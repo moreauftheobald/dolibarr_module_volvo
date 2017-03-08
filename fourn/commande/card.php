@@ -844,6 +844,7 @@ $parameters=array('socid'=>$socid);
 	}
 
 	// Set status of reception (complete, partial, ...)
+	echo 'action =' . $action;
 	if ($action == 'livraison')
 	{
 		echo 'ok';
