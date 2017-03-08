@@ -798,12 +798,9 @@ if ($action == 'reopen'){
 	}
 
 	// Set status of reception (complete, partial, ...)
-	echo 'action =' . $action;
 	if ($action == 'livraison')
 	{
-		echo 'ok';
-		exit;
-	    if (GETPOST("type") != '')
+		if (GETPOST("type") != '')
 	    {
 	        $date_liv = dol_mktime(GETPOST('rehour'),GETPOST('remin'),GETPOST('resec'),GETPOST("remonth"),GETPOST("reday"),GETPOST("reyear"));
 
