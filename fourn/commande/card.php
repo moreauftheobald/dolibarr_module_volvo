@@ -123,164 +123,118 @@ $permissiontoedit=$user->rights->fournisseur->commande->creer;	// Used by the in
 
 $parameters=array('socid'=>$socid);
 
-	if ($cancel) $action='';
+if ($cancel) $action='';
 
-	include DOL_DOCUMENT_ROOT.'/core/actions_setnotes.inc.php';	// Must be include, not include_once
+include DOL_DOCUMENT_ROOT.'/core/actions_setnotes.inc.php';	// Must be include, not include_once
+include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';		// Must be include, not include_once
+include DOL_DOCUMENT_ROOT.'/core/actions_lineupdown.inc.php';	// Must be include, not include_once
 
-	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';		// Must be include, not include_once
-
-	include DOL_DOCUMENT_ROOT.'/core/actions_lineupdown.inc.php';	// Must be include, not include_once
-
-	if($action=='update_extras') {
-		if (isset($_POST['options_vin'])){
-			$vin = GETPOST('options_vin','alpha');
-		} else {
-			$vin = $object->array_options['options_vin'];
-		}
-		if (isset($_POST['options_immat'])){
-			$immat  = GETPOST('options_immat','alpha');
-		} else {
-			$immat = $object->array_options['options_immat'];
-		}
-		if (isset($_POST['options_numom'])){
-			$numom  = GETPOST('options_numom','alpha');
-		} else {
-			$numom = $object->array_options['options_numom'];
-		}
-		if (isset($_POST['options_ctm'])){
-			$ctm  = GETPOST('options_ctm','alpha');
-		} else {
-			$ctm = $object->array_options['options_ctm'];
-		}
-		if ($object->array_options['options_vin'] != $vin || $object->array_options['options_immat'] != $immat || $object->array_options['options_numom'] != $numom || $object->array_options['options_ctm'] != $ctm) {
-			dol_include_once('/volvo/lib/volvo.lib.php');
-			Update_vh_info_from_suporder($object->id,$vin , $immat,$numom,$ctm,$note,1,0);
-		}
+if($action=='update_extras') {
+	if (isset($_POST['options_vin'])){
+		$vin = GETPOST('options_vin','alpha');
+	} else {
+		$vin = $object->array_options['options_vin'];
 	}
-
-
-	if ($action == 'setref_supplier' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result=$object->setValueFrom('ref_supplier',GETPOST('ref_supplier','alpha'));
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
-		else $object->ref_supplier = GETPOST('ref_supplier','alpha');	// The setValueFrom does not set new property of object
+	if (isset($_POST['options_immat'])){
+		$immat  = GETPOST('options_immat','alpha');
+	} else {
+		$immat = $object->array_options['options_immat'];
 	}
-
-	// Set incoterm
-	if ($action == 'set_incoterms' && $user->rights->fournisseur->commande->creer)
-	{
-		$result = $object->setIncoterms(GETPOST('incoterm_id', 'int'), GETPOST('location_incoterms', 'alpha'));
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+	if (isset($_POST['options_numom'])){
+		$numom  = GETPOST('options_numom','alpha');
+	} else {
+		$numom = $object->array_options['options_numom'];
 	}
-
-	// payment conditions
-	if ($action == 'setconditions' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result=$object->setPaymentTerms(GETPOST('cond_reglement_id','int'));
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+	if (isset($_POST['options_ctm'])){
+		$ctm  = GETPOST('options_ctm','alpha');
+	} else {
+		$ctm = $object->array_options['options_ctm'];
 	}
-
-	// payment mode
-	if ($action == 'setmode' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result = $object->setPaymentMethods(GETPOST('mode_reglement_id','int'));
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+	if ($object->array_options['options_vin'] != $vin || $object->array_options['options_immat'] != $immat || $object->array_options['options_numom'] != $numom || $object->array_options['options_ctm'] != $ctm) {
+		dol_include_once('/volvo/lib/volvo.lib.php');
+		Update_vh_info_from_suporder($object->id,$vin , $immat,$numom,$ctm,$note,1,0);
 	}
+}
 
-	// Multicurrency Code
-	else if ($action == 'setmulticurrencycode' && $user->rights->fournisseur->commande->creer) {
-		$result = $object->setMulticurrencyCode(GETPOST('multicurrency_code', 'alpha'));
-	}
 
-	// Multicurrency rate
-	else if ($action == 'setmulticurrencyrate' && $user->rights->fournisseur->commande->creer) {
-		$result = $object->setMulticurrencyRate(price2num(GETPOST('multicurrency_tx')));
-	}
+if ($action == 'setref_supplier' && $user->rights->fournisseur->commande->creer){
+    $result=$object->setValueFrom('ref_supplier',GETPOST('ref_supplier','alpha'));
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+	else $object->ref_supplier = GETPOST('ref_supplier','alpha');	// The setValueFrom does not set new property of object
+}
 
-	// bank account
-	if ($action == 'setbankaccount' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result=$object->setBankAccount(GETPOST('fk_account', 'int'));
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
-	}
+// Set incoterm
+if ($action == 'set_incoterms' && $user->rights->fournisseur->commande->creer){
+	$result = $object->setIncoterms(GETPOST('incoterm_id', 'int'), GETPOST('location_incoterms', 'alpha'));
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+}
 
-	// date of delivery
-	if ($action == 'setdate_livraison' && $user->rights->fournisseur->commande->creer)
-	{
-		$result=$object->set_date_livraison($user,$datelivraison);
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
-	}
+// payment conditions
+if ($action == 'setconditions' && $user->rights->fournisseur->commande->creer){
+    $result=$object->setPaymentTerms(GETPOST('cond_reglement_id','int'));
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+}
 
-	// Set project
-	if ($action ==	'classin' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result=$object->setProject($projectid);
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
-	}
+// payment mode
+if ($action == 'setmode' && $user->rights->fournisseur->commande->creer){
+	$result = $object->setPaymentMethods(GETPOST('mode_reglement_id','int'));
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+}
 
-	if ($action == 'setremisepercent' && $user->rights->fournisseur->commande->creer)
-	{
-	    $result = $object->set_remise($user, $_POST['remise_percent']);
-		if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
-	}
+// date of delivery
+if ($action == 'setdate_livraison' && $user->rights->fournisseur->commande->creer){
+	$result=$object->set_date_livraison($user,$datelivraison);
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+}
 
-	if ($action == 'reopen')	// no test on permission here, permission to use will depends on status
-	{
-	    if (in_array($object->statut, array(1, 2, 3, 4, 5, 6, 7, 9)))
-	    {
-	        if ($object->statut == 1) $newstatus=0;	// Validated->Draft
-	        else if ($object->statut == 2) $newstatus=0;	// Approved->Draft
-	        else if ($object->statut == 3) $newstatus=2;	// Ordered->Approved
-	        else if ($object->statut == 4) $newstatus=3;
-	        else if ($object->statut == 5)
-	        {
-	            //$newstatus=2;    // Ordered
-	            // TODO Can we set it to submited ?
-	            //$newstatus=3;  // Submited
-	            // TODO If there is at least one reception, we can set to Received->Received partially
-	            $newstatus=4;  // Received partially
+// Set project
+if ($action ==	'classin' && $user->rights->fournisseur->commande->creer){
+	$result=$object->setProject($projectid);
+	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
+}
 
-	        }
-	        else if ($object->statut == 6) $newstatus=2;	// Canceled->Approved
-	        else if ($object->statut == 7) $newstatus=3;	// Canceled->Process running
-	        else if ($object->statut == 9) $newstatus=1;	// Refused->Validated
-            else $newstatus = 2;
+if ($action == 'reopen'){
+	if (in_array($object->statut, array(1, 2, 3, 4, 5, 6, 7, 9))){
+        if ($object->statut == 1) $newstatus=0;	// Validated->Draft
+        else if ($object->statut == 2) $newstatus=0;	// Approved->Draft
+        else if ($object->statut == 3) $newstatus=2;	// Ordered->Approved
+        else if ($object->statut == 4) $newstatus=3;
+        else if ($object->statut == 5) $newstatus=4;  // Received partially
+        else if ($object->statut == 6) $newstatus=2;	// Canceled->Approved
+        else if ($object->statut == 7) $newstatus=3;	// Canceled->Process running
+        else if ($object->statut == 9) $newstatus=1;	// Refused->Validated
+        else $newstatus = 2;
 
-            //print "old status = ".$object->statut.' new status = '.$newstatus;
-	        $db->begin();
+        $db->begin();
 
-	        $result = $object->setStatus($user, $newstatus);
-	        if ($result > 0)
-	        {
+        $result = $object->setStatus($user, $newstatus);
+        if ($result > 0){
 	            // Currently the "Re-open" also remove the billed flag because there is no button "Set unpaid" yet.
-		        $sql = 'UPDATE '.MAIN_DB_PREFIX.'commande_fournisseur';
-	        	$sql.= ' SET billed = 0';
-	        	$sql.= ' WHERE rowid = '.$object->id;
+	        $sql = 'UPDATE '.MAIN_DB_PREFIX.'commande_fournisseur';
+    	   	$sql.= ' SET billed = 0';
+       		$sql.= ' WHERE rowid = '.$object->id;
 
-	        	$resql=$db->query($sql);
+        	$resql=$db->query($sql);
 
-	            if ($newstatus == 0)
-	        	{
-		        	$sql = 'UPDATE '.MAIN_DB_PREFIX.'commande_fournisseur';
-	        		$sql.= ' SET fk_user_approve = null, fk_user_approve2 = null, date_approve = null, date_approve2 = null';
-	        		$sql.= ' WHERE rowid = '.$object->id;
+            if ($newstatus == 0){
+	        	$sql = 'UPDATE '.MAIN_DB_PREFIX.'commande_fournisseur';
+        		$sql.= ' SET fk_user_approve = null, fk_user_approve2 = null, date_approve = null, date_approve2 = null';
+        		$sql.= ' WHERE rowid = '.$object->id;
 
-	        		$resql=$db->query($sql);
-	        	}
+        		$resql=$db->query($sql);
+        	}
 
-        		$db->commit();
+       		$db->commit();
 
-	            header('Location: '.$_SERVER["PHP_SELF"].'?id='.$object->id);
-	            exit;
-	        }
-	        else
-			{
-				$db->rollback();
+            header('Location: '.$_SERVER["PHP_SELF"].'?id='.$object->id);
+            exit;
+        }else{
+			$db->rollback();
 
-	            setEventMessages($object->error, $object->errors, 'errors');
-	        }
-	    }
-
+            setEventMessages($object->error, $object->errors, 'errors');
+        }
+    }
+}
 
 	/*
 	 * Classify supplier order as billed
@@ -1302,7 +1256,7 @@ $parameters=array('socid'=>$socid);
 			}
 		}
 	}
-}
+
 
 
 /*
