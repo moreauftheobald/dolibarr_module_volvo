@@ -846,6 +846,7 @@ $parameters=array('socid'=>$socid);
 	// Set status of reception (complete, partial, ...)
 	if ($action == 'livraison' && $user->rights->fournisseur->commande->receptionner)
 	{
+		echo 'ok';
 	    if (GETPOST("type") != '')
 	    {
 	        $date_liv = dol_mktime(GETPOST('rehour'),GETPOST('remin'),GETPOST('resec'),GETPOST("remonth"),GETPOST("reday"),GETPOST("reyear"));
