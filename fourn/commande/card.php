@@ -844,7 +844,7 @@ $parameters=array('socid'=>$socid);
 	}
 
 	// Set status of reception (complete, partial, ...)
-	if ($action == 'livraison' && $user->rights->fournisseur->commande->receptionner)
+	if ($action == 'livraison')
 	{
 		echo 'ok';
 		exit;
