@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>dolibarr_module_volvo</name>
+	<comment></comment>
+	<projects>
+		<project>dolibarr</project>
+		<project>dolibarr_module_lead</project>
+		<project>dolibarr_module_mydoliboard</project>
+		<project>dolibarr_module_mylist</project>
+		<project>dolibarr_module_referenceletters</project>
+		<project>dolibarr_module_subtotal</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
