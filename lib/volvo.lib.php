@@ -130,6 +130,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
+			$out.= '\t';
 			$out.= yn($object->array_options['options_'.$key]);
 			$out.= '</td>';
 			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
@@ -154,7 +155,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '</form>';
 		} else {
 			foreach ($list as $cle => $value){
-				if(in_array($cle, $selected)) $out.= $reprise->show_picto(1) . ' ' . $value;
+				if(in_array($cle, $selected)) $out.= '\t' . $reprise->show_picto(1) . ' ' . $value;
 				else $out.= $reprise->show_picto(0) . ' ' . $value;
 			}
 			$out.= '</td>';
@@ -164,11 +165,11 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 
 	if($type=='bool'){
 		if ($object->array_options['options_'.$key] == 1) {
-			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '\t'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('non','switch_off');
 			$out.= '</a>';
 		} else {
-			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '\t'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('Oui','switch_on');
 			$out.= '</a>';
 		}
