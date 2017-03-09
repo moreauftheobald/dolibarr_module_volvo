@@ -11,15 +11,16 @@ dol_include_once('/volvo/class/reprise.class.php');
 $action = GETPOST('action', 'alpha');
 $id = GETPOST('id', 'int');
 $form = new Form($db);
-$cmd = new Commande($db);
-if(!empty($id)) $cmd->fetch($id);
+$object = new Commande($db);
+if(!empty($id)) $object->fetch($id);
 $reprise = new Reprise($db);
 $extrafields = new ExtraFields($db);
 
 $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
+$res = $object->fetch_optionals($object->id, $extralabels);
 
 llxHeader('', 'VCM');
-$head = commande_prepare_head($cmd);
+$head = commande_prepare_head($object);
 dol_fiche_head($head, 'vcm', $langs->trans("CustomerOrder"), 0, 'order');
 $form = new Form($db);
 
