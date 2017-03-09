@@ -6,7 +6,9 @@ if (! $res) die("Include of main fails");
 require_once DOL_DOCUMENT_ROOT . '/core/lib/order.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 dol_include_once('/volvo/class/reprise.class.php');
+dol_include_once('/volvo/lib/volvo.lib.php');
 
 $action = GETPOST('action', 'alpha');
 $id = GETPOST('id', 'int');
@@ -19,10 +21,18 @@ $extrafields = new ExtraFields($db);
 $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 $res = $object->fetch_optionals($object->id, $extralabels);
 
+if ($action == 'update_extras')	{
+	$extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
+	$ret = $extrafields->setOptionalsFromPost($extralabels, $object, GETPOST('attribute'));
+	if ($ret < 0) $error++;
+	if ($error) $action = 'edit_extras';
+}
+
+
+
 llxHeader('', 'VCM');
 $head = commande_prepare_head($object);
 dol_fiche_head($head, 'vcm', $langs->trans("CustomerOrder"), 0, 'order');
-$form = new Form($db);
 
 print load_fiche_titre('Cotation VCM','',dol_buildpath('/volvo/img/iron02.png', 1));
 print '<table class="border" width="100%">';
@@ -30,9 +40,25 @@ print '<tr class="liste_titre"><td align="center">Entretien et Maintenance du v�
 print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
-$key = 'vcm_deja';
-$label = $extrafields->attribute_label[$key];
-include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+print '<td height="10"><table width="100%" class="nobordernopadding"><tr><td align ="left">';
+print $langs->trans('DateDeliveryPlanned') . ': ';
+if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
+	print '<form name="setdate_livraison" action="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '" method="post">';
+	print '<input type="hidden" name="token" value="' . $_SESSION ['newtoken'] . '">';
+	print '<input type="hidden" name="action" value="update_extra">';
+	print '<input type="hidden" name="attribute" value="vcm_deja">';
+	$form->selectyesno('options_vcm_deja',$object->array_options['options_vcm_deja']);
+	print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+	print '</form>';
+} else {
+	print yn($object->array_options['options_vcm_deja']);
+	print '</td>';
+	print '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=editdate_livraison&amp;id=' . $object->id . '">' . img_edit($langs->trans('SetDeliveryDate'), 1) . '</a></td>';
+}
+print '</td>';
+print'</tr></table>';
+print '</td>';
+
 print '<td>' . $reprise->show_picto(1) . ' Véhicule Déporté</td>';
 print '<td colspan="2">Point de service Volvo Trucks: </td>';
 print '</tr>';
