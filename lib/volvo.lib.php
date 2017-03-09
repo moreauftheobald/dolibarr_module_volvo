@@ -126,7 +126,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';;
 			$out.= $form->selectyesno('options_'.$key,$object->array_options['options_'.$key],1);
-			$out.= '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
+			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
 			$out.= yn($object->array_options['options_'.$key]);
