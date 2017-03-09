@@ -22,7 +22,6 @@ $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 $res = $object->fetch_optionals($object->id, $extralabels);
 
 if ($action == 'update_extras')	{
-	$extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 	$ret = $extrafields->setOptionalsFromPost($extralabels, $object, GETPOST('attribute'));
 	if ($ret < 0) $error++;
 	if ($error) $action = 'edit_extras';
@@ -43,7 +42,7 @@ print '<tr>';
 print '<td height="10"><table width="100%" class="nobordernopadding"><tr><td align ="left">';
 print $extrafields->attribute_label['vcm_deja'] . ': ';
 if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
-	print '<form name="setdate_livraison" action="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '" method="post">';
+	print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
 	print '<input type="hidden" name="token" value="' . $_SESSION ['newtoken'] . '">';
 	print '<input type="hidden" name="action" value="update_extras">';
 	print '<input type="hidden" name="attribute" value="vcm_deja">';
