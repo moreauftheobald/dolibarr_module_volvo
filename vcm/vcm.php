@@ -47,7 +47,7 @@ if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
 	print '<input type="hidden" name="token" value="' . $_SESSION ['newtoken'] . '">';
 	print '<input type="hidden" name="action" value="update_extra">';
 	print '<input type="hidden" name="attribute" value="vcm_deja">';
-	$form->selectyesno('options_vcm_deja',$object->array_options['options_vcm_deja']);
+	print $form->selectyesno('options_vcm_deja',$object->array_options['options_vcm_deja']);
 	print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
 	print '</form>';
 } else {
