@@ -67,7 +67,7 @@ if ($resql) {
 
 $sql1 = "SELECT DISTINCT p.rowid, p.label, ";
 $sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_INTERNE .",1,0)) AS CATEG, ";
-$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
 $sql1.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql1.= "WHERE p.tosell = 1 ";
 $sql1.= "GROUP BY p.rowid ";
@@ -86,7 +86,7 @@ if ($resql) {
 
 $sql2 = "SELECT DISTINCT p.rowid, p.label, ";
 $sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->EXTERNE .",1,0)) AS CATEG, ";
-$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
 $sql2.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql2.= "WHERE p.tosell = 1 ";
 $sql2.= "GROUP BY p.rowid ";
@@ -105,7 +105,7 @@ if ($resql) {
 
 $sql3 = "SELECT DISTINCT p.rowid, p.label, ";
 $sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->DIVERS .",1,0)) AS CATEG, ";
-$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
 $sql3.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql3.= "WHERE p.tosell = 1 ";
 $sql3.= "GROUP BY p.rowid ";
