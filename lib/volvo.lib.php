@@ -270,6 +270,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
 				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
 			}
+			$out = substr($out, 0,-4);
 			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
