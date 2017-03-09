@@ -42,24 +42,8 @@ print '<tr class="liste_titre"><td align="center">Entretien et Maintenance du v�
 print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
-print '<td height="10"><table width="100%" class="nobordernopadding"><tr><td align ="left">';
-print $extrafields->attribute_label['vcm_deja'] . ': ';
-if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
-	print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
-	print '<input type="hidden" name="action" value="update_extras">';
-	print '<input type="hidden" name="attribute" value="vcm_deja">';
-	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
-	print '<input type="hidden" name="id" value="' . $object->id . '">';;
-	print $form->selectyesno('options_vcm_deja',$object->array_options['options_vcm_deja'],1);
-	print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
-	print '</form>';
-} else {
-	print yn($object->array_options['options_vcm_deja']);
-	print '</td>';
-	print '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=vcm_deja&id=' . $object->id . '">' . img_edit('', 1) . '</a></td>';
-}
-print '</td>';
-print'</tr></table>';
+print '<td>';
+print print_extra('vcm_deja','yesno',$action,$extrafields,$object);
 print '</td>';
 
 print '<td>' . $reprise->show_picto(1) . ' Véhicule Déporté</td>';
