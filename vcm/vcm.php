@@ -23,7 +23,7 @@ $res = $object->fetch_optionals($object->id, $extralabels);
 
 if ($action == 'update_extras')	{
 	$ret = $extrafields->setOptionalsFromPost($extralabels, $object, GETPOST('attribute'));
-	echo $ret;
+	echo 'ok';
 	if ($ret < 0) $error++;
 	if ($error) $action = 'edit_extras';
 }
