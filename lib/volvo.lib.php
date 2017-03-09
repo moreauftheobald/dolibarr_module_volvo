@@ -132,7 +132,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 		} else {
 			$out.= yn($object->array_options['options_'.$key]);
 			$out.= '</td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
 		}
 	}
 
@@ -158,7 +158,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 				else $out.= $reprise->show_picto(0) . ' ' . $value;
 			}
 			$out.= '</td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
 		}
 	}
 

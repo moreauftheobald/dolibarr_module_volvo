@@ -61,8 +61,8 @@ print '<td colspan="2">' . print_extra('vcm_maint','chkbox',$action,$extrafields
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '<tr>';
-print '<td colspan="2">Transfert du calendrier vers GDS: ' . print_extra('vcm_trf_gds', 'bool', $action, $extrafields, $object) . '</td>';
-print '<td colspan="2">Transfert du calendrier vers Dynafleet: ' . print_extra('vcm_trf_dfol', 'bool', $action, $extrafields, $object) . '</td>';
+print '<td colspan="2">' . print_extra('vcm_trf_gds', 'bool', $action, $extrafields, $object) . '</td>';
+print '<td colspan="2">' . print_extra('vcm_trf_dfol', 'bool', $action, $extrafields, $object) . '</td>';
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
