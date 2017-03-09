@@ -133,7 +133,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= yn($object->array_options['options_'.$key]);
-			$out.= '</span><span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '" style="float:left">' . img_edit('', 1) . '</a></span>';
+			$out.= '</span><span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
