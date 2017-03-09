@@ -313,6 +313,38 @@ print '</td>';
 print '</tr>';
 print '</table>';
 print '</td></tr>';
+
+print '<tr><td>';
+print '<table class="nobordernopadding" width="100%">';
+print '<tr>';
+print '<td>';
+print print_extra('vcm_frigo', 'bool', $action, $extrafields, $object);
+print '</td>';
+if($object->array_options['options_vcm_frigo']==1){
+	$key = 'vcm_marque';
+	$label = $extrafields->attribute_label[$key];
+	include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+}else{
+	print '<td></td>';
+}
+print '</tr><tr>';
+print '<td>';
+if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_model', 'text', $action, $extrafields, $object,1,15);
+print '</td>';
+if($object->array_options['options_vcm_frigo']==1){
+	$key = 'vcm_fonct';
+	$label = $extrafields->attribute_label[$key];
+	include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+}else{
+	print '<td></td>';
+}
+print '</tr><tr>';
+print '<td colspan="2">';
+if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_frigo_nbh', 'num', $action, $extrafields, $object,1,6,'Heures/an');
+print '</td>';
+print '</tr>';
+print '</table>';
+print '</td></tr>';
 print '</table>';
 
 
