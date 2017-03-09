@@ -112,6 +112,7 @@ function volvoAdminPrepareHead()
 }
 
 Function print_extra($key,$type,$action,$extrafields,$object){
+	global $db;
 
 	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
 	$out.= $extrafields->attribute_label[$key] . ': ';
