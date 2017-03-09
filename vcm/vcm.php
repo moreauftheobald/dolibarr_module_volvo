@@ -157,7 +157,7 @@ print '<tr>';
 	print '<td align="center">Inclus</td>';
 	print '<td align="center">Inclus</td>';
 	print '<td align="center">Inclus</td>';
-	print '<td>' . print_extra('vcm_gold', 'bool', $action, $extrafields, $object,0) . ' oui</td>';
+	print '<td>' . print_extra('vcm_gold', 'bool', $action, $extrafields, $object,0) . '</td>';
 	print '</tr>';
 	print '</table>';
 	print '</br>';
