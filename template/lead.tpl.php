@@ -493,8 +493,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 			$div.dialog({
 				modal:true
 				,width:"90%"
-				,height:$(window).height() - 50
-				,close:function() {document.location.href='<?php echo dol_buildpath('/lead/lead/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
+				,height:$(window).height() - 50;}
 			});
 	  	}
 	</script>
