@@ -131,7 +131,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
-			$out.= '<span style="margin-left: 1em;">';
+			$out.= '<span style="margin-left: 1em;" align="left">';
 			$out.= yn($object->array_options['options_'.$key]);
 			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
