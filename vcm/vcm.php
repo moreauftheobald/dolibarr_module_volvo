@@ -20,7 +20,7 @@ $extrafields = new ExtraFields($db);
 
 $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 $res = $object->fetch_optionals($object->id, $extralabels);
-
+var_dump($extralabels);
 if ($action == 'update_extras')	{
 	$ret = $extrafields->setOptionalsFromPost($extralabels, $object, GETPOST('attribute'));
 	echo 'ok';
