@@ -42,12 +42,17 @@ print '<tr class="liste_titre"><td align="center">Entretien et Maintenance du v�
 print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
+// deja client
 print '<td>';
 print print_extra('vcm_deja','yesno',$action,$extrafields,$object);
 print '</td>';
-
-print '<td>' . $reprise->show_picto(1) . ' Véhicule Déporté</td>';
-print '<td colspan="2">Point de service Volvo Trucks: </td>';
+// vh deporté
+print '<td>' . print_extra('vcm_deport','yesno',$action,$extrafields,$object) . '</td>';
+print '<td colspan="2">';
+$key = 'vcm_site';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+print '</td>';
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '<tr>';
