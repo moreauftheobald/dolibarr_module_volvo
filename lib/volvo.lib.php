@@ -162,6 +162,18 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 		}
 	}
 
+	if($type=='bool'){
+		if ($object->array_options['options_'.$key] == 1) {
+			print '<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
+			print img_picto('non','switch_off');
+			print '</a>';
+		} else {
+			print '<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
+			print img_picto('Oui','switch_on');
+			print '</a>';
+		}
+	}
+
 	$out.= '</td>';
 	$out.='</tr></table>';
 
