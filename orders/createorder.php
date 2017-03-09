@@ -66,7 +66,7 @@ if ($resql) {
 }
 
 $sql1 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql1 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_INTERNE . " AND p.tosell = 1  ORDER BY p.label";
+$sql1 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_INTERNE . " AND c.fk_catégorie <> " . $conf->global->VOLVO_OBLIGATOIRE .  " AND p.tosell = 1  ORDER BY p.label";
 
 $resql = $db->query($sql1);
 $interne = array();
