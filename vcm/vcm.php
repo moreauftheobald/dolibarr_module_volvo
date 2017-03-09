@@ -66,7 +66,7 @@ print '<tr>';
 print '<td colspan="2">' . print_extra('vcm_trf_gds', 'bool', $action, $extrafields, $object,1) . '</td>';
 // transfert vers DFOL
 print '<td colspan="2">' . print_extra('vcm_trf_dfol', 'bool', $action, $extrafields, $object,1) . '</td>';
-print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
+print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '</table>';
 print'</td></tr>';
 
@@ -338,7 +338,9 @@ if($object->array_options['options_vcm_frigo']==1){
 }else{
 	print '<td></td>';
 }
-print '</tr><tr>';
+print '</tr>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '<tr>';
 print '<td colspan="2">';
 if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_frigo_nbh', 'num', $action, $extrafields, $object,1,6,'Heures/an');
 print '</td>';
