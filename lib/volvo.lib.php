@@ -269,7 +269,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			foreach ($list as $cle => $value){
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
-				else $out.= '<td><span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
+				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
 			}
 			$out = substr($out, 0,-5);
 			$out.= '</td><td>';
