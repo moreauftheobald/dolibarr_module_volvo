@@ -166,11 +166,11 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1){
 
 	if($type=='bool'){
 		if ($object->array_options['options_'.$key] == 0) {
-			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('non','switch_off');
 			$out.= '</a></span>';
 		} else {
-			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('Oui','switch_on');
 			$out.= '</a></span>';
 		}
