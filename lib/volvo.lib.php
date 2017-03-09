@@ -155,7 +155,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '</form>';
 		} else {
 			foreach ($list as $cle => $value){
-				if(in_array($cle, $selected)) $out.= "\t" . $reprise->show_picto(1) . ' ' . $value;
+				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 4em;">' . $reprise->show_picto(1) . ' ' . $value .'</span>';
 				else $out.= $reprise->show_picto(0) . ' ' . $value;
 			}
 			$out.= '</td>';
