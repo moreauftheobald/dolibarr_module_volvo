@@ -65,8 +65,14 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql1 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql1 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_INTERNE . " AND c.fk_categorie <> " . $conf->global->VOLVO_OBLIGATOIRE .  " AND p.tosell = 1  ORDER BY p.label";
+$sql1 = "SELECT DISTINCT p.rowid, p.label, ";
+$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_INTERNE .",1,0)) AS CATEG, ";
+$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql1.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+$sql1.= "WHERE p.tosell = 1 ";
+$sql1.= "GROUP BY p.rowid ";
+$sql1.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql1.= "ORDER BY p.label";
 
 $resql = $db->query($sql1);
 $interne = array();
@@ -78,8 +84,14 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql2 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql2 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_EXTERNE . " AND p.tosell = 1 ORDER BY p.label";
+$sql2 = "SELECT DISTINCT p.rowid, p.label, ";
+$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->EXTERNE .",1,0)) AS CATEG, ";
+$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql2.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+$sql2.= "WHERE p.tosell = 1 ";
+$sql2.= "GROUP BY p.rowid ";
+$sql2.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql2.= "ORDER BY p.label";
 
 $resql = $db->query($sql2);
 $externe = array();
@@ -91,8 +103,14 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql3 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql3 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_DIVERS . " AND p.tosell = 1  ORDER BY p.label";
+$sql3 = "SELECT DISTINCT p.rowid, p.label, ";
+$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->DIVERS .",1,0)) AS CATEG, ";
+$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC, ";
+$sql3.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+$sql3.= "WHERE p.tosell = 1 ";
+$sql3.= "GROUP BY p.rowid ";
+$sql3.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql3.= "ORDER BY p.label";
 
 $resql = $db->query($sql3);
 $divers = array();
