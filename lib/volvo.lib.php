@@ -133,8 +133,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= yn($object->array_options['options_'.$key]);
-			$out.= '</span>';
-			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
@@ -191,8 +190,8 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= dol_print_date($object->array_options['options_'.$key],'daytextshort');
-			$out.= '</span></td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '</span>';
+			$out.= '<a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
 		}
 	}
 
