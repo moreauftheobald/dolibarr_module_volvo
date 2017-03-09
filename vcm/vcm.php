@@ -49,12 +49,14 @@ print '</td>';
 // vh deporté
 print '<td>' . print_extra('vcm_deport','yesno',$action,$extrafields,$object) . '</td>';
 //point de services
-print '<td>' . print_extra('vcm_test','chkbox',$action,$extrafields,$object) . '</td>';
+$key = 'vcm_site';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '<tr>';
-print '<td> </td>';
+print '<td>' . print_extra('vcm_test','chkbox',$action,$extrafields,$object) . '</td>';
 print '<td colspan="2">Interventions réalisées: ' . $reprise->show_picto(1) . ' Entretien et maintenance légère - '. $reprise->show_picto(1) .' Maintenace Lourde</td>';
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
