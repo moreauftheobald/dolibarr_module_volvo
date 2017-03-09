@@ -232,6 +232,27 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		}
 	}
 
+	if($type=='textlong'){
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			require_once DOL_DOCUMENT_ROOT.'/core/class/doleditor.class.php';
+			$doleditor=new DolEditor('options_'.$key,$object->array_options['options_'.$key]);
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= $doleditor->Create(1);
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			$out.= '<span style="margin-left: 1em;">';
+			$out.= dol_htmlentitiesbr($object->array_options['options_'.$key]);
+			$out.= '</span></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+		}
+	}
+
+
 	$out.= '</td>';
 	$out.='</tr></table>';
 

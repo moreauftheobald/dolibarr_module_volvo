@@ -216,7 +216,7 @@ print '<tr>';
 Print '<td align="left">' . print_extra('vcm_hydro','chkbox',$action,$extrafields,$object,1) . '</td>';
 print '</tr>';
 print '<tr><td></td></tr>';
-print '<tr><td> carrosserie et équipements: </td></tr>';
+print '<tr><td>' . print_extra('vcm_carr', 'textlong', $action, $extrafields, $object) . '</td></tr>';
 print '</table>';
 
 print '</br>';
