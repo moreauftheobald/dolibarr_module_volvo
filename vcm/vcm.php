@@ -48,15 +48,17 @@ print print_extra('vcm_deja','yesno',$action,$extrafields,$object);
 print '</td>';
 // vh deporté
 print '<td>' . print_extra('vcm_deport','yesno',$action,$extrafields,$object) . '</td>';
-//print '<td colspan="2" align="left">';
+//point de services
 $key = 'vcm_site';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
-//print '</td>';
+
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 print '<tr>';
-print '<td colspan="2">Client ayant: ' . $reprise->show_picto(1) . ' Atelier mécanique - '. $reprise->show_picto(1) .' Atelier Carrosserie - ' .$reprise->show_picto(1).' Sans atelier</td>';
+$key = 'vcm_test';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 print '<td colspan="2">Interventions réalisées: ' . $reprise->show_picto(1) . ' Entretien et maintenance légère - '. $reprise->show_picto(1) .' Maintenace Lourde</td>';
 print '</tr>';
 print '<tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
