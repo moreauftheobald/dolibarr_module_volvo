@@ -114,7 +114,7 @@ function volvoAdminPrepareHead()
 Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 10,$unit=''){
 	global $db;
 
-	$out = '<div align ="left">';
+	$out = '<div style="display: inline" align ="left">';
 
 	if($label==1)$out.= $extrafields->attribute_label[$key];
 
