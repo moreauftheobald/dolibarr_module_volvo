@@ -115,7 +115,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 	global $db;
 
 	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
-	$out.= $extrafields->attribute_label[$key] . ': ';
+	$out.= $extrafields->attribute_label[$key];
 
 	if($type=='yesno'){
 		require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
