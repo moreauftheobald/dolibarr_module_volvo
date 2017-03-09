@@ -172,7 +172,7 @@ print '<td>' . print_extra('vcm_gold', 'bool', $action, $extrafields, $object,0)
 print '</tr>';
 print '</table>';
 
-print '</br>';
+print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 // date de demmarrage
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
@@ -180,7 +180,7 @@ Print '<td>' . print_extra('vcm_duree', 'chkbox', $action, $extrafields, $object
 print '</tr>';
 print '</table>';
 
-print '<tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
@@ -195,7 +195,7 @@ print '<td  align="Left">' . print_extra('vcm_ptra', 'num', $action, $extrafield
 print '</tr>';
 print '</table>';
 
-print '<tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
@@ -208,7 +208,7 @@ print '<td  align="Left">' . print_extra('vcm_pto_hdep','num',$action,$extrafiel
 print '</tr>';
 print '</table>';
 
-print '<tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
@@ -219,7 +219,7 @@ print '<tr><td></td></tr>';
 print '<tr><td>' . print_extra('vcm_carr', 'textlong', $action, $extrafields, $object) . '</td></tr>';
 print '</table>';
 
-print '<tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 print'</td></tr>';
 print '<tr class="liste_titre"><td align="center">Utilisation du Véhicule</td></tr>';
 
