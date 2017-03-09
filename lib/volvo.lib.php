@@ -112,6 +112,9 @@ function volvoAdminPrepareHead()
 }
 
 Function print_extra($key,$type,$action,$extrafields,$object){
+	require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
+	$form = new Form($db);
+
 	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
 	$out.= $extrafields->attribute_label[$key] . ': ';
 
