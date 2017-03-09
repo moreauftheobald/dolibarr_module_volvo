@@ -185,13 +185,13 @@ print '</br>';
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
 // consommation estimée
-Print '<td bgcolor="ffaaaa">' . print_extra('vcm_conso', 'num', $action, $extrafields, $object,1,'l/100km') . '</td>';
+Print '<td bgcolor="ffaaaa">' . print_extra('vcm_conso', 'num', $action, $extrafields, $object,1,5,'l/100km') . '</td>';
 // Kilométrage annuel
-print '<td  align="Left">' . print_extra('vcm_km', 'num', $action, $extrafields, $object,1,'km/an') . '</td>';
+print '<td  align="Left">' . print_extra('vcm_km', 'num', $action, $extrafields, $object,1,7,'km/an') . '</td>';
 // kilometre départ
-print '<td  align="Left">' . print_extra('vcm_km_dep', 'num', $action, $extrafields, $object,1,'km') . '</td>';
+print '<td  align="Left">' . print_extra('vcm_km_dep', 'num', $action, $extrafields, $object,1,7,'km') . '</td>';
 // ptra
-print '<td  align="Left">' . print_extra('vcm_ptra', 'num', $action, $extrafields, $object,1,'Tonnes') . '</td>';
+print '<td  align="Left">' . print_extra('vcm_ptra', 'num', $action, $extrafields, $object,1,5,'Tonnes') . '</td>';
 print '</tr>';
 print '</table>';
 
@@ -202,9 +202,9 @@ print '<tr>';
 //type de prise de force
 Print '<td align="left">'. print_extra('vcm_pto','chkbox',$action,$extrafields,$object,1).'</td>';
 //nb heure pto
-print '<td  align="Left">'.print_extra('vcm_pto_nbh','num',$action,$extrafields,$object,1,'H/an').'</td>';
+print '<td  align="Left">'.print_extra('vcm_pto_nbh','num',$action,$extrafields,$object,1,5,'H/an').'</td>';
 // nb heure pto depart
-print '<td  align="Left">' . print_extra('vcm_pto_hdep','num',$action,$extrafields,$object,1,'H') . '</td>';
+print '<td  align="Left">' . print_extra('vcm_pto_hdep','num',$action,$extrafields,$object,1,5,'H') . '</td>';
 print '</tr>';
 print '</table>';
 
