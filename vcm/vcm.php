@@ -41,7 +41,7 @@ print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
 print '<td height="10"><table width="100%" class="nobordernopadding"><tr><td align ="left">';
-print $langs->trans('DateDeliveryPlanned') . ': ';
+print $extrafields->attribute_label['vcm_deja'] . ': ';
 if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
 	print '<form name="setdate_livraison" action="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '" method="post">';
 	print '<input type="hidden" name="token" value="' . $_SESSION ['newtoken'] . '">';
@@ -53,7 +53,7 @@ if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
 } else {
 	print yn($object->array_options['options_vcm_deja']);
 	print '</td>';
-	print '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=editdate_livraison&amp;id=' . $object->id . '">' . img_edit($langs->trans('SetDeliveryDate'), 1) . '</a></td>';
+	print '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=vcm_deja&id=' . $object->id . '">' . img_edit('', 1) . '</a></td>';
 }
 print '</td>';
 print'</tr></table>';
