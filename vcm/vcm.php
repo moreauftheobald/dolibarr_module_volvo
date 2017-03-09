@@ -48,7 +48,7 @@ print print_extra('vcm_deja','yesno',$action,$extrafields,$object);
 print '</td>';
 // vh deporté
 print '<td>' . print_extra('vcm_deport','yesno',$action,$extrafields,$object) . '</td>';
-print '<td colspan="2">';
+print '<td colspan="2" align="left">';
 $key = 'vcm_site';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
