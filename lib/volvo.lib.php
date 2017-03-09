@@ -184,7 +184,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
 			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
-			$out.= $form->select_date($db->jdate($object->array_options['options_'.$key]),'options_'.$key,0,0,1,'',1);
+			$out.= $form->select_date($db->jdate($object->array_options['options_'.$key]),'options_'.$key,0,0,1,'',1,1,1);
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
