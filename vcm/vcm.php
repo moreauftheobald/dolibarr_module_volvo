@@ -225,42 +225,77 @@ print '<tr class="liste_titre"><td align="center">Utilisation du Véhicule</td><
 
 print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
-	print '<tr>';
-	Print '<td align="left" Colspan="2">'."Amplitude Hebdomadaire d'utilisation du véhicule : " . $reprise->show_picto(1) . ' 5jours/semaine - ' . $reprise->show_picto(1) . ' 6jours/semaine - '. $reprise->show_picto(1) .' 7jours/semaine</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left" Colspan="2">'."Amplitude journalière d'utilisation du véhicule : " . $reprise->show_picto(1) . ' 8 heures/jour maximum - ' . $reprise->show_picto(1) . ' > à 8 heures /jour - '. $reprise->show_picto(1) .' > à 16 Heure /jour</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left">'."Nombre de position de livraison ou chargement journalier : 15 Positions / jour" .'</td>';
-	Print '<td align="left">'."Véhicule ayant une activité saisonnière ?" . $reprise->show_picto(1) . '</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left">'."Superstructure typique pour les chantiers ?" . yn(1) .'</td>';
-	Print '<td align="left">'."Le véhicule circule t il principalement en ville ?" . yn(1) . '</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left">'."La distance moyenne entre le chargement et le déchargement est-elle inférieure à 50 km ?" . yn(1) .'</td>';
-	Print '<td align="left">'."Le kilométrage annuel est il égal ou supérieur  à 100 000 kms ?" . yn(1) . '</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left" Colspan="2">'."Cycle de transport: Distribution régional" . '</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left">'."Zone géographique : Communauté Européenne" . '</td>';
-	Print '<td align="left">'."Type de transport: Transport Traditionnel" . '</td>';
-	print '</tr>';
-	print '<tr>';
-	Print '<td align="left">'."type de Carburant: 0.05% de soufre (carburant type 0)" . '</td>';
-	Print '<td align="left">'."Topographie: Lisse" . '</td>';
-	print '</tr>';
-	print '</table>';
-	print '</br>';
-	print '</td></tr>';
-	print '<tr class="liste_titre"><td align="center">Options</td></tr>';
-	print '<tr><td></td></tr>';
+print '<tr>';
+//amplitude hebdo
+Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_heb','chkbox',$action,$extrafields,$object,1) . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
 
-	print '</table>';
+print '<tr>';
+//amplitude journaliere
+Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_jour','chkbox',$action,$extrafields,$object,1) . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//nb position/jour
+Print '<td align="left">' . print_extra('vcm_nbpos','num',$action,$extrafields,$object,1,4,'Positions / Jour') . '</td>';
+//activité saisoniere
+Print '<td align="left">'.print_extra('vcm_sais', 'bool', $action, $extrafields, $object,1) . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//structure chantier
+Print '<td align="left">'.print_extra('vcm_chant', 'bool', $action, $extrafields, $object,1) .'</td>';
+// activité urbaine
+Print '<td align="left">'.print_extra('vcm_ville', 'bool', $action, $extrafields, $object,1) . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//activité régionnale
+Print '<td align="left">'.print_extra('vcm_50km', 'bool', $action, $extrafields, $object,1) .'</td>';
+//longue distance
+Print '<td align="left">'.print_extra('vcm_ld', 'bool', $action, $extrafields, $object,1) . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//calcul du cycle de transport
+$cycle='';
+if($object->array_options['options_vcm_ld']==1) $cycle='Longue Distance';
+if($object->array_options['options_vcm_50km']==1) $cycle='Distribution Régionnale';
+if($object->array_options['options_vcm_ville']==1) $cycle='Distribution Urbaine';
+if($object->array_options['options_vcm_chant']==1) $cycle='Construction';
+
+Print '<td align="left" Colspan="2">'."Cycle de transport:" . $cycle . '</td>';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//zone géographique
+$key = 'vcm_zone';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+//type de transport
+$key = 'vcm_typ_trans';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+
+print '<tr>';
+//conditions de roulage
+$key = 'vcm_roul';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+//topographie
+$key = 'vcm_topo';
+$label = $extrafields->attribute_label[$key];
+include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+print '</table>';
+print '</br>';
+print '</td></tr>';
+
+print '<tr class="liste_titre"><td align="center">Options</td></tr>';
+print '<tr><td></td></tr>';
+
+print '</table>';
 
 
 
