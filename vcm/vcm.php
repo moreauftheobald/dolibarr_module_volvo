@@ -293,6 +293,9 @@ print '</br>';
 print '</td></tr>';
 
 print '<tr class="liste_titre"><td align="center">Options</td></tr>';
+print '<tr><td>';
+print '<table class="nobordernopadding" width="100%">';
+
 print '<tr>';
 print '<td>';
 print print_extra('vcm_pack', 'chkboxvert', $action, $extrafields, $object,0);
@@ -308,6 +311,8 @@ print '<td>';
 print print_extra('vcm_legal', 'chkboxvert', $action, $extrafields, $object,0);
 print '</td>';
 print '</tr>';
+print '</table>';
+print '</td></tr>';
 print '</table>';
 
 
