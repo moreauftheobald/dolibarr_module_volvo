@@ -22,9 +22,12 @@ $extralabels = $extrafields->fetch_name_optionals_label($object->table_element);
 $res = $object->fetch_optionals($object->id, $extralabels);
 if ($action == 'update_extras')	{
 	$ret = $extrafields->setOptionalsFromPost($extralabels, $object, GETPOST('attribute'));
-	echo 'ret:' . $ret;
 	if ($ret < 0) $error++;
-	if ($error) $action = 'edit_extras';
+	if ($error){
+		$action = 'edit_extras';
+	}else{
+		$result = $object->insertExtraFields();
+	}
 }
 
 
