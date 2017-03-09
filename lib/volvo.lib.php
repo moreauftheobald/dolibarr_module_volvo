@@ -133,7 +133,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= yn($object->array_options['options_'.$key]);
-			$out.= '</span><span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' .'-'. img_edit('', 1) . '</a></span>';
+			$out.= '</span><span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -158,7 +158,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span>';
 				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span>';
 			}
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -189,7 +189,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= dol_print_date($object->array_options['options_'.$key],'daytextshort').'</span>';
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -207,7 +207,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= $object->array_options['options_'.$key] . ' ' . $unit;
 			$out.= '</span>';
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -225,7 +225,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= price($object->array_options['options_'.$key]). ' ' . $unit;
 			$out.= '</span>';
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -245,7 +245,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= dol_htmlentitiesbr($object->array_options['options_'.$key]);
 			$out.= '</span>';
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
@@ -270,7 +270,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
 				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
 			}
-			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
 		}
 	}
 
