@@ -112,14 +112,12 @@ function volvoAdminPrepareHead()
 }
 
 Function print_extra($key,$type,$action,$extrafields,$object){
-	require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
-	require_once DOL_DOCUMENT_ROOT . '/volvo/class/html.formvolvo.class.php';
-
 
 	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
 	$out.= $extrafields->attribute_label[$key] . ': ';
 
 	if($type=='yesno'){
+		require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 		$form = new Form($db);
 		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
 			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
@@ -138,20 +136,26 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 	}
 
 	if($type=='chkbox'){
+		require_once DOL_DOCUMENT_ROOT . '/volvo/class/html.formvolvo.class.php';
+		dol_include_once('/volvo/class/reprise.class.php');
+		$reprise = new Reprise($db);
 		$form = new FormVolvo($db);
+		$list = $extrafields->attribute_param[$key]['options'];
+		$selected = explode(',', $object->array_options['options_'.$key]);
 		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
 			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
 			$out.= '<input type="hidden" name="action" value="update_extras">';
 			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
 			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
-			$list = $extrafields->attribute_param[$key]['options'];
-			$selected = explode(',', $object->array_options['options_'.$key]);
 			$out.= $form->select_withcheckbox_flat('options_'.$key,$list,$selected);
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
-			$out.= yn($object->array_options['options_'.$key]);
+			foreach ($list as $cle => $value){
+				if(in_array($cle, $selected)) $out.= $reprise->show_picto(1) . ' ' . $value;
+				else $out.= $reprise->show_picto(0) . ' ' . $value;
+			}
 			$out.= '</td>';
 			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></td>';
 		}
