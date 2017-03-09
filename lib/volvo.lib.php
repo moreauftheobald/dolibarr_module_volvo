@@ -146,7 +146,8 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
 			$list = $extrafields->attribute_param[$key]['options'];
-			$out.= $form->select_withcheckbox_flat('options_'.$key,$list,$object->array_options['options_'.$key]);
+			$selected = explode(',', $object->array_options['options_'.$key]);
+			$out.= $form->select_withcheckbox_flat('options_'.$key,$list,$selected);
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
