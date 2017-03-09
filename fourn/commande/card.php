@@ -775,9 +775,7 @@ if ($action == 'update_extras'){
 	if ($ret < 0) $error++;
 
 	if (! $error){
-		// Actions on extra fields (by external module or standard code)
-		// TODO le hook fait double emploi avec le trigger !!
-		$parameters=array('id'=>$object->id);
+		$result = $object->insertExtraFields();
 	}else{
 		$action = 'edit_extras';
 	}
