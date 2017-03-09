@@ -71,7 +71,7 @@ $sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS 
 $sql1.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql1.= "WHERE p.tosell = 1 ";
 $sql1.= "GROUP BY p.rowid ";
-$sql1.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql1.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
 $sql1.= "ORDER BY p.label";
 
 $resql = $db->query($sql1);
@@ -90,7 +90,7 @@ $sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS 
 $sql2.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql2.= "WHERE p.tosell = 1 ";
 $sql2.= "GROUP BY p.rowid ";
-$sql2.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql2.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
 $sql2.= "ORDER BY p.label";
 
 $resql = $db->query($sql2);
@@ -109,7 +109,7 @@ $sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS 
 $sql3.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 $sql3.= "WHERE p.tosell = 1 ";
 $sql3.= "GROUP BY p.rowid ";
-$sql3.= "HAVING CATEG = 1 AND CATEG_EXCLUDE !=1 ";
+$sql3.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
 $sql3.= "ORDER BY p.label";
 
 $resql = $db->query($sql3);
