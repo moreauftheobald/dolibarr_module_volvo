@@ -114,7 +114,7 @@ function volvoAdminPrepareHead()
 Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 10,$unit=''){
 	global $db;
 
-	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
+	$out = '<div align ="left">';
 
 	if($label==1)$out.= $extrafields->attribute_label[$key];
 
@@ -158,8 +158,7 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span>';
 				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span>';
 			}
-			$out.= '</td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
@@ -207,8 +206,8 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= $object->array_options['options_'.$key] . ' ' . $unit;
-			$out.= '</span></td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '</span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
@@ -225,8 +224,8 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= price($object->array_options['options_'.$key]). ' ' . $unit;
-			$out.= '</span></td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '</span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
@@ -245,8 +244,8 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= dol_htmlentitiesbr($object->array_options['options_'.$key]);
-			$out.= '</span></td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '</span>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
@@ -271,13 +270,12 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
 				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
 			}
-			$out.= '</td>';
-			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a></span>';
 		}
 	}
 
-	$out.= '</td>';
-	$out.='</tr></table>';
+	$out.= '</div>';
+
 
 	return $out;
 }
