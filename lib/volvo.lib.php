@@ -175,6 +175,26 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 		}
 	}
 
+	if($type=='date'){
+		require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
+		$form = new Form($db);
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= $form->select_date($db->jdate($object->array_options['options_'.$key]),'options_'.$key,0,0,1,'',1);
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			$out.= '<span style="margin-left: 1em;">';
+			$out.= dol_print_date($object->array_options['options_'.$key],'dayhourtextshort');
+			$out.= '</span></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+		}
+	}
+
 	$out.= '</td>';
 	$out.='</tr></table>';
 

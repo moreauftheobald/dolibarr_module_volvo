@@ -72,7 +72,7 @@ print '<tr class="liste_titre"><td align="center">Termes de la Solution de Maint
 print '<tr><td>';
 print '<table class="border" width="100%">';
 print '<tr>';
-print '<td rowspan="2" valign="top" align="center">Date éventuelle de démarrage du contrat: </br> 17/07/2016</td>';
+print '<td rowspan="2" valign="top" align="center">' . print_extra('vcm_dt_dem', 'date', $action, $extrafields, $object) . '</td>';
 print '<td bgcolor="56aaff" class="liste_titre" align="center">Prévention</td>';
 print '<td bgcolor="ff7f00" class="liste_titre" colspan=2 align="center">Entretien</td>';
 print '<td bgcolor="#00ff00" class="liste_titre" colspan=2 align="center">Protection</td>';
