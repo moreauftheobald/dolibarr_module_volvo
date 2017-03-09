@@ -43,10 +43,10 @@ print '<td height="10"><table width="100%" class="nobordernopadding"><tr><td ali
 print $extrafields->attribute_label['vcm_deja'] . ': ';
 if ($action == 'edit_extra' && GETPOST('attribute') =='vcm_deja') {
 	print '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
-	print '<input type="hidden" name="token" value="' . $_SESSION ['newtoken'] . '">';
 	print '<input type="hidden" name="action" value="update_extras">';
 	print '<input type="hidden" name="attribute" value="vcm_deja">';
-	print '<input type="hidden" name="id" value="' . $object->id . '">';
+	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+	print '<input type="hidden" name="id" value="' . $object->id . '">';;
 	print $form->selectyesno('options_vcm_deja',$object->array_options['options_vcm_deja'],1);
 	print '<input type="submit" class="button" value="' . $langs->trans('Modify') . '">';
 	print '</form>';
