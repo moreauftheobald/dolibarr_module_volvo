@@ -293,8 +293,21 @@ print '</br>';
 print '</td></tr>';
 
 print '<tr class="liste_titre"><td align="center">Options</td></tr>';
-print '<tr><td></td></tr>';
+print '<tr>';
+print '<td>';
+print print_extra('vcm_pack', 'chkboxvert', $action, $extrafields, $object,0);
+print '</br>';
+print print_extra('vcm_option', 'chkboxvert', $action, $extrafields, $object,0);
+print '</td>';
 
+print '<td>';
+print print_extra('vcm_sup', 'chkboxvert', $action, $extrafields, $object,0);
+print '</td>';
+
+print '<td>';
+print print_extra('vcm_legal', 'chkboxvert', $action, $extrafields, $object,0);
+print '</td>';
+print '</tr>';
 print '</table>';
 
 

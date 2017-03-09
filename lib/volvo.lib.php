@@ -252,6 +252,31 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 		}
 	}
 
+	if($type=='chkboxvert'){
+		require_once DOL_DOCUMENT_ROOT . '/volvo/class/html.formvolvo.class.php';
+		dol_include_once('/volvo/class/reprise.class.php');
+		$reprise = new Reprise($db);
+		$form = new FormVolvo($db);
+		$list = $extrafields->attribute_param[$key]['options'];
+		$selected = explode(',', $object->array_options['options_'.$key]);
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= $form->select_withcheckbox('options_'.$key,$list,$selected);
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			foreach ($list as $cle => $value){
+				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
+				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
+			}
+			$out.= '</td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+		}
+	}
 
 	$out.= '</td>';
 	$out.='</tr></table>';
