@@ -130,7 +130,7 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '<input type="submit" class="button" value="Modifier">';
 			$out.= '</form>';
 		} else {
-			$out.= '<span style="margin-left: 4em;">';
+			$out.= '<span style="margin-left: 1em;">';
 			$out.= yn($object->array_options['options_'.$key]);
 			$out.= '</span></td>';
 			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
@@ -155,8 +155,8 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 			$out.= '</form>';
 		} else {
 			foreach ($list as $cle => $value){
-				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 4em;">' . $reprise->show_picto(1) . ' ' . $value .'</span>';
-				else $out.= $reprise->show_picto(0) . ' ' . $value;
+				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span>';
+				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span>';
 			}
 			$out.= '</td>';
 			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
@@ -165,13 +165,13 @@ Function print_extra($key,$type,$action,$extrafields,$object){
 
 	if($type=='bool'){
 		if ($object->array_options['options_'.$key] == 1) {
-			$out.= "\t".'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('non','switch_off');
-			$out.= '</a>';
+			$out.= '</a></span>';
 		} else {
-			$out.= "\t".'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
 			$out.= img_picto('Oui','switch_on');
-			$out.= '</a>';
+			$out.= '</a></span>';
 		}
 	}
 
