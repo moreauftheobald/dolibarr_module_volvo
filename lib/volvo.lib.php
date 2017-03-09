@@ -111,7 +111,7 @@ function volvoAdminPrepareHead()
 	return $head;
 }
 
-Function print_extra($key,$type,$action,$extrafields,$object,$label=1){
+Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 10,$unit=''){
 	global $db;
 
 	$out = '<table width="100%" class="nobordernopadding"><tr><td align ="left">';
@@ -191,6 +191,42 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1){
 		} else {
 			$out.= '<span style="margin-left: 1em;">';
 			$out.= dol_print_date($object->array_options['options_'.$key],'daytextshort');
+			$out.= '</span></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+		}
+	}
+
+	if($type=='text'){
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= '<input type="text" name="options_' . $key . '" size="' . $lenght . '" value="' . $object->array_options['options_'.$key] . '"/>'. ' ' . $unit;
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			$out.= '<span style="margin-left: 1em;">';
+			$out.= $object->array_options['options_'.$key] . ' ' . $unit;
+			$out.= '</span></td>';
+			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
+		}
+	}
+
+	if($type=='num'){
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= '<input type="text" name="options_' . $key . '" size="' . $lenght . '" value="' . price($object->array_options['options_'.$key]) . '"/>'. ' ' . $unit;
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			$out.= '<span style="margin-left: 1em;">';
+			$out.= price($object->array_options['options_'.$key]). ' ' . $unit;
 			$out.= '</span></td>';
 			$out.= '<td align="center"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('', 1) . '</a>';
 		}
