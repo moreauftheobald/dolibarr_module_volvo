@@ -72,6 +72,25 @@ class FormVolvo
 
 		return $out;
 	}
+
+	public function select_withcheckbox_flat($htmlname = '', $values = array(), $selectedvalues = array(), $moreparam = '') {
+		$out = '<div align="left"><table class="nobordernopadding"><tr>';
+		$i = 0;
+		foreach ( $values as $key => $label ) {
+			$out .= '<td><input class="flat" type="checkbox" align="left" name="' . $htmlname . '[]" ' . ($moreparam ? $moreparam : '');
+			$out .= ' value="' . $key . '"';
+			if (in_array($key, $selectedvalues)) {
+				$out .= 'checked';
+			}
+			$out .= '/>' . $label . '</td>';
+		}
+
+		$out .= '</tr></table></div>';
+
+		return $out;
+	}
+
+
 	public function selectFournPrice($htmlname = 'fournprice', $selectedvalue, $fk_product = 0, $nooutput = 1) {
 		require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.product.class.php';
 
