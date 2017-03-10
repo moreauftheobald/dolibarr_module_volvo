@@ -390,7 +390,7 @@ print '</tr>';
 // Catégorie Solutions Transport
 print '<tr class="impair"><td>Saisie des infos VCM Obligatoire pour valider une commande</td>';
 print '<td align="left">';
-print $form->selectyesno('VOLVO_VCM_OBLIG', $conf->global->VOLVO_VCM_OBLIG,1);
+print $form->selectyesno('VOLVO_VCM_OBLIG', $conf->global->VOLVO_VCM_OBLIG,1,false,1);
 print '</tr>';
 
 print '</table>';
