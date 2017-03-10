@@ -41,6 +41,7 @@ $langs->load("compta");
 $search_name=GETPOST('search_name');
 $search_contract=GETPOST('search_contract');
 $search_ref_supplier=GETPOST('search_ref_supplier','alpha');
+$search_ref_customer=GETPOST('search_ref_customer','alpha');
 $sall=GETPOST('sall');
 $search_status=GETPOST('search_status');
 $socid=GETPOST('socid');
@@ -117,6 +118,7 @@ if (GETPOST("button_removefilter_x") || GETPOST("button_removefilter.x") || GETP
 	$search_name="";
 	$search_contract="";
 	$search_ref_supplier="";
+	$search_ref_customer="";
     $search_user='';
     $search_sale='';
     $search_product_category='';
@@ -193,6 +195,7 @@ else if ($year > 0)
 }
 if ($search_contract) $sql .= natural_search(array('c.rowid', 'c.ref'), $search_contract);
 if (!empty($search_ref_supplier)) $sql .= natural_search(array('c.ref_supplier'), $search_ref_supplier);
+if (!empty($search_ref_customer)) $sql .= natural_search(array('c.ref_customer'), $search_ref_customer);
 if ($search_sale > 0)
 {
 	$sql.= " AND s.rowid = sc.fk_soc AND sc.fk_user = " .$search_sale;
@@ -246,6 +249,7 @@ if ($resql)
     if ($search_contract != '')     $param.='&search_contract='.$search_contract;
     if ($search_name != '')         $param.='&search_name='.$search_name;
     if ($search_ref_supplier != '') $param.='&search_ref_supplier='.$search_ref_supplier;
+    if ($search_ref_customer != '') $param.='&search_ref_customer='.$search_ref_customer;
     if ($search_sale != '')         $param.='&search_sale=' .$search_sale;
     if ($optioncss != '')           $param.='&optioncss='.$optioncss;
 

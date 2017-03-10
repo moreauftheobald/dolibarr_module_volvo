@@ -168,7 +168,7 @@ if ($action == 'updateMask') {
 	if (! $res > 0) {
 		$error ++;
 	}
-	$vcmoblig = GETPOST('VOLVO_VCM_OBLIG', 'int');
+	$vcmoblig = GETPOST('VOLVO_VCM_OBLIG');
 	if (! empty($vcmoblig)) {
 		$res = dolibarr_set_const($db, 'VOLVO_VCM_OBLIG', $vcmoblig, 'chaine', 0, '', $conf->entity);
 	}
