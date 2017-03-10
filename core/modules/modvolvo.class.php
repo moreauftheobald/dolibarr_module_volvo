@@ -575,7 +575,7 @@ class modvolvo extends DolibarrModules
 		// // To add a new tab identified by code tabname1
 		'lead:+reprise:Reprise::$user->rights->volvo->lireeprise:/volvo/reprise/card.php?&action=&repid=&id=__ID__',
 		'order:-contact',
-		'order:+vcm:VCM::$user->rights->commande->lire:/volvo/vcm/vcm.php?&id=__ID__',
+		//'order:+vcm:VCM::$user->rights->commande->lire:/volvo/vcm/vcm.php?&id=__ID__',
 		// // To add another new tab identified by code tabname2
 		// 'objecttype:+tabname2:Title2:langfile@lead:$user->rights->othermodule->read:/lead/mynewtab2.php?id=__ID__',
 		// // To remove an existing tab identified by code tabname
