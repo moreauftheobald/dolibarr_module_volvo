@@ -358,5 +358,5 @@ function volvo_vcm_ok($object) {
 		if(empty($object->array_options['options_vcm_fonct'])) return 0;
 		if(empty($object->array_options['options_vcm_frigo_nbh'])) return 0;
 	}
-	return 0;
+	return 1;
 }
