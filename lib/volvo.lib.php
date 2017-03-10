@@ -303,7 +303,7 @@ function commande_prepare_head(Commande $object)
 
 	$ok = volvo_vcm_ok($object);
 	$img =img_picto('','on');
-	if($ok==0) $img = img_picto('','off');
+	if($ok==0 ||$ok==-1) $img = img_picto('','off');
 	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
 	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
 	$head[$h][2] = 'vcm';
@@ -339,7 +339,7 @@ function commande_prepare_head(Commande $object)
 
 function volvo_vcm_ok($object) {
 global $conf,$user;
-	if($user->admin) return 1;
+	if($user->admin || $user->rights->volvo->update_cost) return -1;
 	if(empty($object->array_options['options_vcm_site'])) return 0;
 	if(empty($object->array_options['options_vcm_dt_dem'])) return 0;
 	if(empty($object->array_options['options_vcm_duree'])) return 0;

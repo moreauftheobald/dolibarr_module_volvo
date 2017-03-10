@@ -2141,7 +2141,7 @@ if ($action == 'create' && $user->rights->commande->creer)
 
 			    // Valid
 			    $ok = volvo_vcm_ok($object);
-				if ($object->statut == Commande::STATUS_DRAFT && $object->total_ttc >= 0 && $numlines > 0 && $ok==1 &&
+				if ($object->statut == Commande::STATUS_DRAFT && $object->total_ttc >= 0 && $numlines > 0 && ($ok==1||$ok==-1) &&
 				    ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->creer))
 			       	|| (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->order_advance->validate)))
 				)
