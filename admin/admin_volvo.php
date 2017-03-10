@@ -73,7 +73,7 @@ if ($action == 'updateMask') {
 	}
 } else if ($action == 'setvar') {
 
-	$listvcm = GETPOST('VOLVO_VCM_LIST', 'alpha');
+	$listvcm = GETPOST('VOLVO_VCM_LIST');
 	if (! empty($listvcm)) {
 		$res = dolibarr_set_const($db, 'VOLVO_VCM_LIST', $listvcm, 'chaine', 0, '', $conf->entity);
 	}
@@ -81,7 +81,7 @@ if ($action == 'updateMask') {
 		$error ++;
 	}
 
-	$listpack = GETPOST('VOLVO_PACK_LIST', 'int');
+	$listpack = GETPOST('VOLVO_PACK_LIST');
 	if (! empty($listpack)) {
 		$res = dolibarr_set_const($db, 'VOLVO_PACK_LIST', $listpack, 'chaine', 0, '', $conf->entity);
 	}
@@ -98,32 +98,24 @@ if ($action == 'updateMask') {
 	}
 
 	$truck = GETPOST('VOLVO_TRUCK', 'int');
-	if (! empty($lock)) {
+	if (! empty($truck)) {
 		$res = dolibarr_set_const($db, 'VOLVO_TRUCK', $truck, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
 	}
 
-	$lock = GETPOST('VOLVO_TRUCK', 'int');
-	if (! empty($lock)) {
-		$res = dolibarr_set_const($db, 'VOLVO_TRUCK', $lock, 'chaine', 0, '', $conf->entity);
-	}
-	if (! $res > 0) {
-		$error ++;
-	}
-
 	$sures = GETPOST('VOLVO_SURES', 'int');
-	if (! empty($lock)) {
+	if (! empty($sures)) {
 		$res = dolibarr_set_const($db, 'VOLVO_SURES', $sures, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
 	}
 
-	$sures = GETPOST('VOLVO_COM', 'int');
-	if (! empty($lock)) {
-		$res = dolibarr_set_const($db, 'VOLVO_COM', $sures, 'chaine', 0, '', $conf->entity);
+	$com = GETPOST('VOLVO_COM', 'int');
+	if (! empty($com)) {
+		$res = dolibarr_set_const($db, 'VOLVO_COM', $com, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
@@ -131,14 +123,14 @@ if ($action == 'updateMask') {
 
 	$forfaitliv = GETPOST('VOLVO_FORFAIT_LIV', 'int');
 	if (! empty($forfaitliv)) {
-		$res = dolibarr_set_const($db, 'VOLVO_FORFAIT_LIV', $listvcm, 'chaine', 0, '', $conf->entity);
+		$res = dolibarr_set_const($db, 'VOLVO_FORFAIT_LIV', $forfaitliv, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
 	}
 
 	$oblig = GETPOST('VOLVO_OBLIGATOIRE', 'int');
-	if (! empty($lock)) {
+	if (! empty($oblig)) {
 		$res = dolibarr_set_const($db, 'VOLVO_OBLIGATOIRE', $oblig, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
@@ -146,7 +138,7 @@ if ($action == 'updateMask') {
 	}
 
 	$interne = GETPOST('VOLVO_INTERNE', 'int');
-	if (! empty($lock)) {
+	if (! empty($interne)) {
 		$res = dolibarr_set_const($db, 'VOLVO_INTERNE', $interne, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
@@ -154,7 +146,7 @@ if ($action == 'updateMask') {
 	}
 
 	$externe = GETPOST('VOLVO_EXTERNE', 'int');
-	if (! empty($lock)) {
+	if (! empty($externe)) {
 		$res = dolibarr_set_const($db, 'VOLVO_EXTERNE', $externe, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
@@ -162,14 +154,14 @@ if ($action == 'updateMask') {
 	}
 
 	$divers = GETPOST('VOLVO_DIVERS', 'int');
-	if (! empty($lock)) {
+	if (! empty($divers)) {
 		$res = dolibarr_set_const($db, 'VOLVO_DIVERS', $divers, 'chaine', 0, '', $conf->entity);
 	}
 	if (! $res > 0) {
 		$error ++;
 	}
 
-	$soltrs = GETPOST('VOLVO_SOLTRS', 'int');
+	$soltrs = GETPOST('VOLVO_SOLTRS');
 	if (! empty($soltrs)) {
 		$res = dolibarr_set_const($db, 'VOLVO_SOLTRS', $soltrs, 'chaine', 0, '', $conf->entity);
 	}
@@ -177,7 +169,7 @@ if ($action == 'updateMask') {
 		$error ++;
 	}
 	$vcmoblig = GETPOST('VOLVO_VCM_OBLIG', 'int');
-	if (! empty($soltrs)) {
+	if (! empty($vcmoblig)) {
 		$res = dolibarr_set_const($db, 'VOLVO_VCM_OBLIG', $vcmoblig, 'chaine', 0, '', $conf->entity);
 	}
 
