@@ -338,7 +338,7 @@ function commande_prepare_head(Commande $object)
 }
 
 function volvo_vcm_ok($object) {
-global $conf;
+global $conf,$user;
 	if($user->admin) return 1;
 	if(empty($object->array_options['options_vcm_site'])) return 0;
 	if(empty($object->array_options['options_vcm_dt_dem'])) return 0;
