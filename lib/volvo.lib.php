@@ -301,13 +301,18 @@ function commande_prepare_head(Commande $object)
 		$h++;
 	}
 
+	$ok = volvo_vcm_ok($object);
+	$img =img_picto('','on');
+	if($ok==0) $img = img_picto('','off');
+	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
+	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
+	$head[$h][2] = 'vcm';
+	$h++;
 
 	// Show more tabs from modules
 	// Entries must be declared in modules descriptor with line
 	// $this->tabs = array('entity:+tabname:Title:@mymodule:/mymodule/mypage.php?id=__ID__');   to add new tab
 	// $this->tabs = array('entity:-tabname);   												to remove a tab
-	complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
-
 
 	require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
 	require_once DOL_DOCUMENT_ROOT.'/core/class/link.class.php';
@@ -320,13 +325,7 @@ function commande_prepare_head(Commande $object)
 	$head[$h][2] = 'documents';
 	$h++;
 
-	$ok = volvo_vcm_ok($object);
-	$img =img_picto('','on');
-	if($ok==0) $img = img_picto('','off');
-	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
-	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
-	$head[$h][2] = 'vcm';
-	$h++;
+	complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
 
 	$head[$h][0] = DOL_URL_ROOT.'/commande/info.php?id='.$object->id;
 	$head[$h][1] = $langs->trans("Info");
