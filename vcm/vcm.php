@@ -219,10 +219,12 @@ print '</table>';
 print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr></table>';
 
 print '<table class="nobordernopadding" width="100%">';
-print '<tr>';
-//hydraulique
-Print '<td align="left">' . print_extra('vcm_hydro','chkbox',$action,$extrafields,$object,1) . '</td>';
-print '</tr>';
+if(!empty($object->array_options['options_vcm_pto'])){
+	print '<tr>';
+	//hydraulique
+	Print '<td align="left">' . print_extra('vcm_hydro','chkbox',$action,$extrafields,$object,1) . '</td>';
+	print '</tr>';
+}
 print '<tr><td></td></tr>';
 print '<tr><td>' . print_extra('vcm_carr', 'textlong', $action, $extrafields, $object) . '</td></tr>';
 print '</table>';
