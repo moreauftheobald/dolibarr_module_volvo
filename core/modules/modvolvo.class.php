@@ -556,6 +556,15 @@ class modvolvo extends DolibarrModules
 				1
 			),
 			46 => array(
+				'VOLVO_VCM_OBLIG',
+				'chaine',
+				'1',
+				'',
+				0,
+				'current',
+				1
+			),
+			47 => array(
 				'VOLVO_ANALYSELG_Y_PIED',
 				'chaine',
 				'198.5,205.5,212.5,219,225,231,237,243,254.5',

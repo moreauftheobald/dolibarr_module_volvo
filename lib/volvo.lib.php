@@ -339,7 +339,7 @@ function commande_prepare_head(Commande $object)
 
 function volvo_vcm_ok($object) {
 global $conf,$user;
-	if($user->admin || $user->rights->volvo->update_cost) return -1;
+	if($user->admin || $user->rights->volvo->update_cost || $conf->global->VOLVO_VCM_OBLIG == 0) return -1;
 	if(empty($object->array_options['options_vcm_site'])) return 0;
 	if(empty($object->array_options['options_vcm_dt_dem'])) return 0;
 	if(empty($object->array_options['options_vcm_duree'])) return 0;
