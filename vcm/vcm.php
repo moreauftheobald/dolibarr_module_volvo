@@ -225,7 +225,6 @@ if(!empty($object->array_options['options_vcm_pto'])){
 	Print '<td align="left">' . print_extra('vcm_hydro','chkbox',$action,$extrafields,$object,1) . '</td>';
 	print '</tr>';
 }
-print '<tr><td></td></tr>';
 print '<tr><td>' . print_extra('vcm_carr', 'textlong', $action, $extrafields, $object) . '</td></tr>';
 print '</table>';
 
@@ -235,21 +234,22 @@ print '<tr class="liste_titre"><td align="center">Utilisation du Véhicule</td><
 
 print '<tr><td>';
 print '<table class="nobordernopadding" width="100%">';
-print '<tr>';
+//print '<tr>';
 //amplitude hebdo
-Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_heb','chkbox',$action,$extrafields,$object,1) . '</td>';
-print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+//Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_heb','chkbox',$action,$extrafields,$object,1) . '</td>';
+//print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
 
-print '<tr>';
+//print '<tr>';
 //amplitude journaliere
-Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_jour','chkbox',$action,$extrafields,$object,1) . '</td>';
-print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+//Print '<td align="left" Colspan="2">' . print_extra('vcm_amp_jour','chkbox',$action,$extrafields,$object,1) . '</td>';
+//print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
 
 print '<tr>';
 //nb position/jour
-Print '<td align="left">' . print_extra('vcm_nbpos','num',$action,$extrafields,$object,1,4,'Positions / Jour') . '</td>';
+//Print '<td align="left">' . print_extra('vcm_nbpos','num',$action,$extrafields,$object,1,4,'Positions / Jour') . '</td>';
 //activité saisoniere
 Print '<td align="left">'.print_extra('vcm_sais', 'bool', $action, $extrafields, $object,1) . '</td>';
+print '<td></td>';
 print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
 
 print '<tr>';
@@ -302,61 +302,65 @@ print '</table>';
 print '</br>';
 print '</td></tr>';
 
-print '<tr class="liste_titre"><td align="center">Options</td></tr>';
-print '<tr><td>';
-print '<table class="nobordernopadding" width="100%">';
+if($object->array_options['options_vcm_ppc'] == 1 ||$object->array_options['options_vcm_pc'] == 1 ||$object->array_options['options_vcm_pcc'] == 1 ||
+		$object->array_options['options_vcm_pvc'] == 1 ||$object->array_options['options_vcm_blue'] == 1 ||$object->array_options['options_vcm_silver'] == 1 ||
+		$object->array_options['options_vcm_silverp'] == 1 ||$object->array_options['options_vcm_gold'] == 1){
+	print '<tr class="liste_titre"><td align="center">Options</td></tr>';
+	print '<tr><td>';
+	print '<table class="nobordernopadding" width="100%">';
 
-print '<tr>';
-print '<td>';
-print print_extra('vcm_pack', 'chkboxvert', $action, $extrafields, $object,0);
-print '</br>';
-print print_extra('vcm_option', 'chkboxvert', $action, $extrafields, $object,0);
-print '</td>';
+	print '<tr>';
+	print '<td>';
+	print print_extra('vcm_pack', 'chkboxvert', $action, $extrafields, $object,0);
+	print '</br>';
+	print print_extra('vcm_option', 'chkboxvert', $action, $extrafields, $object,0);
+	print '</td>';
 
-print '<td>';
-print print_extra('vcm_sup', 'chkboxvert', $action, $extrafields, $object,0);
-print '</td>';
+	print '<td>';
+	print print_extra('vcm_sup', 'chkboxvert', $action, $extrafields, $object,0);
+	print '</td>';
 
-print '<td>';
-print print_extra('vcm_legal', 'chkboxvert', $action, $extrafields, $object,0);
-print '</td>';
-print '</tr>';
-print '</table>';
-print '</td></tr>';
+	print '<td>';
+	print print_extra('vcm_legal', 'chkboxvert', $action, $extrafields, $object,0);
+	print '</td>';
+	print '</tr>';
+	print '</table>';
+	print '</td></tr>';
 
-print '<tr><td>';
-print '<table class="nobordernopadding" width="100%">';
-print '<tr>';
-print '<td>';
-print print_extra('vcm_frigo', 'bool', $action, $extrafields, $object);
-print '</td>';
-if($object->array_options['options_vcm_frigo']==1){
-	$key = 'vcm_marque';
-	$label = $extrafields->attribute_label[$key];
-	include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
-}else{
-	print '<td></td>';
+	print '<tr><td>';
+	print '<table class="nobordernopadding" width="100%">';
+	print '<tr>';
+	print '<td>';
+	print print_extra('vcm_frigo', 'bool', $action, $extrafields, $object);
+	print '</td>';
+	if($object->array_options['options_vcm_frigo']==1){
+		$key = 'vcm_marque';
+		$label = $extrafields->attribute_label[$key];
+		include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+	}else{
+		print '<td></td>';
+	}
+	print '</tr><tr>';
+	print '<td>';
+	if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_model', 'text', $action, $extrafields, $object,1,15);
+	print '</td>';
+	if($object->array_options['options_vcm_frigo']==1){
+		$key = 'vcm_fonct';
+		$label = $extrafields->attribute_label[$key];
+		include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
+	}else{
+		print '<td></td>';
+	}
+	print '</tr>';
+	print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
+	print '<tr>';
+	print '<td colspan="2">';
+	if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_frigo_nbh', 'num', $action, $extrafields, $object,1,6,'Heures/an');
+	print '</td>';
+	print '</tr>';
+	print '</table>';
+	print '</td></tr>';
 }
-print '</tr><tr>';
-print '<td>';
-if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_model', 'text', $action, $extrafields, $object,1,15);
-print '</td>';
-if($object->array_options['options_vcm_frigo']==1){
-	$key = 'vcm_fonct';
-	$label = $extrafields->attribute_label[$key];
-	include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
-}else{
-	print '<td></td>';
-}
-print '</tr>';
-print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
-print '<tr>';
-print '<td colspan="2">';
-if($object->array_options['options_vcm_frigo']==1) print print_extra('vcm_frigo_nbh', 'num', $action, $extrafields, $object,1,6,'Heures/an');
-print '</td>';
-print '</tr>';
-print '</table>';
-print '</td></tr>';
 print '</table>';
 
 
