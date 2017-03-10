@@ -54,12 +54,12 @@ $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 
-print '<tr>';
+//print '<tr>';
 // atelier
-print '<td>' . print_extra('vcm_atel','chkbox',$action,$extrafields,$object,1) . '</td>';
+//print '<td>' . print_extra('vcm_atel','chkbox',$action,$extrafields,$object,1) . '</td>';
 // type maintenance
-print '<td colspan="2">' . print_extra('vcm_maint','chkbox',$action,$extrafields,$object,1) . '</td>';
-print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
+//print '<td colspan="2">' . print_extra('vcm_maint','chkbox',$action,$extrafields,$object,1) . '</td>';
+//print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
 
 print '<tr>';
 // transfert vers gds
@@ -184,8 +184,13 @@ print '<table class="nobordernopadding" width="100%"><tr style="height:5px"><td 
 
 print '<table class="nobordernopadding" width="100%">';
 print '<tr>';
-// consommation estimée
-Print '<td bgcolor="ffaaaa">' . print_extra('vcm_conso', 'num', $action, $extrafields, $object,1,5,'l/100km') . '</td>';
+if($object->array_options['options_vcm_blue'] == 1 ||$object->array_options['options_vcm_silver'] == 1 ||
+		$object->array_options['options_vcm_silverp'] == 1 ||$object->array_options['options_vcm_gold'] == 1){
+	// consommation estimée
+	Print '<td bgcolor="ffaaaa">' . print_extra('vcm_conso', 'num', $action, $extrafields, $object,1,5,'l/100km') . '</td>';
+}else{
+	print '<td  align="Left"></td>';
+}
 // Kilométrage annuel
 print '<td  align="Left">' . print_extra('vcm_km', 'num', $action, $extrafields, $object,1,7,'km/an') . '</td>';
 // kilometre départ
@@ -302,9 +307,8 @@ print '</table>';
 print '</br>';
 print '</td></tr>';
 
-if($object->array_options['options_vcm_ppc'] == 1 ||$object->array_options['options_vcm_pc'] == 1 ||$object->array_options['options_vcm_pcc'] == 1 ||
-		$object->array_options['options_vcm_pvc'] == 1 ||$object->array_options['options_vcm_blue'] == 1 ||$object->array_options['options_vcm_silver'] == 1 ||
-		$object->array_options['options_vcm_silverp'] == 1 ||$object->array_options['options_vcm_gold'] == 1){
+if($object->array_options['options_vcm_blue'] == 1 ||$object->array_options['options_vcm_silver'] == 1 ||
+	$object->array_options['options_vcm_silverp'] == 1 ||$object->array_options['options_vcm_gold'] == 1){
 	print '<tr class="liste_titre"><td align="center">Options</td></tr>';
 	print '<tr><td>';
 	print '<table class="nobordernopadding" width="100%">';
