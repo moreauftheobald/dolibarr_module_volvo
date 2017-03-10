@@ -283,3 +283,61 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 
 	return $out;
 }
+
+function commande_prepare_head(Commande $object)
+{
+	global $db, $langs, $conf, $user;
+	if (! empty($conf->expedition->enabled)) $langs->load("sendings");
+	$langs->load("orders");
+
+	$h = 0;
+	$head = array();
+
+	if (! empty($conf->commande->enabled) && $user->rights->commande->lire)
+	{
+		$head[$h][0] = DOL_URL_ROOT.'/commande/card.php?id='.$object->id;
+		$head[$h][1] = $langs->trans("OrderCard");
+		$head[$h][2] = 'order';
+		$h++;
+	}
+
+
+	// Show more tabs from modules
+	// Entries must be declared in modules descriptor with line
+	// $this->tabs = array('entity:+tabname:Title:@mymodule:/mymodule/mypage.php?id=__ID__');   to add new tab
+	// $this->tabs = array('entity:-tabname);   												to remove a tab
+	complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
+
+
+	require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
+	require_once DOL_DOCUMENT_ROOT.'/core/class/link.class.php';
+	$upload_dir = $conf->commande->dir_output . "/" . dol_sanitizeFileName($object->ref);
+	$nbFiles = count(dol_dir_list($upload_dir,'files',0,'','(\.meta|_preview\.png)$'));
+	$nbLinks=Link::count($db, $object->element, $object->id);
+	$head[$h][0] = DOL_URL_ROOT.'/commande/document.php?id='.$object->id;
+	$head[$h][1] = $langs->trans('Documents');
+	if (($nbFiles+$nbLinks) > 0) $head[$h][1].= ' <span class="badge">'.($nbFiles+$nbLinks).'</span>';
+	$head[$h][2] = 'documents';
+	$h++;
+
+	$ok = volvo_vcm_ok($object);
+	$img ='';
+	if($ok==0) $img = img_error('');
+	$head[$h][0] = DOL_URL_ROOT.'volvo/vcm/vcm.php?id='.$object->id;
+	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
+	$head[$h][2] = 'vcm';
+	$h++;
+
+	$head[$h][0] = DOL_URL_ROOT.'/commande/info.php?id='.$object->id;
+	$head[$h][1] = $langs->trans("Info");
+	$head[$h][2] = 'info';
+	$h++;
+
+	complete_head_from_modules($conf,$langs,$object,$head,$h,'order','remove');
+
+	return $head;
+}
+
+function volvo_vcm_ok($object) {
+	return 0;
+}
