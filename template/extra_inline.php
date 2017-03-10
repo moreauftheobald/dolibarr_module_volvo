@@ -54,9 +54,10 @@ if ($action == 'edit_extras')
 				print $extrafields->showOutputField($key, $value);
 			}
 			print '</td>';
+			if (empty($align_button)) $align_button='right';
 			if (($object->statut == 0 || $extrafields->attribute_alwayseditable[$key])
 					&& $permok && ($action != 'edit_extras' || GETPOST('attribute') != $key))
-				print '<td align="right"><a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=' . $key . '">' . img_edit().'</a></td>';
+				print '<td align="' . $align_button . '"><a href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=edit_extras&attribute=' . $key . '">' . img_edit().'</a></td>';
 
 			print '</tr></table>';
 			print '</td>' . "\n";

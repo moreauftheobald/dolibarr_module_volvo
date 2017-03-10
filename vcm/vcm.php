@@ -50,6 +50,7 @@ print '</td>';
 print '<td>' . print_extra('vcm_deport','yesno',$action,$extrafields,$object,1) . '</td>';
 //point de services
 $key = 'vcm_site';
+$align_button='left';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 print '</tr><tr style="height:5px"><td colspan="4" style="height:5px"></td></tr>';
@@ -285,10 +286,12 @@ print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>
 print '<tr>';
 //zone géographique
 $key = 'vcm_zone';
+$align_button='left';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 //type de transport
 $key = 'vcm_typ_trans';
+$align_button='left';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
@@ -296,10 +299,12 @@ print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>
 print '<tr>';
 //conditions de roulage
 $key = 'vcm_roul';
+$align_button='left';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 //topographie
 $key = 'vcm_topo';
+$align_button='left';
 $label = $extrafields->attribute_label[$key];
 include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 print '</tr><tr style="height:5px"><td colspan="2" style="height:5px"></td></tr>';
@@ -339,6 +344,7 @@ if($object->array_options['options_vcm_blue'] == 1 ||$object->array_options['opt
 	print '</td>';
 	if($object->array_options['options_vcm_frigo']==1){
 		$key = 'vcm_marque';
+		$align_button='left';
 		$label = $extrafields->attribute_label[$key];
 		include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 	}else{
@@ -350,6 +356,7 @@ if($object->array_options['options_vcm_blue'] == 1 ||$object->array_options['opt
 	print '</td>';
 	if($object->array_options['options_vcm_frigo']==1){
 		$key = 'vcm_fonct';
+		$align_button='left';
 		$label = $extrafields->attribute_label[$key];
 		include DOL_DOCUMENT_ROOT . '/volvo/template/extra_inline.php';
 	}else{
