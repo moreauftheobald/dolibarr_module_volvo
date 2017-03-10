@@ -305,7 +305,7 @@ function commande_prepare_head(Commande $object)
 	$img =img_picto('','on');
 	if($ok==0) $img = img_picto('','off');
 	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
-	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
+	$head[$h][1] = 'VCM' . ' <span class="badge">'.$ok.'</span>' ;
 	$head[$h][2] = 'vcm';
 	$h++;
 
@@ -339,22 +339,22 @@ function commande_prepare_head(Commande $object)
 
 function volvo_vcm_ok($object) {
 	if(empty($object->array_options['options_vcm_site'])) return 0;
-	if(empty($object->array_options['options_vcm_dt_dem'])) return 0;
-	if(empty($object->array_options['options_vcm_duree'])) return 0;
-	if(empty($object->array_options['options_vcm_km'])) return 0;
-	if(empty($object->array_options['options_vcm_ptra'])) return 0;
+	if(empty($object->array_options['options_vcm_dt_dem'])) return 1;
+	if(empty($object->array_options['options_vcm_duree'])) return 2;
+	if(empty($object->array_options['options_vcm_km'])) return 3;
+	if(empty($object->array_options['options_vcm_ptra'])) return 4;
 	if(empty($object->array_options['options_vcm_chant']) && empty($object->array_options['options_vcm_50km'])
-			&& empty($object->array_options['options_vcm_ld']) && empty($object->array_options['options_vcm_ville'])) return 0;
-	if(empty($object->array_options['options_vcm_zone'])) return 0;
-	if(empty($object->array_options['options_vcm_typ_trans'])) return 0;
-	if(empty($object->array_options['options_vcm_roul'])) return 0;
-	if(empty($object->array_options['options_vcm_topo'])) return 0;
+			&& empty($object->array_options['options_vcm_ld']) && empty($object->array_options['options_vcm_ville'])) return 5;
+	if(empty($object->array_options['options_vcm_zone'])) return 6;
+	if(empty($object->array_options['options_vcm_typ_trans'])) return 7;
+	if(empty($object->array_options['options_vcm_roul'])) return 8;
+	if(empty($object->array_options['options_vcm_topo'])) return 9;
 	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_hdep'])) return 0;
 	if(!empty($object->array_options['options_vcm_frigo'])){
-		if(empty($object->array_options['options_vcm_marque'])) return 0;
-		if(empty($object->array_options['options_vcm_model'])) return 0;
-		if(empty($object->array_options['options_vcm_fonct'])) return 0;
-		if(empty($object->array_options['options_vcm_frigo_nbh'])) return 0;
+		if(empty($object->array_options['options_vcm_marque'])) return 10;
+		if(empty($object->array_options['options_vcm_model'])) return 11;
+		if(empty($object->array_options['options_vcm_fonct'])) return 12;
+		if(empty($object->array_options['options_vcm_frigo_nbh'])) return 13;
 	}
-	return 1;
+	return 20;
 }
