@@ -176,6 +176,14 @@ if ($action == 'updateMask') {
 	if (! $res > 0) {
 		$error ++;
 	}
+	$vcmoblig = GETPOST('VOLVO_VCM_OBLIG', 'int');
+	if (! empty($soltrs)) {
+		$res = dolibarr_set_const($db, 'VOLVO_VCM_OBLIG', $vcmoblig, 'chaine', 0, '', $conf->entity);
+	}
+
+	if (! $res > 0) {
+		$error ++;
+	}
 
 	if (! $error) {
 		setEventMessages($langs->trans("SetupSaved"), null, 'mesgs');
@@ -385,6 +393,12 @@ print '</tr>';
 print '<tr class="impair"><td>Catégorie pour les solutions Transport</td>';
 print '<td align="left">';
 print $form->select_all_categories(0, $conf->global->VOLVO_SOLTRS, 'VOLVO_SOLTRS', 64, 0, 0);
+print '</tr>';
+
+// Catégorie Solutions Transport
+print '<tr class="impair"><td>Saisie des infos VCM Obligatoire pour valider une commande</td>';
+print '<td align="left">';
+print $form->select_all_categories(0, $conf->global->VOLVO_VCM_OBLIG, 'VOLVO_VCM_OBLIG', 64, 0, 0);
 print '</tr>';
 
 print '</table>';
