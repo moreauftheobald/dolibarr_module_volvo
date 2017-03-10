@@ -321,8 +321,8 @@ function commande_prepare_head(Commande $object)
 	$h++;
 
 	$ok = volvo_vcm_ok($object);
-	$img ='';
-	if($ok==0) $img = img_error('');
+	$img =img_picto('','on');
+	if($ok==0) $img = img_picto('','off');
 	$head[$h][0] = DOL_URL_ROOT.'volvo/vcm/vcm.php?id='.$object->id;
 	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img.'</span>' ;
 	$head[$h][2] = 'vcm';
@@ -339,5 +339,5 @@ function commande_prepare_head(Commande $object)
 }
 
 function volvo_vcm_ok($object) {
-	return 0;
+	return 1;
 }
