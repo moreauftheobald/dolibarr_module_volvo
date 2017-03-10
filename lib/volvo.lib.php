@@ -325,7 +325,7 @@ function commande_prepare_head(Commande $object)
 	$head[$h][2] = 'documents';
 	$h++;
 
-	complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
+	//complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
 
 	$head[$h][0] = DOL_URL_ROOT.'/volvo/commande/info.php?id='.$object->id;
 	$head[$h][1] = $langs->trans("Info");
