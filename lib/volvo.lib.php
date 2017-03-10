@@ -319,20 +319,16 @@ function commande_prepare_head(Commande $object)
 	$upload_dir = $conf->commande->dir_output . "/" . dol_sanitizeFileName($object->ref);
 	$nbFiles = count(dol_dir_list($upload_dir,'files',0,'','(\.meta|_preview\.png)$'));
 	$nbLinks=Link::count($db, $object->element, $object->id);
-	$head[$h][0] = DOL_URL_ROOT.'/commande/document.php?id='.$object->id;
+	$head[$h][0] = DOL_URL_ROOT.'/volvo/commande/document.php?id='.$object->id;
 	$head[$h][1] = $langs->trans('Documents');
 	if (($nbFiles+$nbLinks) > 0) $head[$h][1].= ' <span class="badge">'.($nbFiles+$nbLinks).'</span>';
 	$head[$h][2] = 'documents';
 	$h++;
 
-	complete_head_from_modules($conf,$langs,$object,$head,$h,'order');
-
-	$head[$h][0] = DOL_URL_ROOT.'/commande/info.php?id='.$object->id;
+	$head[$h][0] = DOL_URL_ROOT.'/volvo/commande/info.php?id='.$object->id;
 	$head[$h][1] = $langs->trans("Info");
 	$head[$h][2] = 'info';
 	$h++;
-
-	complete_head_from_modules($conf,$langs,$object,$head,$h,'order','remove');
 
 	return $head;
 }
