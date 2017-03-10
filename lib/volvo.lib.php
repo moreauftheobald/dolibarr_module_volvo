@@ -350,7 +350,9 @@ function volvo_vcm_ok($object) {
 	if(empty($object->array_options['options_vcm_roul'])) return 8;
 	if(empty($object->array_options['options_vcm_topo'])) return 9;
 	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_hdep'])) return 0;
-	if(!empty($object->array_options['options_vcm_frigo'])){
+	if(!empty($object->array_options['options_vcm_frigo']) &&
+			(!empty($object->array_options['options_vcm_blue']) || !empty($object->array_options['options_vcm_silver'])
+			|| !empty($object->array_options['options_vcm_silverp']) || !empty($object->array_options['options_vcm_gold']))){
 		if(empty($object->array_options['options_vcm_marque'])) return 10;
 		if(empty($object->array_options['options_vcm_model'])) return 11;
 		if(empty($object->array_options['options_vcm_fonct'])) return 12;
