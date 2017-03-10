@@ -202,9 +202,17 @@ print '<tr>';
 //type de prise de force
 Print '<td align="left">'. print_extra('vcm_pto','chkbox',$action,$extrafields,$object,1).'</td>';
 //nb heure pto
-print '<td  align="Left">'.print_extra('vcm_pto_nbh','num',$action,$extrafields,$object,1,5,'H/an').'</td>';
+if(!empty($object->array_options['options_vcm_pto'])){
+	print '<td  align="Left">'.  print_extra('vcm_pto_nbh','num',$action,$extrafields,$object,1,5,'H/an').'</td>';
+}else{
+	print '<td  align="Left"></td>';
+}
 // nb heure pto depart
-print '<td  align="Left">' . print_extra('vcm_pto_hdep','num',$action,$extrafields,$object,1,5,'H') . '</td>';
+if(!empty($object->array_options['options_vcm_pto'])){
+	print '<td  align="Left">' . print_extra('vcm_pto_hdep','num',$action,$extrafields,$object,1,5,'H') . '</td>';
+}else{
+	print '<td  align="Left"></td>';
+}
 print '</tr>';
 print '</table>';
 
