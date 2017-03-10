@@ -3,7 +3,7 @@ $res = @include '../../main.inc.php'; // For root directory
 if (! $res) $res = @include '../../../main.inc.php'; // For "custom" directory
 if (! $res) die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/core/lib/order.lib.php';
+//require_once DOL_DOCUMENT_ROOT . '/core/lib/order.lib.php';
 require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
