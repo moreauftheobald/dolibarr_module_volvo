@@ -531,6 +531,27 @@ class pdf_vcm extends ModelePDFContract
  					}
  				}
 
+ 				$pdf->SetFont('','', $default_font_size-1);
+ 				$selected = explode(',', $object->array_options['options_vcm_option']);
+ 				$x = 90;
+ 				$yy = $y[31];
+ 				foreach ($extrafields->attribute_param['vcm_option']['options'] as $key => $value){
+ 					if(in_array($key, $selected)){
+ 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
+ 						$pdf->SetFont('','', $default_font_size-1);
+ 						$pdf->SetXY($x+2.5, $yy-0.3);
+ 						$out = $outputlangs->convToOutputCharset($value);
+ 						$pdf->MultiCell(80, 0, $value,0,'L');
+ 						$yy=$yy+3.5;
+ 					}else{
+ 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
+ 						$pdf->SetFont('','', $default_font_size-1);
+ 						$pdf->SetXY($x+2.5, $yy-0.3);
+ 						$out = $outputlangs->convToOutputCharset($value);
+ 						$pdf->MultiCell(80, 0, $value,0,'L');
+ 						$yy=$yy+3.5;
+ 					}
+ 				}
 
 				$pdf->Close();
 
