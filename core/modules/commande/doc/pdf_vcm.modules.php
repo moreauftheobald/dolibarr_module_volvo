@@ -456,7 +456,7 @@ class pdf_vcm extends ModelePDFContract
  				if($object->array_options['options_vcm_chant']==1) $cycle='Construction';
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(33.5, $y[22]);
+ 				$pdf->SetXY(33.5, $y[23]);
  				$out = $outputlangs->convToOutputCharset($cycle);
  				$pdf->MultiCell(100, 0, $out,0,'L');
 
