@@ -339,7 +339,7 @@ function commande_prepare_head(Commande $object)
 
 function volvo_vcm_ok($object) {
 global $conf,$user;
-
+	$res =  1;
 	if(empty($object->array_options['options_vcm_site'])) $res = 2;
 	if(empty($object->array_options['options_vcm_dt_dem'])) $res =  3;
 	if(empty($object->array_options['options_vcm_duree'])) $res =  4;
@@ -360,7 +360,7 @@ global $conf,$user;
 		if(empty($object->array_options['options_vcm_fonct'])) $res =  15;
 		if(empty($object->array_options['options_vcm_frigo_nbh'])) $res =  16;
 	}
-	$res =  1;
+
 	if(($user->admin || $user->rights->volvo->update_cost || $conf->global->VOLVO_VCM_OBLIG == 0) && $res>1) return -1*$res;
 	if($res == 1) return $res;
 	if($res > 1) return $res;
