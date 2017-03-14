@@ -349,7 +349,7 @@ class pdf_vcm extends ModelePDFContract
  				$selected = explode(',', $object->array_options['options_vcm_duree']);
  				foreach ($extrafields->attribute_param['vcm_duree']['options'] as $key => $value){
  					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),194,32,7,7);
+ 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),32,194,7,7,'','','M',1);
  						//$pdf->MultiCell(30, 0, $value,0,'L');
  					}else{
  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),194,32,7,7);
