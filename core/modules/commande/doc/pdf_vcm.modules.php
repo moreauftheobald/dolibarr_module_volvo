@@ -226,7 +226,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2);
+				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2,103.3);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -305,8 +305,13 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170, $y[6]);
+ 				$pdf->SetXY(170.5, $y[6]);
  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ppc']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(170.5, $y[7]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pc']));
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
 // 				//Carac client
