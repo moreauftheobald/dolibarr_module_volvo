@@ -449,7 +449,7 @@ class pdf_vcm extends ModelePDFContract
  					$pdf->writeHTMLCell(194,20,6.8,$y[22],$out);
  				}
 
- 				$cycle='';
+ 				$cycle='test';
  				if($object->array_options['options_vcm_ld']==1) $cycle='Longue Distance';
  				if($object->array_options['options_vcm_50km']==1) $cycle='Distribution Régionnale';
  				if($object->array_options['options_vcm_ville']==1) $cycle='Distribution Urbaine';
