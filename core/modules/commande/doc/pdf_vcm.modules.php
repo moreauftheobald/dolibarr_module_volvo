@@ -616,7 +616,7 @@ class pdf_vcm extends ModelePDFContract
 
  					$pdf->SetFont('','', $default_font_size);
  					$out = $outputlangs->convToOutputCharset("<b>Nombre d'heure de fonctionnement: </b>" . price($object->array_options['options_vcm_frigo_nbh']) . ' H/an');
- 					$pdf->writeHTMLCell(194,5,65,$y[33],$out);
+ 					$pdf->writeHTMLCell(194,5,6.8,$y[33],$out);
 
  					$list_value = $extrafields->attribute_param['vcm_fonct']['options'];
  					$pdf->SetFont('','', $default_font_size);
