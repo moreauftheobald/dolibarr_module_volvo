@@ -387,7 +387,7 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(58.5, $y[17]);
+ 				$pdf->SetXY(58.7, $y[17]);
  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->array_options['options_vcm_dt_dem'],'daytext'));
  				$pdf->MultiCell(80, 0, $out,0,'L');
 
