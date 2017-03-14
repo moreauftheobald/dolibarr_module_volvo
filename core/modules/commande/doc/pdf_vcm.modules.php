@@ -237,553 +237,553 @@ class pdf_vcm extends ModelePDFContract
 				$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'L');
 
 
-				//Carac client
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[1], $yt[0]);
-				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date,'day'));
-				$pdf->MultiCell($z[1], 0, $out,0,'L');
-
-				$object->info($object->id);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yt[0]);
-				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_modification,'dayhour'));
-				$pdf->MultiCell($z[3]+$z[4], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yt[0]);
-				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_livraison,'%W-%Y'));
-				$pdf->MultiCell($z[7], 0, $out,0,'L');
-
-				$commercial = new User($this->db);
-				$commercial->fetch($object->user_author_id);
-
-
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[5], $yt[1]);
-				$out = $outputlangs->convToOutputCharset($object->ref);
-				$pdf->MultiCell($z[5], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yt[1]);
-				$out = $outputlangs->convToOutputCharset(substr($object->array_options['options_vin'],-7));
-				$pdf->MultiCell($z[7], 0, $out,0,'L');
-
-				$lead = new Leadext($this->db);
-				$lead->fetchLeadLink($object->id, $object->table_element);
-				$lead=$lead->doclines['0'];
-				$extrafields_lead = new ExtraFields($this->db);
-				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yt[2]);
-				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
-				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yt[3]);
-				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
-				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yt[4]);
-				$out = $outputlangs->convToOutputCharset($object->thirdparty->address . "\n" . $object->thirdparty->zip . ' '. $object->thirdparty->town);
-				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 18, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[1], $yt[6]);
-				$out = $outputlangs->convToOutputCharset('1');
-				$pdf->MultiCell($z[1], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yt[6]);
-				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('type', $lead->array_options['options_type']) . ' ' . $extrafields_lead->showOutputField('gamme', $lead->array_options['options_gamme']). ' ' . $extrafields_lead->showOutputField('silouhette', $lead->array_options['options_silouhette']));
-				$pdf->MultiCell($z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
-
-				$object->demand_reason;
-				$sql = "SELECT label";
-        		$sql.= " FROM ".MAIN_DB_PREFIX.'c_input_reason';
-        		$sql.= " WHERE active > 0 AND rowid =" . $object->demand_reason_id;
-
-        		$resql = $this->db->query($sql);
-        		if ($resql)
-        		{
-        			$obj = $this->db->fetch_object($resql);
-        			$liv = $obj->label;
-        		}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yt[7]);
-				$out = $outputlangs->convToOutputCharset($liv);
-				$pdf->MultiCell($z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yt[8]);
-				$out = $outputlangs->convToOutputCharset($object->cond_reglement);
-				$pdf->MultiCell($z[2], 0, $out,0,'L');
-
-
-				$filter=array();
-				$filter['com.rowid'] = $object->id;
-				$lead2 = new Leadext($this->db);
-				$lead2->fetchAllfolow('','', 1, 0, $filter,'AND');
-				if(!empty($lead2->business[1]->dt_pay)){
-					$cash = $lead2->business[1]->delai_cash;
-					$pdf->SetFont('','', $default_font_size);
-					$pdf->SetXY($x[4], $yt[8]);
-					$out = $outputlangs->convToOutputCharset($cash . ' Jours');
-					$pdf->MultiCell($z[4], 0, $out,0,'L');
-				}
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yt[8]);
-				$out = $outputlangs->convToOutputCharset(Price($object->total_ht) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$intern = 0;
-				$internspace = array();
-				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_INTERNE_NB; $i++) {
-					$internspace[] = $conf->global->VOLVO_ANALYSELG_Y_INTERNE_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_INTERNE_PAS);
-				}
-
-				$externe = 0;
-				$externspace = array();
-				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_EXTERNE_NB; $i++) {
-					$externspace[] = $conf->global->VOLVO_ANALYSELG_Y_EXTERNE_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_EXTERNE_PAS);
-				}
-
-				$divers = 0;
-				$diverspace = array();
-				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_DIVERS_NB; $i++) {
-					$diverspace[] = $conf->global->VOLVO_ANALYSELG_Y_DIVERS_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_DIVERS_PAS);
-				}
-
-				$vo = 0;
-				$vospace = array();
-				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_VO_NB; $i++) {
-					$vospace[] = $conf->global->VOLVO_ANALYSELG_Y_VO_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_VO_PAS);
-				}
-
-				$totalht =0;
-				$totalpa=0;
-				$totalreel=0;
-				$totalecart=0;
-				$marge =0;
-				$gold=0;
-				$blue=0;
-				$silver=0;
-				$ppc=0;
-				$pcc=0;
-				$pvc=0;
-				$golds=0;
-
-				foreach($object->lines as $line){
-
-					$extrafieldsline = new ExtraFields($this->db);
-					$extralabelsline = $extrafieldsline->fetch_name_optionals_label($line->table_element, true);
-					$line->fetch_optionals($line->id, $extralabelsline);
-					$categ = new Categorie($this->db);
-
-
-					if($line->fk_product == $conf->global->VOLVO_FORFAIT_LIV){
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[4], $yt[9]);
-						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-						$pdf->MultiCell($z[4], 0, $out,0,'R');
-						$totalht+=$line->total_ht;
-
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[5], $yt[9]);
-						$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
-						$pdf->MultiCell($z[5], 0, $out,0,'R');
-						$totalpa+=$line->pa_ht;
-
-						if(!empty($line->array_options['options_fk_supplier'])){
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[6], $yt[9]);
-							$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
-							$pdf->MultiCell($z[6], 0, $out,0,'R');
-							$totalreel+=$line->array_options['options_buyingprice_real'];
-
-							$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
-						}else{
-							$ecart = $line->total_ht-$line->pa_ht;
-						}
-
-						if(!empty($ecart)){
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[7], $yt[9]);
-							$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
-							$pdf->MultiCell($z[7], 0, $out,0,'R');
-							$totalecart+=$ecart;
-						}
-
-					}elseif($line->fk_product == $conf->global->VOLVO_SURES){
-						$pdf->SetPage(2);
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[4], $vospace[1]);
-						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-						$pdf->MultiCell($z[4], 0, $out,0,'R');
-						$totalht+=$line->total_ht;
-
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[5], $vospace[1]);
-						$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
-						$pdf->MultiCell($z[5], 0, $out,0,'R');
-						$totalpa+=$line->pa_ht;
-
-						if(!empty($line->array_options['options_fk_supplier'])){
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[6], $vospace[1]);
-							$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
-							$pdf->MultiCell($z[6], 0, $out,0,'R');
-							$totalreel+=$line->array_options['options_buyingprice_real'];
-
-							$ecart = $line->total_ht-$line->array_options['options_buyingprice_real'];
-						}else{
-							$ecart = $line->total_ht-$line->pa_ht;
-						}
-
-						if(!empty($ecart)){
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[7], $vospace[1]);
-							$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
-							$pdf->MultiCell($z[7], 0, $out,0,'R');
-							$totalecart+=$ecart;
-						}
-
-						$reprise = new Reprise($this->db);
-
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[2], $vospace[0]);
-						$out = $outputlangs->convToOutputCharset(Price($reprise->gettotalestim($lead->id)) . ' €');
-						$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'R');
-
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[2], $vospace[1]);
-						$out = $outputlangs->convToOutputCharset(Price($reprise->gettotalrachat($lead->id)) . ' €');
-						$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'R');
-
-
-					}elseif($line->fk_product == $conf->global->VOLVO_COM){
-						$pdf->SetPage(2);
-						$pdf->SetFont('','', $default_font_size);
-						$pdf->SetXY($x[4], $yp[1]);
-						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-						$pdf->MultiCell($z[4], 0, $out,0,'R');
-						$marge+=$line->total_ht;
-						$pdf->SetPage(1);
-
-					}else{
-
-						$categ = new Categorie($this->db);
-						$listcateg = $categ->containing($line->fk_product, 'product','id');
-
-						if(in_array($conf->global->VOLVO_INTERNE, $listcateg)){
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[0], $internspace[$intern]);
-							$out = $outputlangs->convToOutputCharset($line->product_label);
-							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
-
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[4], $internspace[$intern]);
-							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-							$pdf->MultiCell($z[4], 0, $out,0,'R');
-							$totalht+=$line->total_ht;
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[5], $internspace[$intern]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
-							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
-
-							if(!empty($line->array_options['options_fk_supplier'])){
-
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[6], $internspace[$intern]);
-								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
-								$pdf->MultiCell($z[6], 0, $out,0,'R');
-								$totalreel+=$line->array_options['options_buyingprice_real'];
-
-								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
-
-							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
-							}
-
-							if(!empty($ecart)){
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[7], $internspace[$intern]);
-								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
-								$pdf->MultiCell($z[7], 0, $out,0,'R');
-								$totalecart+=$ecart;
-							}
-							$intern++;
-						}
-
-						if(in_array($conf->global->VOLVO_EXTERNE, $listcateg)){
-							$pdf->SetPage(2);
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[0], $externspace[$externe]);
-							$out = $outputlangs->convToOutputCharset($line->product_label);
-							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
-
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[4], $externspace[$externe]);
-							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-							$pdf->MultiCell($z[4], 0, $out,0,'R');
-							$totalht+=$line->total_ht;
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[5], $externspace[$externe]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
-							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
-
-							if(!empty($line->array_options['options_fk_supplier'])){
-
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[6], $externspace[$externe]);
-								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
-								$pdf->MultiCell($z[6], 0, $out,0,'R');
-								$totalreel+=$line->array_options['options_buyingprice_real'];
-
-								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
-
-							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
-							}
-
-							if(!empty($ecart)){
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[7], $externspace[$externe]);
-								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
-								$pdf->MultiCell($z[7], 0, $out,0,'R');
-								$totalecart+=$ecart;
-							}
-							$externe++;
-							$pdf->SetPage(1);
-						}
-
-						if(in_array($conf->global->VOLVO_DIVERS, $listcateg) && !in_array($conf->global->VOLVO_SOLTRS, $listcateg)){
-							$pdf->SetPage(2);
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[0], $diverspace[$divers]);
-							$out = $outputlangs->convToOutputCharset($line->product_label);
-							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
-
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[4], $diverspace[$divers]);
-							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
-							$pdf->MultiCell($z[4], 0, $out,0,'R');
-							$totalht+=$line->total_ht;
-
-							$pdf->SetFont('','', $default_font_size);
-							$pdf->SetXY($x[5], $diverspace[$divers]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
-							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
-
-							if(!empty($line->array_options['options_fk_supplier'])){
-
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[6], $diverspace[$divers]);
-								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
-								$pdf->MultiCell($z[6], 0, $out,0,'R');
-								$totalreel+=$line->array_options['options_buyingprice_real'];
-
-								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
-
-							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
-							}
-
-							if(!empty($ecart)){
-								$pdf->SetFont('','', $default_font_size);
-								$pdf->SetXY($x[7], $diverspace[$divers]);
-								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
-								$pdf->MultiCell($z[7], 0, $out,0,'R');
-								$totalecart+=$ecart;
-							}
-							$divers++;
-							$pdf->SetPage(1);
-						}
-
-						if(in_array($conf->global->VOLVO_SOLTRS, $listcateg)){
-							if($line->fk_product == 28){
-								$blue=1;
-							}elseif ($line->fk_product == 31){
-								$gold=1;
-							}elseif ($line->fk_product == 20){
-								$pcc=1;
-							}elseif ($line->fk_product == 27){
-								$ppc=1;
-							}elseif ($line->fk_product == 26){
-								$pvc=1;
-							}elseif ($line->fk_product == 29){
-								$silver=1;
-							}elseif ($line->fk_product == 30){
-								$silver=1;
-							}elseif ($line->fk_product == 40){
-								$golds=1;
-							}
-
-						}
-
-					}
-
-				}
-				$pdf->SetPage(2);
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[4], $yp[0]);
-				$out = $outputlangs->convToOutputCharset(Price($totalht) . ' €');
-				$pdf->MultiCell($z[4], 0, $out,0,'R');
-
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[5], $yp[0]);
-				$out = $outputlangs->convToOutputCharset(Price($totalpa) . ' €');
-				$pdf->MultiCell($z[5], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[6], $yp[0]);
-				$out = $outputlangs->convToOutputCharset(Price($totalreel) . ' €');
-				$pdf->MultiCell($z[6], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[0]);
-				$out = $outputlangs->convToOutputCharset(Price($totalecart) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$margeprev = $marge - ($totalpa-$totalht);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[6], $yp[1]);
-				$out = $outputlangs->convToOutputCharset(Price($margeprev) . ' €');
-				$pdf->MultiCell($z[6], 0, $out,0,'R');
-
-				$margereel = $marge +($totalecart);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[2]);
-				$out = $outputlangs->convToOutputCharset(Price($margereel) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$rep = 'Non';
-				if($blue){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[1], $yp[3]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[1], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($silver){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[1], $yp[4]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[1], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($gold){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[1], $yp[5]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[1], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($ppc){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yp[3]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[3], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($pcc){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yp[4]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[3], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($pvc){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[3], $yp[5]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[3], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($golds){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yp[6]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'L');
-
-				$rep = 'Non';
-				if($lead->array_options['options_new']){
-					$rep = 'Oui';
-				}
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[2], $yp[7]);
-				$out = $outputlangs->convToOutputCharset($rep);
-				$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[3]);
-				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm'],2)) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[4]);
-				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_vcm'] + $object->array_options['options_comm_pack'],2)) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[5]);
-				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_div'],2)) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[6]);
-				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_newclient'],2)) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$totalcom = $object->array_options['options_comm_newclient'];
-				$totalcom+= $object->array_options['options_comm'];
-				$totalcom+= $object->array_options['options_comm _div'];
-				$totalcom+= $object->array_options['options_comm_vcm'];
-				$totalcom+= $object->array_options['options_comm_pack'];
-				$totalcom+= $object->array_options['options_comm_cash'];
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY($x[7], $yp[7]);
-				$out = $outputlangs->convToOutputCharset(price(round($totalcom,2)) . ' €');
-				$pdf->MultiCell($z[7], 0, $out,0,'R');
-
-				$pdf->SetFont('','', $default_font_size-2);
-				$pdf->SetXY($x[0], $yp[8]);
-				$out = $outputlangs->convToOutputCharset($object->note_private);
-				//$pdf->MultiCell(25.5, 0, $object->note_private,0,'L');
-				$pdf->writeHTMLCell(194,35,8,254.5,$out);
+// 				//Carac client
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[1], $yt[0]);
+// 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date,'day'));
+// 				$pdf->MultiCell($z[1], 0, $out,0,'L');
+
+// 				$object->info($object->id);
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yt[0]);
+// 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_modification,'dayhour'));
+// 				$pdf->MultiCell($z[3]+$z[4], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yt[0]);
+// 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_livraison,'%W-%Y'));
+// 				$pdf->MultiCell($z[7], 0, $out,0,'L');
+
+// 				$commercial = new User($this->db);
+// 				$commercial->fetch($object->user_author_id);
+
+
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[5], $yt[1]);
+// 				$out = $outputlangs->convToOutputCharset($object->ref);
+// 				$pdf->MultiCell($z[5], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yt[1]);
+// 				$out = $outputlangs->convToOutputCharset(substr($object->array_options['options_vin'],-7));
+// 				$pdf->MultiCell($z[7], 0, $out,0,'L');
+
+// 				$lead = new Leadext($this->db);
+// 				$lead->fetchLeadLink($object->id, $object->table_element);
+// 				$lead=$lead->doclines['0'];
+// 				$extrafields_lead = new ExtraFields($this->db);
+// 				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yt[2]);
+// 				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
+// 				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yt[3]);
+// 				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
+// 				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yt[4]);
+// 				$out = $outputlangs->convToOutputCharset($object->thirdparty->address . "\n" . $object->thirdparty->zip . ' '. $object->thirdparty->town);
+// 				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 18, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[1], $yt[6]);
+// 				$out = $outputlangs->convToOutputCharset('1');
+// 				$pdf->MultiCell($z[1], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yt[6]);
+// 				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('type', $lead->array_options['options_type']) . ' ' . $extrafields_lead->showOutputField('gamme', $lead->array_options['options_gamme']). ' ' . $extrafields_lead->showOutputField('silouhette', $lead->array_options['options_silouhette']));
+// 				$pdf->MultiCell($z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
+
+// 				$object->demand_reason;
+// 				$sql = "SELECT label";
+//         		$sql.= " FROM ".MAIN_DB_PREFIX.'c_input_reason';
+//         		$sql.= " WHERE active > 0 AND rowid =" . $object->demand_reason_id;
+
+//         		$resql = $this->db->query($sql);
+//         		if ($resql)
+//         		{
+//         			$obj = $this->db->fetch_object($resql);
+//         			$liv = $obj->label;
+//         		}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yt[7]);
+// 				$out = $outputlangs->convToOutputCharset($liv);
+// 				$pdf->MultiCell($z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yt[8]);
+// 				$out = $outputlangs->convToOutputCharset($object->cond_reglement);
+// 				$pdf->MultiCell($z[2], 0, $out,0,'L');
+
+
+// 				$filter=array();
+// 				$filter['com.rowid'] = $object->id;
+// 				$lead2 = new Leadext($this->db);
+// 				$lead2->fetchAllfolow('','', 1, 0, $filter,'AND');
+// 				if(!empty($lead2->business[1]->dt_pay)){
+// 					$cash = $lead2->business[1]->delai_cash;
+// 					$pdf->SetFont('','', $default_font_size);
+// 					$pdf->SetXY($x[4], $yt[8]);
+// 					$out = $outputlangs->convToOutputCharset($cash . ' Jours');
+// 					$pdf->MultiCell($z[4], 0, $out,0,'L');
+// 				}
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yt[8]);
+// 				$out = $outputlangs->convToOutputCharset(Price($object->total_ht) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$intern = 0;
+// 				$internspace = array();
+// 				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_INTERNE_NB; $i++) {
+// 					$internspace[] = $conf->global->VOLVO_ANALYSELG_Y_INTERNE_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_INTERNE_PAS);
+// 				}
+
+// 				$externe = 0;
+// 				$externspace = array();
+// 				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_EXTERNE_NB; $i++) {
+// 					$externspace[] = $conf->global->VOLVO_ANALYSELG_Y_EXTERNE_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_EXTERNE_PAS);
+// 				}
+
+// 				$divers = 0;
+// 				$diverspace = array();
+// 				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_DIVERS_NB; $i++) {
+// 					$diverspace[] = $conf->global->VOLVO_ANALYSELG_Y_DIVERS_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_DIVERS_PAS);
+// 				}
+
+// 				$vo = 0;
+// 				$vospace = array();
+// 				for ($i = 1; $i <= $conf->global->VOLVO_ANALYSELG_Y_VO_NB; $i++) {
+// 					$vospace[] = $conf->global->VOLVO_ANALYSELG_Y_VO_OFFSET +(($i-1)*$conf->global->VOLVO_ANALYSELG_Y_VO_PAS);
+// 				}
+
+// 				$totalht =0;
+// 				$totalpa=0;
+// 				$totalreel=0;
+// 				$totalecart=0;
+// 				$marge =0;
+// 				$gold=0;
+// 				$blue=0;
+// 				$silver=0;
+// 				$ppc=0;
+// 				$pcc=0;
+// 				$pvc=0;
+// 				$golds=0;
+
+// 				foreach($object->lines as $line){
+
+// 					$extrafieldsline = new ExtraFields($this->db);
+// 					$extralabelsline = $extrafieldsline->fetch_name_optionals_label($line->table_element, true);
+// 					$line->fetch_optionals($line->id, $extralabelsline);
+// 					$categ = new Categorie($this->db);
+
+
+// 					if($line->fk_product == $conf->global->VOLVO_FORFAIT_LIV){
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[4], $yt[9]);
+// 						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 						$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 						$totalht+=$line->total_ht;
+
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[5], $yt[9]);
+// 						$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+// 						$pdf->MultiCell($z[5], 0, $out,0,'R');
+// 						$totalpa+=$line->pa_ht;
+
+// 						if(!empty($line->array_options['options_fk_supplier'])){
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[6], $yt[9]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
+// 							$pdf->MultiCell($z[6], 0, $out,0,'R');
+// 							$totalreel+=$line->array_options['options_buyingprice_real'];
+
+// 							$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
+// 						}else{
+// 							$ecart = $line->total_ht-$line->pa_ht;
+// 						}
+
+// 						if(!empty($ecart)){
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[7], $yt[9]);
+// 							$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
+// 							$pdf->MultiCell($z[7], 0, $out,0,'R');
+// 							$totalecart+=$ecart;
+// 						}
+
+// 					}elseif($line->fk_product == $conf->global->VOLVO_SURES){
+// 						$pdf->SetPage(2);
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[4], $vospace[1]);
+// 						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 						$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 						$totalht+=$line->total_ht;
+
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[5], $vospace[1]);
+// 						$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+// 						$pdf->MultiCell($z[5], 0, $out,0,'R');
+// 						$totalpa+=$line->pa_ht;
+
+// 						if(!empty($line->array_options['options_fk_supplier'])){
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[6], $vospace[1]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
+// 							$pdf->MultiCell($z[6], 0, $out,0,'R');
+// 							$totalreel+=$line->array_options['options_buyingprice_real'];
+
+// 							$ecart = $line->total_ht-$line->array_options['options_buyingprice_real'];
+// 						}else{
+// 							$ecart = $line->total_ht-$line->pa_ht;
+// 						}
+
+// 						if(!empty($ecart)){
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[7], $vospace[1]);
+// 							$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
+// 							$pdf->MultiCell($z[7], 0, $out,0,'R');
+// 							$totalecart+=$ecart;
+// 						}
+
+// 						$reprise = new Reprise($this->db);
+
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[2], $vospace[0]);
+// 						$out = $outputlangs->convToOutputCharset(Price($reprise->gettotalestim($lead->id)) . ' €');
+// 						$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'R');
+
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[2], $vospace[1]);
+// 						$out = $outputlangs->convToOutputCharset(Price($reprise->gettotalrachat($lead->id)) . ' €');
+// 						$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'R');
+
+
+// 					}elseif($line->fk_product == $conf->global->VOLVO_COM){
+// 						$pdf->SetPage(2);
+// 						$pdf->SetFont('','', $default_font_size);
+// 						$pdf->SetXY($x[4], $yp[1]);
+// 						$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 						$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 						$marge+=$line->total_ht;
+// 						$pdf->SetPage(1);
+
+// 					}else{
+
+// 						$categ = new Categorie($this->db);
+// 						$listcateg = $categ->containing($line->fk_product, 'product','id');
+
+// 						if(in_array($conf->global->VOLVO_INTERNE, $listcateg)){
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[0], $internspace[$intern]);
+// 							$out = $outputlangs->convToOutputCharset($line->product_label);
+// 							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
+
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[4], $internspace[$intern]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 							$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 							$totalht+=$line->total_ht;
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[5], $internspace[$intern]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+// 							$pdf->MultiCell($z[5], 0, $out,0,'R');
+// 							$totalpa+=$line->pa_ht;
+
+// 							if(!empty($line->array_options['options_fk_supplier'])){
+
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[6], $internspace[$intern]);
+// 								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
+// 								$pdf->MultiCell($z[6], 0, $out,0,'R');
+// 								$totalreel+=$line->array_options['options_buyingprice_real'];
+
+// 								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
+
+// 							}else{
+// 								$ecart = $line->total_ht - $line->pa_ht;
+// 							}
+
+// 							if(!empty($ecart)){
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[7], $internspace[$intern]);
+// 								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
+// 								$pdf->MultiCell($z[7], 0, $out,0,'R');
+// 								$totalecart+=$ecart;
+// 							}
+// 							$intern++;
+// 						}
+
+// 						if(in_array($conf->global->VOLVO_EXTERNE, $listcateg)){
+// 							$pdf->SetPage(2);
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[0], $externspace[$externe]);
+// 							$out = $outputlangs->convToOutputCharset($line->product_label);
+// 							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
+
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[4], $externspace[$externe]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 							$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 							$totalht+=$line->total_ht;
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[5], $externspace[$externe]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+// 							$pdf->MultiCell($z[5], 0, $out,0,'R');
+// 							$totalpa+=$line->pa_ht;
+
+// 							if(!empty($line->array_options['options_fk_supplier'])){
+
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[6], $externspace[$externe]);
+// 								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
+// 								$pdf->MultiCell($z[6], 0, $out,0,'R');
+// 								$totalreel+=$line->array_options['options_buyingprice_real'];
+
+// 								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
+
+// 							}else{
+// 								$ecart = $line->total_ht - $line->pa_ht;
+// 							}
+
+// 							if(!empty($ecart)){
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[7], $externspace[$externe]);
+// 								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
+// 								$pdf->MultiCell($z[7], 0, $out,0,'R');
+// 								$totalecart+=$ecart;
+// 							}
+// 							$externe++;
+// 							$pdf->SetPage(1);
+// 						}
+
+// 						if(in_array($conf->global->VOLVO_DIVERS, $listcateg) && !in_array($conf->global->VOLVO_SOLTRS, $listcateg)){
+// 							$pdf->SetPage(2);
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[0], $diverspace[$divers]);
+// 							$out = $outputlangs->convToOutputCharset($line->product_label);
+// 							$pdf->MultiCell($z[0]+$z[1]+$z[2]+$z[3], 0, $out,0,'L');
+
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[4], $diverspace[$divers]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->total_ht) . ' €');
+// 							$pdf->MultiCell($z[4], 0, $out,0,'R');
+// 							$totalht+=$line->total_ht;
+
+// 							$pdf->SetFont('','', $default_font_size);
+// 							$pdf->SetXY($x[5], $diverspace[$divers]);
+// 							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+// 							$pdf->MultiCell($z[5], 0, $out,0,'R');
+// 							$totalpa+=$line->pa_ht;
+
+// 							if(!empty($line->array_options['options_fk_supplier'])){
+
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[6], $diverspace[$divers]);
+// 								$out = $outputlangs->convToOutputCharset(Price($line->array_options['options_buyingprice_real']) . ' €');
+// 								$pdf->MultiCell($z[6], 0, $out,0,'R');
+// 								$totalreel+=$line->array_options['options_buyingprice_real'];
+
+// 								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
+
+// 							}else{
+// 								$ecart = $line->total_ht - $line->pa_ht;
+// 							}
+
+// 							if(!empty($ecart)){
+// 								$pdf->SetFont('','', $default_font_size);
+// 								$pdf->SetXY($x[7], $diverspace[$divers]);
+// 								$out = $outputlangs->convToOutputCharset(Price($ecart) . ' €');
+// 								$pdf->MultiCell($z[7], 0, $out,0,'R');
+// 								$totalecart+=$ecart;
+// 							}
+// 							$divers++;
+// 							$pdf->SetPage(1);
+// 						}
+
+// 						if(in_array($conf->global->VOLVO_SOLTRS, $listcateg)){
+// 							if($line->fk_product == 28){
+// 								$blue=1;
+// 							}elseif ($line->fk_product == 31){
+// 								$gold=1;
+// 							}elseif ($line->fk_product == 20){
+// 								$pcc=1;
+// 							}elseif ($line->fk_product == 27){
+// 								$ppc=1;
+// 							}elseif ($line->fk_product == 26){
+// 								$pvc=1;
+// 							}elseif ($line->fk_product == 29){
+// 								$silver=1;
+// 							}elseif ($line->fk_product == 30){
+// 								$silver=1;
+// 							}elseif ($line->fk_product == 40){
+// 								$golds=1;
+// 							}
+
+// 						}
+
+// 					}
+
+// 				}
+// 				$pdf->SetPage(2);
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[4], $yp[0]);
+// 				$out = $outputlangs->convToOutputCharset(Price($totalht) . ' €');
+// 				$pdf->MultiCell($z[4], 0, $out,0,'R');
+
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[5], $yp[0]);
+// 				$out = $outputlangs->convToOutputCharset(Price($totalpa) . ' €');
+// 				$pdf->MultiCell($z[5], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[6], $yp[0]);
+// 				$out = $outputlangs->convToOutputCharset(Price($totalreel) . ' €');
+// 				$pdf->MultiCell($z[6], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[0]);
+// 				$out = $outputlangs->convToOutputCharset(Price($totalecart) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$margeprev = $marge - ($totalpa-$totalht);
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[6], $yp[1]);
+// 				$out = $outputlangs->convToOutputCharset(Price($margeprev) . ' €');
+// 				$pdf->MultiCell($z[6], 0, $out,0,'R');
+
+// 				$margereel = $marge +($totalecart);
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[2]);
+// 				$out = $outputlangs->convToOutputCharset(Price($margereel) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$rep = 'Non';
+// 				if($blue){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[1], $yp[3]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[1], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($silver){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[1], $yp[4]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[1], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($gold){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[1], $yp[5]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[1], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($ppc){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yp[3]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[3], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($pcc){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yp[4]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[3], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($pvc){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[3], $yp[5]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[3], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($golds){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yp[6]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'L');
+
+// 				$rep = 'Non';
+// 				if($lead->array_options['options_new']){
+// 					$rep = 'Oui';
+// 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[2], $yp[7]);
+// 				$out = $outputlangs->convToOutputCharset($rep);
+// 				$pdf->MultiCell($z[2]+$z[3], 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[3]);
+// 				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm'],2)) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[4]);
+// 				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_vcm'] + $object->array_options['options_comm_pack'],2)) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[5]);
+// 				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_div'],2)) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[6]);
+// 				$out = $outputlangs->convToOutputCharset(price(round($object->array_options['options_comm_newclient'],2)) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$totalcom = $object->array_options['options_comm_newclient'];
+// 				$totalcom+= $object->array_options['options_comm'];
+// 				$totalcom+= $object->array_options['options_comm _div'];
+// 				$totalcom+= $object->array_options['options_comm_vcm'];
+// 				$totalcom+= $object->array_options['options_comm_pack'];
+// 				$totalcom+= $object->array_options['options_comm_cash'];
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY($x[7], $yp[7]);
+// 				$out = $outputlangs->convToOutputCharset(price(round($totalcom,2)) . ' €');
+// 				$pdf->MultiCell($z[7], 0, $out,0,'R');
+
+// 				$pdf->SetFont('','', $default_font_size-2);
+// 				$pdf->SetXY($x[0], $yp[8]);
+// 				$out = $outputlangs->convToOutputCharset($object->note_private);
+// 				//$pdf->MultiCell(25.5, 0, $object->note_private,0,'L');
+// 				$pdf->writeHTMLCell(194,35,8,254.5,$out);
 
 				$pdf->Close();
 
