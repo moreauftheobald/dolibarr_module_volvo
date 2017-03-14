@@ -373,7 +373,7 @@ class pdf_vcm extends ModelePDFContract
 
  				$pdf->SetFont('','', $default_font_size);
  				$pdf->SetXY(165, $y[15]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_PTRA']) . ' Tonnes');
+ 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_ptra']) . ' Tonnes');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
 // 				//Carac client
