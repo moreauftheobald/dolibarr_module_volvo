@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25.3,37.3,49.5,61.8,65.8,70.2,97.2,103.3,107.8,112.3,118.2,122.7,127.2,131.7,138.7,143,147.7);
+				$y=array(25.3,37.6,49.8,62.1,66.1,70.5,97.5,103.6,108.1,112.6,118.5,123,127.5,132,139,143.3,148);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
