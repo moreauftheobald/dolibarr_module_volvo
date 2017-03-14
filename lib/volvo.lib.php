@@ -284,6 +284,68 @@ Function print_extra($key,$type,$action,$extrafields,$object,$label=1,$lenght = 
 	return $out;
 }
 
+Function print_extra_pdf($key,$type,$extrafields,$object){
+	global $db;
+
+	if($type=='chkbox'){
+		require_once DOL_DOCUMENT_ROOT . '/volvo/class/html.formvolvo.class.php';
+		dol_include_once('/volvo/class/reprise.class.php');
+		$reprise = new Reprise($db);
+		$form = new FormVolvo($db);
+		$list = $extrafields->attribute_param[$key]['options'];
+		$selected = explode(',', $object->array_options['options_'.$key]);
+		foreach ($list as $cle => $value){
+			if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;"><img src="http://www.erp-theobald.com' . show_picto(1) . ' height="10" width="10"> ' . $value .'</span>';
+			else $out.= '<span style="margin-left: 1em;"><img src="http://www.erp-theobald.com' . show_picto(0) . ' height="10" width="10"> ' . $value .'</span>';
+		}
+	}
+
+	if($type=='bool'){
+		if ($object->array_options['options_'.$key] == 0) {
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=1&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= img_picto('non','switch_off');
+			$out.= '</a></span>';
+		} else {
+			$out.= '<span style="margin-left: 1em;">'.'<a href="' . $_SERVER["PHP_SELF"] . '?action=update_extras&options_' .$key. '=0&attribute=' .$key . '&id=' . $object->id . '">';
+			$out.= img_picto('Oui','switch_on');
+			$out.= '</a></span>';
+		}
+	}
+
+
+	if($type=='chkboxvert'){
+		require_once DOL_DOCUMENT_ROOT . '/volvo/class/html.formvolvo.class.php';
+		dol_include_once('/volvo/class/reprise.class.php');
+		$reprise = new Reprise($db);
+		$form = new FormVolvo($db);
+		$list = $extrafields->attribute_param[$key]['options'];
+		$selected = explode(',', $object->array_options['options_'.$key]);
+		$out.= '<table class="nobordernopadding" width="100%"><tr><td>';
+		if ($action == 'edit_extra' && GETPOST('attribute') == $key) {
+			$out.= '<form enctype="multipart/form-data" action="' . $_SERVER["PHP_SELF"] . '" method="post" name="formextra">';
+			$out.= '<input type="hidden" name="action" value="update_extras">';
+			$out.= '<input type="hidden" name="attribute" value="'. $key .'">';
+			$out.= '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+			$out.= '<input type="hidden" name="id" value="' . $object->id . '">';
+			$out.= $form->select_withcheckbox('options_'.$key,$list,$selected);
+			$out.= '<input type="submit" class="button" value="Modifier">';
+			$out.= '</form>';
+		} else {
+			foreach ($list as $cle => $value){
+				if(in_array($cle, $selected)) $out.= '<span style="margin-left: 1em;">' . $reprise->show_picto(1) . ' ' . $value .'</span></br>';
+				else $out.= '<span style="margin-left: 1em;">' .$reprise->show_picto(0) . ' ' . $value.'</span></br>';
+			}
+			$out = substr($out, 0,-5);
+			$out.= '</td><td>';
+			$out.= '<span style="margin-left: 1em;"><a href="' . $_SERVER["PHP_SELF"] . '?action=edit_extra&attribute=' .$key . '&id=' . $object->id . '">' . img_edit('') . '</a></span>';
+			$out.='</td></tr></table>';
+		}
+	}
+
+	return $out;
+}
+
+
 function commande_prepare_head(Commande $object)
 {
 	global $db, $langs, $conf, $user;
@@ -361,4 +423,12 @@ global $conf,$user;
 		if(empty($object->array_options['options_vcm_frigo_nbh'])) return 0;
 	}
 	return 1;
+}
+
+function show_picto_pdf($value) {
+	if ($value == 1) {
+		return img_picto('non', 'statut6','',0,1);
+	} else {
+		return img_picto('non', 'statut0','',0,1);
+	}
 }

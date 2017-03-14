@@ -346,8 +346,8 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				//$out = print_extra('vcm_duree', 'chkbox', 'none', $extrafields, $object,0);
- 				$out='<span style="margin-left: 1em;"><img src="http://www.erp-theobald.com/dolibarr/htdocs/theme/eldy/img/statut0.png" border="0" alt="" title="non"> 24 Mois</span>';
+ 				$out = print_extra_pdf('vcm_duree', 'chkbox', $extrafields, $object);
+ 				//$out='<span style="margin-left: 1em;"><img src="http://www.erp-theobald.com/dolibarr/htdocs/theme/eldy/img/statut0.png" border="0" alt="" title="non"> 24 Mois</span>';
  				//$out = $outputlangs->convToOutputCharset($object->note_private);
  				$pdf->writeHTMLCell(194,5,32,$y[14],$out);
 
