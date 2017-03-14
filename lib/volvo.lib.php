@@ -303,9 +303,9 @@ function commande_prepare_head(Commande $object)
 
 	$ok = volvo_vcm_ok($object);
 	$img =img_picto('','on');
-	if($ok==0 ||$ok==-1) $img = img_picto('','off');
+	if($ok>1 ||$ok<0) $img = img_picto('','off');
 	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
-	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img. $ok . '</span>' ;
+	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img . '</span>' ;
 	$head[$h][2] = 'vcm';
 	$h++;
 
@@ -339,28 +339,86 @@ function commande_prepare_head(Commande $object)
 
 function volvo_vcm_ok($object) {
 global $conf,$user;
-	//if($user->admin || $user->rights->volvo->update_cost || $conf->global->VOLVO_VCM_OBLIG == 0) return -1;
-	if(empty($object->array_options['options_vcm_site'])) return 2;
-	if(empty($object->array_options['options_vcm_dt_dem'])) return 3;
-	if(empty($object->array_options['options_vcm_duree'])) return 4;
-	if(empty($object->array_options['options_vcm_km'])) return 5;
-	if(empty($object->array_options['options_vcm_ptra'])) return 6;
+
+	if(empty($object->array_options['options_vcm_site'])) $res = 2;
+	if(empty($object->array_options['options_vcm_dt_dem'])) $res =  3;
+	if(empty($object->array_options['options_vcm_duree'])) $res =  4;
+	if(empty($object->array_options['options_vcm_km'])) $res =  5;
+	if(empty($object->array_options['options_vcm_ptra'])) $res =  6;
 	if(empty($object->array_options['options_vcm_chant']) && empty($object->array_options['options_vcm_50km'])
-			&& empty($object->array_options['options_vcm_ld']) && empty($object->array_options['options_vcm_ville'])) return 7;
-	if(empty($object->array_options['options_vcm_zone'])) return 8;
-	if(empty($object->array_options['options_vcm_typ_trans'])) return 9;
-	if(empty($object->array_options['options_vcm_roul'])) return 10;
-	if(empty($object->array_options['options_vcm_topo'])) return 11;
-	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_nbh'])) return 12;
+			&& empty($object->array_options['options_vcm_ld']) && empty($object->array_options['options_vcm_ville'])) $res =  7;
+	if(empty($object->array_options['options_vcm_zone'])) $res =  8;
+	if(empty($object->array_options['options_vcm_typ_trans'])) $res =  9;
+	if(empty($object->array_options['options_vcm_roul'])) $res =  10;
+	if(empty($object->array_options['options_vcm_topo'])) $res =  11;
+	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_nbh'])) $res =  12;
 	if(!empty($object->array_options['options_vcm_frigo']) &&
 			(!empty($object->array_options['options_vcm_blue']) || !empty($object->array_options['options_vcm_silver'])
 			|| !empty($object->array_options['options_vcm_silverp']) || !empty($object->array_options['options_vcm_gold']))){
-		if(empty($object->array_options['options_vcm_marque'])) return 13;
-		if(empty($object->array_options['options_vcm_model'])) return 14;
-		if(empty($object->array_options['options_vcm_fonct'])) return 15;
-		if(empty($object->array_options['options_vcm_frigo_nbh'])) return 16;
+		if(empty($object->array_options['options_vcm_marque'])) $res =  13;
+		if(empty($object->array_options['options_vcm_model'])) $res =  14;
+		if(empty($object->array_options['options_vcm_fonct'])) $res =  15;
+		if(empty($object->array_options['options_vcm_frigo_nbh'])) $res =  16;
 	}
-	return 1;
+	$res =  1;
+	if(($user->admin || $user->rights->volvo->update_cost || $conf->global->VOLVO_VCM_OBLIG == 0) && $res>1) return -1*$res;
+	if($res == 1) return $res;
+	if($res > 1) return $res;
+}
+
+function volvo_vcm_motif($code) {
+	global $conf,$user;
+	if($code<0) $code =-1*$code;
+
+	switch($code){
+		case 2:
+			$motif = 'Point de service absent ou non valide';
+			break;
+		case 3:
+			$motif = 'Date de début absente ou non valide';
+			break;
+		case 4:
+			$motif = 'Durée absente ou non valide';
+			break;
+		case 5:
+			$motif = 'Kilométrage annuel absent ou non valide';
+			break;
+		case 6:
+			$motif = 'poid total roulant constaté absent ou non valide';
+			break;
+		case 7:
+			$motif = 'paramètres de calcul du cycle de transport absent ou non valide';
+			break;
+		case 8:
+			$motif = 'zone géographique absente ou non valide';
+			break;
+		case 9:
+			$motif = 'type de transport absent ou non valide';
+			break;
+		case 10:
+			$motif = 'condition de roulage absente ou non valide';
+			break;
+		case 11:
+			$motif = 'topographie absente ou non valide';
+			break;
+		case 12:
+			$motif = "PTO selectionnée, mais nombre d'heures annuelle d'utilisation absente ou non valide";
+			break;
+		case 13:
+			$motif = 'Entretien groupe frigo sélectionné, mais marque du groupe absente ou non valide';
+			break;
+		case 14:
+			$motif = 'Entretien groupe frigo sélectionné, mais Modèle du groupe absente ou non valide';
+			break;
+		case 15:
+			$motif = 'Entretien groupe frigo sélectionné, mais mode de fonctionnement du groupe absente ou non valide';
+			break;
+		case 16:
+			$motif = 'Entretien groupe frigo sélectionné, mais durée annuelle de fonctionnement absente ou non valide';
+			break;
+	}
+
+	return $motif;
 }
 
 function show_picto_pdf($value) {
