@@ -295,7 +295,7 @@ Function print_extra_pdf($key,$type,$extrafields,$object){
 		$list = $extrafields->attribute_param[$key]['options'];
 		$selected = explode(',', $object->array_options['options_'.$key]);
 		foreach ($list as $cle => $value){
-			if(in_array($cle, $selected)) $out.= '<img src="http://www.erp-theobald.com' . show_picto_pdf(1) . ' height="10" width="10"> ' . $value;
+			if(in_array($cle, $selected)) $out.= '<img src="http://www.erp-theobald.com' . show_picto_pdf(1) . ' height="5" width="5"> ' . $value;
 			else $out.= '<img src="http://www.erp-theobald.com' . show_picto_pdf(0) . ' height="10" width="10"> ' . $value;
 		}
 	}
