@@ -370,6 +370,8 @@ function volvo_vcm_motif($code) {
 	global $conf,$user;
 	if($code<0) $code =-1*$code;
 
+	$motif = 'Saisie Valide';
+
 	switch($code){
 		case 2:
 			$motif = 'Point de service absent ou non valide';
