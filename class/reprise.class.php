@@ -938,9 +938,9 @@ class Reprise extends CommonObject
 	 */
 	public function show_picto($value) {
 		if ($value == 1) {
-			return img_picto('non', 'statut6','',1);
+			return img_picto('non', 'statut6');
 		} else {
-			return img_picto('non', 'statut0','',1);
+			return img_picto('non', 'statut0');
 		}
 	}
 
