@@ -609,6 +609,11 @@ class pdf_vcm extends ModelePDFContract
  					$pdf->SetFont('','', $default_font_size);
  					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid:</b>' . $list_value[$object->array_options['options_vcm_marque']]);
  					$pdf->writeHTMLCell(194,20,6.8,$y[33],$out);
+
+ 					$pdf->SetFont('','', $default_font_size);
+ 					$out = $outputlangs->convToOutputCharset('<b>Modèle:</b>' . $list_value[$object->array_options['options_vcm_model']]);
+ 					$pdf->writeHTMLCell(194,20,80,$y[33],$out);
+
  				}
 
 
