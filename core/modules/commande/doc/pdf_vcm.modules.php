@@ -294,7 +294,15 @@ class pdf_vcm extends ModelePDFContract
  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_deport']));
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(65.5, $y[5]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_gds']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
 
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(173, $y[5]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_dfol']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
 
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
