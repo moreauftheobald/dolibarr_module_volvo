@@ -177,7 +177,7 @@ class pdf_vcm extends ModelePDFContract
 				$reshook=$hookmanager->executeHooks('beforePDFCreation',$parameters,$object,$action);    // Note that $action and $object may have been modified by some hooks
 
                 $pdf=pdf_getInstance($this->format);
-                $default_font_size = pdf_getPDFFontSize($outputlangs);	// Must be after pdf_getInstance
+                $default_font_size = pdf_getPDFFontSize($outputlangs)-1;	// Must be after pdf_getInstance
                 $heightforinfotot = 50;	// Height reserved to output the info and total part
 		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
 	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
@@ -234,20 +234,30 @@ class pdf_vcm extends ModelePDFContract
 				$commercial = new User($this->db);
 				$commercial->fetch($object->user_author_id);
 
-				$pdf->SetFont('','', $default_font_size-1);
+				$pdf->SetFont('','', $default_font_size);
 				$pdf->SetXY(38, 24.6);
 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
 				$pdf->MultiCell(80, 0, $out,0,'L');
 
-				$pdf->SetFont('','', $default_font_size-1);
+				$pdf->SetFont('','', $default_font_size);
  				$pdf->SetXY(143.8, 24.6);
  				$out = $outputlangs->convToOutputCharset($object->ref);
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
- 				$pdf->SetFont('','', $default_font_size-1);
+ 				$pdf->SetFont('','', $default_font_size);
  				$pdf->SetXY(19, 37);
  				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+				$pdf->SetXY(93.1, 37);
+				$out = $outputlangs->convToOutputCharset($object->thirdparty->town);
+				$pdf->MultiCell(80, 0, $out,0,'L');
+
+				$pdf->SetFont('','', $default_font_size);
+				$pdf->SetXY(154.2, 37);
+				$out = $outputlangs->convToOutputCharset($object->thirdparty->code_client);
+				$pdf->MultiCell(80, 0, $out,0,'L');
 
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
@@ -290,11 +300,7 @@ class pdf_vcm extends ModelePDFContract
 
 
 
-// 				$pdf->SetFont('','', $default_font_size);
-// 				$pdf->SetXY($x[2], $yt[4]);
-// 				$out = $outputlangs->convToOutputCharset($object->thirdparty->address . "\n" . $object->thirdparty->zip . ' '. $object->thirdparty->town);
-// 				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 18, $out,0,'L');
-
+//
 // 				$pdf->SetFont('','', $default_font_size);
 // 				$pdf->SetXY($x[1], $yt[6]);
 // 				$out = $outputlangs->convToOutputCharset('1');
