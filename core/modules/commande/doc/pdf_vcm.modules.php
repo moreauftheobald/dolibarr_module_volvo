@@ -371,6 +371,11 @@ class pdf_vcm extends ModelePDFContract
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_conso']) . ' l/100km');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(165, $y[15]);
+ 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_PTRA']) . ' Tonnes');
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
 // 				$pdf->SetXY($x[1], $yt[0]);
