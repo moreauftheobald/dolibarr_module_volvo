@@ -604,7 +604,7 @@ class pdf_vcm extends ModelePDFContract
  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_frigo']));
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
- 				if($object->array_options['options_vcm_frigo']==1){
+ 				if(!empty($object->array_options['options_vcm_frigo'])){
  					$list_value = $extrafields->attribute_param['vcm_marque']['options'];
  					$pdf->SetFont('','', $default_font_size);
  					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid:</b>' . $list_value[$object->array_options['options_vcm_marque']]);
