@@ -305,7 +305,7 @@ function commande_prepare_head(Commande $object)
 	$img =img_picto('','on');
 	if($ok>1 ||$ok<0) $img = img_picto('','off');
 	$head[$h][0] = DOL_URL_ROOT.'/volvo/vcm/vcm.php?id='.$object->id;
-	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img . ok .'</span>' ;
+	$head[$h][1] = 'VCM' . ' <span class="badge">'.$img . $ok .'</span>' ;
 	$head[$h][2] = 'vcm';
 	$h++;
 
