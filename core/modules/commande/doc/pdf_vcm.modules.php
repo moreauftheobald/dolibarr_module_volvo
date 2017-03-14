@@ -226,38 +226,52 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
-				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
-				$yt = $sys->prepare_array('VOLVO_ANALYSELG_Y_ENTETE', 'array');
-				$yp = $sys->prepare_array('VOLVO_ANALYSELG_Y_PIED', 'array');
+				$y=array(25,37.4,49.8,62.2)
+
+// 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
+// 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
+// 				$yt = $sys->prepare_array('VOLVO_ANALYSELG_Y_ENTETE', 'array');
+// 				$yp = $sys->prepare_array('VOLVO_ANALYSELG_Y_PIED', 'array');
 
 				$commercial = new User($this->db);
 				$commercial->fetch($object->user_author_id);
 
 				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(38, 25);
+				$pdf->SetXY(38, $y[0]);
 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
 				$pdf->MultiCell(80, 0, $out,0,'L');
 
 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(143.8, 24.6);
+ 				$pdf->SetXY(143.8, $y[0]);
  				$out = $outputlangs->convToOutputCharset($object->ref);
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(19, 37);
+ 				$pdf->SetXY(19, $y[1]);
  				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
  				$pdf->MultiCell(100, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(93.1, 37);
+				$pdf->SetXY(93.1, $y[1]);
 				$out = $outputlangs->convToOutputCharset($object->thirdparty->town);
 				$pdf->MultiCell(80, 0, $out,0,'L');
 
 				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(154.2, 37);
+				$pdf->SetXY(154.2, $y[1]);
 				$out = $outputlangs->convToOutputCharset($object->thirdparty->code_client);
 				$pdf->MultiCell(80, 0, $out,0,'L');
+
+				$lead = new Leadext($this->db);
+				$lead->fetchLeadLink($object->id, $object->table_element);
+				$lead=$lead->doclines['0'];
+				$extrafields_lead = new ExtraFields($this->db);
+				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
+
+				$pdf->SetFont('','', $default_font_size);
+				$pdf->SetXY(26, $y[2]);
+				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
+				$pdf->MultiCell(100, 0, $out,0,'L');
+
 
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
@@ -287,16 +301,7 @@ class pdf_vcm extends ModelePDFContract
 // 				$out = $outputlangs->convToOutputCharset(substr($object->array_options['options_vin'],-7));
 // 				$pdf->MultiCell($z[7], 0, $out,0,'L');
 
-// 				$lead = new Leadext($this->db);
-// 				$lead->fetchLeadLink($object->id, $object->table_element);
-// 				$lead=$lead->doclines['0'];
-// 				$extrafields_lead = new ExtraFields($this->db);
-// 				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
 
-// 				$pdf->SetFont('','', $default_font_size);
-// 				$pdf->SetXY($x[2], $yt[2]);
-// 				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
-// 				$pdf->MultiCell($z[2]+$z[3]+$z[4]+$z[5]+$z[6]+$z[7], 0, $out,0,'L');
 
 
 
