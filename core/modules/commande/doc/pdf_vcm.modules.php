@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3);
+				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,157.5);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -390,6 +390,27 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->SetXY(58.7, $y[17]);
  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->array_options['options_vcm_dt_dem'],'daytext'));
  				$pdf->MultiCell(80, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$selected = explode(',', $object->array_options['options_vcm_pto']);
+ 				$x = 36.5;
+ 				foreach ($extrafields->attribute_param['vcm_pto']['options'] as $key => $value){
+ 					if(in_array($key, $selected)){
+ 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[18],3,3,'','','M',1);
+ 						$pdf->SetFont('','', $default_font_size);
+ 						$pdf->SetXY($x+3.5, $y[14]);
+ 						$out = $outputlangs->convToOutputCharset($value);
+ 						$pdf->MultiCell(30, 0, $value,0,'L');
+ 						$x=$x+22;
+ 					}else{
+ 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[18],3,3,'','','M',1);
+ 						$pdf->SetFont('','', $default_font_size);
+ 						$pdf->SetXY($x+3.5, $y[14]);
+ 						$out = $outputlangs->convToOutputCharset($value);
+ 						$pdf->MultiCell(30, 0, $value,0,'L');
+ 						$x=$x+22;
+ 					}
+ 				}
 
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
