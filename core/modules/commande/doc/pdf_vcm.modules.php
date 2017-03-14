@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,166.1);
+				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,167);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -423,9 +423,9 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$selected = explode(',', $object->array_options['options_vcm_pto']);
+ 				$selected = explode(',', $object->array_options['options_vcm_hydro']);
  				$x = 41;
- 				foreach ($extrafields->attribute_param['vcm_pto']['options'] as $key => $value){
+ 				foreach ($extrafields->attribute_param['vcm_hydro']['options'] as $key => $value){
  					if(in_array($key, $selected)){
  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[21],3,3,'','','M',1);
  						$pdf->SetFont('','', $default_font_size);
