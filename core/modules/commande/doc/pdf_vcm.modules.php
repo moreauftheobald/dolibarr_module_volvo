@@ -239,7 +239,7 @@ class pdf_vcm extends ModelePDFContract
 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
 				$pdf->MultiCell(80, 0, $out,0,'L');
 
-				$pdf->SetFont('','', $default_font_size);
+				$pdf->SetFont('','', $default_font_size-1);
  				$pdf->SetXY(143.8, 24.6);
  				$out = $outputlangs->convToOutputCharset($object->ref);
  				$pdf->MultiCell(30, 0, $out,0,'L');
