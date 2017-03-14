@@ -534,7 +534,7 @@ class pdf_vcm extends ModelePDFContract
 
  				$pdf->SetFont('','', $default_font_size-1);
  				$selected = explode(',', $object->array_options['options_vcm_sup']);
- 				$x = 70;
+ 				$x = 60;
  				$yy = $y[31];
  				foreach ($extrafields->attribute_param['vcm_sup']['options'] as $key => $value){
  					if(in_array($key, $selected)){
@@ -556,7 +556,7 @@ class pdf_vcm extends ModelePDFContract
 
  				$pdf->SetFont('','', $default_font_size-1);
  				$selected = explode(',', $object->array_options['options_vcm_legal']);
- 				$x = 140;
+ 				$x = 150;
  				$yy = $y[31];
  				foreach ($extrafields->attribute_param['vcm_legal']['options'] as $key => $value){
  					if(in_array($key, $selected)){
