@@ -367,22 +367,22 @@ class pdf_vcm extends ModelePDFContract
  				}
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(55, $y[15]);
+ 				$pdf->SetXY(54, $y[15]);
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_conso']) . ' l/100km');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(165, $y[15]);
+ 				$pdf->SetXY(164, $y[15]);
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_ptra']) . ' Tonnes');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(34, $y[16]);
+ 				$pdf->SetXY(33, $y[16]);
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km']) . ' km/an');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(165, $y[16]);
+ 				$pdf->SetXY(164, $y[16]);
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km_dep']) . ' km');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
