@@ -432,14 +432,14 @@ class pdf_vcm extends ModelePDFContract
  						$pdf->SetXY($x+3.5, $y[21]);
  						$out = $outputlangs->convToOutputCharset($value);
  						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+80;
+ 						$x=$x+70;
  					}else{
  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[21],3,3,'','','M',1);
  						$pdf->SetFont('','', $default_font_size);
  						$pdf->SetXY($x+3.5, $y[21]);
  						$out = $outputlangs->convToOutputCharset($value);
  						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+80;
+ 						$x=$x+70;
  					}
  				}
 
