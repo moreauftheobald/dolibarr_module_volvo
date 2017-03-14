@@ -39,6 +39,7 @@ require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
 require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/reprise.class.php';
+dol_include_once('/volvo/lib/volvo.lib.php');
 
 /**
  *	Class to build contracts documents with model Strato
@@ -226,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2,103.3,107.8,112.3,118.2,122.7,127.2,131.7);
+				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2,103.3,107.8,112.3,118.2,122.7,127.2,131.7,138.8);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -343,6 +344,11 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->SetXY(170.5, $y[13]);
  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_gold']));
  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$out = print_extra('vcm_duree', 'chkbox', 'none', $extrafields, $object,0);
+ 				//$out = $outputlangs->convToOutputCharset($object->note_private);
+ 				$pdf->writeHTMLCell(194,5,32,$y[14],$out);
 
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
