@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,167.2,172,192.2);
+				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,167.2,172,192.2,196.9,201.6,206.3,211,215.7);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -459,6 +459,31 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->SetXY(33.5, $y[23]);
  				$out = $outputlangs->convToOutputCharset($cycle);
  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(58.5, $y[24]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_sais']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(63, $y[25]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_chant']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(67, $y[26]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ville']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(120, $y[27]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_50km']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(86, $y[28]);
+ 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ld']));
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
 
 				$pdf->Close();
 
