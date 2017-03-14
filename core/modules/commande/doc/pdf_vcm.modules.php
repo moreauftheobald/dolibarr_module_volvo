@@ -231,6 +231,9 @@ class pdf_vcm extends ModelePDFContract
 				$yt = $sys->prepare_array('VOLVO_ANALYSELG_Y_ENTETE', 'array');
 				$yp = $sys->prepare_array('VOLVO_ANALYSELG_Y_PIED', 'array');
 
+				$commercial = new User($this->db);
+				$commercial->fetch($object->user_author_id);
+
 				$pdf->SetFont('','', $default_font_size);
 				$pdf->SetXY(38, 25);
 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
@@ -255,8 +258,6 @@ class pdf_vcm extends ModelePDFContract
 // 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_livraison,'%W-%Y'));
 // 				$pdf->MultiCell($z[7], 0, $out,0,'L');
 
-// 				$commercial = new User($this->db);
-// 				$commercial->fetch($object->user_author_id);
 
 
 
