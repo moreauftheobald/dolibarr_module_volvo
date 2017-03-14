@@ -36,7 +36,10 @@ llxHeader('', 'VCM');
 $head = commande_prepare_head($object);
 dol_fiche_head($head, 'vcm', $langs->trans("CustomerOrder"), 0, 'order');
 
-print load_fiche_titre('Cotation VCM','',dol_buildpath('/volvo/img/object_iron02.png', 1),1);
+$code = volvo_vcm_ok($object);
+$motif = volvo_vcm_motif($code);
+
+print load_fiche_titre('Cotation VCM - ' . $motif ,'',dol_buildpath('/volvo/img/object_iron02.png', 1),1);
 print '<table class="border" width="100%">';
 print '<tr class="liste_titre"><td align="center">Entretien et Maintenance du véhicule</td></tr>';
 print '<tr><td>';
