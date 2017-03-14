@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2,103.3,107.8,112.3,118.2,122.7,127.2,131.7,138.7,143);
+				$y=array(25,37.3,49.5,61.8,65.8,70.2,97.2,103.3,107.8,112.3,118.2,122.7,127.2,131.7,138.7,143,148.1);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -374,6 +374,16 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->SetFont('','', $default_font_size);
  				$pdf->SetXY(165, $y[15]);
  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_ptra']) . ' Tonnes');
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(34, $y[16]);
+ 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km']) . ' km/an');
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(165, $y[16]);
+ 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km_dep']) . ' km');
  				$pdf->MultiCell(30, 0, $out,0,'L');
 
 // 				//Carac client
