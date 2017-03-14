@@ -412,6 +412,11 @@ class pdf_vcm extends ModelePDFContract
  					}
  				}
 
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(164, $y[18]);
+ 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_pto_nbh']) . ' H/an');
+ 				$pdf->MultiCell(30, 0, $out,0,'L');
+
 // 				//Carac client
 // 				$pdf->SetFont('','', $default_font_size);
 // 				$pdf->SetXY($x[1], $yt[0]);
