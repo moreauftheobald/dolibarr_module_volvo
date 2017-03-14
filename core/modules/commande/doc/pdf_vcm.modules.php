@@ -607,12 +607,16 @@ class pdf_vcm extends ModelePDFContract
  				if($object->array_options['options_vcm_frigo']==1){
  					$list_value = $extrafields->attribute_param['vcm_marque']['options'];
  					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid:</b>' . $list_value[$object->array_options['options_vcm_marque']]);
+ 					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid: </b>' . $list_value[$object->array_options['options_vcm_marque']]);
  					$pdf->writeHTMLCell(194,5,55,$y[32],$out);
 
  					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<b>Modèle:</b>' . $object->array_options['options_vcm_model']);
+ 					$out = $outputlangs->convToOutputCharset('<b>Modèle: </b>' . $object->array_options['options_vcm_model']);
  					$pdf->writeHTMLCell(194,5,110,$y[32],$out);
+
+ 					$pdf->SetFont('','', $default_font_size);
+ 					$out = $outputlangs->convToOutputCharset("<b>Nombre d'heure de fonctionnement: </b>" . price($object->array_options['options_vcm_frigo_nbh']) . ' H/an');
+ 					$pdf->writeHTMLCell(194,5,160,$y[32],$out);
 
  				}
 
