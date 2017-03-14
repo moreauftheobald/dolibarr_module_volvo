@@ -446,7 +446,7 @@ class pdf_vcm extends ModelePDFContract
  				$pdf->SetFont('','', $default_font_size);
  				$pdf->SetXY($x[0], $yp[8]);
  				$out = $outputlangs->convToOutputCharset('<B>Carrosserie et equipements: </b>' . $object->array_options['options_vcm_carr']);
- 				$pdf->writeHTMLCell(194,20,6,172,$out);
+ 				$pdf->writeHTMLCell(194,20,6.2,172,$out);
 
 
 
