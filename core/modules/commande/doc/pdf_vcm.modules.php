@@ -449,16 +449,16 @@ class pdf_vcm extends ModelePDFContract
  					$pdf->writeHTMLCell(194,20,6.8,$y[22],$out);
  				}
 
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(164, $y[22]);
- 				$out = $outputlangs->convToOutputCharset(price($cycle));
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
  				$cycle='';
  				if($object->array_options['options_vcm_ld']==1) $cycle='Longue Distance';
  				if($object->array_options['options_vcm_50km']==1) $cycle='Distribution Régionnale';
  				if($object->array_options['options_vcm_ville']==1) $cycle='Distribution Urbaine';
  				if($object->array_options['options_vcm_chant']==1) $cycle='Construction';
+
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(33.5, $y[22]);
+ 				$out = $outputlangs->convToOutputCharset(price($cycle));
+ 				$pdf->MultiCell(100, 0, $out,0,'L');
 
 				$pdf->Close();
 
