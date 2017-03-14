@@ -83,8 +83,8 @@ class pdf_analysevolvolg extends ModelePDFContract
 		global $conf,$langs,$mysoc;
 
 		$this->db = $db;
-		$this->name = 'Analyse Lg';
-		$this->description = "Fiche d'analyse commerciale Volvo version longue";
+		$this->name = 'vcm';
+		$this->description = "Demande de tarification de solution de maintenace";
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
@@ -151,7 +151,7 @@ class pdf_analysevolvolg extends ModelePDFContract
 			{
 				$objectref = dol_sanitizeFileName($object->ref);
 				$dir = $conf->commande->dir_output . "/" . $objectref;
-				$file = $dir . "/analyse_" . $objectref . "_Lg.pdf";
+				$file = $dir . "/vcm_" . $objectref . ".pdf";
 			}
 
 			if (! file_exists($dir))
