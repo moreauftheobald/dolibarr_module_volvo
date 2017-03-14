@@ -227,7 +227,7 @@ class pdf_vcm extends ModelePDFContract
 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 				$sys = new Leadext($this->db);
-				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,157.2);
+				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,157);
 
 // 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
 // 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
@@ -393,7 +393,7 @@ class pdf_vcm extends ModelePDFContract
 
  				$pdf->SetFont('','', $default_font_size);
  				$selected = explode(',', $object->array_options['options_vcm_pto']);
- 				$x = 36.5;
+ 				$x = 36.8;
  				foreach ($extrafields->attribute_param['vcm_pto']['options'] as $key => $value){
  					if(in_array($key, $selected)){
  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[18],3,3,'','','M',1);
