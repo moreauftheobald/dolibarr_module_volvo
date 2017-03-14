@@ -43,7 +43,7 @@ require_once DOL_DOCUMENT_ROOT . '/volvo/class/reprise.class.php';
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_analysevolvolg extends ModelePDFContract
+class pdf_vcm extends ModelePDFContract
 {
 	var $db;
 	var $name;
