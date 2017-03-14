@@ -621,7 +621,7 @@ class pdf_vcm extends ModelePDFContract
  					$list_value = $extrafields->attribute_param['vcm_fonct']['options'];
  					$pdf->SetFont('','', $default_font_size);
  					$out = $outputlangs->convToOutputCharset('<b>Fonctionnement du groupe: </b>' . $list_value[$object->array_options['options_vcm_fonct']]);
- 					$pdf->writeHTMLCell(194,5,150,$y[32],$out);
+ 					$pdf->writeHTMLCell(194,5,150,$y[33],$out);
  				}
 
 
