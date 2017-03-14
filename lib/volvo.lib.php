@@ -351,7 +351,7 @@ global $conf,$user;
 	if(empty($object->array_options['options_vcm_typ_trans'])) return 9;
 	if(empty($object->array_options['options_vcm_roul'])) return 10;
 	if(empty($object->array_options['options_vcm_topo'])) return 11;
-	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_hdep'])) return 12;
+	if(!empty($object->array_options['options_vcm_pto']) && empty($object->array_options['options_vcm_pto_nbh'])) return 12;
 	if(!empty($object->array_options['options_vcm_frigo']) &&
 			(!empty($object->array_options['options_vcm_blue']) || !empty($object->array_options['options_vcm_silver'])
 			|| !empty($object->array_options['options_vcm_silverp']) || !empty($object->array_options['options_vcm_gold']))){
