@@ -2156,7 +2156,6 @@ if ($action == 'create' && $user->rights->commande->creer)
 				// Create contract
 				$ok = 0;
 				$ok = $leadext->contrat_needed($object->id);
-				echo $ok;
 				if ($conf->contrat->enabled && $ok>0 && ($object->statut == Commande::STATUS_VALIDATED || $object->statut == Commande::STATUS_ACCEPTED || $object->statut == Commande::STATUS_CLOSED)) {
 				    $langs->load("contracts");
 

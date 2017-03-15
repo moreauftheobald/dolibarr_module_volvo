@@ -802,8 +802,7 @@ class Leadext extends Lead
  		$resql = $this->db->query($sql);
  		if ($resql) {
  			$obj = $this->db->fetch_object($resql);
- 			return $sql;
- 			//return $obj->nb_contrat;
+ 			return $obj->nb_contrat;
  		}else{
  			return $sql;
  		}
