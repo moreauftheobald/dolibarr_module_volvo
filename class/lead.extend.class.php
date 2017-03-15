@@ -931,11 +931,7 @@ class Leadext extends Lead
 		global $conf;
 
 		if($mode == 'sql'){
-			$outtemp = explode(',', $conf->global->$var);
-			foreach ($outtemp as $value){
-				$out.="'" . $value . "',";
-				$out=substr($out, 0,-1);
-			}
+				$out.= $var;
 		}elseif($mode ='array'){
 			$out = explode(',',$conf->global->$var);
 		}
