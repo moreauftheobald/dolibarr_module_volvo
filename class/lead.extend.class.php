@@ -793,12 +793,12 @@ class Leadext extends Lead
 
 	public function contrat_needed($cmdid){
 		$soltrs = $this->prepare_array('VOLVO_VCM_LIST', 'sql');
-		$soltrs = $this->prepare_array('VOLVO_PACK_LIST', 'sql');
+		$soltrs.= $this->prepare_array('VOLVO_PACK_LIST', 'sql');
 		$sql = "SELECT IFNULL(COUNT(det.rowid),0) as nb_contrat ";
  		$sql.= "FROM " . MAIN_DB_PREFIX . "commandedet AS det ";
  		$sql.= "LEFT JOIN ".MAIN_DB_PREFIX . "product AS p ON p.rowid=det.fk_product ";
  		$sql.= "WHERE det.fk_commande =" . $cmdid . " ";
- 		$sql.= "AND p.ref IN (" . VOLVO_SOLTRS_LIST . ") ";
+ 		$sql.= "AND p.ref IN (" . $soltrs . ") ";
  		$resql = $this->db->query($sql);
  		if ($resql) {
  			$obj = $this->db->fetch_object($resql);
