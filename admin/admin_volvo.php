@@ -185,7 +185,7 @@ if ($action == 'updateMask') {
 	}
 }else if ($action == 'rem_dir') {
 	dol_include_once('/core/lib/files.lib.php');
-	$dir =DOL_DOCUMENT_ROOT . $dir;
+	$dir =DOL_MAIN_DATA_ROOT . $dir;
 	$res = dol_delete_dir_recursive($dir);
 	setEventMessages($res, null, 'mesgs');
 }
