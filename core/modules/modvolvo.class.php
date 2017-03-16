@@ -1000,8 +1000,8 @@ class modvolvo extends DolibarrModules
 				'url' => '/volvo/business/listcontrat.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_ext',
-				'perms' => '$user->rights->volvo->stat_ext',
+				'enabled' => '$user->rights->volvo->stat_all',
+				'perms' => '$user->rights->volvo->stat_all',
 				'target' => '',
 				'user' => 0
 		);
@@ -1015,8 +1015,8 @@ class modvolvo extends DolibarrModules
 				'url' => '/mydoliboard/mydoliboard.php?idboard=6',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_ext',
-				'perms' => '$user->rights->volvo->stat_ext',
+				'enabled' => '$user->rights->volvo->stat_all',
+				'perms' => '$user->rights->volvo->stat_all',
 				'target' => '',
 				'user' => 0
 		);
