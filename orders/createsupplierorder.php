@@ -94,7 +94,7 @@ if ($action == 'createsupplerorder') {
 		if (in_array($line->id, $lineupdate_array)) {
 			$priceid = GETPOST('fournprice_' . $line->id);
 			if (! empty($priceid)) {
-				$price_qty_array[$priceid] = $line->qty;
+				$price_qty_array[$priceid] = array('qty'=>$line->qty,'id'=>$line->id);
 			}
 		}
 	}

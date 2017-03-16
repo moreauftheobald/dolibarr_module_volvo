@@ -365,6 +365,7 @@ class CommandeVolvo extends Commande
 		$sp = new ProductFournisseur($this->db);
 
 		$result = $this->fetch($orderid);
+		$this->fetch_lines();
 		if ($result < 0) {
 			return - 1;
 		}
@@ -382,10 +383,11 @@ class CommandeVolvo extends Commande
 
 				$fourn_array[$sp->fourn_id][] = array(
 						'productid' => $sp->fk_product,
-						'qty' => $qty,
+						'qty' => $qty['qty'],
 						'price' => $sp->fourn_price,
 						'ref_supplier' => $sp->ref_supplier,
-						'tva_tx' => $sp->fourn_tva_tx
+						'tva_tx' => $sp->fourn_tva_tx,
+						'id' => $qty['id']
 				);
 			}
 			if (count($fourn_array) > 0 && empty($error)) {
@@ -400,7 +402,7 @@ class CommandeVolvo extends Commande
 
 						foreach ( $prodinfo as $data ) {
 							$line = new CommandeFournisseurLigne($this->db);
-							$line->desc = '';
+							$line->desc = $this->lines[$data['id']]->desc;
 							$line->subprice = $data['price'];
 							$line->qty = $data['qty'];
 							$line->tva_tx = $data['tva_tx'];
