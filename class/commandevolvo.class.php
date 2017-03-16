@@ -365,7 +365,7 @@ class CommandeVolvo extends Commande
 		$sp = new ProductFournisseur($this->db);
 
 		$result = $this->fetch($orderid);
-		$this->fetch_lines();
+		$this->fetch_lines_byid();
 		if ($result < 0) {
 			return - 1;
 		}
@@ -402,7 +402,7 @@ class CommandeVolvo extends Commande
 
 						foreach ( $prodinfo as $data ) {
 							$line = new CommandeFournisseurLigne($this->db);
-							$line->desc = $this->lines[$data['id']]->product_desc;
+							$line->desc = $this->lines_byid[$data['id']]->product_desc;
 							$line->subprice = $data['price'];
 							$line->qty = $data['qty'];
 							$line->tva_tx = $data['tva_tx'];
@@ -975,5 +975,107 @@ class CommandeVolvo extends Commande
 		//         	$this->errors=array('OrderStatusMakeOperationForbidden');
 		//             return -2;
 		//         }
+			}
+
+			function fetch_lines_byid($only_product=0)
+			{
+				$this->lines=array();
+
+				$sql = 'SELECT l.rowid, l.fk_product, l.fk_parent_line, l.product_type, l.fk_commande, l.label as custom_label, l.description, l.price, l.qty, l.tva_tx,';
+				$sql.= ' l.localtax1_tx, l.localtax2_tx, l.fk_remise_except, l.remise_percent, l.subprice, l.fk_product_fournisseur_price as fk_fournprice, l.buy_price_ht as pa_ht, l.rang, l.info_bits, l.special_code,';
+				$sql.= ' l.total_ht, l.total_ttc, l.total_tva, l.total_localtax1, l.total_localtax2, l.date_start, l.date_end,';
+				$sql.= ' l.fk_unit,';
+				$sql.= ' l.fk_multicurrency, l.multicurrency_code, l.multicurrency_subprice, l.multicurrency_total_ht, l.multicurrency_total_tva, l.multicurrency_total_ttc,';
+				$sql.= ' p.ref as product_ref, p.description as product_desc, p.fk_product_type, p.label as product_label,';
+				$sql.= ' p.weight, p.weight_units, p.volume, p.volume_units';
+				$sql.= ' FROM '.MAIN_DB_PREFIX.'commandedet as l';
+				$sql.= ' LEFT JOIN '.MAIN_DB_PREFIX.'product as p ON (p.rowid = l.fk_product)';
+				$sql.= ' WHERE l.fk_commande = '.$this->id;
+				if ($only_product) $sql .= ' AND p.fk_product_type = 0';
+				$sql .= ' ORDER BY l.rang, l.rowid';
+
+				dol_syslog(get_class($this)."::fetch_lines", LOG_DEBUG);
+				$result = $this->db->query($sql);
+				if ($result)
+				{
+					$num = $this->db->num_rows($result);
+
+					$i = 0;
+					while ($i < $num)
+					{
+						$objp = $this->db->fetch_object($result);
+
+						$line = new OrderLine($this->db);
+
+						$line->rowid            = $objp->rowid;
+						$line->id               = $objp->rowid;
+						$line->fk_commande      = $objp->fk_commande;
+						$line->commande_id      = $objp->fk_commande;
+						$line->label            = $objp->custom_label;
+						$line->desc             = $objp->description;
+						$line->description      = $objp->description;		// Description line
+						$line->product_type     = $objp->product_type;
+						$line->qty              = $objp->qty;
+						$line->tva_tx           = $objp->tva_tx;
+						$line->localtax1_tx     = $objp->localtax1_tx;
+						$line->localtax2_tx     = $objp->localtax2_tx;
+						$line->total_ht         = $objp->total_ht;
+						$line->total_ttc        = $objp->total_ttc;
+						$line->total_tva        = $objp->total_tva;
+						$line->total_localtax1  = $objp->total_localtax1;
+						$line->total_localtax2  = $objp->total_localtax2;
+						$line->subprice         = $objp->subprice;
+						$line->fk_remise_except = $objp->fk_remise_except;
+						$line->remise_percent   = $objp->remise_percent;
+						$line->price            = $objp->price;
+						$line->fk_product       = $objp->fk_product;
+						$line->fk_fournprice 	= $objp->fk_fournprice;
+						$marginInfos			= getMarginInfos($objp->subprice, $objp->remise_percent, $objp->tva_tx, $objp->localtax1_tx, $objp->localtax2_tx, $line->fk_fournprice, $objp->pa_ht);
+						$line->pa_ht 			= $marginInfos[0];
+						$line->marge_tx			= $marginInfos[1];
+						$line->marque_tx		= $marginInfos[2];
+						$line->rang             = $objp->rang;
+						$line->info_bits        = $objp->info_bits;
+						$line->special_code		= $objp->special_code;
+						$line->fk_parent_line	= $objp->fk_parent_line;
+
+						$line->ref				= $objp->product_ref;
+						$line->product_ref		= $objp->product_ref;
+						$line->libelle			= $objp->product_label;
+						$line->product_label	= $objp->product_label;
+						$line->product_desc     = $objp->product_desc;
+						$line->fk_product_type  = $objp->fk_product_type;	// Produit ou service
+						$line->fk_unit          = $objp->fk_unit;
+
+						$line->weight           = $objp->weight;
+						$line->weight_units     = $objp->weight_units;
+						$line->volume           = $objp->volume;
+						$line->volume_units     = $objp->volume_units;
+
+						$line->date_start       = $this->db->jdate($objp->date_start);
+						$line->date_end         = $this->db->jdate($objp->date_end);
+
+						// Multicurrency
+						$line->fk_multicurrency 		= $objp->fk_multicurrency;
+						$line->multicurrency_code 		= $objp->multicurrency_code;
+						$line->multicurrency_subprice 	= $objp->multicurrency_subprice;
+						$line->multicurrency_total_ht 	= $objp->multicurrency_total_ht;
+						$line->multicurrency_total_tva 	= $objp->multicurrency_total_tva;
+						$line->multicurrency_total_ttc 	= $objp->multicurrency_total_ttc;
+
+						$this->lines_byid[$line->id] = $line;
+
+						$i++;
+					}
+
+					$this->db->free($result);
+
+					return 1;
+				}
+				else
+				{
+					$this->error=$this->db->error();
+					return -3;
+				}
 			}
 }
