@@ -412,9 +412,9 @@ print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">'
 print '<input type="hidden" name="action" value="rem_dir">';
 
 print '<table>';
-print '<tr class="impair"><td>Délai de vérrouillage des commande apres la date de livraison en mois</td>';
+print '<tr class="impair"><td>répertoire a supprimer</td>';
 print '<td align="left">';
-print '<input type="text" name="dir" value="" size="30" ></td>';
+print '<input type="text" name="dir" value="' . $dir . '" size="30" ></td>';
 print '</tr>';
 print '<tr class="impair"><td colspan="2" align="right"><input type="submit" class="button" value="' . $langs->trans("Save") . '"></td>';
 print '</tr>';
