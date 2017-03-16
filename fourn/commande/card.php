@@ -461,7 +461,7 @@ if ($action == 'updateline' && $user->rights->fournisseur->commande->creer &&	! 
 
 	$result	= $object->updateline(
 	$lineid,
-	$POST['product_desc'],
+	$_POST['product_desc'],
 	$ht,
 	$_POST['qty'],
 	$_POST['remise_percent'],
