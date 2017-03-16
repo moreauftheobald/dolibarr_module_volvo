@@ -185,9 +185,14 @@ if ($action == 'updateMask') {
 	}
 }else if ($action == 'rem_dir') {
 	dol_include_once('/core/lib/files.lib.php');
-	$dir =DOL_DATA_ROOT . $dir;
-	$res = dol_delete_dir_recursive($dir);
-	setEventMessages($res, null, 'mesgs');
+	$dirdel =DOL_DATA_ROOT . $dir;
+	$res = dol_delete_dir_recursive($dirdel);
+	if(!empty($res)){
+		$mes = $res . ' Fichiers supprimé';
+	}else{
+		$mes = 'erreur';
+	}
+	setEventMessages($mes, null, 'mesgs');
 }
 
 /*
