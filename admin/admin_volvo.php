@@ -184,6 +184,7 @@ if ($action == 'updateMask') {
 		setEventMessages($langs->trans("Error"), null, 'errors');
 	}
 }else if ($action == 'rem_dir') {
+	dol_include_once('/core/lib/files.lib.php');
 	$dir =DOL_DOCUMENT_ROOT . $dir;
 	$res = dol_delete_dir_recursive($dir);
 	setEventMessages($res, null, 'mesgs');
