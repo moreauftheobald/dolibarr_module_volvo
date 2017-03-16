@@ -167,6 +167,8 @@ $sql = "SELECT fk_target FROM " . MAIN_DB_PREFIX . "element_element WHERE source
 			$orig = clone $object;
 			$result=$object->createFromClone($socid);
 			if ($result > 0){
+				$object->ref_client = $orig->ref_client;
+				$object->update($user);
 				$sql = "INSERT INTO " .MAIN_DB_PREFIX . "element_element (fk_source, sourcetype, fk_target, targettype) VALUE (" . $result .", 'commande'," . $orig->leadorigin.",'lead')";
 				$db->query($sql);
 				header("Location: ".$_SERVER['PHP_SELF'].'?id='.$result);
