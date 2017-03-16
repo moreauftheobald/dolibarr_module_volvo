@@ -458,10 +458,10 @@ if ($action == 'updateline' && $user->rights->fournisseur->commande->creer &&	! 
 			unset($_POST["options_" . $key]);
 		}
 	}
-
+	$desc = GETPOST('product_desc','alpha');
 	$result	= $object->updateline(
 	$lineid,
-	$POST['product_desc'],
+	$desc,
 	$ht,
 	$_POST['qty'],
 	$_POST['remise_percent'],
