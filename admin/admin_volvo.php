@@ -50,6 +50,7 @@ $action = GETPOST('action', 'alpha');
 $value = GETPOST('value', 'alpha');
 $label = GETPOST('label', 'alpha');
 $scandir = GETPOST('scandir', 'alpha');
+$dir = GETPOST('dir','alpha');
 
 $leadext = New Leadext($db);
 
@@ -182,6 +183,10 @@ if ($action == 'updateMask') {
 	} else {
 		setEventMessages($langs->trans("Error"), null, 'errors');
 	}
+}else if ($action == 'rem_dir') {
+	$dir =DOL_DOCUMENT_ROOT . $dir;
+	$res = dol_delete_dir_recursive($dir);
+	setEventMessages($res, null, 'mesgs');
 }
 
 /*
@@ -400,6 +405,21 @@ print '</tr>';
 
 print '</table><br>';
 print '</form>';
+
+print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" >';
+print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+print '<input type="hidden" name="action" value="rem_dir">';
+
+print '<table>';
+print '<tr class="impair"><td>Délai de vérrouillage des commande apres la date de livraison en mois</td>';
+print '<td align="left">';
+print '<input type="text" name="dir" value="" size="30" ></td>';
+print '</tr>';
+print '<tr class="impair"><td colspan="2" align="right"><input type="submit" class="button" value="' . $langs->trans("Save") . '"></td>';
+print '</tr>';
+print '</table>';
+print '</form>';
+
 
 dol_fiche_end();
 

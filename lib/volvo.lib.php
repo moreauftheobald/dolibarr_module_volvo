@@ -431,3 +431,7 @@ function show_picto_pdf($value) {
 		return img_picto('non', 'statut0','',0,1);
 	}
 }
+
+function remove_dir($dir){
+	dol_delete_dir_recursive($dir);
+}
