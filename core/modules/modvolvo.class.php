@@ -969,7 +969,7 @@ class modvolvo extends DolibarrModules
 			'url' => '/volvo/business/list.php?search_run=1',
 			'langs' => 'lead@lead',
 			'position' => 100+$r,
-			'enabled' => '$user->rights->lead->read',
+			'enabled' => '1',
 			'perms' => '$user->rights->lead->read',
 			'target' => '',
 			'user' => 0
