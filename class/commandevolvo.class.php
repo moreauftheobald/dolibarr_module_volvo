@@ -402,7 +402,7 @@ class CommandeVolvo extends Commande
 
 						foreach ( $prodinfo as $data ) {
 							$line = new CommandeFournisseurLigne($this->db);
-							$line->desc = $this->lines[$data['id']]->desc;
+							$line->desc = $data['id'];
 							$line->subprice = $data['price'];
 							$line->qty = $data['qty'];
 							$line->tva_tx = $data['tva_tx'];
