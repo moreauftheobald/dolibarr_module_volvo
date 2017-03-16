@@ -366,6 +366,8 @@ class CommandeVolvo extends Commande
 
 		$result = $this->fetch($orderid);
 		$this->fetch_lines_byid();
+		var_dump($this->lines_byid);
+		exit;
 		if ($result < 0) {
 			return - 1;
 		}
