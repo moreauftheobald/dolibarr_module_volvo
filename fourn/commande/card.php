@@ -2093,7 +2093,7 @@ elseif (! empty($object->id))
             $ws_parameters = array('authentication'=>$ws_authentication, 'id' => '', 'ref'=>$ws_user);
             $result_user = $soapclient_user->call("getUser", $ws_parameters, $ws_ns, '');
             $user_status_code = $result_user["result"]["result_code"];
-
+			var_dump($result_user);
             if ($user_status_code == "OK")
             {
                 //Fill the variables
@@ -2384,7 +2384,7 @@ elseif (! empty($object->id))
 					}
 
 				}
-				//var_dump($conf->syncsupplierwebservices);
+
 				// Create a remote order using WebService only if module is activated
 				if ($object->statut >= 2) // 2 means accepted
 				{
