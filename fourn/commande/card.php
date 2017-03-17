@@ -1006,7 +1006,7 @@ if ($action == 'webservice' && GETPOST('mode', 'alpha') == "send" && ! GETPOST('
         foreach ($object->lines as $line) {
             $ws_parameters = array('authentication' => $ws_authentication, 'id' => '', 'ref' => $line->ref_supplier);
             $result_product = $soapclient_product->call("getProductOrService", $ws_parameters, $ws_ns, '');
-			var_dump($result_product);
+			var_dump($line);
             if ($result_product["result"]["result_code"] == "OK"){
                 $order_lines[] = array(
                     'desc'          => $line->product_desc,
