@@ -1038,6 +1038,7 @@ if ($action == 'webservice' && GETPOST('mode', 'alpha') == "send" && ! GETPOST('
         $ws_parameters = array('authentication'=>$ws_authentication, 'order' => $order);
         $result_order = $soapclient_order->call("createOrder", $ws_parameters, $ws_ns, '');
 		var_dump($result_order);
+		exit;
         if (empty($result_order["result"]["result_code"])){
             setEventMessages($langs->trans("SOAPError")." '".$soapclient_order->error_str."'", null, 'errors');
         }else if ($result_order["result"]["result_code"] != "OK"){
