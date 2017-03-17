@@ -1024,7 +1024,7 @@ if ($action == 'webservice' && GETPOST('mode', 'alpha') == "send" && ! GETPOST('
                 );
             }
         }
-
+		var_dump($order_lines);
         //Prepare the order header
         $order = array(
             'thirdparty_id' => $ws_thirdparty,
