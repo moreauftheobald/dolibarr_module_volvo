@@ -639,6 +639,9 @@ if ($action == 'confirm_refuse' &&	$confirm == 'yes' && $user->rights->fournisse
 }
 
 if ($action == 'confirm_commande' && $confirm	== 'yes' &&	$user->rights->fournisseur->commande->commander){
+	if($_REQUEST["methode"] == 'OrderByEDI'){
+		$object->send_edi;
+	}
     $result = $object->commande($user, $_REQUEST["datecommande"],	$_REQUEST["methode"], $_REQUEST['comment']);
     if ($result > 0) {
         if (empty($conf->global->MAIN_DISABLE_PDF_AUTOUPDATE)) {
@@ -2381,9 +2384,9 @@ elseif (! empty($object->id))
 					}
 
 				}
-
+				//var_dump($conf->syncsupplierwebservices);
 				// Create a remote order using WebService only if module is activated
-				if (! empty($conf->syncsupplierwebservices->enabled) && $object->statut >= 2) // 2 means accepted
+				if ($object->statut >= 2) // 2 means accepted
 				{
 					print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=webservice&amp;mode=init">'.$langs->trans('CreateRemoteOrder').'</a>';
 				}
@@ -2508,15 +2511,6 @@ elseif (! empty($object->id))
         include_once DOL_DOCUMENT_ROOT.'/core/class/html.formactions.class.php';
         $formactions=new FormActions($db);
         $somethingshown=$formactions->showactions($object,'order_supplier',$socid,0,'listaction'.($genallowed?'largetitle':''));
-
-
-		// List of actions on element
-		/* Hidden because" available into "Log" tab
-		print '<br>';
-		include_once DOL_DOCUMENT_ROOT.'/core/class/html.formactions.class.php';
-		$formactions=new FormActions($db);
-		$somethingshown=$formactions->showactions($object,'order_supplier',$socid);
-		*/
 
 		print '</div></div></div>';
 	}
