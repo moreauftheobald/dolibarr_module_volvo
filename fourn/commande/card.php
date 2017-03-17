@@ -987,9 +987,7 @@ if ($action == 'webservice' && GETPOST('mode', 'alpha') == "send" && ! GETPOST('
     );
 
     //Is sync supplier web services module activated? and everything filled?
-    if (empty($conf->syncsupplierwebservices->enabled)) {
-        setEventMessages($langs->trans("WarningModuleNotActive",$langs->transnoentities("Module2650Name")), null, 'mesgs');
-    } else if (empty($ws_url) || empty($ws_key)) {
+    if (empty($ws_url) || empty($ws_key)) {
         setEventMessages($langs->trans("ErrorWebServicesFieldsRequired"), null, 'errors');
     } else if (empty($ws_user) || empty($ws_password) || empty($ws_thirdparty)) {
         setEventMessages($langs->trans("ErrorFieldsRequired"),null, 'errors');
