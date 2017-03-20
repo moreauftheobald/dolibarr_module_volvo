@@ -214,7 +214,7 @@ class CommandeTrans extends CommonOrder
             	$soapclient_order->decodeUTF8(false);
             	$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$cmd_fourn);
             	$result_orders = $soapclient_order->call("createOrder",$ws_parameters,$ws_ns,'');
-            	$this->msg = $result_orders;
+            	$this->msg = $result_orders['result_code'];
             }else{
             	$this->msg.='no product match';
             }
