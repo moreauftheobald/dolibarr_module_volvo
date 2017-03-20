@@ -122,7 +122,7 @@ class CommandeTrans extends CommonOrder
     		$msg=$user_status_code;
     	}
 
-    	return var_export($ws_authentication);
+    	return var_export($object);
 
     }
 
