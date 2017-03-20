@@ -417,7 +417,7 @@ if (empty($usemargins)) $usemargins=0;
 
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-<td colspan="10">
+<td colspan="10" style="border-style:none">
 <b><span style="text-decoration:underline;">Commentaire:</span></b> <?php echo $line->desc;?>
 </td>
 </tr>
@@ -427,9 +427,9 @@ if (empty($usemargins)) $usemargins=0;
 //Line extrafield
 if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){ ?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-<td style="border-style:none"><b><span style="text-decoration:underline;">facture de:</span></b> <?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
-<td style="border-style:none"><b><span style="text-decoration:underline;">Reçue le:</span></b> <?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
-<td colspan="8" style="border-style:none">
+<td><b><span style="text-decoration:underline;">facture de:</span></b> <?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
+<td><b><span style="text-decoration:underline;">Reçue le:</span></b> <?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
+<td colspan="8">
 </td>
 </tr>
 <?php } ?>
