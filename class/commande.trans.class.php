@@ -381,6 +381,7 @@ class CommandeTrans extends CommonOrder
     					if($result_ordersupdate['result']['result_code'] =='OK'){
     						$this->msg.='Commande ' .$order['ref']. ' supprimée </br>';
     						$order['status'] = 0;
+    						$order['thirdparty_id'] = $order['socid'];
     						$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
     						$result_ordersupdate =$soapclient_orderupdate->call("createOrder",$ws_parameters,$ws_ns,'');
     						if($result_ordersupdate['result']['result_code'] == 'OK'){
@@ -401,6 +402,7 @@ class CommandeTrans extends CommonOrder
     					if($result_ordersupdate['result']['result_code'] =='OK'){
     						$this->msg.='Commande ' .$order['ref']. ' annulée </br>';
     						$order['status'] = 0;
+    						$order['thirdparty_id'] = $order['socid'];
     						$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
     						$result_ordersupdate =$soapclient_orderupdate->call("createOrder",$ws_parameters,$ws_ns,'');
     						if($result_ordersupdate['result']['result_code'] == 'OK'){
