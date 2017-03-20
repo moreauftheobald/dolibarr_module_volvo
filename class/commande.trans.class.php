@@ -135,7 +135,7 @@ class CommandeTrans extends CommonOrder
     			}
     		}
 
-    		$msg=var_export($order,true);
+    		$msg=var_export($cmd_found,true);
     	}else{
     		$msg=$user_status_code;
     	}
