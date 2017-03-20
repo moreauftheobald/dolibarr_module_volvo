@@ -422,10 +422,6 @@ print '</td>';
 print '</tr>';
 }
 ?>
-<tr>
-<td colspan="5">
-<?php echo $line->desc;?>
-</td>
-</tr>
+
 
 <!-- END PHP TEMPLATE objectline_view.tpl.php -->
