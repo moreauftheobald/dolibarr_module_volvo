@@ -386,7 +386,7 @@ class CommandeTrans extends CommonOrder
     						if($result_ordersupdate['result']['result_code'] == 'OK'){
     							$this->msg ='Commande ' . $result_ordersupdate['ref']. ' créée</br>';
     						}else{
-    							$this->msg.='erreur de création de commande</br>';
+    							$this->msg.='erreur de création de commande ' . $result_ordersupdate['result']['result_label'] . '</br>';
     						}
     					}else{
     						$this->msg.='impossible de supprimer la commande</br>';
