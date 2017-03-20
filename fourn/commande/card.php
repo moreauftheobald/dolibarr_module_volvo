@@ -134,7 +134,7 @@ if($action == 'confirm_sendedi' && $confirm	== 'yes' &&	$user->rights->fournisse
 	dol_include_once('/volvo/class/commande.trans.class.php');
 	$trans = new CommandeTrans($db);
 	$res = $trans->create($object);
-	setEventMessage($res);
+	setEventMessage($trans->msg);
 }
 
 
