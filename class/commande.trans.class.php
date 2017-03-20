@@ -105,6 +105,7 @@ class CommandeTrans extends CommonOrder
     			'entity'=>''
     	);
 
+
     	//Create SOAP client and connect it to user
     	$soapclient_user = new nusoap_client($ws_url."/webservices/server_user.php");
     	$soapclient_user->soap_defencoding='UTF-8';
@@ -121,7 +122,7 @@ class CommandeTrans extends CommonOrder
     		$msg=$user_status_code;
     	}
 
-    	return $user_status_code;
+    	return var_export($ws_authentication);
 
     }
 
