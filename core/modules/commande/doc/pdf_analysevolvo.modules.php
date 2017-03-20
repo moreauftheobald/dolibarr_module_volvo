@@ -492,9 +492,9 @@ class pdf_analysevolvo extends ModelePDFContract
 
 							$pdf->SetFont('','', $default_font_size);
 							$pdf->SetXY($x[5], $internspace[$intern]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht * $line->qty) . ' €');
 							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
+							$totalpa+=$line->pa_ht * $line->qty;
 
 							if(!empty($line->array_options['options_fk_supplier'])){
 
@@ -507,7 +507,7 @@ class pdf_analysevolvo extends ModelePDFContract
 								$ecart =$line->total_ht - $line->array_options['options_buyingprice_real'];
 
 							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
+								$ecart = $line->total_ht - ($line->pa_ht * $line->qty);
 							}
 
 							if(!empty($ecart)){
@@ -536,9 +536,9 @@ class pdf_analysevolvo extends ModelePDFContract
 
 							$pdf->SetFont('','', $default_font_size);
 							$pdf->SetXY($x[5], $externspace[$externe]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht * $line->qty) . ' €');
 							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
+							$totalpa+=$line->pa_ht * $line->qty;
 
 							if(!empty($line->array_options['options_fk_supplier'])){
 
@@ -551,7 +551,7 @@ class pdf_analysevolvo extends ModelePDFContract
 								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
 
 							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
+								$ecart = $line->total_ht - ($line->pa_ht * $line->qty);
 							}
 
 							if(!empty($ecart)){
@@ -580,9 +580,9 @@ class pdf_analysevolvo extends ModelePDFContract
 
 							$pdf->SetFont('','', $default_font_size);
 							$pdf->SetXY($x[5], $diverspace[$divers]);
-							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht) . ' €');
+							$out = $outputlangs->convToOutputCharset(Price($line->pa_ht * $line->qty) . ' €');
 							$pdf->MultiCell($z[5], 0, $out,0,'R');
-							$totalpa+=$line->pa_ht;
+							$totalpa+=$line->pa_ht * $line->qty;
 
 							if(!empty($line->array_options['options_fk_supplier'])){
 
@@ -595,7 +595,7 @@ class pdf_analysevolvo extends ModelePDFContract
 								$ecart = $line->total_ht - $line->array_options['options_buyingprice_real'];
 
 							}else{
-								$ecart = $line->total_ht - $line->pa_ht;
+								$ecart = $line->total_ht - ($line->pa_ht * $line->qty);
 							}
 
 							if(!empty($ecart)){
