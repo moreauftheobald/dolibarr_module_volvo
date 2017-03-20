@@ -91,6 +91,8 @@ class CommandeTrans extends CommonOrder
 
     function fetch($object){
 
+    	$object->fetch_thirdparty();
+
     	$ws_url      = $object->thirdparty->webservices_url;
     	$ws_key      = $object->thirdparty->webservices_key;
     	$ws_user     = $object->thirdparty->array_options['options_edi_user'];
@@ -122,7 +124,7 @@ class CommandeTrans extends CommonOrder
     		$msg=$user_status_code;
     	}
 
-    	return var_export($object);
+    	return var_export($ws_authentication);
 
     }
 
