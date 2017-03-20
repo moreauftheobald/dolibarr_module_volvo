@@ -130,6 +130,14 @@ include DOL_DOCUMENT_ROOT.'/core/actions_setnotes.inc.php';	// Must be include, 
 include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';		// Must be include, not include_once
 include DOL_DOCUMENT_ROOT.'/core/actions_lineupdown.inc.php';	// Must be include, not include_once
 
+if($action == 'confirm_sendedi' && $confirm	== 'yes' &&	$user->rights->fournisseur->commande->commander){
+	dol_include_once('/volvo/class/commande.trans.class.php');
+	$trans = new CommandeTrans($db);
+	$res = $trans->create($object);
+	setEventMessage($res);
+}
+
+
 if ($action == 'setref_supplier' && $user->rights->fournisseur->commande->creer){
     $result=$object->setValueFrom('ref_supplier',GETPOST('ref_supplier','alpha'));
 	if ($result < 0) setEventMessages($object->error, $object->errors, 'errors');
@@ -1314,6 +1322,13 @@ elseif (! empty($object->id))
 	{
 		 $formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id.'&lineid='.$lineid, $langs->trans('DeleteProductLine'), $langs->trans('ConfirmDeleteProductLine'), 'confirm_deleteline', '', 0, 1);
 	}
+
+	// Confirmation to delete line
+	if ($action == 'sendedi')
+	{
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, 'Envoyer un EDI','Envoyer la commande par EDI ?', 'confirm_sendedi', '', 0, 1);
+	}
+
 
 	// Print form confirm
 	print $formconfirm;
