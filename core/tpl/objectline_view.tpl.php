@@ -247,11 +247,13 @@ if (empty($usemargins)) $usemargins=0;
 }
 ?>
 </tr>
+<?php if(!empty($line->desc)){?>
 <tr>
 <td colspan="5">
 <?php echo $line->desc;?>
 </td>
 </tr>
+<?php }?>
 <?php if ($object->element == 'commande') {?>
 
 	<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
