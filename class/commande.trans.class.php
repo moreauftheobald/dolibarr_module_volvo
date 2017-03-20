@@ -118,7 +118,16 @@ class CommandeTrans extends CommonOrder
     	$user_status_code = $result_user["result"]["result_code"];
 
     	if ($user_status_code == "OK"){
-    		$msg=$user_status_code;
+    		$ws_entity = $result_user["user"]["entity"];
+    		$ws_authentication['entity'] = $ws_entity;
+    		$ws_thirdparty = $result_user["user"]["fk_thirdparty"];
+
+    		$soapclient_order = new nusoap_client($ws_url."/webservices/server_order.php");
+    		$soapclient_user->soap_defencoding='UTF-8';
+    		$soapclient_user->decodeUTF8(false);
+    		$ws_parameters = array('authentication'=>$ws_authentication,'idthirdparty'=>$ws_thirdparty);
+    		$result_orders = $soapclient_order->call("getOrdersForThirdParty",$ws_parameters,$ws_ns,'');
+    		$msg=var_export($result_orders,true);
     	}else{
     		$msg=$user_status_code;
     	}
