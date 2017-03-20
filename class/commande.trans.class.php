@@ -190,7 +190,7 @@ class CommandeTrans extends CommonOrder
                 $result_product = $soapclient_product->call("getProductOrService", $ws_parameters, $ws_ns, '');
                 $status_code = $result_product["result"]["result_code"];
                 if($status_code =='OK'){
-                	$fournref[] == array(
+                	$fournref[] = array(
                 			'desc'=>$line->desc,
                 			'product_id'=>$result_product['product']['id'],
                 			'qty'=>$line->qty,
