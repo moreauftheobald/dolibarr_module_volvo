@@ -2044,6 +2044,16 @@ elseif (! empty($object->id))
 
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
+		// Bloc EDI
+
+		print '<table>';
+		print '<tr class="liste_titre">';
+		print '<th class="liste_titre" Colspan="4">Gestion des EDI</th>';
+		Print '</tr>';
+
+		Print '</table>';
+
+
 
 		/*
 		 * Documents generes
