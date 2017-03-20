@@ -2045,9 +2045,9 @@ elseif (! empty($object->id))
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
 		// Bloc EDI
-		load_fiche_titre('Gestion des EDI');
-		print '<table>';
-		print '<tr class="liste_titre" width="100%">';
+		print load_fiche_titre('Gestion des EDI');
+		print '<table width="100%" class="nobordernopadding">';
+		print '<tr class="liste_titre" >';
 		print '<th class="liste_titre">Date</th>';
 		print '<th class="liste_titre">Référence</th>';
 		print '<th class="liste_titre">Montant</th>';
