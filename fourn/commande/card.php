@@ -2063,7 +2063,7 @@ elseif (! empty($object->id))
 					print '<tr>';
 					print '<td>' .dol_print_date($cmd['date'],'daytext') . '</td>';
 					print '<td>' .$cmd['ref'] . '</td>';
-					print '<td>' .prie($cmd['total']) . ' €</td>';
+					print '<td>' .price($cmd['total']) . ' €</td>';
 					print '<td>' .$trans->getLibStatut(2,$cmd['statut']) .'</td>';
 					print '</tr>';
 				}
