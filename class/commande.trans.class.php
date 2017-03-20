@@ -197,7 +197,7 @@ class CommandeTrans extends CommonOrder
                 			'unitprice'=>$line->subprice);
                 }else{
                 	$this->msg.= 'Ref non valide</br>';
-                	$this->error =1;
+                	$this->error+=1;
                 }
 
             }
@@ -216,7 +216,7 @@ class CommandeTrans extends CommonOrder
             	$result_orders = $soapclient_order->call("createOrder",$ws_parameters,$ws_ns,'');
             	$this->msg = $result_orders;
             }else{
-            	$this->msg ='no product match';
+            	$this->msg.='no product match';
             }
 
 		}else{
