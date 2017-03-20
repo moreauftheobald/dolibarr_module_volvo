@@ -42,7 +42,6 @@ $search_name=GETPOST('search_name');
 $search_contract=GETPOST('search_contract');
 $search_ref_supplier=GETPOST('search_ref_supplier','alpha');
 $search_ref_customer=GETPOST('search_ref_customer','alpha');
-$sall=GETPOST('sall');
 $search_status=GETPOST('search_status');
 $socid=GETPOST('socid');
 $search_user=GETPOST('search_user','int');
@@ -78,40 +77,11 @@ $staticcontratligne=new ContratLigne($db);
 
 $contextpage='contractlist';
 
-// Initialize technical object to manage hooks of thirdparties. Note that conf->hooks_modules contains array array
-$hookmanager->initHooks(array($contextpage));
-$extrafields = new ExtraFields($db);
-
-// fetch optionals attributes and labels
-$extralabels = $extrafields->fetch_name_optionals_label('contract');
-$search_array_options=$extrafields->getOptionalsFromPost($extralabels,'','search_');
-
-// List of fields to search into when doing a "search in all"
-$fieldstosearchall = array(
-    'c.ref'=>'Ref',
-    'c.ref_customer'=>'RefCustomer',
-    'c.ref_supplier'=>'RefSupplier',
-    's.nom'=>"ThirdParty",
-    'cd.description'=>'Description',
-    'c.note_public'=>'NotePublic',
-);
-if (empty($user->socid)) $fieldstosearchall["c.note_private"]="NotePrivate";
-
-
 /*
  * Action
  */
 
-$parameters=array();
-$reshook=$hookmanager->executeHooks('doActions',$parameters, $object, $action);    // Note that $action and $object may have been modified by some hooks
-if ($reshook < 0) setEventMessages($hookmanager->error, $hookmanager->errors, 'errors');
-
 include DOL_DOCUMENT_ROOT.'/core/actions_changeselectedfields.inc.php';
-
-if (empty($reshook))
-{
-
-}
 
 if (GETPOST("button_removefilter_x") || GETPOST("button_removefilter.x") || GETPOST("button_removefilter")) // Both test are required to be compatible with all browsers
 {
@@ -196,6 +166,7 @@ else if ($year > 0)
 if ($search_contract) $sql .= natural_search(array('c.rowid', 'c.ref'), $search_contract);
 if (!empty($search_ref_supplier)) $sql .= natural_search(array('c.ref_supplier'), $search_ref_supplier);
 if (!empty($search_ref_customer)) $sql .= natural_search(array('c.ref_customer'), $search_ref_customer);
+if (!empty($search_name)) $sql .= natural_search(array('s.nom'), $search_ref_customer);
 if ($search_sale > 0)
 {
 	$sql.= " AND s.rowid = sc.fk_soc AND sc.fk_user = " .$search_sale;
@@ -217,7 +188,6 @@ if($search_status == 1){
 }elseif($search_status == 8){
 	$sql.= " AND ef.dt_enr IS NOT NULL AND ef.dt_ret_vtf IS NOT NULL AND ef.dt_trait IS NOT NULL";
 }
-if ($sall) $sql .= natural_search(array_keys($fieldstosearchall), $sall);
 $sql.= " GROUP BY c.rowid, c.ref, c.datec, c.date_contrat, c.statut, c.ref_customer, c.ref_supplier, s.nom, s.rowid";
 $totalnboflines=0;
 $result=$db->query($sql);
@@ -245,13 +215,12 @@ if ($resql)
     $param='';
     if (! empty($contextpage) && $contextpage != $_SERVER["PHP_SELF"]) $param.='&contextpage='.$contextpage;
     if ($limit > 0 && $limit != $conf->liste_limit) $param.='&limit='.$limit;
-    if ($sall != '')                $param.='&sall='.$sall;
     if ($search_contract != '')     $param.='&search_contract='.$search_contract;
     if ($search_name != '')         $param.='&search_name='.$search_name;
     if ($search_ref_supplier != '') $param.='&search_ref_supplier='.$search_ref_supplier;
     if ($search_ref_customer != '') $param.='&search_ref_customer='.$search_ref_customer;
     if ($search_sale != '')         $param.='&search_sale=' .$search_sale;
-    if ($optioncss != '')           $param.='&optioncss='.$optioncss;
+	if ($search_status !='')		$param.='&search_status=' .$search_status;
 
     print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">';
     if ($optioncss != '') print '<input type="hidden" name="optioncss" value="'.$optioncss.'">';
@@ -262,20 +231,7 @@ if ($resql)
 
     print_barre_liste($langs->trans("ListOfContracts"), $page, $_SERVER["PHP_SELF"], $param, $sortfield, $sortorder,'',$num,$totalnboflines,'title_commercial.png', 0, '', '', $limit);
 
-	if ($sall)
-    {
-        foreach($fieldstosearchall as $key => $val) $fieldstosearchall[$key]=$langs->trans($val);
-        print $langs->trans("FilterOnInto", $sall) . join(', ',$fieldstosearchall);
-    }
-
-    // If the user can view prospects other than his'
-
-	$parameters=array();
-    $reshook=$hookmanager->executeHooks('printFieldPreListTitle',$parameters);    // Note that $action and $object may have been modified by hook
-	if (empty($reshook)) $moreforfilter .= $hookmanager->resPrint;
-	else $moreforfilter = $hookmanager->resPrint;
-
-    print '<table class="tagtable liste'.($moreforfilter?" listwithfilterbefore":"").'">';
+	print '<table class="tagtable liste">';
     print '<tr class="liste_titre">';
 
     print_liste_field_titre($langs->trans("Ref"), $_SERVER["PHP_SELF"], "c.ref","","$param",'',$sortfield,$sortorder);
@@ -377,7 +333,7 @@ if ($resql)
         print '</td>';
         print '<td>'.$obj->ref_customer.'</td>';
         print '<td>'.$obj->ref_supplier.'</td>';
-        print '<td><a href="../../comm/card.php?socid='.$obj->socid.'">'.img_object($langs->trans("ShowCompany"),"company").' '.$obj->name.'</a></td>';
+        print '<td><a href="../../comm/card.php?socid='.$obj->socid .'">'.img_object($langs->trans("ShowCompany"),"company").' '.$obj->name.'</a></td>';
          // Sales Rapresentatives
         print '<td>';
         if($obj->socid)
@@ -422,7 +378,7 @@ if ($resql)
 
         print '<td align="center">';
         if($action_element != 'none'){
-        	print '<a href="'.DOL_URL_ROOT.'/volvo/business/listcontrat.php?id='.$obj->cid . '&action=set_date&element='.$action_element.$param .'">';
+        	print '<a href="'.DOL_URL_ROOT.'/volvo/business/listcontrat.php?id='.$obj->cid . '&action=set_date&element='.$action_element.'&param=' . $param .'">';
         	print img_object("Action","cron");
         	print '</a>';
         }
