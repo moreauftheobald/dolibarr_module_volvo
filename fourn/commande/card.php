@@ -2045,10 +2045,13 @@ elseif (! empty($object->id))
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
 		// Bloc EDI
-
+		load_fiche_titre('Gestion des EDI');
 		print '<table>';
-		print '<tr class="liste_titre">';
-		print '<th class="liste_titre" Colspan="4">Gestion des EDI</th>';
+		print '<tr class="liste_titre" width="100%">';
+		print '<th class="liste_titre">Date</th>';
+		print '<th class="liste_titre">Référence</th>';
+		print '<th class="liste_titre">Montant</th>';
+		print '<th class="liste_titre">Statut</th>';
 		Print '</tr>';
 
 		Print '</table>';
