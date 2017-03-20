@@ -1323,12 +1323,23 @@ elseif (! empty($object->id))
 		 $formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id.'&lineid='.$lineid, $langs->trans('DeleteProductLine'), $langs->trans('ConfirmDeleteProductLine'), 'confirm_deleteline', '', 0, 1);
 	}
 
-	// Confirmation to delete line
+	// Confirmation to send EDI
 	if ($action == 'sendedi')
 	{
 		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, 'Envoyer un EDI','Envoyer la commande par EDI ?', 'confirm_sendedi', '', 0, 1);
 	}
 
+	// Confirmation to update EDI
+	if ($action == 'updateedi')
+	{
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, 'Annule et remplace EDI','Annuler et remplacer la commande par EDI ?', 'confirm_updateedi', '', 0, 1);
+	}
+
+	// Confirmation to cancel EDI
+	if ($action == 'canceledi')
+	{
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, 'Annuler un EDI','Annuler la commande par EDI ?', 'confirm_canceledi', '', 0, 1);
+	}
 
 	// Print form confirm
 	print $formconfirm;
@@ -1873,7 +1884,7 @@ elseif (! empty($object->id))
 				print '</tr>';
 				if($trans->msg == 'Pas de commande transmise'){
 					print '<tr>';
-					print '<td colspan="4" align="center"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=sendedi">Envoyer l\'EDI</a></td>';
+					print '<td colspan="4" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=sendedi">Envoyer l\'EDI</a></td>';
 					print '</tr>';
 				}
 			}
