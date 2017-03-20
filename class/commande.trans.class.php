@@ -130,7 +130,7 @@ class CommandeTrans extends CommonOrder
     		$orders = $result_orders['orders'];
     		$cmd_found =array();
     		foreach ($orders as $order){
-    			if($order['ref_client'] == $object->ref_supplier){
+    			if($order['ref_client'] == $object->ref_ext){
     				$this->cmd_found[] = $order;
     			}
     		}
@@ -191,10 +191,18 @@ class CommandeTrans extends CommonOrder
                 $status_code = $result_product["result"]["result_code"];
                 if($status_code =='OK'){
                 	$fournref[] = array(
-                			'desc'=>$line->desc,
+                			'desc'          => $line->product_desc,
+	                    	'type'          => $line->product_type,
                 			'product_id'=>$result_product['product']['id'],
-                			'qty'=>$line->qty,
-                			'unitprice'=>$line->subprice);
+                			'vat_rate'      => $line->tva_tx,
+	                 	 	'qty'           => $line->qty,
+	               		    'price'         => $line->price,
+	                    	'unitprice'     => $line->subprice,
+	                    	'total_net'     => $line->total_ht,
+	                    	'total_vat'     => $line->total_tva,
+		                    'total'         => $line->total_ttc,
+		                    'date_start'    => $line->date_start,
+	    	                'date_end'      => $line->date_end);
                 }else{
                 	$this->msg.= 'Ref non valide:'. $line->ref . '</br>';
                 	$this->error+=1;
@@ -205,9 +213,12 @@ class CommandeTrans extends CommonOrder
             	$cmd_fourn =array(
             			'thirdparty_id'=>$ws_thirdparty,
             			'ref_ext' => $object->ref_supplier,
-            			'date'=>dol_now(),
+            			'date'=>dol_print_date(dol_now(),'dayrfc'),
             			'note_public' => $object->note_public,
-            			'arrayoflines'=>$fournref
+            			'total_net'     => $object->total_ht,
+            			'total_var'     => $object->total_tva,
+            			'total'         => $object->total_ttc,
+            			'lines'=>$fournref
             	);
             	$soapclient_order = new nusoap_client($ws_url."/webservices/server_order.php");
             	$soapclient_order->soap_defencoding='UTF-8';
