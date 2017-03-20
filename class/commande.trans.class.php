@@ -128,7 +128,6 @@ class CommandeTrans extends CommonOrder
     		$ws_parameters = array('authentication'=>$ws_authentication,'idthirdparty'=>$ws_thirdparty);
     		$result_orders = $soapclient_order->call("getOrdersForThirdParty",$ws_parameters,$ws_ns,'');
     		$orders = $result_orders['orders'];
-    		$this->result = $result_orders;
     		$cmd_found =array();
     		foreach ($orders as $order){
     			if($order['ref_ext'] == $object->ref_supplier){

@@ -1854,7 +1854,6 @@ elseif (! empty($object->id))
 			print '<th class="liste_titre">Montant</th>';
 			print '<th class="liste_titre">Statut</th>';
 			Print '</tr>';
-			echo var_export($trans->result,true);
 			if (count($trans->cmd_found)>0){
 				foreach ($trans->cmd_found as $cmd){
 					print '<tr>';
