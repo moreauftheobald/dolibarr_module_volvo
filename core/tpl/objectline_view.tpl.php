@@ -414,13 +414,7 @@ if (empty($usemargins)) $usemargins=0;
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
 <?php } ?>
-<?php if(!empty($line->desc)){?>
-<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-<td colspan="9">
-<?php echo'<b><u>Commentaire:</u></b> ' . $line->desc;?>
-</td>
-</tr>
-<?php }?>
+
 <?php
 //Line extrafield
 if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){ ?>
@@ -430,9 +424,15 @@ if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_op
 <td colspan="6" style="border-top-style:none">
 </td>
 </tr>
-<?php }
-}
-?>
+<?php } ?>
+<?php if(!empty($line->desc)){?>
+<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
+<td colspan="9">
+<?php echo'<b><u>Commentaire:</u></b> ' . $line->desc;?>
+</td>
+</tr>
+<?php }?>
+<?php }?>
 
 
 <!-- END PHP TEMPLATE objectline_view.tpl.php -->
