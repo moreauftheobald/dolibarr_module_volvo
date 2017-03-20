@@ -134,8 +134,11 @@ class CommandeTrans extends CommonOrder
     				$this->cmd_found[] = $order;
     			}
     		}
-
-    		$this->msg=var_export($cmd_found,true);
+			if(count($this->cmd_found) == 0){
+				$this->msg = 'Pas de commande transmise';
+			}else{
+    			$this->msg='cmd found';
+			}
     	}else{
     		$this->msg=$user_status_code;
     	}
