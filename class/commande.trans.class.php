@@ -92,8 +92,8 @@ class CommandeTrans extends CommonOrder
     function fetch($ref,$object){
     	$ws_url      = $object->thirdparty->webservices_url;
     	$ws_key      = $object->thirdparty->webservices_key;
-    	$ws_user     = $object->thirdparty->array_options['options_ediuser'];
-    	$ws_password = $object->thirdparty->array_options['options_edipw'];
+    	$ws_user     = $object->thirdparty->array_options['options_edi_user'];
+    	$ws_password = $object->thirdparty->array_options['options_edi_pw'];
 
     	$ws_ns = 'http://www.dolibarr.org/ns/';
     	$ws_authentication = array(
