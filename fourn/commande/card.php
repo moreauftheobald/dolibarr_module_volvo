@@ -2042,9 +2042,6 @@ elseif (! empty($object->id))
 
 		print "<br>";
 		$object->fetch_thirdparty();
-
-		print var_export($object->thirdparty);
-
 		print '<div class="fichecenter"><div class="fichehalfleft">';
 		if (!empty($object->thirdparty->webservices_url)){
 			dol_include_once('/volvo/class/commande.trans.class.php');
