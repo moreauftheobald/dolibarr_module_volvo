@@ -347,7 +347,7 @@ if (empty($usemargins)) $usemargins=0;
 	<td align="right" class="linecoluht nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?><?php echo price($line->array_options["options_buyingprice_real"]); ?></td>
 
 	<?php if(empty($line->array_options["options_buyingprice_real"])){?>
-	<td align="right" class="liencolht nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?><?php echo price($line->total_ht-$line->pa_ht); ?></td>
+	<td align="right" class="liencolht nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?><?php echo price($line->total_ht-($line->qty * $line->pa_ht)); ?></td>
 	<?php }else{?>
 	<td align="right" class="liencolht nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?><?php echo price($line->total_ht-$line->array_options["options_buyingprice_real"]); ?></td>
 	<?php }?>
