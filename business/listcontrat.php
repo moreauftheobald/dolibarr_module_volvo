@@ -259,10 +259,10 @@ if ($resql)
     print '<input type="text" class="flat" size="10" name="search_contract" value="'.dol_escape_htmltag($search_contract).'">';
     print '</td>';
     print '<td class="liste_titre">';
-    print '<input type="text" class="flat" size="7" name="search_ref_customer value="'.dol_escape_htmltag($search_ref_customer).'">';
+    print '<input type="text" class="flat" size="7" name="search_ref_customer" value="'.dol_escape_htmltag($search_ref_customer).'">';
     print '</td>';
     print '<td class="liste_titre">';
-    print '<input type="text" class="flat" size="7" name="search_ref_supplier value="'.dol_escape_htmltag($search_ref_supplier).'">';
+    print '<input type="text" class="flat" size="7" name="search_ref_supplier" value="'.dol_escape_htmltag($search_ref_supplier).'">';
     print '</td>';
     print '<td class="liste_titre">';
     print '<input type="text" class="flat" size="15" name="search_name" value="'.dol_escape_htmltag($search_name).'">';
