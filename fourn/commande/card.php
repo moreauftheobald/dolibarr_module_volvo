@@ -2045,6 +2045,10 @@ elseif (! empty($object->id))
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
 		if (!empty($object->thirdparty->webservices_url)){
+			dol_include_once('/volvo/commande/commande.trans.class.php');
+			$trans = new CommandeTrans($db);
+			$res = $trans->fetch($object->ref_supplier,$object);
+
 			// Bloc EDI
 			print load_fiche_titre('Gestion des EDI');
 			print '<table width="100%" class="nobordernopadding">';
