@@ -2061,7 +2061,7 @@ elseif (! empty($object->id))
 			if (count($trans->cmd_found)>0){
 				foreach ($trans->cmd_found as $cmd){
 					print '<tr>';
-					print '<td>' .$cmd['date'] . '</td>';
+					print '<td>' .dol_print_date($cmd['date'],'daytext') . '</td>';
 					print '<td>' .$cmd['ref'] . '</td>';
 					print '<td>' .$cmd['total'] . '</td>';
 					print '<td>' .$trans->getLibStatut(2,$cmd['statut']) .'</td>';
