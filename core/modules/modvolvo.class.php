@@ -234,7 +234,7 @@ class modvolvo extends DolibarrModules
 			10 => array(
 				'VOLVO_OBLIGATOIRE',
 				'chaine',
-				'5',
+				'0',
 				'',
 				0,
 				'current',
