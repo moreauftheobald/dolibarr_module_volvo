@@ -419,8 +419,8 @@ if (empty($usemargins)) $usemargins=0;
 //Line extrafield
 if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){ ?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-<td colspan="2" class="linecoldescription"><?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
-<td colspan="2" class="linecoldescription"><?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
+<td colspan="2" style="border-style:none"><?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
+<td colspan="2" style="border-style:none"><?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
 <td colspan="6" style="border-style:none">
 </td>
 </tr>
