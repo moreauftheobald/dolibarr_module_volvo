@@ -225,7 +225,7 @@ class CommandeTrans extends CommonOrder
             	$soapclient_order->decodeUTF8(false);
             	$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$cmd_fourn);
             	$result_orders = $soapclient_order->call("createOrder",$ws_parameters,$ws_ns,'');
-            	$this->msg.= $result_orders['result_code'];
+            	$this->msg.= $result_orders['result']['result_code'];
             }else{
             	$this->msg.='no product match';
             }
@@ -326,6 +326,175 @@ class CommandeTrans extends CommonOrder
             if ($statut==self::STATUS_CLOSED && ($billed && empty($conf->global->WORKFLOW_BILL_ON_SHIPMENT))) return '<span class="hideonsmartphone">'.$langs->trans('StatusOrderProcessedShort').$billedtext.' </span>'.img_picto($langs->trans('StatusOrderProcessed').$billedtext,'statut6');
             if ($statut==self::STATUS_CLOSED && (! empty($conf->global->WORKFLOW_BILL_ON_SHIPMENT))) return '<span class="hideonsmartphone">'.$langs->trans('StatusOrderDeliveredShort').' </span>'.img_picto($langs->trans('StatusOrderDelivered'),'statut6');
         }
+    }
+
+    function update($object){
+
+    	$object->fetch_thirdparty();
+
+    	$ws_url      = $object->thirdparty->webservices_url;
+    	$ws_key      = $object->thirdparty->webservices_key;
+    	$ws_user     = $object->thirdparty->array_options['options_edi_user'];
+    	$ws_password = $object->thirdparty->array_options['options_edi_pw'];
+
+    	$ws_ns = 'http://www.dolibarr.org/ns/';
+    	$ws_authentication = array(
+    			'dolibarrkey'=>$ws_key,
+    			'sourceapplication'=>'DolibarrWebServiceClient',
+    			'login'=>$ws_user,
+    			'password'=>$ws_password,
+    			'entity'=>''
+    	);
+
+    	//Create SOAP client and connect it to user
+    	$soapclient_user = new nusoap_client($ws_url."/webservices/server_user.php");
+    	$soapclient_user->soap_defencoding='UTF-8';
+    	$soapclient_user->decodeUTF8(false);
+
+    	//Get the thirdparty associated to user
+    	$ws_parameters = array('authentication'=>$ws_authentication, 'id' => '', 'ref'=>$ws_user);
+    	$result_user = $soapclient_user->call("getUser", $ws_parameters, $ws_ns, '');
+    	$user_status_code = $result_user["result"]["result_code"];
+
+    	if ($user_status_code == "OK"){
+    		$ws_entity = $result_user["user"]["entity"];
+    		$ws_authentication['entity'] = $ws_entity;
+    		$ws_thirdparty = $result_user["user"]["fk_thirdparty"];
+
+    		$soapclient_order = new nusoap_client($ws_url."/webservices/server_order.php");
+    		$soapclient_order->soap_defencoding='UTF-8';
+    		$soapclient_order->decodeUTF8(false);
+    		$ws_parameters = array('authentication'=>$ws_authentication,'idthirdparty'=>$ws_thirdparty);
+    		$result_orders = $soapclient_order->call("getOrdersForThirdParty",$ws_parameters,$ws_ns,'');
+    		$orders = $result_orders['orders'];
+    		$cmd_found =array();
+    		foreach ($orders as $order){
+    			if($order['ref_ext'] == $object->ref_supplier){
+    				$this->cmd_found[] = $order;
+    				if($order['status']==0){
+    					$order['status'] = -2;
+    					$soapclient_orderupdate = new nusoap_client($ws_url."/webservices/server_order.php");
+    					$soapclient_orderupdate->soap_defencoding='UTF-8';
+    					$soapclient_orderupdate->decodeUTF8(false);
+    					$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    					$result_ordersupdate = $soapclient_orderupdate->call("updateOrder",$ws_parameters,$ws_ns,'');
+    					if($result_ordersupdate['result']['result_code'] =='OK'){
+    						$this->msg.='Commande ' .$order['ref']. ' supprimée </br>';
+    						$order['status'] = 0;
+    						$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    						$result_ordersupdate =$soapclient_orderupdate->call("createOrder",$ws_parameters,$ws_ns,'');
+    						if($result_ordersupdate['result']['result_code'] == 'OK'){
+    							$this->msg ='Commande ' . $result_ordersupdate['ref']. ' créée</br>';
+    						}else{
+    							$this->msg.='erreur de création de commande</br>';
+    						}
+    					}else{
+    						$this->msg.='impossible de supprimer la commande</br>';
+    					}
+    				}elseif($order['status'] == 1 || $order['status'] == 2){
+    					$order['status'] = -1;
+    					$soapclient_orderupdate = new nusoap_client($ws_url."/webservices/server_order.php");
+    					$soapclient_orderupdate->soap_defencoding='UTF-8';
+    					$soapclient_orderupdate->decodeUTF8(false);
+    					$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    					$result_ordersupdate = $soapclient_orderupdate->call("updateOrder",$ws_parameters,$ws_ns,'');
+    					if($result_ordersupdate['result']['result_code'] =='OK'){
+    						$this->msg.='Commande ' .$order['ref']. ' annulée </br>';
+    						$order['status'] = 0;
+    						$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    						$result_ordersupdate =$soapclient_orderupdate->call("createOrder",$ws_parameters,$ws_ns,'');
+    						if($result_ordersupdate['result']['result_code'] == 'OK'){
+    							$this->msg ='Commande ' . $result_ordersupdate['ref']. ' créée</br>';
+    						}else{
+    							$this->msg.='erreur de création de commande</br>';
+    						}
+    					}else{
+    						$this->msg.='impossible d\'annuler la commande</br>';
+    					}
+    				}else{
+    					$this->msg.='Impossible de modifier la commande</br>Commande classée fermée dans système cible</br>';
+    				}
+    			}
+    		}
+    	}else{
+    		$this->msg=$user_status_code;
+    	}
+    }
+    function cancel($object){
+
+    	$object->fetch_thirdparty();
+
+    	$ws_url      = $object->thirdparty->webservices_url;
+    	$ws_key      = $object->thirdparty->webservices_key;
+    	$ws_user     = $object->thirdparty->array_options['options_edi_user'];
+    	$ws_password = $object->thirdparty->array_options['options_edi_pw'];
+
+    	$ws_ns = 'http://www.dolibarr.org/ns/';
+    	$ws_authentication = array(
+    			'dolibarrkey'=>$ws_key,
+    			'sourceapplication'=>'DolibarrWebServiceClient',
+    			'login'=>$ws_user,
+    			'password'=>$ws_password,
+    			'entity'=>''
+    	);
+
+    	//Create SOAP client and connect it to user
+    	$soapclient_user = new nusoap_client($ws_url."/webservices/server_user.php");
+    	$soapclient_user->soap_defencoding='UTF-8';
+    	$soapclient_user->decodeUTF8(false);
+
+    	//Get the thirdparty associated to user
+    	$ws_parameters = array('authentication'=>$ws_authentication, 'id' => '', 'ref'=>$ws_user);
+    	$result_user = $soapclient_user->call("getUser", $ws_parameters, $ws_ns, '');
+    	$user_status_code = $result_user["result"]["result_code"];
+
+    	if ($user_status_code == "OK"){
+    		$ws_entity = $result_user["user"]["entity"];
+    		$ws_authentication['entity'] = $ws_entity;
+    		$ws_thirdparty = $result_user["user"]["fk_thirdparty"];
+
+    		$soapclient_order = new nusoap_client($ws_url."/webservices/server_order.php");
+    		$soapclient_order->soap_defencoding='UTF-8';
+    		$soapclient_order->decodeUTF8(false);
+    		$ws_parameters = array('authentication'=>$ws_authentication,'idthirdparty'=>$ws_thirdparty);
+    		$result_orders = $soapclient_order->call("getOrdersForThirdParty",$ws_parameters,$ws_ns,'');
+    		$orders = $result_orders['orders'];
+    		$cmd_found =array();
+    		foreach ($orders as $order){
+    			if($order['ref_ext'] == $object->ref_supplier){
+    				$this->cmd_found[] = $order;
+    				if($order['status']==0){
+    					$order['status'] = -2;
+    					$soapclient_orderupdate = new nusoap_client($ws_url."/webservices/server_order.php");
+    					$soapclient_orderupdate->soap_defencoding='UTF-8';
+    					$soapclient_orderupdate->decodeUTF8(false);
+    					$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    					$result_ordersupdate = $soapclient_orderupdate->call("updateOrder",$ws_parameters,$ws_ns,'');
+    					if($result_ordersupdate['result']['result_code'] =='OK'){
+    						$this->msg.='Commande ' .$order['ref']. ' supprimée </br>';
+    					}else{
+    						$this->msg.='erreur: impossible de supprimer la commande</br>';
+    					}
+    				}elseif($order['status'] == 1 || $order['status'] == 2){
+    					$order['status'] = -1;
+    					$soapclient_orderupdate = new nusoap_client($ws_url."/webservices/server_order.php");
+    					$soapclient_orderupdate->soap_defencoding='UTF-8';
+    					$soapclient_orderupdate->decodeUTF8(false);
+    					$ws_parameters = array('authentication'=>$ws_authentication,'order'=>$order);
+    					$result_ordersupdate = $soapclient_orderupdate->call("updateOrder",$ws_parameters,$ws_ns,'');
+    					if($result_ordersupdate['result']['result_code'] =='OK'){
+    						$this->msg.='Commande ' .$order['ref']. ' annulée </br>';
+    					}else{
+    						$this->msg.='erreur: impossible d\'annuler la commande</br>';
+    					}
+    				}else{
+    					$this->msg.='Impossible d\'annuler la commande</br>Commande classée fermée dans système cible</br>';
+    				}
+    			}
+    		}
+    	}else{
+    		$this->msg=$user_status_code;
+    	}
     }
 
 }

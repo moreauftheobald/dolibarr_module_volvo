@@ -137,6 +137,20 @@ if($action == 'confirm_sendedi' && $confirm	== 'yes' &&	$user->rights->fournisse
 	setEventMessage($trans->msg);
 }
 
+if($action == 'confirm_canceledi' && $confirm	== 'yes' &&	$user->rights->fournisseur->commande->commander){
+	dol_include_once('/volvo/class/commande.trans.class.php');
+	$trans = new CommandeTrans($db);
+	$res = $trans->cancel($object);
+	setEventMessage($trans->msg);
+}
+
+if($action == 'confirm_updateedi' && $confirm	== 'yes' &&	$user->rights->fournisseur->commande->commander){
+	dol_include_once('/volvo/class/commande.trans.class.php');
+	$trans = new CommandeTrans($db);
+	$res = $trans->update($object);
+	setEventMessage($trans->msg);
+}
+
 
 if ($action == 'setref_supplier' && $user->rights->fournisseur->commande->creer){
     $result=$object->setValueFrom('ref_supplier',GETPOST('ref_supplier','alpha'));
@@ -1871,7 +1885,7 @@ elseif (! empty($object->id))
 					print '<td>' .dol_print_date($cmd['date'],'daytext') . '</td>';
 					print '<td>' .$cmd['ref'] . '</td>';
 					print '<td>' .price($cmd['total']) . ' €</td>';
-					print '<td>' .$trans->getLibStatut(2,$cmd['statut']) .'</td>';
+					print '<td>' .$trans->getLibStatut(2,$cmd['status']) .'</td>';
 					print '</tr>';
 					print '<tr>';
 					print '<td colspan="2" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=updateedi">Annule et Remplace</a></td>';
