@@ -155,7 +155,7 @@ else if ($year > 0)
 if ($search_contract) $sql .= natural_search(array('c.rowid', 'c.ref'), $search_contract);
 if (!empty($search_ref_supplier)) $sql .= natural_search(array('c.ref_supplier'), $search_ref_supplier);
 if (!empty($search_ref_customer)) $sql .= natural_search(array('c.ref_customer'), $search_ref_customer);
-if (!empty($search_name)) $sql .= natural_search(array('s.nom'), $search_ref_customer);
+if (!empty($search_name)) $sql .= natural_search(array('s.nom'), $search_name);
 if ($search_sale > 0)
 {
 	$sql.= " AND s.rowid = sc.fk_soc AND sc.fk_user = " .$search_sale;
