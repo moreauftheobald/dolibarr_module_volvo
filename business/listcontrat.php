@@ -72,6 +72,8 @@ if (! $sortorder) $sortorder='DESC';
 //if ($user->societe_id) $socid=$user->societe_id;
 //$result = restrictedArea($user, 'contrat', $id);
 
+
+
 $staticcontrat=new Contrat($db);
 $staticcontratligne=new ContratLigne($db);
 
@@ -99,6 +101,12 @@ if (GETPOST("button_removefilter_x") || GETPOST("button_removefilter.x") || GETP
 	$month='';
 	$year='';
 }
+$search_sale_disabled = 0;
+if (empty($user->rights->volvo->stat_all)){
+	$search_sale = $user->id;
+	$search_sale_disabled = 1;
+}
+
 
 if($action=='confirm_set_date'){
 	$contrat = New Contrat($db);
@@ -268,7 +276,7 @@ if ($resql)
     print '<input type="text" class="flat" size="15" name="search_name" value="'.dol_escape_htmltag($search_name).'">';
     print '</td>';
     print '<td>';
-    print $formother->select_salesrepresentatives($search_sale,'search_sale',$user,0,1,'maxwidth300');
+    print $form->select_dolusers($search_sale,'search_sale',1,array(),$search_sale_disabled);
     print '</td>';
     print '<td>';
     print '<select class="flat" id="search_status" name="search_status">';
