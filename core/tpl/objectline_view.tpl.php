@@ -243,9 +243,7 @@ if (empty($usemargins)) $usemargins=0;
 	<?php } ?>
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
-<?php }
-}
-?>
+<?php } ?>
 </tr>
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
@@ -253,6 +251,8 @@ if (empty($usemargins)) $usemargins=0;
 <?php echo'<b><u>Commentaire:</u></b> ' . $line->desc;?>
 </td>
 </tr>
+<?php }?>
+
 <?php }?>
 <?php if ($object->element == 'commande') {?>
 
