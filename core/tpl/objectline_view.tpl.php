@@ -423,14 +423,14 @@ if (empty($usemargins)) $usemargins=0;
 <?php }?>
 <?php
 //Line extrafield
-if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){
-print '<tr ' . $bcdd[$var] .'>';
-print '<td colspan="2">'.$extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]) .'</td>';
-print '<td colspan="2">' . $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]) .'</td>';
-print '<td colspan="6" style="border-top-style:none">';
-print '</td>';
-print '</tr>';
-}
+if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){ ?>
+<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
+<td colspan="2"><?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
+<td colspan="2"><?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>';
+<td colspan="6" style="border-top-style:none">
+</td>
+</tr>
+<?php }
 }
 ?>
 
