@@ -127,7 +127,15 @@ class CommandeTrans extends CommonOrder
     		$soapclient_user->decodeUTF8(false);
     		$ws_parameters = array('authentication'=>$ws_authentication,'idthirdparty'=>$ws_thirdparty);
     		$result_orders = $soapclient_order->call("getOrdersForThirdParty",$ws_parameters,$ws_ns,'');
-    		$msg=var_export($result_orders,true);
+    		$orders = $result_orders['orders'];
+    		$cmd_found =array();
+    		foreach ($orders as $order){
+    			if($order['ref_client'] = $object->ref_supplier){
+    				$cmd_found = $order;
+    			}
+    		}
+
+    		$msg=var_export($order,true);
     	}else{
     		$msg=$user_status_code;
     	}
