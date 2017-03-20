@@ -178,7 +178,7 @@ if($search_status == 1){
 	$sql.= " AND ef.dt_enr IS NOT NULL AND ef.dt_ret_vtf IS NOT NULL AND ef.dt_trait IS NOT NULL";
 }
 $sql.= " GROUP BY c.rowid, c.ref, c.datec, c.date_contrat, c.statut, c.ref_customer, c.ref_supplier, s.nom, s.rowid";
-echo $sql;
+
 $totalnboflines=0;
 $result=$db->query($sql);
 if ($result)
