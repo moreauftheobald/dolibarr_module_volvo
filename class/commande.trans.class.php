@@ -144,7 +144,7 @@ class CommandeTrans extends CommonOrder
     	}
     }
 
-	function create($mode, $object){
+	function create($object){
 
 		$object->fetch_thirdparty();
 
