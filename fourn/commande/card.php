@@ -2047,7 +2047,7 @@ elseif (! empty($object->id))
 		//if (!empty($object->thirdparty->webservices_url)){
 			dol_include_once('/volvo/class/commande.trans.class.php');
 			$trans = new CommandeTrans($db);
-			$res = $trans->fetch($object->ref_supplier,$object);
+			$res = $trans->fetch($object);
 
 			// Bloc EDI
 			print load_fiche_titre('Gestion des EDI');

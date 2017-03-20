@@ -89,7 +89,8 @@ class CommandeTrans extends CommonOrder
 
     }
 
-    function fetch($ref,$object){
+    function fetch($object){
+
     	$ws_url      = $object->thirdparty->webservices_url;
     	$ws_key      = $object->thirdparty->webservices_key;
     	$ws_user     = $object->thirdparty->array_options['options_edi_user'];
