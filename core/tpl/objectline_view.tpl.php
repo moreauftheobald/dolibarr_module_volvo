@@ -421,13 +421,13 @@ if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_op
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
 <td colspan="2"><?php echo $extrafieldsline->showOutputField("fk_supplier",$line->array_options["options_fk_supplier"]);?></td>
 <td colspan="2"><?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
-<td colspan="5" style="border-top-style:none">
+<td colspan="6" style="border-top-style:none">
 </td>
 </tr>
 <?php } ?>
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-<td colspan="9">
+<td colspan="10">
 <?php echo'<b><u>Commentaire:</u></b> ' . $line->desc;?>
 </td>
 </tr>
