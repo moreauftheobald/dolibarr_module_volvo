@@ -2058,7 +2058,7 @@ elseif (! empty($object->id))
 			print '<th class="liste_titre">Montant</th>';
 			print '<th class="liste_titre">Statut</th>';
 			Print '</tr>';
-
+			print '<tr><td colspan="4">' .$res .'</td></tr>';
 			Print '</table>';
 
 			print '</br>';

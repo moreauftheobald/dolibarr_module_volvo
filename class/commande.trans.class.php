@@ -120,6 +120,8 @@ class CommandeTrans extends CommonOrder
     		$msg=$user_status_code;
     	}
 
+    	return $msg;
+
     }
 
 
