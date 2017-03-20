@@ -2045,7 +2045,7 @@ elseif (! empty($object->id))
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
 		//if (!empty($object->thirdparty->webservices_url)){
-			dol_include_once('/volvo/commande/commande.trans.class.php');
+			dol_include_once('/volvo/class/commande.trans.class.php');
 			$trans = new CommandeTrans($db);
 			$res = $trans->fetch($object->ref_supplier,$object);
 
