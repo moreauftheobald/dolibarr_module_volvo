@@ -6,5 +6,6 @@
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 	<buildpathentry combineaccessrules="false" kind="prj" path="/dolibarr_module_referenceletters"/>
 	<buildpathentry combineaccessrules="false" kind="prj" path="/dolibarr_module_subtotal"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/dolibarr_module_lead"/>
 	<buildpathentry kind="src" path=""/>
 </buildpath>

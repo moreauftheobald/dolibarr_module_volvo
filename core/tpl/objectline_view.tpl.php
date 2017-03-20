@@ -247,6 +247,11 @@ if (empty($usemargins)) $usemargins=0;
 }
 ?>
 </tr>
+<tr>
+<td colspan="5">
+<?php echo $line->desc;?>
+</td>
+</tr>
 <?php if ($object->element == 'commande') {?>
 
 	<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
@@ -417,6 +422,11 @@ print '</td>';
 print '</tr>';
 }
 ?>
-
+</tr>
+<tr>
+<td colspan="5">
+<?php echo $line->desc;?>
+</td>
+</tr>
 
 <!-- END PHP TEMPLATE objectline_view.tpl.php -->
