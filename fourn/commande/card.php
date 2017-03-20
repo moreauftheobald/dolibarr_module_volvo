@@ -1851,11 +1851,11 @@ elseif (! empty($object->id))
 				}
 			}else{
 				print '<tr>';
-				print '<td colspan="4"> resultat: ' .$trans->msg .'</td>';
+				print '<td colspan="4" align="center"> resultat: ' .$trans->msg .'</td>';
 				print '</tr>';
 				if($trans->msg == 'Pas de commande transmise'){
 					print '<tr>';
-					print '<td colspan="4"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=sendedi">Envoyer l\'EDI</a></td>';
+					print '<td colspan="4" align="center"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=sendedi">Envoyer l\'EDI</a></td>';
 					print '</tr>';
 				}
 			}
