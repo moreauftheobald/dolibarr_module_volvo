@@ -68,9 +68,9 @@ if (! $sortfield) $sortfield='c.ref';
 if (! $sortorder) $sortorder='DESC';
 
 // Security check
-$id=GETPOST('id','int');
-if ($user->societe_id) $socid=$user->societe_id;
-$result = restrictedArea($user, 'contrat', $id);
+//$id=GETPOST('id','int');
+//if ($user->societe_id) $socid=$user->societe_id;
+//$result = restrictedArea($user, 'contrat', $id);
 
 $staticcontrat=new Contrat($db);
 $staticcontratligne=new ContratLigne($db);
