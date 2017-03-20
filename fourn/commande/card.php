@@ -1863,8 +1863,8 @@ elseif (! empty($object->id))
 					print '<td>' .$trans->getLibStatut(2,$cmd['statut']) .'</td>';
 					print '</tr>';
 					print '<tr>';
-					print '<td colspan="2" align="center"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=updateedi">Annule et Remplace</a></td>';
-					print '<td colspan="2" align="center"><a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=canceledi">Annuler Commande</a></td>';
+					print '<td colspan="2" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=updateedi">Annule et Remplace</a></td>';
+					print '<td colspan="2" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=canceledi">Annuler Commande</a></td>';
 					print '</tr>';
 				}
 			}else{
