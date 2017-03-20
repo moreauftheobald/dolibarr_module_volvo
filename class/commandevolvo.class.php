@@ -279,11 +279,11 @@ class CommandeVolvo extends Commande
 					if (!empty($line->array_options['options_fk_supplier']) || !empty($line->array_options['options_dt_invoice'])) {
 						$this->total_real_paht += $realpa;
 					} elseif (! empty($line->pa_ht)) {
-						$this->total_real_paht += $line->pa_ht;
+						$this->total_real_paht += $line->pa_ht * $line->qty;
 					}
 				} elseif ($type == 'theo') {
 					if (! empty($line->pa_ht)) {
-						$this->total_real_paht += $line->pa_ht;
+						$this->total_real_paht += $line->pa_ht * $line->qty;
 					}
 				}
 			}
