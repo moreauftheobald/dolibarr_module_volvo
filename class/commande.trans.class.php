@@ -196,7 +196,7 @@ class CommandeTrans extends CommonOrder
                 			'qty'=>$line->qty,
                 			'unitprice'=>$line->subprice);
                 }else{
-                	$this->msg.= 'Ref non valide</br>';
+                	$this->msg.= 'Ref non valide:'. $line->ref . '</br>';
                 	$this->error+=1;
                 }
 
