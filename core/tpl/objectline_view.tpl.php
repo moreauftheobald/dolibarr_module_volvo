@@ -248,7 +248,7 @@ if (empty($usemargins)) $usemargins=0;
 ?>
 </tr>
 <?php if(!empty($line->desc)){?>
-<tr>
+<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
 <td colspan="5">
 <?php echo $line->desc;?>
 </td>
