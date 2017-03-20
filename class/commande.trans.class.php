@@ -131,7 +131,7 @@ class CommandeTrans extends CommonOrder
     		$this->result = $result_orders;
     		$cmd_found =array();
     		foreach ($orders as $order){
-    			if($order['ref_client'] == $object->ref_ext){
+    			if($order['ref_ext'] == $object->ref_supplier){
     				$this->cmd_found[] = $order;
     			}
     		}
