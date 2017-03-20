@@ -2057,7 +2057,22 @@ elseif (! empty($object->id))
 			print '<th class="liste_titre">Montant</th>';
 			print '<th class="liste_titre">Statut</th>';
 			Print '</tr>';
-			print '<tr><td colspan="4"> resultat: ' .$res .'</td></tr>';
+
+			if (count($trans->cmd_found)>0){
+				foreach ($trans->cmd_found as $cmd){
+					print '<tr>';
+					print '<td>' .$cmd['date'] . '</td>';
+					print '<td>' .$cmd['ref'] . '</td>';
+					print '<td>' .$cmd['total'] . '</td>';
+					print '<td>' .$trans->getLibStatut(2,$cmd['statut']) .'</td>';
+					print '</tr>';
+				}
+			}else{
+				print '<tr>';
+				print '<td colspan="4"> resultat: ' .$res .'</td>';
+				print '</tr>';
+			}
+
 			Print '</table>';
 
 			print '</br>';

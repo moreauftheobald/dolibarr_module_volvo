@@ -131,13 +131,13 @@ class CommandeTrans extends CommonOrder
     		$cmd_found =array();
     		foreach ($orders as $order){
     			if($order['ref_client'] == $object->ref_supplier){
-    				$cmd_found[] = $order;
+    				$this->cmd_found[] = $order;
     			}
     		}
 
-    		$msg=var_export($cmd_found,true);
+    		$this->msg=var_export($cmd_found,true);
     	}else{
-    		$msg=$user_status_code;
+    		$this->msg=$user_status_code;
     	}
 
     	return $msg;
@@ -376,10 +376,10 @@ class CommandeTrans extends CommonOrder
      *	@param      int		$mode       0=libelle long, 1=libelle court, 2=Picto + Libelle court, 3=Picto, 4=Picto + Libelle long, 5=Libelle court + Picto
      *	@return     string      		Libelle
      */
-    function getLibStatut($mode)
+    function getLibStatut($mode,$statut)
     {
         if ($this->facturee && empty($this->billed)) $this->billed=$this->facturee; // For backward compatibility
-        return $this->LibStatut($this->statut,$this->billed,$mode);
+        return $this->LibStatut($statut,$this->billed,$mode);
     }
 
     /**
