@@ -422,7 +422,6 @@ print '</td>';
 print '</tr>';
 }
 ?>
-</tr>
 <tr>
 <td colspan="5">
 <?php echo $line->desc;?>
