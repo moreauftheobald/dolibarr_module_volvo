@@ -1000,8 +1000,8 @@ class modvolvo extends DolibarrModules
 				'url' => '/volvo/business/listcontrat.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_all',
-				'perms' => '$user->rights->volvo->stat_all',
+				'enabled' => '$user->rights->lead->read',
+				'perms' => '$user->rights->lead->read',
 				'target' => '',
 				'user' => 0
 		);
