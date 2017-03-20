@@ -119,17 +119,6 @@ $socstatic = new Societe($db);
 
 llxHeader();
 
-if ($action == 'set_date') {
-	$form = new Form($db);
-	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $param, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
-			'type' => 'date',
-			'name' => 'date_action',
-			'label'=> "date de l'action"
-	)), '', 1);
-}
-
-if(!empty($formconfirm)) print $formconfirm;
-
 $sql = 'SELECT';
 $sql.= " c.rowid as cid, c.ref, c.datec, c.date_contrat, c.statut, c.ref_customer, c.ref_supplier,";
 $sql.= " s.nom as name, s.rowid as socid, ef.dt_env_cli as dt_env_cli, ef.dt_ret_cli as dt_ret_cli, ef.dt_sig_the as dt_sig_the, ef.dt_env_vtf as dt_env_vtf, ef.dt_enr as dt_enr,";
@@ -221,6 +210,21 @@ if ($resql)
     if ($search_ref_customer != '') $param.='&search_ref_customer='.$search_ref_customer;
     if ($search_sale != '')         $param.='&search_sale=' .$search_sale;
 	if ($search_status !='')		$param.='&search_status=' .$search_status;
+
+
+	if ($action == 'set_date') {
+		$form = new Form($db);
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $param, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
+				'type' => 'date',
+				'name' => 'date_action',
+				'label'=> "date de l'action"
+		)), '', 1);
+	}
+
+	if(!empty($formconfirm)) print $formconfirm;
+
+
+
 
     print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">';
     if ($optioncss != '') print '<input type="hidden" name="optioncss" value="'.$optioncss.'">';
@@ -378,7 +382,7 @@ if ($resql)
 
         print '<td align="center">';
         if($action_element != 'none'){
-        	print '<a href="'.DOL_URL_ROOT.'/volvo/business/listcontrat.php?id='.$obj->cid . '&action=set_date&element='.$action_element.'&param=' . $param .'">';
+        	print '<a href="'.DOL_URL_ROOT.'/volvo/business/listcontrat.php?id='.$obj->cid . '&action=set_date&element='.$action_element. $param .'">';
         	print img_object("Action","cron");
         	print '</a>';
         }
