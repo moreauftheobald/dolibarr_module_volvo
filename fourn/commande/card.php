@@ -1879,6 +1879,7 @@ elseif (! empty($object->id))
 			print '<th class="liste_titre">Montant</th>';
 			print '<th class="liste_titre">Statut</th>';
 			Print '</tr>';
+			$cmdactiv =0;
 			if (count($trans->cmd_found)>0){
 				foreach ($trans->cmd_found as $cmd){
 					print '<tr>';
@@ -1888,11 +1889,19 @@ elseif (! empty($object->id))
 					print '<td>' .$trans->getLibStatut(2,$cmd['status']) .'</td>';
 					print '</tr>';
 					if(in_array($cmd['status'], array(0,1,2))){
+						$cmdactiv++;
 						print '<tr>';
 						print '<td colspan="2" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=updateedi">Annule et Remplace</a></td>';
 						print '<td colspan="2" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=canceledi">Annuler Commande</a></td>';
 						print '</tr>';
+					}elseif($cmd['status'] == 3){
+						$cmdactiv++;
 					}
+				}
+				if(empty($cmdactiv)){
+					print '<tr>';
+					print '<td colspan="4" align="center"><a class="button" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&amp;action=sendedi">Envoyer l\'EDI</a></td>';
+					print '</tr>';
 				}
 			}else{
 				print '<tr>';
