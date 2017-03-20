@@ -2044,18 +2044,21 @@ elseif (! empty($object->id))
 
 
 		print '<div class="fichecenter"><div class="fichehalfleft">';
-		// Bloc EDI
-		print load_fiche_titre('Gestion des EDI');
-		print '<table width="100%" class="nobordernopadding">';
-		print '<tr class="liste_titre" >';
-		print '<th class="liste_titre">Date</th>';
-		print '<th class="liste_titre">Référence</th>';
-		print '<th class="liste_titre">Montant</th>';
-		print '<th class="liste_titre">Statut</th>';
-		Print '</tr>';
+		if (!empty($object->thirdparty->webservices_url)){
+			// Bloc EDI
+			print load_fiche_titre('Gestion des EDI');
+			print '<table width="100%" class="nobordernopadding">';
+			print '<tr class="liste_titre" >';
+			print '<th class="liste_titre">Date</th>';
+			print '<th class="liste_titre">Référence</th>';
+			print '<th class="liste_titre">Montant</th>';
+			print '<th class="liste_titre">Statut</th>';
+			Print '</tr>';
 
-		Print '</table>';
+			Print '</table>';
 
+			print '</br>';
+		}
 
 
 		/*
