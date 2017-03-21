@@ -183,7 +183,7 @@ if ($action == 'updateMask') {
 	} else {
 		setEventMessages($langs->trans("Error"), null, 'errors');
 	}
-}else if ($action == 'rem_dir' && !empty($dir)) {
+}else if ($action == 'rem_dir') {
 	dol_include_once('/core/lib/files.lib.php');
 	$dirdel =DOL_DATA_ROOT . $dir;
 	//$res = dol_delete_dir_recursive($dirdel);
