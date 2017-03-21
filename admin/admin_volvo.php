@@ -187,7 +187,7 @@ if ($action == 'updateMask') {
 	dol_include_once('/core/lib/files.lib.php');
 	$dirdel =DOL_DATA_ROOT . $dir;
 	//$res = dol_delete_dir_recursive($dirdel);
-	$res = chmod_r($dirdel, '0777');
+	$res = chmod_r($dirdel, 0777);
 	if(!empty($res)){
 		$mes = $res . ' Fichiers supprimé';
 	}else{
