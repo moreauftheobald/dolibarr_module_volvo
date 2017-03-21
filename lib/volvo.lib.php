@@ -432,6 +432,19 @@ function show_picto_pdf($value) {
 	}
 }
 
-function remove_dir($dir){
-	dol_delete_dir_recursive($dir);
+function chmod_r($Path,$mode) {
+   $dp = opendir($Path);
+   while($File = readdir($dp)) {
+      if($File != "." AND $File != "..") {
+         if(is_dir($File)){
+            chmod($File, $mode);
+         }else{
+             chmod($Path."/".$File, $mode);
+             if(is_dir($Path."/".$File)) {
+                chmod_r($Path."/".$File);
+             }
+         }
+      }
+   }
+   closedir($dp);
 }
