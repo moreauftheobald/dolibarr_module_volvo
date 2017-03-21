@@ -437,11 +437,11 @@ function chmod_r($Path,$mode) {
    while($File = readdir($dp)) {
       if($File != "." AND $File != "..") {
          if(is_dir($File)){
-            chmod($File, $mode);
+            chmod($File, 0777);
          }else{
-             chmod($Path."/".$File, $mode);
+             chmod($Path."/".$File, 0777);
              if(is_dir($Path."/".$File)) {
-                chmod_r($Path."/".$File,$mode);
+                chmod_r($Path."/".$File,0777);
              }
          }
       }
