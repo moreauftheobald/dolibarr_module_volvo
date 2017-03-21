@@ -441,7 +441,7 @@ function chmod_r($Path,$mode) {
          }else{
              chmod($Path."/".$File, $mode);
              if(is_dir($Path."/".$File)) {
-                chmod_r($Path."/".$File);
+                chmod_r($Path."/".$File,$mode);
              }
          }
       }
