@@ -878,7 +878,7 @@ class modvolvo extends DolibarrModules
 
 		// $r++;
 		// Main menu entries
-		$this->menus = array(); // List of menus to add
+$this->menus = array(); // List of menus to add
 		$r = 0;
 
 		$this->menu[$r] = array(
@@ -947,6 +947,22 @@ class modvolvo extends DolibarrModules
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=volvo',
 				'type' => 'left',
+				'titre' => 'Imports',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'imports',
+				'url' => '/volvo/import/index.php',
+				'langs' => '',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->stat_all',
+				'perms' => '$user->rights->volvo->stat_all',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=imports',
+				'type' => 'left',
 				'titre' => 'Import Immat',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'immat',
@@ -955,6 +971,22 @@ class modvolvo extends DolibarrModules
 				'position' => 100+$r,
 				'enabled' => '$user->admin',
 				'perms' => '$user->admin',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=imports',
+				'type' => 'left',
+				'titre' => 'Import OM',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'om',
+				'url' => '/volvo/import/import_om.php?step=1',
+				'langs' => '',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->stat_all',
+				'perms' => '$user->rights->volvo->stat_all',
 				'target' => '',
 				'user' => 0
 		);
@@ -1021,6 +1053,7 @@ class modvolvo extends DolibarrModules
 				'user' => 0
 		);
 		$r ++;
+
 
 
 
