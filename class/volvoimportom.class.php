@@ -332,7 +332,7 @@ class VolvoImportom extends VolvoImport
 
 
 		//update customer order id
-		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_extrafields as EF ';
+		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_extrafields as ef ';
 		$sql.= 'SET tmp.cust_cmd_id = ef.fk_object ';
 		$sql.= 'WHERE tmp.numero_de_commande = ef.numom';
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update cust_cmd_id', LOG_DEBUG);
@@ -368,7 +368,7 @@ class VolvoImportom extends VolvoImport
 
 
 		//update customer order id
-		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_fournisseur_extrafields as EF, ' . MAIN_DB_PREFIX . 'commande_fournisseur as cmd ';
+		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_fournisseur_extrafields as ef, ' . MAIN_DB_PREFIX . 'commande_fournisseur as cmd ';
 		$sql.= 'SET tmp.fourn_cmd_id = ef.fk_object ';
 		$sql.= 'WHERE tmp.numero_de_commande = ef.numom AND ef.fk_object = cmd.rowid AND cmd.fk_soc = 32553';
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update fourn_cmd_id', LOG_DEBUG);
