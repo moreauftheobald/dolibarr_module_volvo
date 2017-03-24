@@ -67,7 +67,8 @@ class VolvoImportom extends VolvoImport
 				'filecolumntitle' => 'Numéro de commande',
 				'editable' => 0,
 				'noinsert' => 1,
-				'isnumom' =>1
+				'isnumom' =>1,
+				'ForCustomerStep' => 1
 		);
 		$this->targetInfoArray[] = array(
 				'column' => 'dt_blockupdate',
@@ -130,7 +131,31 @@ class VolvoImportom extends VolvoImport
 				'filecolumntitle' => 'VIN',
 				'editable' => 0,
 				'noinsert' => 1,
-				'isvin' =>1
+				'isvin' =>1,
+				'ForCustomerStep' => 1
+		);
+		$this->targetInfoArray[] = array(
+				'column' => 'cust_name',
+				'type' => 'text',
+				'columntrans' => 'Client',
+				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
+				'tabletrans' => $langs->trans('commande extrafields'),
+				'filecolumntitle' => 'Client final',
+				'editable' => 0,
+				'noinsert' => 1,
+				'ForCustomerStep' => 1,
+				'iscustname' => 1
+		);
+		$this->targetInfoArray[] = array(
+				'column' => 'model',
+				'type' => 'text',
+				'columntrans' => 'Modele',
+				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
+				'tabletrans' => $langs->trans('commande extrafields'),
+				'filecolumntitle' => 'Modèle',
+				'editable' => 0,
+				'noinsert' => 1,
+				'ForCustomerStep' => 1
 		);
 
 	}
@@ -187,7 +212,7 @@ class VolvoImportom extends VolvoImport
 			$sql = 'CREATE TABLE ' . $this->tempTable;
 			$sql .= '(';
 			$sql .= 'rowid integer NOT NULL auto_increment PRIMARY KEY,';
-			$sql .= 'fourn_cmd_id integer DEFAULT NULL,';
+			$sql .= 'fourn_cmd_id varchar(255) DEFAULT NULL,';
 			$sql .= 'cust_cmd_id integer DEFAULT NULL,';
 			$sql .= 'integration_status integer DEFAULT NULL,';
 			$sql .= 'integration_action varchar(20) DEFAULT NULL,';
@@ -296,6 +321,17 @@ class VolvoImportom extends VolvoImport
 
 		$error = 0;
 
+		$sql = "UPDATE " . MAIN_DB_PREFIX . "commande as c, " . MAIN_DB_PREFIX . "element_element as ee, " . MAIN_DB_PREFIX . "commande_fournisseur as cf ";
+		$sql.= "SET cf.ref_supplier = c.ref ";
+		$sql.= "WHERE (ee.fk_source = c.rowid and ee.sourcetype ='commande') ";
+		$sql.= "AND (cf.rowid = ee.fk_target and ee.targettype = 'order_supplier') ";
+		$sql.= "AND cf.ref_supplier != c.ref";
+		$resql = $this->db->query($sql);
+		if (! $resql) {
+			$this->errors[] = $this->db->lasterror;
+			$error ++;
+		}
+
 		$sql = 'UPDATE ' . $this->tempTable . ' SET integration_status=NULL, integration_comment=\'\'';
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' remove all comment', LOG_DEBUG);
 		$resql = $this->db->query($sql);
@@ -330,9 +366,18 @@ class VolvoImportom extends VolvoImport
 			}
 		}
 
+		// Find OM number column
+		foreach ( $this->targetInfoArray as $key => $data ) {
+			if (array_key_exists('iscustname', $data) && ! empty($data['isnumom'])) {
+				$columnTmpName = $matchColmunArray[$key];
+				$colcustname_tmptable = $columnTmpName;
+				$colcustname_desttable = $data['column'];
+			}
+		}
+
 
 		//update customer order id
-		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_extrafields as ef ';
+		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_extrafields as EF ';
 		$sql.= 'SET tmp.cust_cmd_id = ef.fk_object ';
 		$sql.= 'WHERE tmp.numero_de_commande = ef.numom';
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update cust_cmd_id', LOG_DEBUG);
@@ -368,15 +413,42 @@ class VolvoImportom extends VolvoImport
 
 
 		//update customer order id
-		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_fournisseur_extrafields as ef, ' . MAIN_DB_PREFIX . 'commande_fournisseur as cmd ';
-		$sql.= 'SET tmp.fourn_cmd_id = ef.fk_object ';
-		$sql.= 'WHERE tmp.numero_de_commande = ef.numom AND ef.fk_object = cmd.rowid AND cmd.fk_soc = 32553';
-		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update fourn_cmd_id', LOG_DEBUG);
-		$resql = $this->db->query($sql);
-		if (! $resql) {
-			$this->errors[] = $this->db->lasterror;
-			$error ++;
+		$sql1 = "SELECT cf.rowid, ef.numom ";
+		$sql1.= "FROM " . MAIN_DB_PREFIX . "commande_fournisseur as cf ";
+		$sql1.= "INNER JOIN " . MAIN_DB_PREFIX . "commande as c on c.ref = cf.ref_supplier ";
+		$sql1.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as ef on ef.fk_object = c.rowid ";
+		$sql1.= "INNER JOIN " .$this->tempTable . " as tmp ON tmp.numero_de_commande = ef.numom";
+		$resql1 = $this->db->query($sql1);
+
+		if($resql1){
+			while ($obj = $this->db->fetch_object($resql1)){
+				$arrayresult[$obj->numom].= $obj->rowid .',';
+			}
+			if(count($arrayresult)>1){
+				foreach ($arrayresult as $key =>$value){
+					$arrayresult[$key] = substr($value, 0,-1);
+				}
+			}
 		}
+
+		if(count($arrayresult)>0){
+			foreach ($arrayresult as $key =>$value){
+				$sql = "UPDATE " . $this->tempTable ." as tmp ";
+				$sql.= "SET tmp.fourn_cmd_id = '" . $value . "' ";
+				$sql.= "WHERE tmp.numero_de_commande = " . $key;
+// 				var_dump($sql);
+// 				exit;
+				dol_syslog(get_class($this) . '::' . __METHOD__ . ' update fourn_cmd_id', LOG_DEBUG);
+				$resql = $this->db->query($sql);
+				//var_dump($resql);
+				if (! $resql) {
+					$this->errors[] = $this->db->lasterror;
+					$error ++;
+				}
+			}
+		}
+
+
 
 
 		// Add supplier order not found integration comment
@@ -510,29 +582,52 @@ class VolvoImportom extends VolvoImport
 		$cmd_data_array= array();
 		$cmdfourn_data_array= array();
 		foreach ( $this->lines as $line ) {
-			$cmd_data_array[$line->rowid]['cust_cmd_id'] = $line->cust_cmd_id;
-			$cmdfourn_data_array[$line->rowid]['fourn_cmd_id'] = $line->fourn_cmd_id;
+			$cmd_fourn_array = explode(',', $line->fourn_cmd_id);
 			foreach ($this->targetInfoArray as $key => $col){
 				if($col['column'] == 'numom'){
-					$cmd_data_array[$line->rowid]['numom'] = $line->$matchColmunArray[$key];
-					$cmdfourn_data_array[$line->rowid]['numom'] = $line->$matchColmunArray[$key];
+					$cmd_data_array[$line->cust_cmd_id]['numom'] = $line->$matchColmunArray[$key];
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['numom'] = $line->$matchColmunArray[$key];
+					}
+
 				}
 				if($col['column'] == 'vin'){
-					$cmd_data_array[$line->rowid]['vin'] = $line->$matchColmunArray[$key];
-					$cmdfourn_data_array[$line->rowid]['vin'] = $line->$matchColmunArray[$key];
+					$cmd_data_array[$line->cust_cmd_id]['vin'] = $line->$matchColmunArray[$key];
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['vin'] = $line->$matchColmunArray[$key];
+					}
 				}
-				if($col['column'] == 'dt_fact') $cmd_data_array[$line->rowid]['dt_fact'] = $line->$matchColmunArray[$key];
-				if($col['column'] == 'date_livraison') $cmdfourn_data_array[$line->rowid]['date_livraison'] = $line->$matchColmunArray[$key];
-				if($col['column'] == 'dt_blockupdate') $cmdfourn_data_array[$line->rowid]['dt_blockupdate'] = $line->$matchColmunArray[$key];
-				if($col['column'] == 'dt_liv_maj') $cmdfourn_data_array[$line->rowid]['dt_liv_maj'] = $line->$matchColmunArray[$key];
-				if($col['column'] == 'dt_lim_annul') $cmdfourn_data_array[$line->rowid]['dt_lim_annul'] = $line->$matchColmunArray[$key];
+				if($col['column'] == 'dt_fact'){
+					$cmd_data_array[$line->cust_cmd_id]['dt_fact'] = $line->$matchColmunArray[$key];
+				}
+				if($col['column'] == 'date_livraison'){
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['date_livraison'] = $line->$matchColmunArray[$key];
+					}
+				}
+				if($col['column'] == 'dt_blockupdate'){
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['dt_blockupdate'] = $line->$matchColmunArray[$key];
+					}
+				}
+				if($col['column'] == 'dt_liv_maj'){
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['dt_liv_maj'] = $line->$matchColmunArray[$key];
+					}
+				}
+				if($col['column'] == 'dt_lim_annul'){
+					foreach ($cmd_fourn_array as $numcmdfourn){
+						$cmdfourn_data_array[$numcmdfourn]['dt_lim_annul'] = $line->$matchColmunArray[$key];
+					}
+				}
 			}
 		}
-
+//   		var_dump($cmd_data_array);
+//   		exit;
 
 		foreach ($cmd_data_array as $key => $value){
 			$cmd = new CommandeVolvo($this->db);
-			$res = $cmd->fetch('326');
+			$res = $cmd->fetch($key);
 			if ($res < 0) {
 				$error ++;
 			}else{
@@ -551,7 +646,7 @@ class VolvoImportom extends VolvoImport
 		}
 		foreach ($cmdfourn_data_array as $key => $value){
 			$cmd_fourn = new CommandeFournisseur($this->db);
-			$res = $cmd_fourn->fetch($value['fourn_cmd_id']);
+			$res = $cmd_fourn->fetch($key);
 			if ($res < 0) {
 				$error ++;
 			}else{
@@ -650,6 +745,79 @@ class VolvoImportom extends VolvoImport
 		foreach ( $this->columnArray as $key => $col ) {
 			if (in_array($col['name'], $mathcolumnname) || in_array($col['name'], $forceDisplaycolumn)) {
 				$this->columnArrayCustomer[$key] = $col;
+			}
+		}
+	}
+
+
+	public function printlistorderwhithoutOMlist($lineid){
+
+		dol_include_once('/core/class/html.form.class.php');
+
+		$form = new Form($this->db);
+
+		$sql = 'SELECT c.rowid as id, c.ref as ref, s.nom, c.date_valid ';
+		$sql.= 'FROM ' . MAIN_DB_PREFIX .  'commande as c ';
+		$sql.= 'LEFT JOIN ' . MAIN_DB_PREFIX .  'commande_extrafields as ef on c.rowid = ef.fk_object ';
+		$sql.= 'INNER JOIN ' . MAIN_DB_PREFIX .  'societe as s on s.rowid = c.fk_soc ';
+		$sql.= 'WHERE ef.numom IS NULL AND c.fk_statut IN(1,2) ';
+
+		$arrayout=array();
+		//$arrayout[0]='';
+
+		$resql = $this->db->query($sql);
+		if($resql){
+			while ( $obj = $this->db->fetch_object($resql) ) {
+				$arrayout[$obj->id] = $obj->nom . ' / ' . $obj->ref . ' du ' .$obj->date_valid;
+			}
+		}else{
+			return $sql;
+		}
+
+	$out.= $form->selectarray('cmd_line_' . $lineid, $arrayout,'',1);
+
+		return $out;
+	}
+
+	public function countcustorderwhithoutOM(){
+
+		$sql = 'SELECT COUNT(c.rowid) as nb ';
+		$sql.= 'FROM ' . MAIN_DB_PREFIX .  'commande as c ';
+		$sql.= 'LEFT JOIN ' . MAIN_DB_PREFIX .  'commande_extrafields as ef on c.rowid = ef.fk_object ';
+		$sql.= 'INNER JOIN ' . MAIN_DB_PREFIX .  'societe as s on s.rowid = c.fk_soc ';
+		$sql.= 'WHERE ef.numom IS NULL AND c.fk_statut IN(1,2) ';
+
+		$resql = $this->db->query($sql);
+		if($resql){
+			$obj = $this->db->fetch_object($resql);
+			return $obj->nb;
+		}else{
+			return -1;
+		}
+	}
+
+
+	public function setnumom($key,$value){
+		global $langs, $conf,$user;
+		dol_include_once('/volvo/class/commandevolvo.class.php');
+		dol_include_once('/fourn/class/fournisseur.class.php');
+
+		$cmd = new CommandeVolvo($this->db);
+		$cmd_fourn = new CommandeFournisseur($this->db);
+
+		$cmd->fetch($key);
+		$cmd->array_options['options_numom'] = $value;
+		$cmd->insertExtraFields();
+
+		$sql = "SELECT rowid FROM ' . MAIN_DB_PREFIX . 'commande_fournisseur ";
+		$sql.= "WHERE ref_supplier ='" . $cmd->ref ."'";
+
+		$resql = $this->db->query($sql);
+		if($resql){
+			while($obj = $this->db->fetch_object($resql)){
+				$cmd_fourn->fetch($obj->rowid);
+				$cmd_fourn->array_options['options_numom'] = $value;
+				$cmd_fourn->insertExtraFields();
 			}
 		}
 	}

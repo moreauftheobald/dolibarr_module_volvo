@@ -25,7 +25,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
 require_once '../class/volvoimportom.class.php';
 require_once '../class/html.formvolvo.class.php';
 
-if (!$user->rights->volvo->stat_all)
+if (! $user->admin)
 	accessforbidden();
 
 $langs->load("exports");
@@ -35,6 +35,7 @@ $langs->load('volvo@volvo');
 $datatoimport = GETPOST('datatoimport');
 $step = GETPOST('step', 'int');
 $action = GETPOST('action', 'alpha');
+$todo = GETPOST('todo', 'alpha');
 $confirm = GETPOST('confirm', 'alpha');
 $urlfile = GETPOST('urlfile');
 $filetoimport = GETPOST('filetoimport');
@@ -47,6 +48,21 @@ $offset = $limit * $page;
 $importobject = new VolvoImportom($db);
 
 $dir = $conf->volvo->dir_output . '/import/immat';
+
+if($todo == 'set_numon'){
+	foreach ( $_POST as $key => $data ) {
+		if (strpos($key, 'cmd_line_') !== false) {
+			if ($data != - 1) {
+				$cmdarray[$data] = str_replace('cmd_line_', '', $key);
+			}
+		}
+	}
+	var_dump($cmdarray);
+	foreach ($cmdarray as $key=>$value){
+		$importobject->setnumom($key,$value);
+	}
+}
+
 
 if ($step == 2 && $action == 'sendit') {
 
@@ -162,6 +178,11 @@ if ($step == 5 && $action == 'checkdata') {
 		}
 	}
 
+	if (empty($match_column) && isset($_POST['match_column'])){
+		$match_column_str = html_entity_decode(GETPOST('match_column'), ENT_COMPAT);
+		$match_column = json_decode($match_column_str, true);
+	}
+
 	if (count($match_column) < 2) {
 		setEventMessage($langs->trans('VolvoMustSelectAllData'));
 		$error ++;
@@ -182,7 +203,7 @@ if ($step == 5 && $action == 'checkdata') {
 
 	if (empty($error)) {
 		$step = '6';
-		$action = 'reviewdatablocking';
+		$action = 'reviewdatacustomer';
 	} else {
 		$action = 'checkdata';
 	}
@@ -219,11 +240,11 @@ if ($step == 7 && $action == 'importdata') {
 	}
 }
 
-$title = $langs->trans('VolvoImport') . '-' . $langs->trans('VolvoImportImmat');
+$title = $langs->trans('VolvoImport') . '- Import OM';
 
 llxHeader('', $title);
 
-dol_fiche_head($head, 'business', $title, 0, 'volvo@volvo');
+dol_fiche_head($head, 'business', $title, 0, 'iron02@volvo');
 
 $form = new Form($db);
 $html_volvo = new FormVolvo($db);
@@ -502,33 +523,49 @@ if ($step == 6 && $action == 'reviewdatacustomer') {
 
 	$coloutput = array ();
 
+	$result = $importobject->getCustomerColumnArray(array (
+			'realaddress',
+			'integration_comment'
+	), $match_column, 'ForCustomerStep');
 
 	$nbtotalofrecords = $importobject->fetchAllTempTable('', '', 0,0, array (
 			'integration_status' => 3
 	));
 
 	foreach ( $importobject->targetInfoArray as $key => $data ) {
-		if ($data['column'] == 'name_alias') {
+		if ($data['column'] == 'numom') {
 			$columnTmpName = $match_column[$key];
 			$colpatronyme_tmptable = $columnTmpName;
 		}
 	}
-
+	$nbcmdwithoutOM = $importobject->countcustorderwhithoutOM();
 	// Display wrong lines
 	$result = $importobject->fetchAllTempTable('ASC', $colpatronyme_tmptable, $limit, $offset, array (
 			'integration_status' => 3
 	));
 	if ($result < O) {
 		setEventMessages(null, $importobject->errors, 'errors');
-	} elseif (count($importobject->lines) > 0) {
+	} elseif (count($importobject->lines) > 0  && $nbcmdwithoutOM>0) {
 		print '<span style="color:red;font-size:200%;font-weight: bold;">' . $langs->trans('VolvoCkImpNoCompanyFound') . '</span>';
 		// print_fiche_titre($langs->trans("VolvoImportFailedOnRows"));
 		$param = '&amp;step=6&amp;action=reviewdatacustomer&amp;filetoimport=' . $filetoimport . '&amp;columnArray=' . urlencode(json_encode($importobject->columnArray)) . '&amp;match_column=' . urlencode(json_encode($match_column));
 
 		echo print_barre_liste($langs->trans('VolvoImportFailedOnRows'), $page, $_SERVER["PHP_SELF"], $param, '', '', '', $result, $nbtotalofrecords);
 
+
+		print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" METHOD="POST">';
+		print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+		print '<input type="hidden" value="5" name="step" id="step">';
+		print '<input type="hidden" value="set_numon" name="todo" id="todo">';
+		print '<input type="hidden" value="' . $filetoimport . '" name="filetoimport">';
+		print '<input type="hidden" value="checkdata" name="action" id="action">';
+			print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
+	print '<input type="hidden" value="' . dol_htmlentities(json_encode($match_column), ENT_COMPAT) . '" name="match_column">';
+		print '<input type="hidden" value="' . $page . '" name="page">';
 		print '<table width="100%" cellspacing="0" cellpadding="4" class="border">';
 		print '<tr class="liste_titre">';
+		print '<td>Commande Client</td>';
+		$coloutput[] = 'Commande_client';
 		foreach ( $importobject->columnArrayCustomer as $column ) {
 			if ($column['name'] != 'integration_comment') {
 				// Display only
@@ -537,8 +574,11 @@ if ($step == 6 && $action == 'reviewdatacustomer') {
 			}
 		}
 		print '</tr>';
+
+
 		foreach ( $importobject->lines as $line ) {
 			print '<tr>';
+			print '<td>' . $importobject->printlistorderwhithoutOMlist($line->numero_de_commande) . '</td>';
 			foreach ( $line as $key => $data )
 				if ($key != 'rowid' && $key != 'integration_comment' && in_array($key, $coloutput)) {
 					print '<td>';
@@ -553,8 +593,10 @@ if ($step == 6 && $action == 'reviewdatacustomer') {
 		}
 
 		print '</table>';
+		print '<input type="submit" class="button" value="Mettre a jour" name="set_om" id="set_om">';
+		print '</form>';
 	} else {
-		print '<span style="font-size:200%;font-weight: bold;">' . $langs->trans('VolvoNoCustomerError') . '</span>';
+		print '<span style="font-size:200%;font-weight: bold;">Pas de rapprochement de commande possible</span>';
 	}
 
 	dol_fiche_end();
