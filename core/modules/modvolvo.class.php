@@ -1011,6 +1011,22 @@ $this->menus = array(); // List of menus to add
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
 				'type' => 'left',
+				'titre' => 'Suivi d\'activité',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'resume',
+				'url' => '/volvo/business/resume.php',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->stat_all',
+				'perms' => '$user->rights->volvo->stat_all',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'type' => 'left',
 				'titre' => 'Affaires chaudes',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'chaudes',
