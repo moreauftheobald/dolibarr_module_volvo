@@ -55,7 +55,7 @@ if (empty($user->rights->volvo->stat_all)){
 	$search_commercial_disabled = 1;
 }
 
-if(empty($year)) $year = dol_print_date(dol_now(),'Y');
+if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 echo $year;
 $form = new Form($db);
 $object = new Leadext($db);
