@@ -30,7 +30,7 @@ require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
 require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 
-$title = 'Suivis des affaires en cours';
+$title = 'Suivis d\'activité VN volvo';
 
 // Security check
 if (! $user->rights->lead->read)
