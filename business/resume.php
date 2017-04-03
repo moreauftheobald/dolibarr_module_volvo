@@ -87,9 +87,9 @@ $nbtotalofrecords = 0;
 
   	print '<table class="noborder" width="100%">';
   	print '<tr class="liste_titre">';
- 	print '<th class="liste_titre" colspan="4" align="center">Année: ' . $formother->select_year($syear,'year',1, 20, 5) .'</th>';
- 	print '<th class="liste_titre" colspan="7" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
- 	print '<th class="liste_titre" colspan="5" align="center">Periode: ';
+ 	print '<th class="liste_titre" align="center">Année: ' . $formother->select_year($syear,'year',1, 20, 5) .'</th>';
+ 	print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
+ 	print '<th class="liste_titre" align="center">Periode: ';
  	print '<select class="flat" id="search_status" name="search_status">';
  	print '<option value="0"'.(empty($search_status)?' selected':'').'> </option>';
  	print '<option value="1"'.($search_status==1?' selected':'').'>1er Trimestre</option>';
@@ -100,14 +100,14 @@ $nbtotalofrecords = 0;
  	print '<option value="6"'.($search_status==6?' selected':'').'>2eme Semestre</option>';
  	print '</select>';
  	print '</th>';
+ 	print '<th class="liste_titre" align="center">';
+ 	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
+ 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
+ 	print '</th>';
  	print "</tr>";
  	print '</table>';
 	print '</br>';
  	$i = 0;
-
- 	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
- 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
-	print '<div align="left"><input type="checkbox" name="search_run" value="1"' . $sel . '> Selection uniquement sur les affaires en cours ?</div></br>';
 
 	print '<table class="noborder" width="100%">';
  	print '<tr class="liste_titre">';
