@@ -56,7 +56,8 @@ if (empty($user->rights->volvo->stat_all)){
 }
 
 if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
-echo $year;
+
+
 $form = new Form($db);
 $object = new Leadext($db);
 $formother = new FormOther($db);
