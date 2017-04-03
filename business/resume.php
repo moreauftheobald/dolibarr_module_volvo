@@ -56,7 +56,7 @@ if (empty($user->rights->volvo->stat_all)){
 }
 
 if(empty($year)) $year = dol_print_date(dol_now(),'Y');
-
+echo $year;
 $form = new Form($db);
 $object = new Leadext($db);
 $formother = new FormOther($db);
@@ -76,22 +76,22 @@ $nbtotalofrecords = 0;
 
   	print '<table class="noborder" width="100%">';
   	print '<tr class="liste_titre">';
- 	print '<th class="liste_titre" align="center" valign="center">Année: ';
+ 	print '<th class="liste_titre" align="center">Année: ';
  	$formother->select_year($syear,'year',1, 20, 5);
  	print '</th>';
- 	print '<th class="liste_titre" align="center" valign="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
- 	print '<th class="liste_titre" align="center" valign="center">Periode: ';
+ 	print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
+ 	print '<th class="liste_titre" align="center">Periode: ';
  	print '<select class="flat" id="search_periode" name="search_status">';
- 	print '<option value="0"'.(empty($search_status)?' selected':'').'> </option>';
- 	print '<option value="1"'.($search_status==1?' selected':'').'>1er Trimestre</option>';
- 	print '<option value="2"'.($search_status==2?' selected':'').'>2eme Trimestre</option>';
- 	print '<option value="3"'.($search_status==3?' selected':'').'>3eme Trimestre</option>';
- 	print '<option value="4"'.($search_status==4?' selected':'').'>4eme Trimestre</option>';
- 	print '<option value="5"'.($search_status==5?' selected':'').'>1er Semestre</option>';
- 	print '<option value="6"'.($search_status==6?' selected':'').'>2eme Semestre</option>';
+ 	print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
+ 	print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
+ 	print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
+ 	print '<option value="3"'.($search_periode==3?' selected':'').'>3eme Trimestre</option>';
+ 	print '<option value="4"'.($search_periode==4?' selected':'').'>4eme Trimestre</option>';
+ 	print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</option>';
+ 	print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
  	print '</select>';
  	print '</th>';
- 	print '<th class="liste_titre" align="center" valign="center">';
+ 	print '<th class="liste_titre" align="center">';
  	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
  	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
  	print '</th>';
