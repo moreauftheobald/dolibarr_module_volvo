@@ -38,35 +38,24 @@ if (! $user->rights->lead->read)
 
 // Search criteria
 $search_commercial = GETPOST("search_commercial", 'int');
-$search_client = GETPOST("search_client");
-$search_lead = GETPOST('search_lead');
+$search_periode = GETPOST("search_periode");
+$year = GETPOST('year');
 
 
 // Do we click on purge search criteria ?
 if (GETPOST("button_removefilter_x")) {
  	$search_commercial = '';
- 	$search_client = '';
- 	$search_lead = '';
+ 	$search_periode = '';
+ 	$year = dol_print_date(dol_now(),'Y');
 }
+
 $search_commercial_disabled = 0;
 if (empty($user->rights->volvo->stat_all)){
 	$search_commercial = $user->id;
 	$search_commercial_disabled = 1;
 }
 
-$filter = array();
-if (! empty($search_commercial) && $search_commercial != -1) {
- 	$filter['lead.fk_user_resp'] = $search_commercial;
- 	$option .= '&search_commercial=' . $search_commercial;
-}
-if (! empty($search_client)) {
-	$filter['soc.nom'] = $search_client;
- 	$option .= '&search_client=' . $search_client;
-}
-if (! empty($search_lead)) {
- 	$filter['lead.ref'] = $search_lead;
- 	$option .= '&search_lead=' . $search_lead;
-}
+if(empty($year)) $year = dol_print_date(dol_now(),'Y');
 
 $form = new Form($db);
 $object = new Leadext($db);
@@ -92,7 +81,7 @@ $nbtotalofrecords = 0;
  	print '</th>';
  	print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
  	print '<th class="liste_titre" align="center">Periode: ';
- 	print '<select class="flat" id="search_status" name="search_status">';
+ 	print '<select class="flat" id="search_periode" name="search_status">';
  	print '<option value="0"'.(empty($search_status)?' selected':'').'> </option>';
  	print '<option value="1"'.($search_status==1?' selected':'').'>1er Trimestre</option>';
  	print '<option value="2"'.($search_status==2?' selected':'').'>2eme Trimestre</option>';
