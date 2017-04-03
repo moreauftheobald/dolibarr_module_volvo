@@ -77,7 +77,7 @@ $nbtotalofrecords = 0;
   	print '<table class="noborder" width="100%">';
   	print '<tr class="liste_titre">';
  	print '<th class="liste_titre" align="center">Année: ';
- 	$formother->select_year($syear,'year',1, 20, 5);
+ 	$formother->select_year($year,'year',1, 20, 5);
  	print '</th>';
  	print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
  	print '<th class="liste_titre" align="center">Periode: ';
