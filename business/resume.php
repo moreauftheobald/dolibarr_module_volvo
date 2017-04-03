@@ -107,6 +107,8 @@ $nbtotalofrecords = 0;
  	print "</tr>";
  	print '</table>';
 	print '</br>';
+	print '</form>';
+
  	$i = 0;
 
 	print '<table class="noborder" width="100%">';
@@ -134,7 +136,7 @@ $nbtotalofrecords = 0;
  	print '<th class="liste_titre" align="center">VFS</th>';
  	print '<th class="liste_titre" align="center">Lixbail</th>';
  	print "</tr>\n";
- 	print '</form>';
+
 
 //  	$var = true;
 
