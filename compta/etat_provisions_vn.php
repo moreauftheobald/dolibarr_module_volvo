@@ -148,8 +148,6 @@ if(!empty($search_periode)){
 
 $arrayresult1 = stat_prov1($year,$monthlist);
 
-var_dump($arrayresult1);
-
 foreach ($arrayresult1 as $key=>$arrayvalue) {
  	$var = ! $var;
 
