@@ -788,7 +788,10 @@ class modvolvo extends DolibarrModules
 		// Example:
 
 
-		$this->boxes[$r][1] = "box_pay_late@volvo";
+		$this->boxes[$r][1] = "box_pdmsoltrs_indiv@volvo";
+		$r ++;
+
+		$this->boxes[$r][1] = "box_pdmsoltrs_global@volvo";
 		$r ++;
 		/*
 		 * $this->boxes[$r][1] = "myboxb.php"; $r++;

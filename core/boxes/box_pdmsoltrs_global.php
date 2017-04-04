@@ -31,7 +31,7 @@ require_once(DOL_DOCUMENT_ROOT."/core/lib/date.lib.php");
 class box_pay_late extends ModeleBoxes
 {
     var $boxcode="pay_late";
-    var $boximg="lead@lead";
+    var $boximg="iron02@volvo";
     var $boxlabel;
     //var $depends = array("projet");
     var $db;
@@ -51,7 +51,7 @@ class box_pay_late extends ModeleBoxes
         global $langs;
         $langs->load("boxes");
         $langs->load("pay_late");
-        $this->boxlabel="Affaire en attente de paiement";
+        $this->boxlabel="Mix produit solutions Transports";
         $this->db = $db;
     }
 
@@ -63,21 +63,17 @@ class box_pay_late extends ModeleBoxes
 	 */
 	function loadBox($max=5)
 	{
-		require DOL_DOCUMENT_ROOT . '/lead/core/boxes/config.default.php';
-		dol_include_once('/query/class/query.class.php');
-		dol_include_once('/query/lib/query.lib.php');
-
-		$query=new TQuery;
-		$PDOdb=new TPDOdb;
-
-		$query->load($PDOdb, 9);
-		$this->info_box_head = array('text' => "evolution des commandes", 'limit'=> 25);
-
+		global $user;
+		dol_include_once('/mydoliboard/class/mydoliboard.class.php');
+		$_POST['Année'] = dol_print_date(dol_now(),'%Y');
+ 		$_POST['Commercial'] = $user->id;
+		$board= new Mydoliboard($this->db);
+		$board->fetch(7);
+		$this->info_box_head = array('text' => $board->blocBtitle, 'limit'=> 50);
 		$this->info_box_contents[0][0] = array(
-		'td' => 'align="center"',
-		'textnoformat' => $query->run($PDOdb, 0)
+			'td' => 'align="center" width="100%"',
+			'textnoformat' => $board->gengraph("B", 2,'',1,550)
 		);
-
 	}
 	/**
 	 *	Method to show box
