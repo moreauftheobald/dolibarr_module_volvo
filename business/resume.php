@@ -164,7 +164,7 @@ if(!empty($monthlist)){
 }
 
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
-
+var_dump($arrayresult1);
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
 
