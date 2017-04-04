@@ -848,7 +848,7 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'stat_ext';
 		$r ++;
 
-		$this->rights[$r][0] = 0101759;
+		$this->rights[$r][0] = 0101764;
 		$this->rights[$r][1] = 'Consultation stat tout vendeurs';
 		$this->rights[$r][3] = 1;
 		$this->rights[$r][4] = 'stat_all';
@@ -878,7 +878,7 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'prime_valid';
 		$r ++;
 
-		$this->rights[$r][0] = 0101764;
+		$this->rights[$r][0] = 0101765;
 		$this->rights[$r][1] = 'Accéder aux etats comptable';
 		$this->rights[$r][3] = 1;
 		$this->rights[$r][4] = 'compta';
