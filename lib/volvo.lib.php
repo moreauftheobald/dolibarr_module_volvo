@@ -526,7 +526,7 @@ function stat_sell2($year, $commercial,$monthlist){
 			$result[vcm][$obj->Mois] = $obj->vcm;
 			$result[dfol][$obj->Mois] = $obj->dfol;
 			$result[dded][$obj->Mois] = $obj->dded;
-			$result[lixbal][$obj->Mois] = $obj->lixbail;
+			$result[lixbail][$obj->Mois] = $obj->lixbail;
 			$result[vfs][$obj->Mois] = $obj->vfs;
 		}
 		return $result;
