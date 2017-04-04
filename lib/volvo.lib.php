@@ -544,7 +544,7 @@ function stat_sell3($year, $commercial,$monthlist){
 
 	$soltrs1 = $leadext->prepare_array('VOLVO_VCM_LIST', 'array');
 	$soltrs2= $leadext->prepare_array('VOLVO_PACK_LIST', 'array');
-	$soltrs3= array('volvo','LIVUSI','TPNEU');
+	$soltrs3= array('Volvo','LIVUSI','TPNEU');
 	$soltrs =array_merge($soltrs1,$soltrs2,$soltrs3);
 
 	$sql = "SELECT  ";
