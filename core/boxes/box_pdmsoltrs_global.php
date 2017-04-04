@@ -51,7 +51,7 @@ class box_pay_late extends ModeleBoxes
         global $langs;
         $langs->load("boxes");
         $langs->load("pay_late");
-        $this->boxlabel="Mix produit solutions Transports";
+        $this->boxlabel="Mix produit solutions Transports global";
         $this->db = $db;
     }
 
@@ -64,16 +64,17 @@ class box_pay_late extends ModeleBoxes
 	function loadBox($max=5)
 	{
 		global $user;
-		dol_include_once('/mydoliboard/class/mydoliboard.class.php');
-		$_POST['Année'] = dol_print_date(dol_now(),'%Y');
- 		$_POST['Commercial'] = $user->id;
-		$board= new Mydoliboard($this->db);
-		$board->fetch(7);
-		$this->info_box_head = array('text' => $board->blocBtitle, 'limit'=> 50);
-		$this->info_box_contents[0][0] = array(
-			'td' => 'align="center" width="100%"',
-			'textnoformat' => $board->gengraph("B", 2,'',1,550)
-		);
+		if($user->rights->volvo->stat_all){
+			dol_include_once('/mydoliboard/class/mydoliboard.class.php');
+			$_POST['Année'] = dol_print_date(dol_now(),'%Y');
+			$board= new Mydoliboard($this->db);
+			$board->fetch(6);
+			$this->info_box_head = array('text' => 'Mix Produit Solutions Transports Global', 'limit'=> 50);
+			$this->info_box_contents[0][0] = array(
+				'td' => 'align="center" width="100%"',
+				'textnoformat' => $board->gengraph("B", 2,'',1,550)
+			);
+		}
 	}
 	/**
 	 *	Method to show box

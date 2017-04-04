@@ -69,7 +69,7 @@ class box_pay_late extends ModeleBoxes
  		$_POST['Commercial'] = $user->id;
 		$board= new Mydoliboard($this->db);
 		$board->fetch(7);
-		$this->info_box_head = array('text' => $board->blocBtitle, 'limit'=> 50);
+		$this->info_box_head = array('text' => 'Mix Produit Solutions Transport Individuel', 'limit'=> 50);
 		$this->info_box_contents[0][0] = array(
 			'td' => 'align="center" width="100%"',
 			'textnoformat' => $board->gengraph("B", 2,'',1,550)
