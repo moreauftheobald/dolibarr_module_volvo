@@ -63,7 +63,7 @@ class box_pay_late extends ModeleBoxes
 	 */
 	function loadBox($max=5)
 	{
-		require DOL_DOCUMENT_ROOT.'/mydoliboard/class/mydoliboard.class.php';
+		dol_include_once('/mydoliboard/class/mydoliboard.class.php');
 		$_POST['Année'] = 2016;
 		$board= new Mydoliboard($this->db);
 		$board->fetch(6);
