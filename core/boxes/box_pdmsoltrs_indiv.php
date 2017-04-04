@@ -30,7 +30,7 @@ require_once(DOL_DOCUMENT_ROOT."/core/lib/date.lib.php");
  */
 class box_pay_late extends ModeleBoxes
 {
-    var $boxcode="pay_late";
+    var $boxcode="pdm_soltrs_indiv";
     var $boximg="iron02@volvo";
     var $boxlabel;
     //var $depends = array("projet");
@@ -50,8 +50,7 @@ class box_pay_late extends ModeleBoxes
     {
         global $langs;
         $langs->load("boxes");
-        $langs->load("pay_late");
-        $this->boxlabel="Mix produit solutions Transports";
+        $this->boxlabel="Mix produit solutions Transports Individuel";
         $this->db = $db;
     }
 
@@ -61,7 +60,7 @@ class box_pay_late extends ModeleBoxes
 	 *  @param  int     $max        Maximum number of records to load
 	 *  @return void
 	 */
-	function loadBox($max=5)
+	function loadBox()
 	{
 		global $user;
 		dol_include_once('/mydoliboard/class/mydoliboard.class.php');

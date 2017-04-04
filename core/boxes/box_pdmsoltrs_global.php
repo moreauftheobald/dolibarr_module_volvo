@@ -30,10 +30,9 @@ require_once(DOL_DOCUMENT_ROOT."/core/lib/date.lib.php");
  */
 class box_pay_late extends ModeleBoxes
 {
-    var $boxcode="pay_late";
+    var $boxcode="pdm_soltrs_global";
     var $boximg="iron02@volvo";
     var $boxlabel;
-    //var $depends = array("projet");
     var $db;
     var $param;
 
@@ -50,7 +49,6 @@ class box_pay_late extends ModeleBoxes
     {
         global $langs;
         $langs->load("boxes");
-        $langs->load("pay_late");
         $this->boxlabel="Mix produit solutions Transports global";
         $this->db = $db;
     }
