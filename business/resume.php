@@ -74,7 +74,7 @@ $formother->select_year($year,'year',0, 5, 0);
 print '</th>';
 print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
 print '<th class="liste_titre" align="center">Periode: ';
-print '<select class="flat" id="search_periode" name="search_status">';
+print '<select class="flat" id="search_periode" name="search_periode">';
 print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
 print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
 print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
