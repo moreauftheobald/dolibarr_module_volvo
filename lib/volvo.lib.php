@@ -476,10 +476,10 @@ function stat_sell1($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result[nb_fact][$obj->mois] = $obj->nb_facture;
-			$result[catotalht][$obj->mois] = $obj->catotalht;
-			$result[nbporteur][$obj->mois] = $obj->nbporteur;
-			$result[nbtracteur][$obj->mois] = $obj->nbtracteur;
+			$result[nb_fact][$obj->Mois] = $obj->nb_facture;
+			$result[catotalht][$obj->Mois] = $obj->catotalht;
+			$result[nbporteur][$obj->Mois] = $obj->nbporteur;
+			$result[nbtracteur][$obj->Mois] = $obj->nbtracteur;
 		}
 		return $result;
 	}else{
