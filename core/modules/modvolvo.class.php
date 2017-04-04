@@ -878,6 +878,12 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'prime_valid';
 		$r ++;
 
+		$this->rights[$r][0] = 0101764;
+		$this->rights[$r][1] = 'Accéder aux etats comptable';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'compta';
+		$r ++;
+
 
 		// $r++;
 		// Main menu entries
@@ -1073,6 +1079,37 @@ $this->menus = array(); // List of menus to add
 		);
 		$r ++;
 
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo',
+				'type' => 'left',
+				'titre' => 'Etats comptables',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'compta',
+				'url' => '/volvo/index.php',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->compta',
+				'perms' => '$user->rights->volvo->compta',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=compta',
+				'type' => 'left',
+				'titre' => 'Etat des provision VN Volvo',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'provnvolvo',
+				'url' => '/volvo/compta/etat_provision_vn.php',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->compta',
+				'perms' => '$user->rights->volvo->compta',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
 
 
 
