@@ -56,7 +56,6 @@ if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 
 
 $form = new Form($db);
-$object = new Leadext($db);
 $formother = new FormOther($db);
 
 
