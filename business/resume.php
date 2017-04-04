@@ -167,6 +167,10 @@ $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
+ 	$total_fact+=$arrayresult1[nb_fact][$m];
+	$total_caht+=$arrayresult1[catotalht][$m];
+	$total_tracteur+=$arrayresult1[nbtracteur][$m];
+	$total_porteur+=$arrayresult1[nbporteur][$m];
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $month[$m] . '</td>';
@@ -176,8 +180,8 @@ foreach ($arrayperiode as $m) {
 	print '<td align="center">' . $arrayresult1[nbtracteur][$m] . '</td>';
 	print '<td align="center">' . $arrayresult1[nbporteur][$m] . '</td>';
 	if(!empty($arrayresult1[nb_fact][$m])){
-		$tracteur_percent = ($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100;
-		$porteur_percent = ($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+		$tracteur_percent = round(($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100,2);
+		$porteur_percent = round(($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100,2);
 	}else{
 		$tracteur_percent = 0;
 		$porteur_percent = 0;
@@ -199,6 +203,37 @@ foreach ($arrayperiode as $m) {
 	print "</tr>\n";
 
 }
+
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" align="center">Total</th>';
+print '<th class="liste_titre" align="center">' . $total_fact . '</th>';
+print '<th class="liste_titre" align="center">'. price($total_caht) .' €</th>';
+print '<th class="liste_titre" align="center">'. '' . '</th>';
+print '<th class="liste_titre" align="center">' . $total_tracteur . '</th>';
+print '<th class="liste_titre" align="center">' . $total_porteur . '</th>';
+if(!empty($total_fact)){
+	$tracteur_percent = round(($total_tracteur /($total_fact))*100,2);
+	$porteur_percent = round(($total_porteur /($total_fact))*100,2);
+}else{
+	$tracteur_percent = 0;
+	$porteur_percent = 0;
+}
+print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
+print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . '' . '</th>';
+
+print "</tr>\n";
+
 
 print "</table>";
 
