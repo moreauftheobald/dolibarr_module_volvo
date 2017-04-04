@@ -72,7 +72,7 @@ class box_pay_late extends ModeleBoxes
 		$board= new Mydoliboard($this->db);
 		$board->fetch(7);
 
-		$this->info_box_head = array('text' => 'test', 'limit'=> 50);
+		$this->info_box_head = array('text' => $board->blocBtitle, 'limit'=> 50);
 		$i=0;
 
 		$this->info_box_contents[$i][0] = array(
