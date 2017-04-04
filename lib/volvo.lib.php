@@ -608,11 +608,10 @@ function stat_sell4($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-				$costreal = $cmd->getCostPriceReal($obj->cmdid,'real');
-				$costtheo = $cmd->getCostPriceReal($obj->cmdid,'theo');
-				$result['margereal'][$obj->Mois]+= $obj->total_ht-$costreal;
-				$result['margetheo'][$obj->Mois]+= $obj->total_ht-$costtheo;
-
+				$cmd->getCostPriceReal($obj->cmdid,'real');
+				$result['margereal'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
+				$cmd->getCostPriceReal($obj->cmdid,'theo');
+				$result['margetheo'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
 		}
 		return $result;
 	}else{
