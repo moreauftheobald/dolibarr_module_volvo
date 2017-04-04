@@ -576,7 +576,7 @@ function stat_sell3($year, $commercial,$monthlist){
 		}
 		return $result;
 	}else{
-		return -1;
+		return $sql;
 	}
 
 }
