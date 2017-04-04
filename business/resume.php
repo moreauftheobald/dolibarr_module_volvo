@@ -165,45 +165,51 @@ if(!empty($monthlist)){
 
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
+$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
- 	$total_fact+=$arrayresult1[nb_fact][$m];
-	$total_caht+=$arrayresult1[catotalht][$m];
-	$total_tracteur+=$arrayresult1[nbtracteur][$m];
-	$total_porteur+=$arrayresult1[nbporteur][$m];
-	$total_vcm+=$arrayresult2[vcm][$m];
-	$total_dfol+=$arrayresult2[dfol][$m];
-	$total_dded+=$arrayresult2[dded][$m];
-	$total_vfs+=$arrayresult2[vfs][$m];
-	$total_lixbail+=$arrayresult2[lixbail][$m];
+ 	$total_fact+=$arrayresult1['nb_fact'][$m];
+	$total_caht+=$arrayresult1['catotalht'][$m];
+	$total_tracteur+=$arrayresult1['nbtracteur'][$m];
+	$total_porteur+=$arrayresult1['nbporteur'][$m];
+	$total_vcm+=$arrayresult2['vcm'][$m];
+	$total_dfol+=$arrayresult2['dfol'][$m];
+	$total_dded+=$arrayresult2['dded'][$m];
+	$total_vfs+=$arrayresult2['vfs'][$m];
+	$total_lixbail+=$arrayresult2['lixbail'][$m];
+	$total_cavolvo+=$arrayresult3['cavolvo'][$m];
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $month[$m] . '</td>';
-	print '<td align="center">' . $arrayresult1[nb_fact][$m] . '</td>';
-	if(!empty($arrayresult1[catotalht][$m])){
-		print '<td align="center">'. price($arrayresult1[catotalht][$m]) .' €</td>';
+	print '<td align="center">' . $arrayresult1['nb_fact'][$m] . '</td>';
+	if(!empty($arrayresult1['catotalht'][$m])){
+		print '<td align="center">'. price($arrayresult1['catotalht'][$m]) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
 	}
 	print '<td>'. '' . '</td>';
-	print '<td align="center">' . $arrayresult1[nbtracteur][$m] . '</td>';
-	print '<td align="center">' . $arrayresult1[nbporteur][$m] . '</td>';
-	if(!empty($arrayresult1[nb_fact][$m])){
-		$tracteur_percent = round(($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100,2) . ' %';
-		$porteur_percent = round(($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100,2) . ' %';
+	print '<td align="center">' . $arrayresult1['nbtracteur'][$m] . '</td>';
+	print '<td align="center">' . $arrayresult1['nbporteur'][$m] . '</td>';
+	if(!empty($arrayresult1['nb_fact'][$m])){
+		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
 	}else{
 		$tracteur_percent = '';
 		$porteur_percent = '';
 	}
 	print '<td align="center">' . $porteur_percent . '</td>';
 	print '<td align="center">' . $tracteur_percent . '</td>';
-	print '<td align="center">' . $arrayresult2[vcm][$m] . '</td>';
-	print '<td align="center">' . $arrayresult2[dfol][$m] . '</td>';
-	print '<td align="center">' . $arrayresult2[dded][$m] . '</td>';
-	print '<td align="center">' . $arrayresult2[vfs][$m] . '</td>';
-	print '<td align="center">' . $arrayresult2[lixbail][$m] . '</td>';
-	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . $arrayresult2['vcm'][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2['dfol'][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2['dded'][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2['vfs'][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2['lixbail'][$m] . '</td>';
+if(!empty($arrayresult3['cavolvo'][$m])){
+		print '<td align="center">'. price($arrayresult3['cavolvo'][$m]) .' €</td>';
+	}else{
+		print '<td align="center"></td>';
+	}
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
