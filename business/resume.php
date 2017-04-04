@@ -226,8 +226,13 @@ foreach ($arrayperiode as $m) {
 		print '<td align="center"></td>';
 		print '<td align="center"></td>';
 	}
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
+	if(!empty($arrayresult4['margetheo'][$m]) && !empty($arrayresult4['margereal'][$m])){
+		print '<td align="center">'. price($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m]) .' €</td>';
+		print '<td align="center">'. price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2)) .' €</td>';
+	}else{
+		print '<td align="center"></td>';
+		print '<td align="center"></td>';
+	}
 
 	print "</tr>\n";
 
@@ -258,8 +263,8 @@ print '<th class="liste_titre" align="center">' . price($total_margetheo) . ' �
 print '<th class="liste_titre" align="center">' . price(round($total_margetheo/$total_fact,2)) . ' €</th>';
 print '<th class="liste_titre" align="center">' . price($total_margereal) . '</th>';
 print '<th class="liste_titre" align="center">' . price(round($total_margereal/$total_fact,2)) . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . price($total_margereal-$total_margetheo) . '</th>';
+print '<th class="liste_titre" align="center">' . price(round(($total_margereal-$total_margetheo)/$total_fact,2)) . '</th>';
 
 print "</tr>\n";
 
