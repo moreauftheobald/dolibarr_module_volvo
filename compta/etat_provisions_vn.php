@@ -59,11 +59,10 @@ print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_fo
 
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre">';
-print '<th class="liste_titre" align="center">Année: ';
+print '<th class="liste_titre" align="center" colspan="4">Année: ';
 $formother->select_year($year,'year',0, 5, 0);
 print '</th>';
-print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),0) . '</th>';
-print '<th class="liste_titre" align="center">Periode: ';
+print '<th class="liste_titre" align="center" colspan="7">Periode: ';
 print '<select class="flat" id="search_periode" name="search_periode">';
 print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
 print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
@@ -74,10 +73,11 @@ print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</op
 print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
 print '</select>';
 print '</th>';
-print '<th class="liste_titre" align="center">';
+print '<th class="liste_titre" align="center"  colspan="2">';
 print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
 print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
 print '</th>';
+print '<th class="liste_titre" align="center" colspan="17"></th>';
 print "</tr>";
 print '</table>';
 print '</br>';
@@ -146,7 +146,7 @@ if(!empty($search_periode)){
 	}
 }
 
-$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
+$arrayresult1 = stat_prov1($year, $search_commercial,$monthlist);
 
 
 // foreach ($arrayperiode as $m) {
