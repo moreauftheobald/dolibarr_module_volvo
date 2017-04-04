@@ -24,11 +24,8 @@ if (! $res)
 
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
-require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
-require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
-require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
+require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
 
 $title = 'Suivis d\'activité VN volvo';
 
@@ -68,154 +65,140 @@ llxHeader('', $title);
 // Count total nb of records
 $nbtotalofrecords = 0;
 
+print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
+print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 
-// $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
-// if ($resql != - 1) {
-// $num = $resql;
-  	print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
-  	print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
+print '<table class="noborder" width="100%">';
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" align="center">Année: ';
+$formother->select_year($year,'year',0, 5, 0);
+print '</th>';
+print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
+print '<th class="liste_titre" align="center">Periode: ';
+print '<select class="flat" id="search_periode" name="search_status">';
+print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
+print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
+print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
+print '<option value="3"'.($search_periode==3?' selected':'').'>3eme Trimestre</option>';
+print '<option value="4"'.($search_periode==4?' selected':'').'>4eme Trimestre</option>';
+print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</option>';
+print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
+print '</select>';
+print '</th>';
+print '<th class="liste_titre" align="center">';
+print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
+print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
+print '</th>';
+print "</tr>";
+print '</table>';
+print '</br>';
+print '</form>';
 
-  	print '<table class="noborder" width="100%">';
-  	print '<tr class="liste_titre">';
- 	print '<th class="liste_titre" align="center">Année: ';
- 	$formother->select_year($year,'year',0, 5, 0);
- 	print '</th>';
- 	print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
- 	print '<th class="liste_titre" align="center">Periode: ';
- 	print '<select class="flat" id="search_periode" name="search_status">';
- 	print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
- 	print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
- 	print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
- 	print '<option value="3"'.($search_periode==3?' selected':'').'>3eme Trimestre</option>';
- 	print '<option value="4"'.($search_periode==4?' selected':'').'>4eme Trimestre</option>';
- 	print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</option>';
- 	print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
- 	print '</select>';
- 	print '</th>';
- 	print '<th class="liste_titre" align="center">';
- 	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
- 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
- 	print '</th>';
- 	print "</tr>";
- 	print '</table>';
-	print '</br>';
-	print '</form>';
+print '<table class="noborder" width="100%">';
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" rowspan="2" align="center">Mois</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Factures</th>';
+print '<th class="liste_titre" rowspan="2" align="center">C.A.</br>Total HT</th>';
+print '<th class="liste_titre" rowspan="2" align="center">C.A. Fac.</br>Volvo</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Tracteurs</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Porteur</th>';
+print '<th class="liste_titre" rowspan="2" align="center">%</br>Tracteur</th>';
+print '<th class="liste_titre" rowspan="2" align="center">%</br>Porteur</th>';
+print '<th class="liste_titre" colspan="5" align="center">Soft Offers</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge</br>Totale</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge</br>moyenne</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale - Ecart</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne - Ecart</th>';
+print "</tr>";
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" align="center">VCM</th>';
+print '<th class="liste_titre" align="center">DFOL</th>';
+print '<th class="liste_titre" align="center">DDED</th>';
+print '<th class="liste_titre" align="center">VFS</th>';
+print '<th class="liste_titre" align="center">Lixbail</th>';
+print "</tr>";
 
- 	$i = 0;
+$var = true;
+$month = array(
+		1=>'Janvier',
+		2=>'Fevrier',
+		3=>'Mars',
+		4=>'Avril',
+		5=>'Mai',
+		6=>'Juin',
+		7=>'Juillet',
+		8=>'Aout',
+		9=>'Septembre',
+		10=>'Octobre',
+		11=>'Novembre',
+		12=>'Décembre'
+);
 
-	print '<table class="noborder" width="100%">';
- 	print '<tr class="liste_titre">';
- 	print '<th class="liste_titre" rowspan="2" align="center">Mois</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Factures</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">C.A.</br>Total HT</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">C.A. Fac.</br>Volvo</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Tracteurs</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Porteur</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">%</br>Tracteur</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">%</br>Porteur</th>';
- 	print '<th class="liste_titre" colspan="5" align="center">Soft Offers</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge</br>Totale</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge</br>moyenne</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale - Ecart</th>';
- 	print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne - Ecart</th>';
- 	print "</tr>";
- 	print '<tr class="liste_titre">';
- 	print '<th class="liste_titre" align="center">VCM</th>';
- 	print '<th class="liste_titre" align="center">DFOL</th>';
- 	print '<th class="liste_titre" align="center">DDED</th>';
- 	print '<th class="liste_titre" align="center">VFS</th>';
- 	print '<th class="liste_titre" align="center">Lixbail</th>';
- 	print "</tr>\n";
+if(!empty($search_periode)){
+	switch($search_periode){
+		case 1:
+			$monthlist = '1,2,3';
+			break;
+		case 2:
+			$monthlist = '4,5,6';
+			break;
+		case 3:
+			$monthlist = '7,8,9';
+			break;
+		case 4:
+			$monthlist = '10,11,12';
+			break;
+		case 5:
+			$monthlist = '1,2,3,4,5,6';
+			break;
+		case 6:
+			$monthlist = '7,8,9,10,11,12';
+			break;
+	}
+}
+if(!empty($monthlist)){
+	$arrayperiode = explode(',',$monthlist);
+}else{
+	$arrayperiode=array(1,2,3,4,5,6,7,8,9,10,11,12);
+}
+
+$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
+
+foreach ($arrayperiode as $m) {
+ 	$var = ! $var;
+
+ 	print '<tr ' . $bc[$var] . '>';
+	print '<td align="center">' . $month[$m] . '</td>';
+	print '<td align="center">' . $arrayresult1[nb_fact][$m] . '</td>';
+	print '<td align="center">'. price($arrayresult1[catotalht][$m]) .' €</td>';
+	print '<td>'. '' . '</td>';
+	print '<td align="center">' . $arrayresult1[nbtracteur][$m] . '</td>';
+	print '<td align="center">' . $arrayresult1[nbporteur][$m] . '</td>';
+	$tracteur_percent = ($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
+	$porteur_percent = ($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . '' . '</td>';
+
+	print "</tr>\n";
+
+}
+
+print "</table>";
 
 
-//  	$var = true;
-
-//  	foreach ($object->business as $line) {
-// 		;$var = ! $var;
-
-//  		$comm = New User($db);
-//  		$comm->fetch($line->commercial);
-
-//  		$comfourn = new CommandeFournisseur($db);
-//  		$result=$comfourn->fetch($line->fournid);
-
-//  		$comcli = New Commande($db);
-//  		$comcli->fetch($line->com);
-
-//  		$lead = new Lead($db);
-//  		$lead->fetch($line->lead);
-
-//  		$soc = New Societe($db);
-//  		$soc->fetch($line->societe);
-
-//  		$om_label = '<a href="'.DOL_URL_ROOT.'/fourn/commande/card.php?id=';
-//  		$om_label.= $comfourn->id .'">';
-//  		if (!empty($line->numom)){
-//  			$om_label.= $line->numom;
-//  		}else{
-//  			$om_label.= $comfourn->ref;
-//  		}
-//  		$om_label.= '</a>';
-
-//  		print '<tr ' . $bc[$var] . '>';
-
-//  		print '<td>'. $comm->getNomUrl(0) .'</td>';
-//  		print '<td align="center">' . $om_label . '</td>';
-//  		print '<td align="center">' . $comcli->getNomUrl(0) . '</td>';
-//  		print '<td align="center">'. $lead->getNomUrl(0) .'</td>';
-//  		print '<td>'.$soc->getNomUrl(0,'',33) . '</td>';
-//  		print '<td align="center">' . $line->vin . '</td>';
-//  		print '<td align="center">' . $line->immat . '</td>';
-
-//  		print '<td align="center">' . dol_print_date($line->dt_env_usi,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_blockupdate,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_liv_cons,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_recep,'day') . '</td>';
-
-//  		print '<td align="center">' . dol_print_date($line->dt_valid_ana,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_liv_dem_cli,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_liv_cli,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_fac,'day') . '</td>';
-//  		print '<td align="center">' . dol_print_date($line->dt_pay,'day') . '</td>';
-
-//  		if(!empty($line->dt_recep)){
-//  			$text = $line->delai_cash . ' Jour(s)';
-//  		}else{
-//  			$text ='';
-//  		}
-//  		print '<td align="center">' . $text . '</td>';
-
-//  		if(!empty($line->dt_liv_dem_cli) && !empty($line->dt_liv_cons)){
-//  			$text = $line->delaiprep . ' Jour(s)';
-//  		}else{
-//  			$text ='';
-//  		}
-//  		print '<td align="center">' . $text . '</td>';
-
-//  		if(!empty($line->dt_liv_cons) && !empty($line->dt_recep)){
-//  			$text = $line->retard_recept . ' Jour(s)';
-//  		}else{
-//  			$text ='';
-//  		}
-//  		print '<td align="center">' . $text . '</td>';
-
-//  		if(!empty($line->dt_liv_dem_cli) && !empty($line->dt_liv_cli)){
-//  			$text = $line->retard_liv . ' Jour(s)';
-//  		}else{
-//  			$text ='';
-//  		}
-//  		print '<td align="center">' . $text . '</td>';
-
-//  		print "</tr>\n";
-
-//  		$i ++;
-//  	}
-
-	print "</table>";
-
-// 	}
 
 
 

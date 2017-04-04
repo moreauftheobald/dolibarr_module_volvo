@@ -426,7 +426,7 @@ function volvo_vcm_motif($code) {
 
 function show_picto_pdf($value) {
 	if ($value == 1) {
-		return img_picto('non', 'statut6','',0,1);
+		return img_picto('oui', 'statut6','',0,1);
 	} else {
 		return img_picto('non', 'statut0','',0,1);
 	}
@@ -447,4 +447,43 @@ function chmod_r($Path,$mode) {
       }
    }
    closedir($dp);
+}
+
+function stat_sell1($year, $commercial,$monthlist){
+	global $db;
+
+	$sql = "SELECT  ";
+	$sql.= "MONTH(event.datep) as Mois, ";
+	$sql.= "COUNT(DISTINCT c.rowid) as nb_facture, ";
+	$sql.= "SUM(c.total_ht) AS catotalht, ";
+	$sql.= "SUM(IF(lef.type = 1,1,0)) AS nbporteur, ";
+	$sql.= "SUM(IF(lef.type = 2,1,0)) AS nbtracteur ";
+	$sql.= "FROM llx_commande AS c ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields lef on lef.fk_object = l.rowid ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	if(!empty($monthlist)){
+		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
+	}
+	if ($commercial > 0){
+		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
+	}
+	$sql.= "GROUP BY MONTH(event.datep) ";
+
+	$resql = $db->query($sql);
+	if($resql){
+		$result =array();
+		while($obj = $db->fetch_object($resql)){
+			$result[nb_fact][$obj->mois] = $obj->nb_facture;
+			$result[catotalht][$obj->mois] = $obj->catotalht;
+			$result[nbporteur][$obj->mois] = $obj->nbporteur;
+			$result[nbtracteur][$obj->mois] = $obj->nbtracteur;
+		}
+		return $result;
+	}else{
+		return -1;
+	}
+
 }
