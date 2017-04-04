@@ -196,7 +196,7 @@ foreach ($arrayperiode as $m) {
 		$tracteur_percent = '';
 		$porteur_percent = '';
 	}
-	print '<td align="center">' . $trateur_ppercent . '</td>';
+	print '<td align="center">' . $porteur_percent . '</td>';
 	print '<td align="center">' . $tracteur_percent . '</td>';
 	print '<td align="center">' . $arrayresult2[vcm][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2[dfol][$m] . '</td>';
