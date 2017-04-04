@@ -175,7 +175,7 @@ foreach ($arrayperiode as $m) {
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $month[$m] . '</td>';
 	print '<td align="center">' . $arrayresult1[nb_fact][$m] . '</td>';
-	print '<td align="center">'. price($arrayresult1[catotalht][$m]) .' €</td>';
+	print '<td align="center">'. empty($arrayresult1[catotalht][$m])?'':price($arrayresult1[catotalht][$m]) .' €</td>';
 	print '<td>'. '' . '</td>';
 	print '<td align="center">' . $arrayresult1[nbtracteur][$m] . '</td>';
 	print '<td align="center">' . $arrayresult1[nbporteur][$m] . '</td>';
@@ -183,11 +183,11 @@ foreach ($arrayperiode as $m) {
 		$tracteur_percent = round(($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100,2);
 		$porteur_percent = round(($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100,2);
 	}else{
-		$tracteur_percent = 0;
-		$porteur_percent = 0;
+		$tracteur_percent = '';
+		$porteur_percent = '';
 	}
-	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
-	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
+	print '<td align="center">' . $trateur_ppercent . ' %</td>';
+	print '<td align="center">' . $tracteur_percent . ' %</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
