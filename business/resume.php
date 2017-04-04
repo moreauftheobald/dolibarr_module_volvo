@@ -164,7 +164,7 @@ if(!empty($monthlist)){
 }
 
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
-var_dump($arrayresult1);
+
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
 
@@ -175,9 +175,14 @@ foreach ($arrayperiode as $m) {
 	print '<td>'. '' . '</td>';
 	print '<td align="center">' . $arrayresult1[nbtracteur][$m] . '</td>';
 	print '<td align="center">' . $arrayresult1[nbporteur][$m] . '</td>';
-	$tracteur_percent = ($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+	if(!empty($arrayresult1[nb_fact][$m])){
+		$tracteur_percent = ($arrayresult1[nbtracteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+		$porteur_percent = ($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100;
+	}else{
+		$tracteur_percent = 0;
+		$porteur_percent = 0;
+	}
 	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
-	$porteur_percent = ($arrayresult1[nbporteur][$m] /($arrayresult1[nb_fact][$m]))*100;
 	print '<td align="center">' . price($tracteur_percent) . ' %</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
