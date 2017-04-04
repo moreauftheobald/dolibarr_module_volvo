@@ -557,7 +557,7 @@ function stat_sell3($year, $commercial,$monthlist){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND p.ref IS NOT NULL";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND p.ref IS NOT NULL ";
 	if(!empty($monthlist)){
 		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
 	}
