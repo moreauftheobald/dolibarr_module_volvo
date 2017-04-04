@@ -214,16 +214,18 @@ foreach ($arrayperiode as $m) {
 	print '<td align="center">' . $arrayresult2['lixbail'][$m] . '</td>';
 	if(!empty($arrayresult4['margetheo'][$m])){
 		print '<td align="center">'. price($arrayresult4['margetheo'][$m]) .' €</td>';
+		print '<td align="center">'. price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
+		print '<td align="center"></td>';
 	}
-if(!empty($arrayresult4['margereal'][$m])){
+	if(!empty($arrayresult4['margereal'][$m])){
 		print '<td align="center">'. price($arrayresult4['margereal'][$m]) .' €</td>';
+		print '<td align="center">'. price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
+		print '<td align="center"></td>';
 	}
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 
@@ -253,9 +255,9 @@ print '<th class="liste_titre" align="center">' . $total_dded . '</th>';
 print '<th class="liste_titre" align="center">' . $total_vfs . '</th>';
 print '<th class="liste_titre" align="center">' . $total_lixbail . '</th>';
 print '<th class="liste_titre" align="center">' . price($total_margetheo) . ' €</th>';
-print '<th class="liste_titre" align="center">' . price($total_margereal) . ' €</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . price(round($total_margetheo/$total_fact,2)) . ' €</th>';
+print '<th class="liste_titre" align="center">' . price($total_margereal) . '</th>';
+print '<th class="liste_titre" align="center">' . price(round($total_margereal/$total_fact,2)) . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 
