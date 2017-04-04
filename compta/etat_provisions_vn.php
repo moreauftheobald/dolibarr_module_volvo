@@ -155,8 +155,8 @@ foreach ($arrayresult1 as $key=>$arrayvalue) {
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $key . '</td>';
-	print '<td align="center">' . $value['vendeur'] . '</td>';
-	print '<td align="center">' . $value['client'] .' €</td>';
+	print '<td align="center">' . $arrayvalue['vendeur'] . '</td>';
+	print '<td align="center">' . $arrayvalue['client'] .'</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
