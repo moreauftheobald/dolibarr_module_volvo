@@ -28,7 +28,7 @@ require_once(DOL_DOCUMENT_ROOT."/core/lib/date.lib.php");
 /**
  * Class to manage the box to show last task
  */
-class box_pay_late extends ModeleBoxes
+class box_pdmsoltrs_indiv extends ModeleBoxes
 {
     var $boxcode="pdm_soltrs_indiv";
     var $boximg="iron02@volvo";
