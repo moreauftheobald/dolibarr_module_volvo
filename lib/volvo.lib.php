@@ -572,7 +572,6 @@ function stat_sell3($year, $commercial,$monthlist){
 		while($obj = $db->fetch_object($resql)){
 			if(!in_array($obj->ref, $soltrs)){
 				$result['cavolvo'][$obj->Mois]+= $obj->total_ht;
-				$result['iter'][$obj->Mois] +=1;
 			}
 		}
 		return $result;
@@ -580,4 +579,43 @@ function stat_sell3($year, $commercial,$monthlist){
 		return $sql;
 	}
 
+}
+
+function stat_sell4($year, $commercial,$monthlist){
+	global $db;
+
+	dol_include_once('/volvo/class/commandevolvo.class.php');
+	$cmd = new CommandeVolvo($db);
+
+	$sql = "SELECT  ";
+	$sql.= "MONTH(event.datep) as Mois, ";
+	$sql.= "c.rowid as cmdid,  ";
+	$sql.= "c.total_ht as total_ht ";
+	$sql.= "FROM llx_commande AS c ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	if(!empty($monthlist)){
+		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
+	}
+	if ($commercial > 0){
+		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
+	}
+	$sql.= "ORDER BY MONTH(event.datep) ";
+
+	$resql = $db->query($sql);
+	if($resql){
+		$result =array();
+		while($obj = $db->fetch_object($resql)){
+				$costreal = $cmd->getCostPriceReal($obj->cmdid,'real');
+				$costtheo = $cmd->getCostPriceReal($obj->cmdid,'theo');
+				$result['margereal'][$obj->Mois]+= $obj->total_ht-$costreal;
+				$result['margetheo'][$obj->Mois]+= $obj->total_ht-$costtheo;
+
+		}
+		return $result;
+	}else{
+		return $sql;
+	}
 }

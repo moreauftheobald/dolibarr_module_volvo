@@ -166,7 +166,8 @@ if(!empty($monthlist)){
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
-var_dump($arrayresult3);
+$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
+
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
  	$total_fact+=$arrayresult1['nb_fact'][$m];
@@ -179,6 +180,8 @@ foreach ($arrayperiode as $m) {
 	$total_vfs+=$arrayresult2['vfs'][$m];
 	$total_lixbail+=$arrayresult2['lixbail'][$m];
 	$total_cavolvo+=$arrayresult3['cavolvo'][$m];
+	$total_margetheo+=$arrayresult4['margetheo'][$m];
+	$total_margereal+=$arrayresult4['margereal'][$m];
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $month[$m] . '</td>';
@@ -209,8 +212,16 @@ foreach ($arrayperiode as $m) {
 	print '<td align="center">' . $arrayresult2['dded'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['vfs'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['lixbail'][$m] . '</td>';
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
+	if(!empty($arrayresult4['margetheo'][$m])){
+		print '<td align="center">'. price($arrayresult4['margetheo'][$m]) .' €</td>';
+	}else{
+		print '<td align="center"></td>';
+	}
+if(!empty($arrayresult4['margereal'][$m])){
+		print '<td align="center">'. price($arrayresult4['margereal'][$m]) .' €</td>';
+	}else{
+		print '<td align="center"></td>';
+	}
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
@@ -241,8 +252,8 @@ print '<th class="liste_titre" align="center">' . $total_dfol . '</th>';
 print '<th class="liste_titre" align="center">' . $total_dded . '</th>';
 print '<th class="liste_titre" align="center">' . $total_vfs . '</th>';
 print '<th class="liste_titre" align="center">' . $total_lixbail . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . price($total_margetheo) . ' €</th>';
+print '<th class="liste_titre" align="center">' . price($total_margereal) . ' €</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
