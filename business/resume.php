@@ -164,6 +164,7 @@ if(!empty($monthlist)){
 }
 
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
+$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
@@ -171,6 +172,11 @@ foreach ($arrayperiode as $m) {
 	$total_caht+=$arrayresult1[catotalht][$m];
 	$total_tracteur+=$arrayresult1[nbtracteur][$m];
 	$total_porteur+=$arrayresult1[nbporteur][$m];
+	$total_vcm+=$arrayresult2[vcm][$m];
+	$total_dfol+=$arrayresult2[dfol][$m];
+	$total_dded+=$arrayresult2[dded][$m];
+	$total_vfs+=$arrayresult2[vfs][$m];
+	$total_lixbail+=$arrayresult2[lixbail][$m];
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $month[$m] . '</td>';
@@ -192,11 +198,11 @@ foreach ($arrayperiode as $m) {
 	}
 	print '<td align="center">' . $trateur_ppercent . '</td>';
 	print '<td align="center">' . $tracteur_percent . '</td>';
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
-	print '<td align="center">' . '' . '</td>';
+	print '<td align="center">' . $arrayresult2[vcm][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2[dfol][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2[dded][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2[vfs][$m] . '</td>';
+	print '<td align="center">' . $arrayresult2[lixbail][$m] . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
@@ -224,11 +230,11 @@ if(!empty($total_fact)){
 }
 print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
 print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
-print '<th class="liste_titre" align="center">' . '' . '</th>';
+print '<th class="liste_titre" align="center">' . $total_vcm . '</th>';
+print '<th class="liste_titre" align="center">' . $total_dfol . '</th>';
+print '<th class="liste_titre" align="center">' . $total_dded . '</th>';
+print '<th class="liste_titre" align="center">' . $total_vfs . '</th>';
+print '<th class="liste_titre" align="center">' . $total_lixbail . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';
 print '<th class="liste_titre" align="center">' . '' . '</th>';

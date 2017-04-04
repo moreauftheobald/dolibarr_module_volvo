@@ -487,3 +487,51 @@ function stat_sell1($year, $commercial,$monthlist){
 	}
 
 }
+
+function stat_sell2($year, $commercial,$monthlist){
+	global $db;
+
+	dol_include_once('/volvo/class/lead.extend.class.php');
+	$leadext = new Leadext($db);
+
+	$soltrs = $leadext->prepare_array('VOLVO_VCM_LIST', 'sql');
+	$soltrs.= $leadext->prepare_array('VOLVO_PACK_LIST', 'sql');
+
+	$sql = "SELECT  ";
+	$sql.= "MONTH(event.datep) as Mois, ";
+	$sql.= "SUM(IF(p.ref IN(" . $soltrs . "),1,0)) as vcm, ";
+	$sql.= "SUM(IF(p.ref LIKE 'DFOL%',1,0)) as dfol, ";
+	$sql.= "SUM(IF(p.ref = 'DDED',1,0)) as dded, ";
+	$sql.= "SUM(IF(p.ref = 'FIN_LIX',1,0)) as lixbail, ";
+	$sql.= "SUM(IF(p.ref = 'FIN_VFS',1,0)) as vfs ";
+	$sql.= "FROM llx_commande AS c ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	if(!empty($monthlist)){
+		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
+	}
+	if ($commercial > 0){
+		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
+	}
+	$sql.= "GROUP BY MONTH(event.datep) ";
+
+	$resql = $db->query($sql);
+	if($resql){
+		$result =array();
+		while($obj = $db->fetch_object($resql)){
+			$result[vcm][$obj->Mois] = $obj->vcm;
+			$result[dfol][$obj->Mois] = $obj->dfol;
+			$result[dded][$obj->Mois] = $obj->dded;
+			$result[lixbal][$obj->Mois] = $obj->lixbail;
+			$result[vfs][$obj->Mois] = $obj->vfs;
+		}
+		return $result;
+	}else{
+		return -1;
+	}
+
+}
