@@ -63,10 +63,13 @@ class box_pay_late extends ModeleBoxes
 	 */
 	function loadBox($max=5)
 	{
+		global $user;
+
 		dol_include_once('/mydoliboard/class/mydoliboard.class.php');
-		$_POST['Année'] = 2016;
+		$_POST['Année'] = dol_print_date(dol_now(),'%Y');
+		$_POST['Commercial'] = $user->id;
 		$board= new Mydoliboard($this->db);
-		$board->fetch(6);
+		$board->fetch(7);
 		//echo var_dump($board);
 		$this->info_box_head = array('text' => $board->description, 'limit'=> 50);
 		$i=0;
