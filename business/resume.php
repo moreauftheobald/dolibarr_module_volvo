@@ -166,7 +166,7 @@ if(!empty($monthlist)){
 $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
-
+var_dump($arrayresult3);
 foreach ($arrayperiode as $m) {
  	$var = ! $var;
  	$total_fact+=$arrayresult1['nb_fact'][$m];
