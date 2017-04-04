@@ -146,7 +146,7 @@ if(!empty($search_periode)){
 	}
 }
 
-$arrayresult1 = stat_prov1($year, $search_commercial,$monthlist);
+$arrayresult1 = stat_prov1($year,$monthlist);
 
 
 // foreach ($arrayperiode as $m) {

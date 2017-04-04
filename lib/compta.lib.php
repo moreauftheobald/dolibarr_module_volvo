@@ -3,33 +3,37 @@ function stat_prov1($year, $monthlist){
 	global $db;
 
 	$sql = "SELECT  ";
-	$sql.= "MONTH(event.datep) as Mois, ";
-	$sql.= "COUNT(DISTINCT c.rowid) as nb_facture, ";
-	$sql.= "SUM(c.total_ht) AS catotalht, ";
-	$sql.= "SUM(IF(lef.type = 1,1,0)) AS nbporteur, ";
-	$sql.= "SUM(IF(lef.type = 2,1,0)) AS nbtracteur ";
+	$sql.= "c.ref AS ref, ";
+	$sql.= "CONCAT(u.firstname,' ',u.lastname) AS vendeur, ";
+	$sql.= "s.nom AS client, ";
+	$sql.= "DATE_FORMAT(c.date_commande,'%b-%Y') AS mois, ";
+	$sql.= "MAX(detef.dt_invoice) AS last_update ";
 	$sql.= "FROM llx_commande AS c ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields lef on lef.fk_object = l.rowid ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
-	if(!empty($monthlist)){
-		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
-	}
-	if ($commercial > 0){
-		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
-	}
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "user AS u on u.rowid = l.fk_user_resp ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "societe AS s on s.rowid = c.fk_soc ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet_extrafields AS detef on detef.fk_object=det.rowid ";
 	$sql.= "GROUP BY MONTH(event.datep) ";
+	$sql.= "HAVING (YEAR(last_update) ='" . $year . "'";
+	if(!empty($monthlist)){
+		$sql.= " AND MONTH(last_update) IN (" . $monthlist . ") ";
+	}
+	$sql.= ") OR (YEAR(mois) ='" . $year . "" ;
+	if(!empty($monthlist)){
+		$sql.= " AND MONTH(mois) IN (" . $monthlist . ") ";
+	}
+	$sql.=")";
 
 	$resql = $db->query($sql);
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result['nb_fact'][$obj->Mois] = $obj->nb_facture;
-			$result['catotalht'][$obj->Mois] = $obj->catotalht;
-			$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
-			$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
+			$result[$obj->ref]['vendeur'] = $obj->vendeur;
+			$result[$obj->ref]['client'] = $obj->client;
+			$result[$obj->ref]['mois'] = $obj->mois;
 		}
 		return $result;
 	}else{
