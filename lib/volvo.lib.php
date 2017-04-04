@@ -572,6 +572,7 @@ function stat_sell3($year, $commercial,$monthlist){
 		while($obj = $db->fetch_object($resql)){
 			if(!in_array($obj->ref, $soltrs)){
 				$result['cavolvo'][$obj->Mois]+= $obj->totalht;
+				$result['iter'][$obj->Mois] +=1;
 			}
 		}
 		return $result;
