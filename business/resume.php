@@ -188,7 +188,11 @@ foreach ($arrayperiode as $m) {
 	}else{
 		print '<td align="center"></td>';
 	}
-	print '<td>'. '' . '</td>';
+	if(!empty($arrayresult3['cavolvo'][$m])){
+		print '<td align="center">'. price($arrayresult3['cavolvo'][$m]) .' €</td>';
+	}else{
+		print '<td align="center"></td>';
+	}
 	print '<td align="center">' . $arrayresult1['nbtracteur'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult1['nbporteur'][$m] . '</td>';
 	if(!empty($arrayresult1['nb_fact'][$m])){
@@ -205,11 +209,7 @@ foreach ($arrayperiode as $m) {
 	print '<td align="center">' . $arrayresult2['dded'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['vfs'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['lixbail'][$m] . '</td>';
-if(!empty($arrayresult3['cavolvo'][$m])){
-		print '<td align="center">'. price($arrayresult3['cavolvo'][$m]) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
+	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
 	print '<td align="center">' . '' . '</td>';
@@ -224,7 +224,7 @@ print '<tr class="liste_titre">';
 print '<th class="liste_titre" align="center">Total</th>';
 print '<th class="liste_titre" align="center">' . $total_fact . '</th>';
 print '<th class="liste_titre" align="center">'. price($total_caht) .' €</th>';
-print '<th class="liste_titre" align="center">'. '' . '</th>';
+print '<th class="liste_titre" align="center">'. price($total_cavolvo) .' €</th>';
 print '<th class="liste_titre" align="center">' . $total_tracteur . '</th>';
 print '<th class="liste_titre" align="center">' . $total_porteur . '</th>';
 if(!empty($total_fact)){
