@@ -14,14 +14,13 @@ function stat_prov1($year, $monthlist){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "user AS u on u.rowid = l.fk_user_resp ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "societe AS s on s.rowid = c.fk_soc ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet_extrafields AS detef on detef.fk_object=det.rowid ";
-	$sql.= "GROUP BY MONTH(event.datep) ";
+	$sql.= "GROUP BY c.ref ";
 	$sql.= "HAVING (YEAR(last_update) ='" . $year . "'";
 	if(!empty($monthlist)){
 		$sql.= " AND MONTH(last_update) IN (" . $monthlist . ") ";
 	}
-	$sql.= ") OR (YEAR(mois) ='" . $year . "" ;
+	$sql.= ") OR (YEAR(mois) ='" . $year . "'" ;
 	if(!empty($monthlist)){
 		$sql.= " AND MONTH(mois) IN (" . $monthlist . ") ";
 	}
