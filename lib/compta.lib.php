@@ -37,7 +37,7 @@ function stat_prov1($year, $monthlist){
 		}
 		return $result;
 	}else{
-		return -1;
+		return $sql;
 	}
 
 }

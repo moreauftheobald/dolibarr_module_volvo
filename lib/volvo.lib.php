@@ -483,7 +483,7 @@ function stat_sell1($year, $commercial,$monthlist){
 		}
 		return $result;
 	}else{
-		return $sql;
+		return -1;
 	}
 
 }
