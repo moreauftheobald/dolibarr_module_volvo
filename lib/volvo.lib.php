@@ -476,10 +476,10 @@ function stat_sell1($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result[nb_fact][$obj->Mois] = $obj->nb_facture;
-			$result[catotalht][$obj->Mois] = $obj->catotalht;
-			$result[nbporteur][$obj->Mois] = $obj->nbporteur;
-			$result[nbtracteur][$obj->Mois] = $obj->nbtracteur;
+			$result['nb_fact'][$obj->Mois] = $obj->nb_facture;
+			$result['catotalht'][$obj->Mois] = $obj->catotalht;
+			$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
+			$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
 		}
 		return $result;
 	}else{
@@ -523,11 +523,56 @@ function stat_sell2($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result[vcm][$obj->Mois] = $obj->vcm;
-			$result[dfol][$obj->Mois] = $obj->dfol;
-			$result[dded][$obj->Mois] = $obj->dded;
-			$result[lixbail][$obj->Mois] = $obj->lixbail;
-			$result[vfs][$obj->Mois] = $obj->vfs;
+			$result['vcm'][$obj->Mois] = $obj->vcm;
+			$result['dfol'][$obj->Mois] = $obj->dfol;
+			$result['dded'][$obj->Mois] = $obj->dded;
+			$result['lixbail'][$obj->Mois] = $obj->lixbail;
+			$result['vfs'][$obj->Mois] = $obj->vfs;
+		}
+		return $result;
+	}else{
+		return -1;
+	}
+
+}
+
+function stat_sell3($year, $commercial,$monthlist){
+	global $db;
+
+	dol_include_once('/volvo/class/lead.extend.class.php');
+	$leadext = new Leadext($db);
+
+	$soltrs1 = $leadext->prepare_array('VOLVO_VCM_LIST', 'array');
+	$soltrs2= $leadext->prepare_array('VOLVO_PACK_LIST', 'array');
+	$soltrs3= array('volvo','LIVUSI','TPNEU');
+	$soltrs =array_merge($soltrs1,$soltrs2,$soltrs3);
+
+	$sql = "SELECT  ";
+	$sql.= "MONTH(event.datep) as Mois, ";
+	$sql.= "p.ref as ref, ";
+	$sql.= "det.total_ht as total_ht ";
+	$sql.= "FROM llx_commande AS c ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND p.ref IS NOT NULL";
+	if(!empty($monthlist)){
+		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
+	}
+	if ($commercial > 0){
+		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
+	}
+	$sql.= "ORDER BY MONTH(event.datep) ";
+
+	$resql = $db->query($sql);
+	if($resql){
+		$result =array();
+		while($obj = $db->fetch_object($resql)){
+			if(!in_array($obj->ref, $soltrs)){
+				$result['cavolvo'][$obj->Mois]+= $obj->totalht;
+			}
 		}
 		return $result;
 	}else{
