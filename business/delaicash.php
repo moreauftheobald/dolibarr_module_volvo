@@ -197,7 +197,7 @@ $formother = new FormOther($db);
 if (empty($sortorder))
 	$sortorder = "ASC";
 if (empty($sortfield))
-	$sortfield = "cf.date_livraison";
+	$sortfield = "diff_cash";
 
 llxHeader('', $title);
 

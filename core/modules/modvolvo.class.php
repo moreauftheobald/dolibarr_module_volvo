@@ -1023,7 +1023,7 @@ $this->menus = array(); // List of menus to add
 				'titre' => 'Suivi Délai Cash',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'cash',
-				'url' => '/volvo/business/delaicash.php',
+				'url' => '/volvo/business/delaicash.php?search_run=1',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
 				'enabled' => '$user->rights->volvo->stat_ext',
