@@ -1020,7 +1020,7 @@ class Leadext extends Lead
 			}
 			return 0;
 		}else{
-			return -1;
+			return $this->db->lasterror;
 		}
 	}
 
