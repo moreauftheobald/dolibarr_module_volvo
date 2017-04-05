@@ -255,7 +255,7 @@ $num = $resql;
  	print_liste_field_titre('Date<br>limite de</br>règlement', $_SERVEUR['PHP_SELF'], "DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY)", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('Délai<br>Cash', $_SERVEUR['PHP_SELF'], "DATEDIFF(event5.datep,event6.datep)", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('prime<br>Cash', $_SERVEUR['PHP_SELF'], "comef.comm_cash", "", $option, 'align="center"', $sortfield, $sortorder);
- 	print_liste_field_titre('Ecart de<br>règlement', $_SERVEUR['PHP_SELF'], "comef.comm_cash", "", $option, 'align="center"', $sortfield, $sortorder);
+ 	print_liste_field_titre('Ecart de<br>règlement', $_SERVEUR['PHP_SELF'], "(payterm.nbjour - DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep))", "", $option, 'align="center"', $sortfield, $sortorder);
 
  	print "</tr>\n";
 
