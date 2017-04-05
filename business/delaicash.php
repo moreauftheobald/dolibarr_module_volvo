@@ -301,7 +301,7 @@ $num = $resql;
  		print '<td align="center">' . dol_print_date($line->dt_fac,'day') . '</td>';
  		print '<td align="center">' . dol_print_date($line->dt_pay,'day') . '</td>';
 
- 		print '<td align="center">' . $line->cond_reg . ' Jours</td>';
+ 		print '<td align="center">' . $line->cond_reg . '</td>';
 
  		if(!empty($line->dt_recep)){
  			$text = $line->delai_cash . ' Jour(s)';
