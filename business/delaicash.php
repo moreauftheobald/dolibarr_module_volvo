@@ -205,7 +205,7 @@ llxHeader('', $title);
 $nbtotalofrecords = 0;
 
 if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
-$nbtotalofrecords = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
+$nbtotalofrecords = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
 }
 $resql = $object->fetchdelaicash($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 if ($resql != - 1) {
