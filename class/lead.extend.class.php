@@ -1006,7 +1006,7 @@ class Leadext extends Lead
 
 		$sql = "SELECT rowid, ref ";
 		$sql.= "FROM " . MAIN_DB_PREFIX . "commande ";
-		$sql.= "WHERE (date_cloture >= DATE_ADD(NOW(),INTERVAL -" .$conf->global->VOLVO_LOCK_DELAI + 6 ." MONTH) ";
+		$sql.= "WHERE (date_cloture >= DATE_ADD(NOW(),INTERVAL -" . $conf->global->VOLVO_LOCK_DELAI + 6 ." MONTH) ";
 		$sql.= "OR date_cloture IS NULL) ";
 		$sql.= "AND fk_statut > 0 ";
 		$sql.= "ORDER BY rowid";
@@ -1020,7 +1020,7 @@ class Leadext extends Lead
 			}
 			return 0;
 		}else{
-			return $this->db->lasterror;
+			return $sql;
 		}
 	}
 
