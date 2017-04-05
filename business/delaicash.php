@@ -316,7 +316,10 @@ $num = $resql;
  		}
  		$om_label.= '</a>';
 
- 		print '<tr ' . $bc[$var] . '>';
+ 		$style = '';
+ 		if($line->diff_cash<0) $style =' style="color:red;"';
+
+ 		print '<tr ' . $bc[$var] . $style .'>';
 
  		print '<td>'. $comm->getNomUrl(0) .'</td>';
  		print '<td align="center">' . $om_label . '</td>';
