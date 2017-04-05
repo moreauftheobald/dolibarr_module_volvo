@@ -671,6 +671,7 @@ class Leadext extends Lead
 		$sql .= " ef.numom AS numom,";
 		$sql .= " ef.dt_blockupdate AS dt_blockupdate,";
 		$sql .= " event6.datep AS dt_recep,";
+		$sql .= " event4.datep AS dt_liv,";
 		$sql .= " event3.datep AS dt_fac,";
 		$sql .= " event5.datep AS dt_pay,";
 		$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
