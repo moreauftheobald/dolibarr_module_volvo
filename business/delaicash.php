@@ -30,7 +30,7 @@ require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
 require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 
-$title = 'Suivis des affaires en cours';
+$title = 'Suivis du délai cash';
 
 // Security check
 if (! $user->rights->lead->read)
@@ -175,7 +175,7 @@ $nbtotalofrecords = 0;
 if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
 $nbtotalofrecords = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
 }
-$resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
+$resql = $object->fetchdelaicash($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 if ($resql != - 1) {
 $num = $resql;
   	print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);

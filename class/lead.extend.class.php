@@ -644,6 +644,121 @@ class Leadext extends Lead
 		}
 	}
 
+	public function fetchdelaicash($sortorder = '', $sortfield = '', $limit = 0, $offset = 0, array $filter = array(), $filtermode = 'AND') {
+		dol_syslog(__METHOD__, LOG_DEBUG);
+
+		$subsql1 = 'SELECT ';
+		$subsql1.= 'MAX(fourn.ref) AS fourn, ';
+		$subsql1.= 'cmd.rowid as cmd, ';
+		$subsql1.= 'el2.fk_target as lead ';
+		$subsql1.= 'FROM ' . MAIN_DB_PREFIX .'element_element AS el ';
+		$subsql1.= 'LEFT JOIN ' . MAIN_DB_PREFIX .'commande_fournisseur as fourn ON el.fk_target = fourn.rowid AND el.targettype = "order_supplier" AND el.sourcetype = "commande" AND fourn.fk_soc = 32553 ';
+		$subsql1.= 'LEFT JOIN ' . MAIN_DB_PREFIX .'commande as cmd ON el.fk_source = cmd.rowid ';
+		$subsql1.= 'INNER JOIN ' . MAIN_DB_PREFIX .'element_element AS el2 ON el2.fk_source = cmd.rowid AND el2.targettype = "lead" AND el.sourcetype = "commande" ';
+		$subsql1.= 'GROUP BY cmd.ref';
+
+		$sql = "SELECT";
+		$sql .= " lead.fk_soc AS societe,";
+		$sql .= " soc.nom AS socnom,";
+		$sql .= " lead.ref AS lead,";
+		$sql .= " lead.rowid AS leadid,";
+		$sql .= " com.ref AS com,";
+		$sql .= " com.rowid AS comid,";
+		$sql .= " cf.ref AS fourn,";
+		$sql .= " cf.rowid AS fournid,";
+		$sql .= " ef.vin AS vin,";
+		$sql .= " ef.immat AS immat,";
+		$sql .= " ef.numom AS numom,";
+		$sql .= " ef.dt_blockupdate AS dt_blockupdate,";
+		$sql .= " event6.datep AS dt_recep,";
+		$sql .= " event3.datep AS dt_fac,";
+		$sql .= " event5.datep AS dt_pay,";
+		$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
+		$sql .= " lead.fk_user_resp AS commercial,";
+		$sql .= " payterm.libelle AS cond_reg,";
+		$sql .= " DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY) AS date_lim_reg";
+		$sql .= " FROM (" . $subsql1 . ") as idx";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
+		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = cf.rowid";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "societe as soc on lead.fk_soc = soc.rowid";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event3 on event3.fk_element = com.rowid AND event3.elementtype = 'order ' AND event3.label LIKE '%Facturée%'";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event4 on event4.fk_element = com.rowid AND event4.elementtype = 'order ' AND event4.label LIKE '%Livrée%'";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event5 on event5.fk_element = com.rowid AND event5.elementtype = 'order ' AND event5.label LIKE '%Payée%'";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event6 on event6.fk_element = cf.rowid AND event6.elementtype = 'order_supplier' AND event6.label LIKE '%reçue%'";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "c_payment_term as payterm on payterm.rowid = com.fk_cond_reglement";
+
+
+		// Manage filter
+		$sqlwhere = array();
+		if (count($filter) > 0) {
+			foreach ( $filter as $key => $value ) {
+				if (($key == 'event3.datep')|| ($key == 'event5.datep')|| ($key == 'event6.datep')|| ($key == 'ef.dt_blockupdate')|| ($key == 'date_lim_reg')){
+					$sqlwhere[] = $key . ' BETWEEN ' . $value;
+				}elseif(($key== 'lead.fk_user_resp')||($key== 'com.rowid')) {
+					$sqlwhere[] = $key . ' = ' . $value;
+				}elseif(($key=='cond_reg')||($key=='delai_cash')) {
+					$sqlwhere[] = $key . ' BETWEEN ' . $value;
+				}elseif(($key== 'search_run')) {
+					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
+				}else {
+					$sqlwhere[] = $key . ' LIKE \'%' . $this->db->escape($value) . '%\'';
+				}
+			}
+		}
+		if (count($sqlwhere) > 0) {
+			$sql .= ' HAVING ' . implode(' ' . $filtermode . ' ', $sqlwhere);
+		}
+
+		if (! empty($sortfield)) {
+			$sql .= $this->db->order($sortfield, $sortorder);
+		}
+		if (! empty($limit)) {
+			$sql .= ' ' . $this->db->plimit($limit + 1, $offset);
+		}
+		$this->business = array();
+
+		$resql = $this->db->query($sql);
+		if ($resql) {
+			$num = $this->db->num_rows($resql);
+			$compteur =1;
+			while ( $obj = $this->db->fetch_object($resql) ) {
+				$line = new Leadext($this->db);
+				$line->societe = $obj->societe;
+				$line->lead = $obj->leadid;
+				$line->com = $obj->comid;
+				$line->fournid = $obj->fournid;
+				$line->numom = $obj->numom;
+				$line->vin = $obj->vin;
+				$line->immat = $obj->immat;
+				$line->dt_blockupdate = $this->db->jdate($obj->dt_blockupdate);
+				$line->dt_recep = $this->db->jdate($obj->dt_recep);
+				$line->dt_fac = $this->db->jdate($obj->dt_fac);
+				$line->dt_pay = $this->db->jdate($obj->dt_pay);
+				$line->delai_cash = $obj->delai_cash;
+				$line->commercial = $obj->commercial;
+				$line->cond_reg = $obj->cond_reg;
+				$line->date_lim_reg = $obj->date_lim_reg;
+
+				$this->business[$compteur] = $line;
+				$compteur++;
+			}
+			$this->db->free($resql);
+			dol_syslog(__METHOD__ . ' ' . $sql, LOG_ERR);
+			return $num;
+		} else {
+			$this->errors[] = 'Error ' . $this->db->lasterror();
+			$this->errors[] = 'Error ' . $sql;
+			dol_syslog(__METHOD__ . ' ' . join(',', $this->errors), LOG_ERR);
+
+			return - 1;
+		}
+	}
+
+
+
 	function fetchbyref($ref) {
 		global $langs;
 		$sql = "SELECT";
