@@ -1020,6 +1020,22 @@ $this->menus = array(); // List of menus to add
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
 				'type' => 'left',
+				'titre' => 'Suivi Délai Cash',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'cash',
+				'url' => '/volvo/business/delaicash.php',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->stat_ext',
+				'perms' => '$user->rights->volvo->stat_ext',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'type' => 'left',
 				'titre' => 'Suivi d\'activité',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'resume',
