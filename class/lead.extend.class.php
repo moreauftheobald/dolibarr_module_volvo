@@ -1022,7 +1022,7 @@ class Leadext extends Lead
 			}
 			return 0;
 		}else{
-			return $conf->global->VOLVO_LOCK_DELAI;
+			return -1;
 		}
 	}
 
