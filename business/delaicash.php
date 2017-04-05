@@ -342,7 +342,7 @@ $num = $resql;
  		}
  		print '<td align="center">' . $text . '</td>';
  		print '<td align="center">' . price(round($line->comm_cash,2)) . ' €</td>';
- 		print '<td align="center">' . $line->diff_cash . ' Jour(s)</td>';
+ 		print '<td align="center">' . round($line->diff_cash,0) . ' Jour(s)</td>';
 
 		print "</tr>\n";
 
