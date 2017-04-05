@@ -62,6 +62,8 @@ $search_date_lru_min = dol_mktime(0, 0, 0, GETPOST('search_date_lru_min_month'),
 $search_date_lru_max = dol_mktime(23, 59, 59, GETPOST('search_date_lru_max_month'), GETPOST('search_date_lru_max_day'), GETPOST('search_date_lru_max_year'));
 $search_cash_min = GETPOST('search_cash_min','int');
 $search_cash_max = GETPOST('search_cash_max','int');
+$search_cond_min = GETPOST('search_cond_min','int');
+$search_cond_max = GETPOST('search_cond_max','int');
 $search_run = GETPOST('search_run','int');
 
 // Do we click on purge search criteria ?
@@ -84,6 +86,8 @@ if (GETPOST("button_removefilter_x")) {
  	$search_date_lru_max ='';
  	$search_cash_min = '';
  	$search_cash_max = '';
+ 	$search_cond_min = '';
+ 	$search_cond_max = '';
  	$search_run = '';
 }
 $search_commercial_disabled = 0;
@@ -144,6 +148,10 @@ if (! empty($search_date_lru_min) && ! empty($search_date_lru_max)) {
 if (! empty($search_cash_min) && ! empty($search_cash_max)) {
 	$filter['delai_cash'] = $search_cash_min . " AND " . $search_cash_max;
 	$option .= '&search_cash_min=' . $search_cash_min . '&search_cash_max=' . $search_cash_max;
+}
+if (! empty($search_cond_min) && ! empty($search_cond_max)) {
+	$filter['cond_reg'] = $search_cond_min . " AND " . $search_cond_max;
+	$option .= '&search_cond_min=' . $search_cond_min . '&search_cond_max=' . $search_cond_max;
 }
 if (! empty($search_run)) {
 	$filter['search_run'] = 1;
@@ -219,6 +227,7 @@ $num = $resql;
  	print_liste_field_titre('Date de<br>facturation', $_SERVEUR['PHP_SELF'], "event3.datep", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('Date de<br>paiement', $_SERVEUR['PHP_SELF'], "event5.datep", "", $option, 'align="center"', $sortfield, $sortorder);
 
+ 	print_liste_field_titre('Délai de<br>règlement', $_SERVEUR['PHP_SELF'], "cond_reg", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('Délai<br>Cash', $_SERVEUR['PHP_SELF'], "DATEDIFF(event5.datep,event6.datep)", "", $option, 'align="center"', $sortfield, $sortorder);
 
  	print "</tr>\n";
@@ -242,6 +251,7 @@ $num = $resql;
  	print '<td align="center">' . $form->select_date($search_date_pai_min, 'search_date_pai_min_',0,0,1,'',1,0,1,0,'','','') . '</br>';
  	print  $form->select_date($search_date_pai_max, 'search_date_pai_max_',0,0,1,'',1,0,1,0,'','','') . '</td>';
 
+ 	print '<td><input type="text" class="flat" name="search_cond_min" value="' . $search_cond_min . '" size="6"></br></br><input type="text" class="flat" name="search_cond_max" value="' . $search_cond_max . '" size="6"></td>';
  	print '<td><input type="text" class="flat" name="search_cash_min" value="' . $search_cash_min . '" size="6"></br></br><input type="text" class="flat" name="search_cash_max" value="' . $search_cash_max . '" size="6"></td>';
  	print "</tr>\n";
  	print '</form>';
@@ -290,6 +300,8 @@ $num = $resql;
 
  		print '<td align="center">' . dol_print_date($line->dt_fac,'day') . '</td>';
  		print '<td align="center">' . dol_print_date($line->dt_pay,'day') . '</td>';
+
+ 		print '<td align="center">' . $line->cond_reg . ' Jours</td>';
 
  		if(!empty($line->dt_recep)){
  			$text = $line->delai_cash . ' Jour(s)';
