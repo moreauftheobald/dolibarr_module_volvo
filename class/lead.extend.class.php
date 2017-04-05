@@ -678,10 +678,13 @@ class Leadext extends Lead
 		$sql .= " lead.fk_user_resp AS commercial,";
 		$sql .= " payterm.libelle AS cond_reg,";
 		$sql .= " DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY) AS date_lim_reg";
+		$sql .= " comef.comm_cash AS comm_cash";
+		$sql .= " (payterm.nbjour - comef.comm_cash) AS diff_cash";
 		$sql .= " FROM (" . $subsql1 . ") as idx";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
 		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as comef ON com.rowid = comef.fk_object";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = cf.rowid";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "societe as soc on lead.fk_soc = soc.rowid";
@@ -700,7 +703,7 @@ class Leadext extends Lead
 					$sqlwhere[] = $key . ' BETWEEN ' . $value;
 				}elseif(($key== 'lead.fk_user_resp')||($key== 'com.rowid')) {
 					$sqlwhere[] = $key . ' = ' . $value;
-				}elseif(($key=='cond_reg')||($key=='delai_cash')) {
+				}elseif(($key=='cond_reg')||($key=='delai_cash')||($key=='comm_cash')||($key=='diff_cash')) {
 					$sqlwhere[] = $key . ' BETWEEN ' . $value;
 				}elseif(($key== 'search_run')) {
 					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
@@ -742,6 +745,8 @@ class Leadext extends Lead
 				$line->commercial = $obj->commercial;
 				$line->cond_reg = $obj->cond_reg;
 				$line->date_lim_reg = $obj->date_lim_reg;
+				$line->comm_cash = $obj->comm_cash;
+				$line->diff_cash = $obj->diff_cash;
 
 				$this->business[$compteur] = $line;
 				$compteur++;

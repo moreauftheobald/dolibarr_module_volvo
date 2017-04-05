@@ -64,6 +64,10 @@ $search_cash_min = GETPOST('search_cash_min','int');
 $search_cash_max = GETPOST('search_cash_max','int');
 $search_cond_min = GETPOST('search_cond_min','int');
 $search_cond_max = GETPOST('search_cond_max','int');
+$search_comm_min = GETPOST('search_comm_min','int');
+$search_comm_max = GETPOST('search_comm_max','int');
+$search_diff_min = GETPOST('search_diff_min','int');
+$search_diff_max = GETPOST('search_diff_max','int');
 $search_date_lim_min = dol_mktime(0, 0, 0, GETPOST('search_date_lim_min_month'), GETPOST('search_date_lim_min_day'), GETPOST('search_date_lim_min_year'));
 $search_date_lim_max = dol_mktime(23, 59, 59, GETPOST('search_date_lim_max_month'), GETPOST('search_date_lim_max_day'), GETPOST('search_date_lim_max_year'));
 $search_run = GETPOST('search_run','int');
@@ -90,6 +94,10 @@ if (GETPOST("button_removefilter_x")) {
  	$search_cash_max = '';
  	$search_cond_min = '';
  	$search_cond_max = '';
+ 	$search_comm_min = '';
+ 	$search_comm_max = '';
+ 	$search_diff_min = '';
+ 	$search_diff_max = '';
  	$search_date_lim_min = '';
  	$search_date_lim_max ='';
  	$search_run = '';
@@ -156,6 +164,14 @@ if (! empty($search_cash_min) && ! empty($search_cash_max)) {
 if (! empty($search_cond_min) && ! empty($search_cond_max)) {
 	$filter['cond_reg'] = $search_cond_min . " AND " . $search_cond_max;
 	$option .= '&search_cond_min=' . $search_cond_min . '&search_cond_max=' . $search_cond_max;
+}
+if (! empty($search_comm_min) && ! empty($search_comm_max)) {
+	$filter['comm_cash'] = $search_comm_min . " AND " . $search_comm_max;
+	$option .= '&search_comm_min=' . $search_comm_min . '&search_comm_max=' . $search_comm_max;
+}
+if (! empty($search_diff_min) && ! empty($search_diff_max)) {
+	$filter['diff_cash'] = $search_diff_min . " AND " . $search_diff_max;
+	$option .= '&search_diff_min=' . $search_diff_min . '&search_diff_max=' . $search_diff_max;
 }
 if (! empty($search_date_lim_min) && ! empty($search_date_lim_max)) {
 	$filter['date_lim_reg'] = "'" . $db->idate($search_date_lim_min) . "' AND '" . $db->idate($search_date_lim_max) . "'";
@@ -235,9 +251,11 @@ $num = $resql;
  	print_liste_field_titre('Date de<br>facturation', $_SERVEUR['PHP_SELF'], "event3.datep", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('Date de<br>paiement', $_SERVEUR['PHP_SELF'], "event5.datep", "", $option, 'align="center"', $sortfield, $sortorder);
 
- 	print_liste_field_titre('Délai de<br>règlement</br>accordé', $_SERVEUR['PHP_SELF'], "cond_reg", "", $option, 'align="center"', $sortfield, $sortorder);
- 	print_liste_field_titre('Date<br>limite de</br>règlement', $_SERVEUR['PHP_SELF'], "cond_reg", "", $option, 'align="center"', $sortfield, $sortorder);
+ 	print_liste_field_titre('Délai de<br>règlement</br>accordé', $_SERVEUR['PHP_SELF'], "payterm.libelle", "", $option, 'align="center"', $sortfield, $sortorder);
+ 	print_liste_field_titre('Date<br>limite de</br>règlement', $_SERVEUR['PHP_SELF'], "DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY)", "", $option, 'align="center"', $sortfield, $sortorder);
  	print_liste_field_titre('Délai<br>Cash', $_SERVEUR['PHP_SELF'], "DATEDIFF(event5.datep,event6.datep)", "", $option, 'align="center"', $sortfield, $sortorder);
+ 	print_liste_field_titre('prime<br>Cash', $_SERVEUR['PHP_SELF'], "comef.comm_cash", "", $option, 'align="center"', $sortfield, $sortorder);
+ 	print_liste_field_titre('Ecart de<br>règlement', $_SERVEUR['PHP_SELF'], "comef.comm_cash", "", $option, 'align="center"', $sortfield, $sortorder);
 
  	print "</tr>\n";
 
@@ -264,6 +282,8 @@ $num = $resql;
  	print '<td align="center">' . $form->select_date($search_date_lim_min, 'search_date_lim_min_',0,0,1,'',1,0,1,0,'','','') . '</br>';
  	print  $form->select_date($search_date_lim_max, 'search_date_lim_max_',0,0,1,'',1,0,1,0,'','','') . '</td>';
  	print '<td><input type="text" class="flat" name="search_cash_min" value="' . $search_cash_min . '" size="6"></br></br><input type="text" class="flat" name="search_cash_max" value="' . $search_cash_max . '" size="6"></td>';
+ 	print '<td><input type="text" class="flat" name="search_comm_min" value="' . $search_comm_min . '" size="6"></br></br><input type="text" class="flat" name="search_comm_max" value="' . $search_comm_max . '" size="6"></td>';
+ 	print '<td><input type="text" class="flat" name="search_diff_min" value="' . $search_diff_min . '" size="6"></br></br><input type="text" class="flat" name="search_diff_max" value="' . $search_diff_max . '" size="6"></td>';
  	print "</tr>\n";
  	print '</form>';
 
@@ -321,6 +341,8 @@ $num = $resql;
  			$text ='';
  		}
  		print '<td align="center">' . $text . '</td>';
+ 		print '<td align="center">' . $line->comm_cash . ' €</td>';
+ 		print '<td align="center">' . $line->diff_cash . ' Jour(s)</td>';
 
 		print "</tr>\n";
 
