@@ -677,8 +677,8 @@ class Leadext extends Lead
 		$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
 		$sql .= " lead.fk_user_resp AS commercial,";
 		$sql .= " payterm.libelle AS cond_reg,";
-		$sql .= " DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY) AS date_lim_reg";
-		$sql .= " comef.comm_cash AS comm_cash";
+		$sql .= " DATE_ADD(event6.datep, INTERVAL payterm.nbjour DAY) AS date_lim_reg,";
+		$sql .= " comef.comm_cash AS comm_cash,";
 		$sql .= " (payterm.nbjour - comef.comm_cash) AS diff_cash";
 		$sql .= " FROM (" . $subsql1 . ") as idx";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
