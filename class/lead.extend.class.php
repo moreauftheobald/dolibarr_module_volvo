@@ -712,8 +712,9 @@ class Leadext extends Lead
 				}
 			}
 		}
+		$sql .= ' HAVING event6.datep IS NOT NULL';
 		if (count($sqlwhere) > 0) {
-			$sql .= ' HAVING ' . implode(' ' . $filtermode . ' ', $sqlwhere);
+			$sql .= ' AND (' . implode(' ' . $filtermode . ' ', $sqlwhere) .')';
 		}
 
 		if (! empty($sortfield)) {
