@@ -30,7 +30,7 @@ require_once(DOL_DOCUMENT_ROOT."/core/lib/date.lib.php");
  */
 class box_delaicash_global extends ModeleBoxes
 {
-    var $boxcode="pdm_soltrs_indiv";
+    var $boxcode="delai_gloabl";
     var $boximg="iron02@volvo";
     var $boxlabel;
     //var $depends = array("projet");
@@ -50,7 +50,7 @@ class box_delaicash_global extends ModeleBoxes
     {
         global $langs;
         $langs->load("boxes");
-        $this->boxlabel="Mix produit solutions Transports Individuel";
+        $this->boxlabel="Commande non payées- Global";
         $this->db = $db;
     }
 
@@ -68,7 +68,7 @@ class box_delaicash_global extends ModeleBoxes
  		$_POST['Commercial'] = $user->id;
 		$board= new Mydoliboard($this->db);
 		$board->fetch(7);
-		$this->info_box_head = array('text' => 'Mix Produit Solutions Transport Individuel', 'limit'=> 50);
+		$this->info_box_head = array('text' => 'Commandes non payées', 'limit'=> 50);
 		$this->info_box_contents[0][0] = array(
 			'td' => 'align="center" width="100%"',
 			'textnoformat' => $board->gengraph("B", 2,'',1,550)
