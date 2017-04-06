@@ -86,14 +86,19 @@ class box_delaicash_indiv extends ModeleBoxes
 
 			$this->info_box_contents[$i][1] = array(
 					'td' => 'align="left"',
-					'text' => $line->leadref,
-					'url' => DOL_URL_ROOT . "/custom/lead/lead/card.php?id=" . $line->lead
+					'text' => $line->comref,
+					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
 			);
 
 			$this->info_box_contents[$i][2] = array(
 					'td' => 'align="left"',
 					'text' => $line->socnom,
 					'url' => DOL_URL_ROOT . "/societe/soc.php?socid=" . $line->societe
+			);
+
+			$this->info_box_contents[$i][2] = array(
+					'td' => 'align="left"',
+					'text' => dol_print_date($line->date_lim_reg,'day'),
 			);
 
 			$i++;
