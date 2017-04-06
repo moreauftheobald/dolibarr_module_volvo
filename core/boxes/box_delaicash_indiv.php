@@ -73,7 +73,7 @@ class box_delaicash_indiv extends ModeleBoxes
 
 		$this->info_box_contents[$i][0] = array(
 				'tr' => 'class="liste_titre"',
- 				'td' => 'align="center" class="liste_titre" colspan="2"',
+ 				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Commande',
 		);
 
@@ -92,11 +92,6 @@ class box_delaicash_indiv extends ModeleBoxes
 				'text' => 'Jours restants',
 		);
 
-		$this->info_box_contents[$i][4] = array(
-						'td' => 'align="center" class="liste_titre" width="0"',
-						'text' => '',
-		);
-
 		$i++;
 
 		foreach ($lead->business AS $line){
@@ -109,28 +104,29 @@ class box_delaicash_indiv extends ModeleBoxes
 			}
 
 			$this->info_box_contents[$i][0] = array(
-				'td' => 'align="left" width="16"',
-				'textnoformat' => $img,
-			);
-
-			$this->info_box_contents[$i][1] = array(
-					'td' => 'align="left"',
-					'text' => $line->comref,
+					'td' => 'align="left" width="16"',
+					'textnoformat' => $img . ' - ' . $line->comref,
 					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
 			);
 
-			$this->info_box_contents[$i][2] = array(
+// 			$this->info_box_contents[$i][1] = array(
+// 					'td' => 'align="left"',
+// 					'text' => $line->comref,
+// 					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
+// 			);
+
+			$this->info_box_contents[$i][1] = array(
 					'td' => 'align="left"',
 					'text' => $line->socnom,
 					'url' => DOL_URL_ROOT . "/societe/soc.php?socid=" . $line->societe
 			);
 
-			$this->info_box_contents[$i][3] = array(
+			$this->info_box_contents[$i][2] = array(
 					'td' => 'align="center"',
 					'text' => dol_print_date($line->date_lim_reg,'day'),
 			);
 
-			$this->info_box_contents[$i][4] = array(
+			$this->info_box_contents[$i][3] = array(
 					'td' => 'align="center"',
 					'text' => $line->diff_cash. ' Jours',
 			);
