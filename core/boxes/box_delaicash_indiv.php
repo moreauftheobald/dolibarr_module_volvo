@@ -127,12 +127,12 @@ class box_delaicash_indiv extends ModeleBoxes
 			);
 
 			$this->info_box_contents[$i][3] = array(
-					'td' => 'align="left"',
+					'td' => 'align="center"',
 					'text' => dol_print_date($line->date_lim_reg,'day'),
 			);
 
 			$this->info_box_contents[$i][4] = array(
-					'td' => 'align="left"',
+					'td' => 'align="center"',
 					'text' => $line->diff_cash. ' Jours',
 			);
 
