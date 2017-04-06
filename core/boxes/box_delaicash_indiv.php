@@ -70,24 +70,30 @@ class box_delaicash_indiv extends ModeleBoxes
 		$this->info_box_head = array('text' => 'Commandes non payées', 'limit'=> 50);
 
 		$i = 0;
+
 		$this->info_box_contents[$i][0] = array(
-				'th' => 'align="left" colspan="2"',
+				'td' => 'align="center" class="liste_titre"',
+				'text' => '',
+		);
+
+		$this->info_box_contents[$i][0] = array(
+				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Commande',
 		);
 
 
 		$this->info_box_contents[$i][2] = array(
-				'th' => 'align="left"',
+				'td' => 'align="center" class="liste_titre"',
 				'text' => 'client',
 		);
 
 		$this->info_box_contents[$i][3] = array(
-				'th' => 'align="left"',
+				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Date limite de reglement',
 		);
 
 		$this->info_box_contents[$i][4] = array(
-				'th' => 'align="left"',
+				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Jours restants',
 		);
 
