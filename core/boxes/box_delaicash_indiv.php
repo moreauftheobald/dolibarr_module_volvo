@@ -104,7 +104,7 @@ class box_delaicash_indiv extends ModeleBoxes
 			}
 
 			$this->info_box_contents[$i][0] = array(
-					'td' => 'align="left" width="16"',
+					'td' => 'align="left"',
 					'text' => $img . ' - ' . $line->comref,
 					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
 			);
