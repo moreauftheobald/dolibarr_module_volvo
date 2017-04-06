@@ -101,6 +101,11 @@ class box_delaicash_indiv extends ModeleBoxes
 					'text' => dol_print_date($line->date_lim_reg,'day'),
 			);
 
+			$this->info_box_contents[$i][4] = array(
+					'td' => 'align="left"',
+					'text' => $line->diff_cash. ' Jours',
+			);
+
 			$i++;
 		}
 	}
