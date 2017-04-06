@@ -78,24 +78,23 @@ class box_delaicash_indiv extends ModeleBoxes
 		);
 
 		$this->info_box_contents[$i][1] = array(
-// 				'td' => 'align="center" class="liste_titre" colspan="2"',
-// 				'text' => 'Commande',
-		);
-
-
-		$this->info_box_contents[$i][2] = array(
 				'td' => 'align="center" class="liste_titre"',
 				'text' => 'client',
 		);
 
-		$this->info_box_contents[$i][3] = array(
+		$this->info_box_contents[$i][2] = array(
 				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Date limite de reglement',
 		);
 
-		$this->info_box_contents[$i][4] = array(
+		$this->info_box_contents[$i][3] = array(
 				'td' => 'align="center" class="liste_titre"',
 				'text' => 'Jours restants',
+		);
+
+		$this->info_box_contents[$i][4] = array(
+		// 				'td' => 'align="center" class="liste_titre" colspan="2"',
+		// 				'text' => 'Commande',
 		);
 
 		$i++;
