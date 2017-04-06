@@ -73,12 +73,12 @@ class box_delaicash_indiv extends ModeleBoxes
 
 		$this->info_box_contents[$i][0] = array(
 				'tr' => 'class="liste_titre"',
- 				'td' => 'align="center" class="liste_titre"',
+ 				'td' => 'align="leftr" class="liste_titre"',
 				'text' => 'Commande',
 		);
 
 		$this->info_box_contents[$i][1] = array(
-				'td' => 'align="center" class="liste_titre"',
+				'td' => 'align="left" class="liste_titre"',
 				'text' => 'client',
 		);
 
