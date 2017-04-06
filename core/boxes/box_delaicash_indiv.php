@@ -80,14 +80,20 @@ class box_delaicash_indiv extends ModeleBoxes
 			}
 
 			$this->info_box_contents[$i][0] = array(
-				'td' => 'align="center" width="16"',
+				'td' => 'align="left" width="16"',
 				'textnoformat' => $img,
 			);
 
 			$this->info_box_contents[$i][1] = array(
-					'td' => 'align="center"',
+					'td' => 'align="left"',
 					'text' => $line->leadref,
-					'url' => DOL_URL_ROOT . "custom/lead/lead/card.php?socid=" . $line->lead
+					'url' => DOL_URL_ROOT . "/custom/lead/lead/card.php?id=" . $line->lead
+			);
+
+			$this->info_box_contents[$i][2] = array(
+					'td' => 'align="left"',
+					'text' => $line->socnom,
+					'url' => DOL_URL_ROOT . "/societe/soc.php?socid=" . $line->societe
 			);
 
 			$i++;
