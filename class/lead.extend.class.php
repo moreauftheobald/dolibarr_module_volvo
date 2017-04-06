@@ -707,6 +707,8 @@ class Leadext extends Lead
 					$sqlwhere[] = $key . ' BETWEEN ' . $value;
 				}elseif(($key== 'search_run')) {
 					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
+				}elseif(($key== 'dt_pay_isnull')) {
+					$sqlwhere[] = 'dt_pay IS NULL';
 				}else {
 					$sqlwhere[] = $key . ' LIKE \'%' . $this->db->escape($value) . '%\'';
 				}
@@ -732,7 +734,9 @@ class Leadext extends Lead
 			while ( $obj = $this->db->fetch_object($resql) ) {
 				$line = new Leadext($this->db);
 				$line->societe = $obj->societe;
+				$line->socnom = $obj->socnom;
 				$line->lead = $obj->leadid;
+				$line->leadref = $obj->lead;
 				$line->com = $obj->comid;
 				$line->fournid = $obj->fournid;
 				$line->numom = $obj->numom;

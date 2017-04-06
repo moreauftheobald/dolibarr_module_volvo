@@ -793,6 +793,12 @@ class modvolvo extends DolibarrModules
 
 		$this->boxes[$r][1] = "box_pdmsoltrs_global@volvo";
 		$r ++;
+
+		$this->boxes[$r][1] = "box_delaicagash_indiv@volvo";
+		$r ++;
+
+		$this->boxes[$r][1] = "box_delaicagash_global@volvo";
+		$r ++;
 		/*
 		 * $this->boxes[$r][1] = "myboxb.php"; $r++;
 		 */
@@ -1026,8 +1032,8 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/business/delaicash.php?search_run=1',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_ext',
-				'perms' => '$user->rights->volvo->stat_ext',
+				'enabled' => '$user->rights->lead->read',
+				'perms' => '$user->rights->lead->read',
 				'target' => '',
 				'user' => 0
 		);
