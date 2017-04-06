@@ -65,7 +65,7 @@ class box_delaicash_indiv extends ModeleBoxes
 		global $user,$db;
 		dol_include_once('/volvo/class/lead.extend.class.php');
 		$lead = new Leadext($db);
-		$lead->fetchdelaicash('DESC','diff_cash',15,0,array('commercial'=>$user->id,'dt_pay_isnull'=>1,));
+		$lead->fetchdelaicash('DESC','diff_cash',15,0,array('commercial'=>4,'dt_pay_isnull'=>1,));
 
 		$this->info_box_head = array('text' => 'Commandes non payées', 'limit'=> 50);
 
