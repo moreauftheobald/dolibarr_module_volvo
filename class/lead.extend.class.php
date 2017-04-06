@@ -738,6 +738,7 @@ class Leadext extends Lead
 				$line->lead = $obj->leadid;
 				$line->leadref = $obj->lead;
 				$line->com = $obj->comid;
+				$line->comref = $obj->com;
 				$line->fournid = $obj->fournid;
 				$line->numom = $obj->numom;
 				$line->vin = $obj->vin;
