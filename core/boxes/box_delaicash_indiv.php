@@ -109,12 +109,6 @@ class box_delaicash_indiv extends ModeleBoxes
 					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
 			);
 
-// 			$this->info_box_contents[$i][1] = array(
-// 					'td' => 'align="left"',
-// 					'text' => $line->comref,
-// 					'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
-// 			);
-
 			$this->info_box_contents[$i][1] = array(
 					'td' => 'align="left"',
 					'text' => $line->socnom,

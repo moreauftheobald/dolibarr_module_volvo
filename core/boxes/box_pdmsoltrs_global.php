@@ -72,6 +72,11 @@ class box_pdmsoltrs_global extends ModeleBoxes
 				'td' => 'align="center" width="100%"',
 				'textnoformat' => $board->gengraph("B", 2,'',1,550)
 			);
+		}else{
+			$this->info_box_contents[$i][0] = array(
+					'td' => 'align="center"',
+					'text' => 'Droit utilisateur insufisants pour lire le contenu de cette box',
+			);
 		}
 	}
 	/**

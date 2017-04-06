@@ -62,17 +62,79 @@ class box_delaicash_global extends ModeleBoxes
 	 */
 	function loadBox()
 	{
-		global $user;
-		dol_include_once('/mydoliboard/class/mydoliboard.class.php');
-		$_POST['Année'] = dol_print_date(dol_now(),'%Y');
- 		$_POST['Commercial'] = $user->id;
-		$board= new Mydoliboard($this->db);
-		$board->fetch(7);
+	global $user,$db;
+		dol_include_once('/volvo/class/lead.extend.class.php');
+		$lead = new Leadext($db);
+
+
 		$this->info_box_head = array('text' => 'Commandes non payées', 'limit'=> 50);
-		$this->info_box_contents[0][0] = array(
-			'td' => 'align="center" width="100%"',
-			'textnoformat' => $board->gengraph("B", 2,'',1,550)
+
+		$i = 0;
+
+		$this->info_box_contents[$i][0] = array(
+				'tr' => 'class="liste_titre"',
+ 				'td' => 'align="leftr" class="liste_titre"',
+				'text' => 'Commande',
 		);
+
+		$this->info_box_contents[$i][1] = array(
+				'td' => 'align="left" class="liste_titre"',
+				'text' => 'client',
+		);
+
+		$this->info_box_contents[$i][2] = array(
+				'td' => 'align="center" class="liste_titre"',
+				'text' => 'Date limite de reglement',
+		);
+
+		$this->info_box_contents[$i][3] = array(
+				'td' => 'align="center" class="liste_titre"',
+				'text' => 'Jours restants',
+		);
+
+		$i++;
+		if($user->rights->volvo->stat_all){
+			$lead->fetchdelaicash('ASC','diff_cash',10,0,array('dt_pay_isnull'=>1,));
+
+			foreach ($lead->business AS $line){
+				if($line->diff_cash < 0){
+					$img = img_picto('délai dépassé','statut8');
+				}elseif($line->diff_cash>=0 && $line->diff_cash <8){
+					$img = img_picto('délai proche','statut1');
+				}else{
+					$img= img_picto('délai ok','statut4');
+				}
+
+				$this->info_box_contents[$i][0] = array(
+						'td' => 'align="left"',
+						'text' => $img . ' - ' . $line->comref,
+						'url' => DOL_URL_ROOT . "/commande/card.php?id=" . $line->lead
+				);
+
+				$this->info_box_contents[$i][1] = array(
+						'td' => 'align="left"',
+						'text' => $line->socnom,
+						'url' => DOL_URL_ROOT . "/societe/soc.php?socid=" . $line->societe
+				);
+
+				$this->info_box_contents[$i][2] = array(
+						'td' => 'align="center"',
+						'text' => dol_print_date($line->date_lim_reg,'day'),
+				);
+
+				$this->info_box_contents[$i][3] = array(
+						'td' => 'align="center"',
+						'text' => $line->diff_cash. ' Jours',
+				);
+
+				$i++;
+			}
+		}else{
+			$this->info_box_contents[$i][0] = array(
+					'td' => 'align="center" colspan="4"',
+					'text' => 'Droit utilisateur insufisants pour lire le contenu de cette box',
+			);
+		}
 	}
 	/**
 	 *	Method to show box
