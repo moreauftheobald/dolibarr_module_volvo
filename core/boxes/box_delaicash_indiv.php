@@ -70,6 +70,29 @@ class box_delaicash_indiv extends ModeleBoxes
 		$this->info_box_head = array('text' => 'Commandes non payées', 'limit'=> 50);
 
 		$i = 0;
+		$this->info_box_contents[$i][0] = array(
+				'td' => 'align="left" colspan="2"',
+				'text' => 'Commande',
+		);
+
+
+		$this->info_box_contents[$i][2] = array(
+				'td' => 'align="left"',
+				'text' => 'client',
+		);
+
+		$this->info_box_contents[$i][3] = array(
+				'td' => 'align="left"',
+				'text' => 'Date limite de reglement',
+		);
+
+		$this->info_box_contents[$i][4] = array(
+				'td' => 'align="left"',
+				'text' => 'Jours restants',
+		);
+
+		$i++;
+
 		foreach ($lead->business AS $line){
 			if($line->diff_cash < 0){
 				$img = img_picto('délai dépassé','statut8');
