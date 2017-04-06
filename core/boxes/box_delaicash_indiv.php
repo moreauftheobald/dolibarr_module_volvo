@@ -72,16 +72,16 @@ class box_delaicash_indiv extends ModeleBoxes
 		$i = 0;
 		foreach ($lead->business AS $line){
 			if($line->diff_cash < 0){
-				$img = 'statut8';
+				$img = img_picto('délai dépassé','statut8');
 			}elseif($line->diff_cash>=0 && $line->diff_cash <8){
-				$img ='statut1';
+				$img = img_picto('délai proche','statut1');
 			}else{
-				$img='statut4';
+				$img= img_picto('délai ok','statut4');
 			}
 
 			$this->info_box_contents[$i][0] = array(
 				'td' => 'align="center" width="16"',
-				'logo' => $img,
+				'textnoformat' => $img,
 			);
 
 			$this->info_box_contents[$i][1] = array(
