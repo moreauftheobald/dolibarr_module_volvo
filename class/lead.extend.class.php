@@ -757,15 +757,16 @@ class Leadext extends Lead
 				$datetotestarray['day'] = dol_print_date($datetotest,'%d');
 				$datetotestarray['month'] = dol_print_date($datetotest,'%m');
 				$datetotestarray['year'] = dol_print_date($datetotest,'%Y');
-				var_dump($datetotestarray);
-				while($ok==0){
-					if(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
-						$datetotest = $datetotest -(24*60*60);
-						$ok=0;
-					}else{
-							$ok=1;
-						}
-				}
+				$test = num_public_holiday($datetotest, $datetotest,'FR',1);
+				var_dump($test);
+// 				while($ok==0){
+// 					if(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
+// 						$datetotest = $datetotest -(24*60*60);
+// 						$ok=0;
+// 					}else{
+// 							$ok=1;
+// 						}
+// 				}
 
 				$line->date_lim_reg = $datetotest;
 				$line->comm_cash = $obj->comm_cash;
