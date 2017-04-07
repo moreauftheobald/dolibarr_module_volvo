@@ -1139,7 +1139,7 @@ class Leadext extends Lead
 						date("i", $date_ascension),
 						date("s", $date_ascension),
 						date("m", $date_ascension),
-						date("d", $date_ascension) + 50,
+						date("d", $date_ascension) + 11,
 						date("Y", $date_ascension)
 						);
 				$jour_pentecote = date("d", $date_pentecote);
