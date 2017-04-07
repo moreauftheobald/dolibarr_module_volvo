@@ -647,6 +647,8 @@ class Leadext extends Lead
 	public function fetchdelaicash($sortorder = '', $sortfield = '', $limit = 0, $offset = 0, array $filter = array(), $filtermode = 'AND') {
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
+		dol_include_once('/core/lib/date/lib.php');
+
 		$subsql1 = 'SELECT ';
 		$subsql1.= 'MAX(fourn.ref) AS fourn, ';
 		$subsql1.= 'cmd.rowid as cmd, ';
@@ -750,10 +752,19 @@ class Leadext extends Lead
 				$line->delai_cash = $obj->delai_cash;
 				$line->commercial = $obj->commercial;
 				$line->cond_reg = $obj->cond_reg;
-				$line->date_lim_reg = $obj->date_lim_reg;
+				$datetotest = $this->db->jdate($obj->date_lim_reg);
+				while($ok==1){
+					if(num_public_holiday($datetotest, $datetotest)>0){
+						$datetotest = $datetotest -(24*60*60);
+						$ok=0
+					}else{
+							$ok=1;
+						}
+				}
+
+				$line->date_lim_reg = $datetotest;
 				$line->comm_cash = $obj->comm_cash;
 				$line->diff_cash = $obj->diff_cash;
-
 				$this->business[$compteur] = $line;
 				$compteur++;
 			}
