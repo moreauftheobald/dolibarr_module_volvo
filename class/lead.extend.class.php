@@ -647,8 +647,6 @@ class Leadext extends Lead
 	public function fetchdelaicash($sortorder = '', $sortfield = '', $limit = 0, $offset = 0, array $filter = array(), $filtermode = 'AND') {
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
-		dol_include_once('/core/lib/date.lib.php');
-
 		$subsql1 = 'SELECT ';
 		$subsql1.= 'MAX(fourn.ref) AS fourn, ';
 		$subsql1.= 'cmd.rowid as cmd, ';
@@ -753,10 +751,10 @@ class Leadext extends Lead
 				$line->commercial = $obj->commercial;
 				$line->cond_reg = $obj->cond_reg;
 				$datetotest = $this->db->jdate($obj->date_lim_reg);
-				$test = num_public_holiday($datetotest, $datetotest,'FR',1);
+				$test = $this->num_public_holiday($datetotest, $datetotest,'FR',1);
 				if($test==1){
 					$datetotest = $datetotest -(24*60*60);
-					while(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
+					while($this->num_public_holiday($datetotest,$datetotest,'FR',1)>0){
 						$datetotest = $datetotest -(24*60*60);
 					}
 				}
@@ -1080,5 +1078,178 @@ class Leadext extends Lead
 		}
 		return $out;
 
+	}
+
+	function num_public_holiday($timestampStart, $timestampEnd, $countrycode='FR', $lastday=0)
+	{
+		$nbFerie = 0;
+
+		// Check to ensure we use correct parameters
+		if ((($timestampEnd - $timestampStart) % 86400) != 0) return 'ErrorDates must use same hours and must be GMT dates';
+
+		$i=0;
+		while (( ($lastday == 0 && $timestampStart < $timestampEnd) || ($lastday && $timestampStart <= $timestampEnd) )
+				&& ($i < 50000))		// Loop end when equals (Test on i is a security loop to avoid infinite loop)
+		{
+			$ferie=false;
+			$countryfound=0;
+
+			$jour  = date("d", $timestampStart);
+			$mois  = date("m", $timestampStart);
+			$annee = date("Y", $timestampStart);
+			if ($countrycode == 'FR')
+			{
+				$countryfound=1;
+
+				// Definition des dates feriees fixes
+				if($jour == 1 && $mois == 1)   $ferie=true; // 1er janvier
+				if($jour == 1 && $mois == 5)   $ferie=true; // 1er mai
+				if($jour == 8 && $mois == 5)   $ferie=true; // 5 mai
+				if($jour == 14 && $mois == 7)  $ferie=true; // 14 juillet
+				if($jour == 15 && $mois == 8)  $ferie=true; // 15 aout
+				if($jour == 1 && $mois == 11)  $ferie=true; // 1 novembre
+				if($jour == 11 && $mois == 11) $ferie=true; // 11 novembre
+				if($jour == 25 && $mois == 12) $ferie=true; // 25 decembre
+
+				// Calcul du jour de paques
+				$date_paques = easter_date($annee);
+				$jour_paques = date("d", $date_paques)+1;
+				$mois_paques = date("m", $date_paques);
+				if($jour_paques == $jour && $mois_paques == $mois) $ferie=true;
+				// Paques
+
+				// Calcul du jour de l ascension (38 jours apres Paques)
+				$date_ascension = mktime(
+						date("H", $date_paques),
+						date("i", $date_paques),
+						date("s", $date_paques),
+						date("m", $date_paques),
+						date("d", $date_paques) + 38,
+						date("Y", $date_paques)
+						);
+				$jour_ascension = date("d", $date_ascension);
+				$mois_ascension = date("m", $date_ascension);
+				var_dump($jour_ascension);
+				var_dump($mois_ascension);
+				if($jour_ascension == $jour && $mois_ascension == $mois) $ferie=true;
+				//Ascension
+
+				// Calcul de Pentecote (11 jours apres Paques)
+				$date_pentecote = mktime(
+						date("H", $date_ascension),
+						date("i", $date_ascension),
+						date("s", $date_ascension),
+						date("m", $date_ascension),
+						date("d", $date_ascension) + 49,
+						date("Y", $date_ascension)
+						);
+				$jour_pentecote = date("d", $date_pentecote);
+				$mois_pentecote = date("m", $date_pentecote);
+				if($jour_pentecote == $jour && $mois_pentecote == $mois) $ferie=true;
+				//Pentecote
+
+				// Calul des samedis et dimanches
+				$jour_julien = unixtojd($timestampStart);
+				$jour_semaine = jddayofweek($jour_julien, 0);
+				if($jour_semaine == 0 || $jour_semaine == 6) $ferie=true;
+				//Samedi (6) et dimanche (0)
+			}
+
+			// Pentecoste and Ascensione in Italy go to the sunday after: isn't holiday.
+			// Pentecoste is 50 days after Easter, Ascensione 40
+			if ($countrycode == 'IT')
+			{
+				$countryfound=1;
+
+				// Definition des dates feriees fixes
+				if($jour == 1 && $mois == 1) $ferie=true; // Capodanno
+				if($jour == 6 && $mois == 1) $ferie=true; // Epifania
+				if($jour == 25 && $mois == 4) $ferie=true; // Anniversario Liberazione
+				if($jour == 1 && $mois == 5) $ferie=true; // Festa del Lavoro
+				if($jour == 2 && $mois == 6) $ferie=true; // Festa della Repubblica
+				if($jour == 15 && $mois == 8) $ferie=true; // Ferragosto
+				if($jour == 1 && $mois == 11) $ferie=true; // Tutti i Santi
+				if($jour == 8 && $mois == 12) $ferie=true; // Immacolata Concezione
+				if($jour == 25 && $mois == 12) $ferie=true; // 25 decembre
+				if($jour == 26 && $mois == 12) $ferie=true; // Santo Stefano
+
+				// Calcul du jour de paques
+				$date_paques = easter_date($annee);
+				$jour_paques = date("d", $date_paques);
+				$mois_paques = date("m", $date_paques);
+				if($jour_paques == $jour && $mois_paques == $mois) $ferie=true;
+				// Paques
+
+				// Calul des samedis et dimanches
+				$jour_julien = unixtojd($timestampStart);
+				$jour_semaine = jddayofweek($jour_julien, 0);
+				if($jour_semaine == 0 || $jour_semaine == 6) $ferie=true;
+				//Samedi (6) et dimanche (0)
+			}
+
+			if ($countrycode == 'ES')
+			{
+				$countryfound=1;
+
+				// Definition des dates feriees fixes
+				if($jour == 1 && $mois == 1)   $ferie=true; // Año nuevo
+				if($jour == 6 && $mois == 1)   $ferie=true; // Día Reyes
+				if($jour == 1 && $mois == 5)   $ferie=true; // 1 Mayo
+				if($jour == 15 && $mois == 8)  $ferie=true; // 15 Agosto
+				if($jour == 12 && $mois == 10)  $ferie=true; // Día Hispanidad
+				if($jour == 1 && $mois == 11)  $ferie=true; // 1 noviembre
+				if($jour == 6 && $mois == 12) $ferie=true; // Constitución
+				if($jour == 8 && $mois == 12)  $ferie=true; // Inmaculada
+				if($jour == 25 && $mois == 12) $ferie=true; // 25 diciembre
+
+				// Calcul día de Pascua
+				$date_paques = easter_date($annee);
+				$jour_paques = date("d", $date_paques);
+				$mois_paques = date("m", $date_paques);
+				if($jour_paques == $jour && $mois_paques == $mois) $ferie=true;
+				// Paques
+
+				// Viernes Santo
+				$date_viernes = mktime(
+						date("H", $date_paques),
+						date("i", $date_paques),
+						date("s", $date_paques),
+						date("m", $date_paques),
+						date("d", $date_paques) -2,
+						date("Y", $date_paques)
+						);
+				$jour_viernes = date("d", $date_viernes);
+				$mois_viernes = date("m", $date_viernes);
+				if($jour_viernes == $jour && $mois_viernes == $mois) $ferie=true;
+				//Viernes Santo
+
+				// Calul des samedis et dimanches
+				$jour_julien = unixtojd($timestampStart);
+				$jour_semaine = jddayofweek($jour_julien, 0);
+				if($jour_semaine == 0 || $jour_semaine == 6) $ferie=true;
+				//Samedi (6) et dimanche (0)
+			}
+
+			// Cas pays non defini
+			if (! $countryfound)
+			{
+				// Calul des samedis et dimanches
+				$jour_julien = unixtojd($timestampStart);
+				$jour_semaine = jddayofweek($jour_julien, 0);
+				if($jour_semaine == 0 || $jour_semaine == 6) $ferie=true;
+				//Samedi (6) et dimanche (0)
+			}
+
+			// On incremente compteur
+			if ($ferie) $nbFerie++;
+
+			// Increase number of days (on go up into loop)
+			$timestampStart=dol_time_plus_duree($timestampStart, 1, 'd');
+			//var_dump($jour.' '.$mois.' '.$annee.' '.$timestampStart);
+
+			$i++;
+		}
+
+		return $nbFerie;
 	}
 }
