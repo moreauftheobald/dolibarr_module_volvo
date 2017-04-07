@@ -753,20 +753,20 @@ class Leadext extends Lead
 				$line->commercial = $obj->commercial;
 				$line->cond_reg = $obj->cond_reg;
 				$datetotest = $this->db->jdate($obj->date_lim_reg);
-				$datetotestarray=array();
-				$datetotestarray['day'] = dol_print_date($datetotest,'%d');
-				$datetotestarray['month'] = dol_print_date($datetotest,'%m');
-				$datetotestarray['year'] = dol_print_date($datetotest,'%Y');
 				$test = num_public_holiday($datetotest, $datetotest,'FR',1);
-				var_dump($test);
-// 				while($ok==0){
-// 					if(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
-// 						$datetotest = $datetotest -(24*60*60);
-// 						$ok=0;
-// 					}else{
-// 							$ok=1;
-// 						}
-// 				}
+				if($test==1){
+					$datetotest = $datetotest -(24*60*60);
+					while($ok==0){
+						if(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
+							var_dump(num_public_holiday($datetotest,$datetotest,'FR',1))
+							$datetotest = $datetotest -(24*60*60);
+							$ok=0;
+						}else{
+							$ok=1;
+						}
+					}
+				}
+
 
 				$line->date_lim_reg = $datetotest;
 				$line->comm_cash = $obj->comm_cash;
