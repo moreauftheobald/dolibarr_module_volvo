@@ -205,8 +205,8 @@ foreach ($arrayperiode as $m) {
 		$tracteur_percent = '';
 		$porteur_percent = '';
 	}
-	print '<td align="center">' . $porteur_percent . '</td>';
 	print '<td align="center">' . $tracteur_percent . '</td>';
+	print '<td align="center">' . $porteur_percent . '</td>';
 	print '<td align="center">' . $arrayresult2['vcm'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['dfol'][$m] . '</td>';
 	print '<td align="center">' . $arrayresult2['dded'][$m] . '</td>';
@@ -253,7 +253,7 @@ if(!empty($total_fact)){
 	$porteur_percent = 0;
 }
 print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
-print '<th class="liste_titre" align="center">' . price($tracteur_percent) . ' %</th>';
+print '<th class="liste_titre" align="center">' . price($porteur_percent) . ' %</th>';
 print '<th class="liste_titre" align="center">' . $total_vcm . '</th>';
 print '<th class="liste_titre" align="center">' . $total_dfol . '</th>';
 print '<th class="liste_titre" align="center">' . $total_dded . '</th>';
