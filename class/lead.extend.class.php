@@ -756,14 +756,9 @@ class Leadext extends Lead
 				$test = num_public_holiday($datetotest, $datetotest,'FR',1);
 				if($test==1){
 					$datetotest = $datetotest -(24*60*60);
-					while($ok==0){
-						if(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
-							var_dump(num_public_holiday($datetotest,$datetotest,'FR',1));
-							$datetotest = $datetotest -(24*60*60);
-							$ok=0;
-						}else{
-							$ok=1;
-						}
+					while(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
+						var_dump(num_public_holiday($datetotest,$datetotest,'FR',1));
+						$datetotest = $datetotest -(24*60*60);
 					}
 				}
 
