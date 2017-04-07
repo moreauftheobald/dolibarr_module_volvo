@@ -647,7 +647,7 @@ class Leadext extends Lead
 	public function fetchdelaicash($sortorder = '', $sortfield = '', $limit = 0, $offset = 0, array $filter = array(), $filtermode = 'AND') {
 		dol_syslog(__METHOD__, LOG_DEBUG);
 
-		dol_include_once('/core/lib/date/lib.php');
+		dol_include_once('/core/lib/date.lib.php');
 
 		$subsql1 = 'SELECT ';
 		$subsql1.= 'MAX(fourn.ref) AS fourn, ';
