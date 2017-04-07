@@ -1082,6 +1082,7 @@ class Leadext extends Lead
 
 	function num_public_holiday($timestampStart, $timestampEnd, $countrycode='FR', $lastday=0)
 	{
+		dol_include_once('/core/lib/date.lib.php');
 		$nbFerie = 0;
 
 		// Check to ensure we use correct parameters
@@ -1124,7 +1125,7 @@ class Leadext extends Lead
 						date("i", $date_paques),
 						date("s", $date_paques),
 						date("m", $date_paques),
-						date("d", $date_paques) + 38,
+						date("d", $date_paques) + 39,
 						date("Y", $date_paques)
 						);
 				$jour_ascension = date("d", $date_ascension);
@@ -1140,7 +1141,7 @@ class Leadext extends Lead
 						date("i", $date_ascension),
 						date("s", $date_ascension),
 						date("m", $date_ascension),
-						date("d", $date_ascension) + 49,
+						date("d", $date_ascension) + 50,
 						date("Y", $date_ascension)
 						);
 				$jour_pentecote = date("d", $date_pentecote);
