@@ -756,7 +756,7 @@ class Leadext extends Lead
 				while($ok==1){
 					if(num_public_holiday($datetotest, $datetotest)>0){
 						$datetotest = $datetotest -(24*60*60);
-						$ok=0
+						$ok=0;
 					}else{
 							$ok=1;
 						}
