@@ -754,11 +754,9 @@ class Leadext extends Lead
 				$line->cond_reg = $obj->cond_reg;
 				$datetotest = $this->db->jdate($obj->date_lim_reg);
 				$test = num_public_holiday($datetotest, $datetotest,'FR',1);
-				var_dump(dol_print_date(easter_date(2017),'day'));
 				if($test==1){
 					$datetotest = $datetotest -(24*60*60);
 					while(num_public_holiday($datetotest,$datetotest,'FR',1)>0){
-						var_dump(num_public_holiday($datetotest,$datetotest,'FR',1));
 						$datetotest = $datetotest -(24*60*60);
 					}
 				}
