@@ -1144,8 +1144,6 @@ class Leadext extends Lead
 						);
 				$jour_pentecote = date("d", $date_pentecote);
 				$mois_pentecote = date("m", $date_pentecote);
-				var_dump($jour_pentecote);
-				var_dump($mois_pentecote);
 				if($jour_pentecote == $jour && $mois_pentecote == $mois) $ferie=true;
 				//Pentecote
 
