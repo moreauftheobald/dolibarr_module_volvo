@@ -76,7 +76,7 @@ $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 
-foreach ($arrayresult1 as $ref => $values) {
+foreach ($arrayresult1 as $key => $values) {
  	$var = ! $var;
  	$total_caht+=$values['catotalht'];
 	$total_vcm+=$arrayresult2[$key]['vcm'];
@@ -90,7 +90,7 @@ foreach ($arrayresult1 as $ref => $values) {
 
  	print '<tr ' . $bc[$var] . '>';
 	print '<td align="center">' . $key . '</td>';
-	if(!empty($arrayresult1['catotalht'][$m])){
+	if(!empty($arrayresult1[$key]['catotalht'])){
 		print '<td align="center">'. price($values['catotalht']) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
@@ -116,7 +116,7 @@ foreach ($arrayresult1 as $ref => $values) {
 		print '<td align="center"></td>';
 	}
 	if(!empty($arrayresult4[$key]['margetheo']) && !empty($arrayresult4[$key]['margereal'])){
-		print '<td align="center">'. price($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m]) .' €</td>';
+		print '<td align="center">'. price($arrayresult4[$key]['margereal']-$arrayresult4[$key]['margetheo']) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
 	}
