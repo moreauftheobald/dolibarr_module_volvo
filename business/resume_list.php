@@ -76,6 +76,8 @@ $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 
+var_dump($arrayresult3);
+
 foreach ($arrayresult1 as $key => $values) {
  	$var = ! $var;
  	$total_caht+=$values['catotalht'];
