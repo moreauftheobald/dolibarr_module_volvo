@@ -71,10 +71,10 @@ $var = true;
 
 $monthlist=$search_month;
 
-$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
-$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
-$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
-$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
+$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 
 foreach ($arrayresult1 as $ref => $values) {
  	$var = ! $var;
