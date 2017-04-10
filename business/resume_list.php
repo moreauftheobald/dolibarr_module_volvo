@@ -76,10 +76,9 @@ $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 
-var_dump($arrayresult3);
-
 foreach ($arrayresult1 as $key => $values) {
  	$var = ! $var;
+ 	$link = '<a href="../../commande/card.php?id=' . $values['id'] . '">' . $key . '</a>';
  	$total_caht+=$values['catotalht'];
 	$total_vcm+=$arrayresult2[$key]['vcm'];
 	$total_dfol+=$arrayresult2[$key]['dfol'];
@@ -91,7 +90,7 @@ foreach ($arrayresult1 as $key => $values) {
 	$total_margereal+=$arrayresult4[$key]['margereal'];
 
  	print '<tr ' . $bc[$var] . '>';
-	print '<td align="center">' . $key . '</td>';
+	print '<td align="center">' . $link . '</td>';
 	if(!empty($arrayresult1[$key]['catotalht'])){
 		print '<td align="center">'. price($values['catotalht']) .' €</td>';
 	}else{

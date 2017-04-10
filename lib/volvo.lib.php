@@ -455,6 +455,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql = "SELECT  ";
 	if($mode=='BY_REF'){
 		$sql.="c.ref as ref, ";
+		$sql.="c.rowid as id, ";
 	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "COUNT(DISTINCT c.rowid) as nb_facture, ";
@@ -489,6 +490,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 				$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
 				$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
 			}elseif($mode=='BY_REF'){
+				$result[$obj->ref]['id'] = $obj->id;
 				$result[$obj->ref]['nb_fact'] = $obj->nb_facture;
 				$result[$obj->ref]['catotalht'] = $obj->catotalht;
 				$result[$obj->ref]['nbporteur'] = $obj->nbporteur;
