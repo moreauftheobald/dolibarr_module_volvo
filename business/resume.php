@@ -169,7 +169,7 @@ $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 
 foreach ($arrayperiode as $m) {
-	$link='<a href="../resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
+	$link='<a href="/resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
  	$var = ! $var;
  	$total_fact+=$arrayresult1['nb_fact'][$m];
 	$total_caht+=$arrayresult1['catotalht'][$m];
