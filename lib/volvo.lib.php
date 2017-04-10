@@ -579,7 +579,7 @@ function stat_sell3($year, $commercial,$monthlist,$mode='GROUP'){
 
 	$sql = "SELECT  ";
 	if($mode=='BY_REF'){
-		$sql.="c.ref as ref, ";
+		$sql.="c.ref as ref_aff, ";
 	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "p.ref as ref, ";
@@ -606,7 +606,7 @@ function stat_sell3($year, $commercial,$monthlist,$mode='GROUP'){
 			if(!in_array($obj->ref, $soltrs) && $mode=='GROUP'){
 				$result['cavolvo'][$obj->Mois]+= $obj->total_ht;
 			}Elseif(!in_array($obj->ref, $soltrs) && $mode=='BY_REF'){
-				$result[$obj->ref]['cavolvo']+= $obj->total_ht;
+				$result[$obj->ref_aff]['cavolvo']+= $obj->total_ht;
 			}
 		}
 		return $result;
