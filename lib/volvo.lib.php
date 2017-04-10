@@ -449,16 +449,19 @@ function chmod_r($Path,$mode) {
    closedir($dp);
 }
 
-function stat_sell1($year, $commercial,$monthlist){
+function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	global $db;
 
 	$sql = "SELECT  ";
+	if($mode=='BY_REF'){
+		$sql.="c.ref as ref, ";
+	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "COUNT(DISTINCT c.rowid) as nb_facture, ";
 	$sql.= "SUM(c.total_ht) AS catotalht, ";
 	$sql.= "SUM(IF(lef.type = 1,1,0)) AS nbporteur, ";
 	$sql.= "SUM(IF(lef.type = 2,1,0)) AS nbtracteur ";
-	$sql.= "FROM llx_commande AS c ";
+	$sql.= "FROM " . MAIN_DB_PREFIX . "commande AS c ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
@@ -470,16 +473,27 @@ function stat_sell1($year, $commercial,$monthlist){
 	if ($commercial > 0){
 		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
 	}
-	$sql.= "GROUP BY MONTH(event.datep) ";
+	if($mode=='GROUP'){
+		$sql.= "GROUP BY MONTH(event.datep) ";
+	}elseif($mode=='BY_REF'){
+		$sql.= "GROUP BY c.ref ";
+	}
 
 	$resql = $db->query($sql);
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result['nb_fact'][$obj->Mois] = $obj->nb_facture;
-			$result['catotalht'][$obj->Mois] = $obj->catotalht;
-			$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
-			$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
+			if($mode=='GROUP'){
+				$result['nb_fact'][$obj->Mois] = $obj->nb_facture;
+				$result['catotalht'][$obj->Mois] = $obj->catotalht;
+				$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
+				$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
+			}elseif($mode=='BY_REF'){
+				$result[$obj->ref]['nb_fact'] = $obj->nb_facture;
+				$result[$obj->ref]['catotalht'] = $obj->catotalht;
+				$result[$obj->ref]['nbporteur'] = $obj->nbporteur;
+				$result[$obj->ref]['nbtracteur'] = $obj->nbtracteur;
+			}
 		}
 		return $result;
 	}else{
@@ -488,7 +502,7 @@ function stat_sell1($year, $commercial,$monthlist){
 
 }
 
-function stat_sell2($year, $commercial,$monthlist){
+function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 	global $db;
 
 	dol_include_once('/volvo/class/lead.extend.class.php');
@@ -498,13 +512,16 @@ function stat_sell2($year, $commercial,$monthlist){
 	$soltrs.= $leadext->prepare_array('VOLVO_PACK_LIST', 'sql');
 
 	$sql = "SELECT  ";
+	if($mode=='BY_REF'){
+		$sql.="c.ref as ref, ";
+	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "SUM(IF(p.ref IN(" . $soltrs . "),1,0)) as vcm, ";
 	$sql.= "SUM(IF(p.ref LIKE 'DFOL%',1,0)) as dfol, ";
 	$sql.= "SUM(IF(p.ref = 'DDED',1,0)) as dded, ";
 	$sql.= "SUM(IF(p.ref = 'FIN_LIX',1,0)) as lixbail, ";
 	$sql.= "SUM(IF(p.ref = 'FIN_VFS',1,0)) as vfs ";
-	$sql.= "FROM llx_commande AS c ";
+	$sql.= "FROM " . MAIN_DB_PREFIX . "commande AS c ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
@@ -517,17 +534,30 @@ function stat_sell2($year, $commercial,$monthlist){
 	if ($commercial > 0){
 		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
 	}
-	$sql.= "GROUP BY MONTH(event.datep) ";
+	if($mode=='GROUP'){
+		$sql.= "GROUP BY MONTH(event.datep) ";
+	}elseif($mode=='BY_REF'){
+		$sql.= "GROUP BY c.ref ";
+	}
 
 	$resql = $db->query($sql);
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			$result['vcm'][$obj->Mois] = $obj->vcm;
-			$result['dfol'][$obj->Mois] = $obj->dfol;
-			$result['dded'][$obj->Mois] = $obj->dded;
-			$result['lixbail'][$obj->Mois] = $obj->lixbail;
-			$result['vfs'][$obj->Mois] = $obj->vfs;
+			if($mode=='GROUP'){
+				$result['vcm'][$obj->Mois] = $obj->vcm;
+				$result['dfol'][$obj->Mois] = $obj->dfol;
+				$result['dded'][$obj->Mois] = $obj->dded;
+				$result['lixbail'][$obj->Mois] = $obj->lixbail;
+				$result['vfs'][$obj->Mois] = $obj->vfs;
+			}elseif($mode=='BY_REF'){
+				$result[$obj->ref]['vcm'] = $obj->vcm;
+				$result[$obj->ref]['dfol'] = $obj->dfol;
+				$result[$obj->ref]['dded'] = $obj->dded;
+				$result[$obj->ref]['lixbail'] = $obj->lixbail;
+				$result[$obj->ref]['vfs'] = $obj->vfs;
+			}
+
 		}
 		return $result;
 	}else{
@@ -536,7 +566,7 @@ function stat_sell2($year, $commercial,$monthlist){
 
 }
 
-function stat_sell3($year, $commercial,$monthlist){
+function stat_sell3($year, $commercial,$monthlist,$mode='GROUP'){
 	global $db;
 
 	dol_include_once('/volvo/class/lead.extend.class.php');
@@ -548,6 +578,9 @@ function stat_sell3($year, $commercial,$monthlist){
 	$soltrs =array_merge($soltrs1,$soltrs2,$soltrs3);
 
 	$sql = "SELECT  ";
+	if($mode=='BY_REF'){
+		$sql.="c.ref as ref, ";
+	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "p.ref as ref, ";
 	$sql.= "det.total_ht as total_ht ";
@@ -570,8 +603,10 @@ function stat_sell3($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
-			if(!in_array($obj->ref, $soltrs)){
+			if(!in_array($obj->ref, $soltrs) && $mode=='GROUP'){
 				$result['cavolvo'][$obj->Mois]+= $obj->total_ht;
+			}Elseif(!in_array($obj->ref, $soltrs) && $mode=='BY_REF'){
+				$result[$obj->ref]['cavolvo']+= $obj->total_ht;
 			}
 		}
 		return $result;
@@ -581,13 +616,16 @@ function stat_sell3($year, $commercial,$monthlist){
 
 }
 
-function stat_sell4($year, $commercial,$monthlist){
+function stat_sell4($year, $commercial,$monthlist,$mode='GROUP'){
 	global $db;
 
 	dol_include_once('/volvo/class/commandevolvo.class.php');
 	$cmd = new CommandeVolvo($db);
 
 	$sql = "SELECT  ";
+	if($mode=='BY_REF'){
+		$sql.="c.ref as ref, ";
+	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "c.rowid as cmdid,  ";
 	$sql.= "c.total_ht as total_ht ";
@@ -608,10 +646,17 @@ function stat_sell4($year, $commercial,$monthlist){
 	if($resql){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
+			if($mode=='GROUP'){
 				$cmd->getCostPriceReal($obj->cmdid,'real');
 				$result['margereal'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
 				$cmd->getCostPriceReal($obj->cmdid,'theo');
 				$result['margetheo'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
+			}elseif($mode=='BY_REF'){
+				$cmd->getCostPriceReal($obj->cmdid,'real');
+				$result[$obj->ref]['margereal']+= ($obj->total_ht-$cmd->total_real_paht);
+				$cmd->getCostPriceReal($obj->cmdid,'theo');
+				$result[$obj->ref]['margetheo']+= ($obj->total_ht-$cmd->total_real_paht);
+			}
 		}
 		return $result;
 	}else{

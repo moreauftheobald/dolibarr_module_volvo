@@ -169,6 +169,7 @@ $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 
 foreach ($arrayperiode as $m) {
+	$link='<a href="' . dol_buildpath('/volvo/business/resume_list.php') . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'>' . $month[$m] . '</a>';
  	$var = ! $var;
  	$total_fact+=$arrayresult1['nb_fact'][$m];
 	$total_caht+=$arrayresult1['catotalht'][$m];
@@ -184,7 +185,7 @@ foreach ($arrayperiode as $m) {
 	$total_margereal+=$arrayresult4['margereal'][$m];
 
  	print '<tr ' . $bc[$var] . '>';
-	print '<td align="center">' . $month[$m] . '</td>';
+	print '<td align="center">' . $link . '</td>';
 	print '<td align="center">' . $arrayresult1['nb_fact'][$m] . '</td>';
 	if(!empty($arrayresult1['catotalht'][$m])){
 		print '<td align="center">'. price($arrayresult1['catotalht'][$m]) .' €</td>';
