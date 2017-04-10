@@ -27,7 +27,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
 
-$title = 'Suivis d\'activité VN volvo - déatil';
+$title = 'Suivis d\'activité VN volvo - détail';
 
 // Security check
 if (! $user->rights->lead->read)
@@ -48,6 +48,8 @@ llxHeader('', $title);
 $nbtotalofrecords = 0;
 
 print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
+
+print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a></div>';
 
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre">';
