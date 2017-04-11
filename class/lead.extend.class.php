@@ -127,7 +127,7 @@ class Leadext extends Lead
 		foreach ($cmd->lines as $line){
 			if($line->fk_product !=$conf->global->VOLVO_TRUCK){
 				if($line->fk_product == $conf->global->VOLVO_SURES){
-					if($line->pa_ht>0) $costvnc+= $line->total_ht;
+					if($line->total_ht>0) $costvnc+= $line->total_ht;
 					$cost+=$line->total_ht;
 				}elseif($line->fk_product == $conf->global->VOLVO_COM){
 					$cost+=$line->total_ht;
@@ -135,11 +135,13 @@ class Leadext extends Lead
 					$cost+=$line->total_ht;
 					$costvnc+=$line->total_ht;
 				}
+
 			}
 		}
 		$ret=array();
 		$ret['prixvh'] = $prixtot-$cost;
 		$ret['vnc'] = $prixtot -$costvnc;
+		$ret['cost'] = $cost;
 		return $ret;
 	}
 
