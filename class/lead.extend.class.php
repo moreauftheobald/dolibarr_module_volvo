@@ -158,11 +158,12 @@ class Leadext extends Lead
 
 		$value = array();
 		$value = $this->calcvhprice($cmdnum,$prixtot);
-		var_dump($value);
-		exit;
+
 		foreach ($cmd->lines as $line){
 			if($line->fk_product ==$conf->global->VOLVO_TRUCK){
-				$cmd->updateline($line->id, $line->label, $value['prixvh'], $line->qty, $line->remise_percent, $line->tva_tx,0,0,'HT',0,'','',0,0,0,0,$value['prixvh']);
+				$res =$cmd->updateline($line->id, $line->label, $value['prixvh'], $line->qty, $line->remise_percent, $line->tva_tx,0,0,'HT',0,'','',0,0,0,0,$value['prixvh']);
+				var_dump($res);
+				exit;
 			}
 		}
 
