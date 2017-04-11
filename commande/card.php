@@ -1809,6 +1809,14 @@ if ($action == 'create' && $user->rights->commande->creer)
 			)), '', 1);
 		}
 
+		if ($action == 'update_pv') {
+			$form = new Form($db);
+			$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, 'Modifier prix de vente', '', 'recalc', array(array(
+					'type' => 'text',
+					'name' => 'prixtot',
+					'label'=>'Nouveau prix de vente ?'
+			)), '', 1);
+		}
 
 		// Confirmation to delete line
 
@@ -2112,6 +2120,9 @@ if ($action == 'create' && $user->rights->commande->creer)
 					$out .= '  	}' . "\n";
 					$out .= '</script>';
 					print $out;
+				}
+				if ($object->statut > Commande::STATUS_DRAFT && $user->rights->volvo->update_cost) {
+					print '<div class="inline-block divButAction"><a class="butAction" href="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '&amp;action=update_pv">Modifier le Prix de vente</a></div>';
 				}
 
 				// Set to shipped
