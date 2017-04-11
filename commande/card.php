@@ -2121,7 +2121,7 @@ if ($action == 'create' && $user->rights->commande->creer)
 					$out .= '</script>';
 					print $out;
 				}
-				if ($object->statut > Commande::STATUS_DRAFT && $user->rights->volvo->update_cost) {
+				if ($object->statut == Commande::STATUS_DRAFT && $user->rights->volvo->update_cost) {
 					print '<div class="inline-block divButAction"><a class="butAction" href="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '&amp;action=update_pv">Modifier le Prix de vente</a></div>';
 				}
 

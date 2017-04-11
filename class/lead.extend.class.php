@@ -141,7 +141,6 @@ class Leadext extends Lead
 		$ret=array();
 		$ret['prixvh'] = $prixtot-$cost;
 		$ret['vnc'] = $prixtot -$costvnc;
-		$ret['cost'] = $cost;
 		return $ret;
 	}
 
@@ -162,8 +161,6 @@ class Leadext extends Lead
 		foreach ($cmd->lines as $line){
 			if($line->fk_product ==$conf->global->VOLVO_TRUCK){
 				$res =$cmd->updateline($line->id, $line->label, $value['prixvh'], $line->qty, $line->remise_percent, $line->tva_tx,0,0,'HT',0,'','',0,0,0,0,$value['prixvh']);
-				var_dump($res);
-				exit;
 			}
 		}
 
