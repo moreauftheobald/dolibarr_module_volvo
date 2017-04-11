@@ -932,7 +932,7 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'om';
 		$r ++;
 
-		$this->rights[$r][0] = 0101773;
+		$this->rights[$r][0] = 0101775;
 		$this->rights[$r][1] = 'Import du fichier Immatriculation';
 		$this->rights[$r][3] = 1;
 		$this->rights[$r][4] = 'immat';
