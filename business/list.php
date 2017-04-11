@@ -33,7 +33,7 @@ require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 $title = 'Suivis des affaires en cours';
 
 // Security check
-if (! $user->rights->lead->read)
+if (! $user->rights->volvo->business)
 	accessforbidden();
 
  $sortorder = GETPOST('sortorder', 'alpha');
