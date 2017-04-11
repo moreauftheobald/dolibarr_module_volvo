@@ -558,7 +558,7 @@ class modvolvo extends DolibarrModules
 			46 => array(
 				'VOLVO_VCM_OBLIG',
 				'chaine',
-				'0',
+				'1',
 				'',
 				0,
 				'current',
@@ -926,6 +926,18 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'soltrs';
 		$r ++;
 
+		$this->rights[$r][0] = 0101774;
+		$this->rights[$r][1] = 'Import des données OM';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'om';
+		$r ++;
+
+		$this->rights[$r][0] = 0101773;
+		$this->rights[$r][1] = 'Import du fichier Immatriculation';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'immat';
+		$r ++;
+
 
 		// $r++;
 		// Main menu entries
@@ -1004,8 +1016,8 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/import/index.php',
 				'langs' => '',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_all',
-				'perms' => '$user->rights->volvo->stat_all',
+				'enabled' => '1',
+				'perms' => '1',
 				'target' => '',
 				'user' => 0
 		);
@@ -1020,8 +1032,8 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/import/import_immat.php?step=1',
 				'langs' => '',
 				'position' => 100+$r,
-				'enabled' => '$user->admin',
-				'perms' => '$user->admin',
+				'enabled' => '$user->rights->volvo->immat',
+				'perms' => '$user->rights->volvo->immat',
 				'target' => '',
 				'user' => 0
 		);
@@ -1036,15 +1048,32 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/import/import_om.php?step=1',
 				'langs' => '',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_all',
-				'perms' => '$user->rights->volvo->stat_all',
+				'enabled' => '$user->rights->volvo->om',
+				'perms' => '$user->rights->volvo->om',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
 
 		$this->menu[$r] = array(
-			'fk_menu' => 'fk_mainmenu=volvo',
+				'fk_menu' => 'fk_mainmenu=volvo',
+				'type' => 'left',
+				'titre' => 'etats',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'etats',
+				'url' => '/volvo/business/list.php?search_run=1',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '1',
+				'perms' => '$user->rights->volvo->business',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+
+		$this->menu[$r] = array(
+			'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 			'type' => 'left',
 			'titre' => 'Suivis Business',
 			'mainmenu' => 'volvo',
@@ -1052,15 +1081,15 @@ $this->menus = array(); // List of menus to add
 			'url' => '/volvo/business/list.php?search_run=1',
 			'langs' => 'lead@lead',
 			'position' => 100+$r,
-			'enabled' => '1',
-			'perms' => '$user->rights->lead->read',
+			'enabled' => '$user->rights->volvo->business',
+			'perms' => '$user->rights->volvo->business',
 			'target' => '',
 			'user' => 0
 		);
 		$r ++;
 
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
 				'titre' => 'Suivi Délai Cash',
 				'mainmenu' => 'volvo',
@@ -1068,15 +1097,15 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/business/delaicash.php?search_run=1',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->lead->read',
-				'perms' => '$user->rights->lead->read',
+				'enabled' => '$user->rights->volvo->delai_cash',
+				'perms' => '$user->rights->volvo->delai_cash',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
 
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
 				'titre' => 'Suivi d\'activité',
 				'mainmenu' => 'volvo',
@@ -1084,15 +1113,15 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/business/resume.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_all',
-				'perms' => '$user->rights->volvo->stat_all',
+				'enabled' => '$user->rights->volvo->activite',
+				'perms' => '$user->rights->volvo->activite',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
 
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
 				'titre' => 'Affaires chaudes',
 				'mainmenu' => 'volvo',
@@ -1100,14 +1129,14 @@ $this->menus = array(); // List of menus to add
 				'url' => '/mydoliboard/mydoliboard.php?idboard=5',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_ext',
-				'perms' => '$user->rights->volvo->stat_ext',
+				'enabled' => '$user->rights->volvo->chaudes',
+				'perms' => '$user->rights->volvo->chaudes',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
 				'titre' => 'Liste des contrats',
 				'mainmenu' => 'volvo',
@@ -1115,14 +1144,14 @@ $this->menus = array(); // List of menus to add
 				'url' => '/volvo/business/listcontrat.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->lead->read',
-				'perms' => '$user->rights->lead->read',
+				'enabled' => '$user->rights->volvo->contrat',
+				'perms' => '$user->rights->volvo->contrat',
 				'target' => '',
 				'user' => 0
 		);
 		$r ++;
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=business',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
 				'titre' => 'Tableau de bord Sol. Trs.',
 				'mainmenu' => 'volvo',
@@ -1130,8 +1159,8 @@ $this->menus = array(); // List of menus to add
 				'url' => '/mydoliboard/mydoliboard.php?idboard=6',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->stat_all',
-				'perms' => '$user->rights->volvo->stat_all',
+				'enabled' => '$user->rights->volvo->soltrs',
+				'perms' => '$user->rights->volvo->soltrs',
 				'target' => '',
 				'user' => 0
 		);
