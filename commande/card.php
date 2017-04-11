@@ -120,6 +120,7 @@ include DOL_DOCUMENT_ROOT.'/core/actions_lineupdown.inc.php';	// Must be include
 
 // Action Recalc
 if($action=='recalc') {
+	echo 'ok';
 	$leadext= new Leadext($db);
 	$leadext->updatevhpriceandvnc($object->id,GETPOST('prixtot','int'));
 	$action = '';
