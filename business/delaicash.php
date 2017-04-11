@@ -33,7 +33,7 @@ require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 $title = 'Suivis du délai cash';
 
 // Security check
-if (! $user->rights->lead->read)
+if (! $user->rights->volvo->delai_cash)
 	accessforbidden();
 
  $sortorder = GETPOST('sortorder', 'alpha');
