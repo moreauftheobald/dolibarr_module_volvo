@@ -106,6 +106,14 @@ if (empty($user->rights->volvo->stat_all)){
 	$search_sale_disabled = 1;
 }
 
+$user_included=array();
+$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
+$resqlusers  = $db->query($sqlusers);
+if($resqlusers){
+	while ($users = $db->fetch_object($resqlusers)){
+		$user_included[] = $users->fk_user;
+	}
+}
 
 if($action=='confirm_set_date'){
 	$contrat = New Contrat($db);
@@ -275,7 +283,7 @@ if ($resql)
     print '<input type="text" class="flat" size="15" name="search_name" value="'.dol_escape_htmltag($search_name).'">';
     print '</td>';
     print '<td>';
-    print $form->select_dolusers($search_sale,'search_sale',1,array(),$search_sale_disabled);
+    print $form->select_dolusers($search_sale,'search_sale',1,array(),$search_sale_disabled,$user_included);
     print '</td>';
     print '<td>';
     print '<select class="flat" id="search_status" name="search_status">';
