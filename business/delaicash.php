@@ -108,6 +108,15 @@ if (empty($user->rights->volvo->stat_all)){
 	$search_commercial_disabled = 1;
 }
 
+$user_included=array();
+$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
+$resqlusers  = $db->query($sqlusers);
+if($resqlusers){
+	while ($users = $db->fetch_object($resqlusers)){
+		$user_included[] = $users->fk_user;
+	}
+}
+
 $filter = array();
 if (! empty($search_commercial) && $search_commercial != -1) {
  	$filter['lead.fk_user_resp'] = $search_commercial;
@@ -260,7 +269,7 @@ $num = $resql;
  	print "</tr>\n";
 
  	print '<tr class="liste_titre">';
- 	print '<td align="center">' . $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</td>';
+ 	print '<td align="center">' . $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled,$user_included) . '</td>';
  	print '<td><input type="text" class="flat" name="search_numom" value="' . $search_numom . '" size="10"></td>';
  	print '<td><input type="text" class="flat" name="search_ana" value="' . $search_ana . '" size="6"></td>';
  	print '<td><input type="text" class="flat" name="search_lead" value="' . $search_lead . '" size="9"></td>';
