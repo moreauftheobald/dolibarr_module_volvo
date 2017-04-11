@@ -905,7 +905,7 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][0] = 0101770;
 		$this->rights[$r][1] = 'Consulter Suvi d\'activité';
 		$this->rights[$r][3] = 1;
-		$this->rights[$r][4] = 'activité';
+		$this->rights[$r][4] = 'activite';
 		$r ++;
 
 		$this->rights[$r][0] = 0101771;
