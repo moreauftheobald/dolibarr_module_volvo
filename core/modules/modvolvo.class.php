@@ -890,6 +890,42 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'compta';
 		$r ++;
 
+		$this->rights[$r][0] = 0101766;
+		$this->rights[$r][1] = 'consulter suivi Business';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'business';
+		$r ++;
+
+		$this->rights[$r][0] = 0101767;
+		$this->rights[$r][1] = 'Consulter Suivi délai cash';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'delai_cash';
+		$r ++;
+
+		$this->rights[$r][0] = 0101768;
+		$this->rights[$r][1] = 'Consulter Suvi d\'activité';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'activité';
+		$r ++;
+
+		$this->rights[$r][0] = 0101769;
+		$this->rights[$r][1] = 'Consulter Affaires chaudes';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'chaudes';
+		$r ++;
+
+		$this->rights[$r][0] = 0101770;
+		$this->rights[$r][1] = 'Consulter liste des contrats';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'contrat';
+		$r ++;
+
+		$this->rights[$r][0] = 0101771;
+		$this->rights[$r][1] = 'Consulter tableau de bord solutions transports';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'soltrs';
+		$r ++;
+
 
 		// $r++;
 		// Main menu entries
