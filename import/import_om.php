@@ -25,7 +25,7 @@ require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
 require_once '../class/volvoimportom.class.php';
 require_once '../class/html.formvolvo.class.php';
 
-if (! $user->rights->volvo->stat_all)
+if (! $user->rights->volvo->om)
 	accessforbidden();
 
 $langs->load("exports");
