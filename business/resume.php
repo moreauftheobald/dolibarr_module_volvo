@@ -52,6 +52,15 @@ if (empty($user->rights->volvo->stat_all)){
 	$search_commercial_disabled = 1;
 }
 
+$user_included=array();
+$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
+$resqlusers  = $db->query($sqlusers);
+if($resqlusers){
+	while ($users = $db->fetch_object($resqlusers)){
+		$user_included[] = $users->fk_user;
+	}
+}
+
 if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 
 
@@ -72,7 +81,7 @@ print '<tr class="liste_titre">';
 print '<th class="liste_titre" align="center">Année: ';
 $formother->select_year($year,'year',0, 5, 0);
 print '</th>';
-print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled) . '</th>';
+print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled,$user_included) . '</th>';
 print '<th class="liste_titre" align="center">Periode: ';
 print '<select class="flat" id="search_periode" name="search_periode">';
 print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
