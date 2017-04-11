@@ -125,11 +125,11 @@ if (empty($user->rights->volvo->stat_all)){
 	$search_commercial_disabled = 1;
 }
 $user_included=array();
-$sqlusers = "SELECT rowid FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
+$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
 $resqlusers  = $db->query($sqlusers);
 if($resqlusers){
 	while ($users = $db->fetch_object($resqlusers)){
-		$user_included[] = $users->rowid;
+		$user_included[] = $users->fk_user;
 	}
 }
 
