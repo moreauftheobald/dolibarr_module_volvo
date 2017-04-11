@@ -145,6 +145,8 @@ class Leadext extends Lead
 
 	public function updatevhpriceandvnc($cmdnum,$prixtot=0) {
 		global $user,$conf;
+		var_dump($prixtot);
+		exit;
 		require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
 		$cmd = new Commande($this->db);
 		$cmd->fetch($cmdnum);
