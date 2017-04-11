@@ -30,7 +30,7 @@ require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
 $title = 'Suivis d\'activité VN volvo';
 
 // Security check
-if (! $user->rights->lead->read)
+if (! $user->rights->volvo->activite)
 	accessforbidden();
 
 // Search criteria
