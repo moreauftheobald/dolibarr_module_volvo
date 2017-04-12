@@ -75,7 +75,6 @@ $nbtotalofrecords = 0;
 
 print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
 print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
-
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre">';
 print '<th class="liste_titre" align="center">Année: ';
