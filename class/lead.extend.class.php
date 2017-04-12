@@ -1247,7 +1247,7 @@ class Leadext extends Lead
 
 			// Increase number of days (on go up into loop)
 			$timestampStart=dol_time_plus_duree($timestampStart, 1, 'd');
-			//var_dump($jour.' '.$mois.' '.$annee.' '.$timestampStart);
+
 
 			$i++;
 		}
