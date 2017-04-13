@@ -37,7 +37,7 @@ if (! empty($conf->commande->enabled))
 	$langs->load('order');
 
 $action = GETPOST('action', 'alpha');
-$commercial = GETPOST('commercial', 'int');
+$userid = GETPOST('commercial', 'int');
 $confirm = GETPOST('confirm', 'alpha');
 $id = GETPOST('id',int);
 
