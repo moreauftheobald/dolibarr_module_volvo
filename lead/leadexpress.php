@@ -42,7 +42,6 @@ $confirm = GETPOST('confirm', 'alpha');
 $id = GETPOST('id',int);
 
 $form = new Form($db);
-$formvolvo = new FormVolvo($db);
 $object = new Leadext($db);
 $extrafields = new ExtraFields($db);
 
