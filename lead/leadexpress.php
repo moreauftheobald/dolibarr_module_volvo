@@ -246,7 +246,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 	print '<tr>';
 	print '<td class="fieldrequired">Client</td>';
-	print '<td>' . $form->select_thirdparty_list($socid, 'socid', 'client<>0', 1, 1, 0, $events) . '</td>';
+	print '<td>' . $form->select_thirdparty_list($socid, 'socid', 'client<>0', 1, 0, 0, $events) . '</td>';
 	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
 	print '<td>' . $extrafields->showInputField("ctm", 0) . '</td>';
 	print '</tr>';
