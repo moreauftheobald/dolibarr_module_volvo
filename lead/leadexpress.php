@@ -213,7 +213,6 @@ if ($action === 'create_relance') {
 
 // Add new proposal
 if ($action == 'create' && $user->rights->lead->write) {
-	dol_fiche_head();
 	print '<form name="addlead" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="propalid" value="' . GETPOST('propalid', 'int') . '">';
@@ -329,7 +328,5 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '</div>';
 
 	print '</form>';
-
-	dol_fiche_end();
 }
 $db->close();
