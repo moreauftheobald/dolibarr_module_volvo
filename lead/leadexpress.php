@@ -248,10 +248,10 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '<tr class="liste_titre"><td align="center" colspan="4">Caracteristiques</td></tr>';
 
 	print '<tr>';
-	print '<td width="15%" class="fieldrequired">' . $langs->trans('LeadAmountGuess') . '</td>';
-	print '<td width="35%"><input type="text" name="amount_guess" size="5" value="' . price2num($amount_guess) . '"/></td>';
-	print '<td width="15%" class="fieldrequired">' . $extrafields->attribute_label["nbchassis"] . '</td>';
-	print '<td width="35%">' . $extrafields->showInputField("nbchassis", 0) . '</td>';
+	print '<td class="fieldrequired">' . $langs->trans('LeadAmountGuess') . '</td>';
+	print '<td><input type="text" name="amount_guess" size="5" value="' . price2num($amount_guess) . '"/></td>';
+	print '<td class="fieldrequired">' . $extrafields->attribute_label["nbchassis"] . '</td>';
+	print '<td>' . $extrafields->showInputField("nbchassis", 0) . '</td>';
 	print '</tr>';
 
 	print '<tr>';
