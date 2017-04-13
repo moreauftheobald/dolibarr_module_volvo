@@ -290,12 +290,6 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '</td>';
 	print '</tr>';
 
-	print '<tr>';
-	print '<td>' . $extrafields->attribute_label["soltrs"] . '</td>';
-	print '<td colspan="3">' . $extrafields->showInputField("soltrs", 0) . '</td>';
-	print '</tr>';
-
-
 	print '</table>';
 
 	$out .= "\n";
