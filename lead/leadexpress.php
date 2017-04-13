@@ -199,6 +199,8 @@ $formlead = new FormLead($db);
 
 $now = dol_now();
 
+top_htmlhead('', '');
+
 if ($action === 'create_relance') {
 	print $form->formconfirm("card.php?id=" . $object->id, $langs->trans("CreateRelance"), $langs->trans("ConfirmCreateRelance"), "confirm_relance", array(
 			array(
