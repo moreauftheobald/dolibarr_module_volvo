@@ -44,6 +44,7 @@ $id = GETPOST('id',int);
 $form = new Form($db);
 $object = new Leadext($db);
 $extrafields = new ExtraFields($db);
+$events = array();
 
 $error = 0;
 
