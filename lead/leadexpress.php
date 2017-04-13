@@ -223,16 +223,17 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 	print '<tr class="liste_titre"><td align="center" colspan="4">Descriptif Affaire</td></tr>';
 	print '<tr>';
-	print '<td width="50%" colspan="2">' . '' . '</td>';
-	print '<td width="15%" class="fieldrequired">Numero de dossier</td>';
-	print '<td width="35%"><input type="text" name="ref_int" size="10" value="' . $ref_int . '"/></td>';
+	print '<td class="fieldrequired">Client</td>';
+	print '<td>' . $form->select_thirdparty_list($socid, 'socid', 'client<>0', 1, 0, 0, $events) . '</td>';
+	print '<td class="fieldrequired">Commercial</td>';
+	print '<td>' . $form->select_dolusers(empty($userid) ? $user->id : $userid, 'userid', 0, array(), 0, $includeuserlist, '', 0, 0, 0, '', 0, '', '', 1) . '</td>';
 	print '</tr>';
 
 	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
+	print '<td>' . $extrafields->showInputField("ctm", 0) . '</td>';
 	print '<td class="fieldrequired"> Canal de Vente </td>';
 	print '<td>' . $formlead->select_lead_type($leadtype, 'leadtype', 0) . '</td>';
-	print '<td class="fieldrequired">Commercial</td>';
-	print '<td>' . $form->select_dolusers(empty($userid) ? $user->id : $userid, 'userid', 0, array(), 0, $includeuserlist, '', 0, 0, 0, '', 0, '', '', 1) . '</td>';
 	print '</tr>';
 
 	print '<tr>';
@@ -243,13 +244,6 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '<td>' . $extrafields->attribute_label["new"] . '</td>';
 	print '<td>' . $extrafields->showInputField("new", 0) . '</td>';
 	print '</tr></table></tr>';
-
-	print '<tr>';
-	print '<td class="fieldrequired">Client</td>';
-	print '<td>' . $form->select_thirdparty_list($socid, 'socid', 'client<>0', 1, 0, 0, $events) . '</td>';
-	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
-	print '<td>' . $extrafields->showInputField("ctm", 0) . '</td>';
-	print '</tr>';
 
 	print '<tr class="liste_titre"><td align="center" colspan="4">Caracteristiques</td></tr>';
 
