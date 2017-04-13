@@ -223,7 +223,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 	print '<tr class="liste_titre"><td align="center" colspan="4">Descriptif Affaire</td></tr>';
 	print '<tr>';
-	print '<td class="fieldrequired" width="250px">Client</td>';
+	print '<td class="fieldrequired" width="300px">Client</td>';
 	print '<td width="690px">' . $form->select_thirdparty_list($socid, 'socid', 'client<>0', 1, 0, 0, $events) . '</td>';
 	print '<td class="fieldrequired" width="150px">Commercial</td>';
 	print '<td>' . $form->select_dolusers(empty($userid) ? $user->id : $userid, 'userid', 0, array(), 0, $includeuserlist, '', 0, 0, 0, '', 0, '', '', 1) . '</td>';
