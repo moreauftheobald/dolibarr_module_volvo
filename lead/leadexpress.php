@@ -5,12 +5,12 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
-require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
-
-dol_include_once('/volvo/class/html.formvolvo.class.php');
+dol_include_once('/lead/class/html.formlead.class.php');
+dol_include_once('/lead/lib/lead.lib.php');
+dol_include_once('/core/lib/date.lib.php');
+dol_include_once('/core/class/extrafields.class.php');
+dol_include_once('/core/class/doleditor.class.php');
+dol_include_once('/core/class/html.form.class.php');
 dol_include_once('/volvo/class/lead.extend.class.php');
 
 if (! empty($conf->facture->enabled))
@@ -18,7 +18,7 @@ if (! empty($conf->facture->enabled))
 if (! empty($conf->contrat->enabled))
 	require_once DOL_DOCUMENT_ROOT . '/contrat/class/contrat.class.php';
 if (! empty($conf->commande->enabled))
-	require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
+	dol_include_once('/commande/class/commande.class.php');
 if (! empty($conf->agenda->enabled))
 	dol_include_once('/comm/action/class/actioncomm.class.php');
 
@@ -194,8 +194,6 @@ if ($action == "add") {
 /*
  * View
  */
-
-llxHeader('', $langs->trans('Module103111Name'));
 
 $form = new Form($db);
 $formlead = new FormLead($db);
