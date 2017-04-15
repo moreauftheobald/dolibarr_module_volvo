@@ -339,7 +339,166 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '</div>';
 
 	print '</form>';
-}/*
+}
+elseif ($action == 'edit') {
+
+	$head = lead_prepare_head($object);
+	dol_fiche_head($head, 'card', $langs->trans('Module103111Name'), 0, dol_buildpath('/lead/img/object_lead.png', 1), 1);
+
+	print '<form name="editlead" action="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '" method="POST">';
+	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+	print '<input type="hidden" name="action" value="update">';
+
+	print '<table class="border" width="100%">';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Descriptif Affaire</td></tr>';
+	print '<tr>';
+	print '<td width="15%">' . $langs->trans('Ref') . '</td>';
+	print '<td width="35%">' . $object->ref . '</td>';
+	print '<td width="15%" class="fieldrequired">Numero de dossier</td>';
+	print '<td width="35%"><input type="text" name="ref_int" size="10" value="' . $object->ref_int . '"/></td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired"> Canal de Vente </td>';
+	print '<td>' . $formlead->select_lead_type($object->fk_c_type, 'leadtype', 0) . '</td>';
+	print '<td class="fieldrequired">Commercial</td>';
+	print '<td>' . $form->select_dolusers($object->fk_user_resp, 'userid', 0, array(), 0, $includeuserlist, '', 0, 0, 0, '', 0, '', '', 1) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired">' . $langs->trans('LeadStatus') . '</td>';
+	print '<td>' . $formlead->select_lead_status($object->fk_c_status, 'leadstatus', 0) . '</td>';
+	print '<td colspan="2"><table width="100%" class="nobordernopadding"><tr><td>' . $extrafields->attribute_label["chaude"] . '</td>';
+	print '<td>' . $extrafields->showInputField("chaude", $object->array_options["options_chaude"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["new"] . '</td>';
+	print '<td>' . $extrafields->showInputField("new", $object->array_options["options_new"]) . '</td>';
+	print '</tr></table></tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired">Client</td>';
+	print '<td>' . $form->select_thirdparty_list($object->thirdparty->id, 'socid', 'client<>0', 1, 1, 0, $events) . '</td>';
+	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
+	print '<td>' . $extrafields->showInputField("ctm", $object->array_options["options_ctm"]) . '</td>';
+	print '</tr>';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Caracteristiques</td></tr>';
+
+	print '<tr>';
+	print '<td width="15%" class="fieldrequired">' . $langs->trans('LeadAmountGuess') . '</td>';
+	print '<td width="35%"><input type="text" name="amount_guess" size="5" value="' . price2num($object->amount_prosp) . '"/></td>';
+	print '<td width="15%" class="fieldrequired">' . $extrafields->attribute_label["nbchassis"] . '</td>';
+	print '<td width="35%">' . $extrafields->showInputField("nbchassis", $object->array_options["options_nbchassis"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired">' . $extrafields->attribute_label["gamme"] . '</td>';
+	print '<td>' . $extrafields->showInputField("gamme", $object->array_options["options_gamme"]) . '</td>';
+	print '<td class="fieldrequired">' . $extrafields->attribute_label["silouhette"] . '</td>';
+	print '<td>' . $extrafields->showInputField("silouhette", $object->array_options["options_silouhette"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired">' . $extrafields->attribute_label["type"] . '</td>';
+	print '<td>' . $extrafields->showInputField("type", $object->array_options["options_type"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["carroserie"] . '</td>';
+	print '<td>' . $extrafields->showInputField("carroserie", $object->array_options["options_carroserie"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . ' ' . '</td>';
+	print '<td>' . ' ' . '</td>';
+	print '<td>' . $extrafields->attribute_label["specif"] . '</td>';
+	print '<td>' . $extrafields->showInputField("specif", $object->array_options["options_specif"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $langs->trans('LeadDescription') . '</td>';
+	print '<td colspan="3">';
+	$doleditor = new DolEditor('description', $object->description, '', 160, 'dolibarr_notes', 'In', true, false, $conf->global->FCKEDITOR_ENABLE || $conf->global->FCKEDITOR_ENABLE_SOCIETE, 4, 90);
+	$doleditor->Create();
+	print '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["soltrs"] . '</td>';
+	print '<td colspan="3">' . $extrafields->showInputField("soltrs", $object->array_options["options_soltrs"]) . '</td>';
+	print '</tr>';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Cloture</td></tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired"  width="20%">';
+	print $langs->trans('LeadDeadLine');
+	print '</td>';
+	print '<td>';
+	print $form->select_date($object->date_closure, 'deadline', 0, 0, 0, "addlead", 1, 1, 0, 0);
+	print '</td>';
+	print '<td colspan ="2">' . ' ' . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . ' ' . '</td>';
+	print '<td>' . ' ' . '</td>';
+	print '<td width="15%"> </td>';
+	print '<td width="35%"> </td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["motif"] . '</td>';
+	print '<td>' . $extrafields->showInputField("motif", $object->array_options["options_motif"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["marque"] . '</td>';
+	print '<td>' . $extrafields->showInputField("marque", $object->array_options["options_marque"]) . '</td>';
+	print '</tr>';
+
+	print '</table>';
+
+	$out .= "\n";
+	$out .= '
+					<script type="text/javascript">
+				    jQuery(document).ready(function() {
+				    	function showOptions(child_list, parent_list)
+				    	{
+				    		var val = $("select[name=\""+parent_list+"\"]").val();
+				    		var parentVal = parent_list + ":" + val;
+							if(val > 0) {
+					    		$("select[name=\""+child_list+"\"] option[parent]").hide();
+					    		$("select[name=\""+child_list+"\"] option[parent=\""+parentVal+"\"]").show();
+							} else {
+								$("select[name=\""+child_list+"\"] option").show();
+							}
+				    	}
+						function setListDependencies() {
+					    	jQuery("select option[parent]").parent().each(function() {
+					    		var child_list = $(this).attr("name");
+								var parent = $(this).find("option[parent]:first").attr("parent");
+								var infos = parent.split(":");
+								var parent_list = infos[0];
+								$("select[name=\""+parent_list+"\"]").change(function() {
+									showOptions(child_list, parent_list);
+								});
+					    	});
+						}
+						setListDependencies();
+
+						$("#leadtype").change();
+				    });
+				</script>' . "\n";
+	$out .= '<!-- /showOptionalsInput --> ' . "\n";
+
+	print $out;
+
+	print "</div>\n";
+
+	print '<div class="tabsAction">';
+	print '<input type="submit" class="button" value="' . $langs->trans("Save") . '">';
+	print '&nbsp;<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
+	print '</div>';
+
+	print '</form>';
+}
+else{
+	/*
 	 * Show object in view mode
 	 */
 	$head = lead_prepare_head($object);
@@ -683,5 +842,5 @@ if ($action == 'create' && $user->rights->lead->write) {
 			print "</table>";
 		}
 	}
-
+}
 $db->close();
