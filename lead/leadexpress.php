@@ -37,7 +37,6 @@ if (! empty($conf->commande->enabled))
 	$langs->load('order');
 
 $action = GETPOST('action', 'alpha');
-$userid = GETPOST('commercial');
 $confirm = GETPOST('confirm', 'alpha');
 $id = GETPOST('id',int);
 $ref_int = GETPOST('ref_int', 'alpha');
@@ -52,8 +51,7 @@ $description = GETPOST('description');
 $deadline = dol_mktime(0, 0, 0, GETPOST('deadlinemonth'), GETPOST('deadlineday'), GETPOST('deadlineyear'));
 
 $date_relance = dol_mktime(0, 0, 0, GETPOST('date_relancemonth'), GETPOST('date_relanceday'), GETPOST('date_relanceyear'));
-
-print 'user id =' . $userid;
+print 'id=' . $id;
 $form = new Form($db);
 $object = new Leadext($db);
 $extrafields = new ExtraFields($db);
