@@ -53,7 +53,7 @@ $deadline = dol_mktime(0, 0, 0, GETPOST('deadlinemonth'), GETPOST('deadlineday')
 
 $date_relance = dol_mktime(0, 0, 0, GETPOST('date_relancemonth'), GETPOST('date_relanceday'), GETPOST('date_relanceyear'));
 
-
+print $userid;
 $form = new Form($db);
 $object = new Leadext($db);
 $extrafields = new ExtraFields($db);
