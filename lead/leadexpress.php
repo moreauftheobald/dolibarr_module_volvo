@@ -647,5 +647,5 @@ if ($action == 'create' && $user->rights->lead->write) {
 			print "</table>";
 		}
 	}
-}
+
 $db->close();
