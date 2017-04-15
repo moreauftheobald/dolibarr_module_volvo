@@ -40,6 +40,19 @@ $action = GETPOST('action', 'alpha');
 $userid = GETPOST('commercial', 'int');
 $confirm = GETPOST('confirm', 'alpha');
 $id = GETPOST('id',int);
+$ref_int = GETPOST('ref_int', 'alpha');
+$socid = GETPOST('socid', 'int');
+if ($socid == - 1)
+	$socid = 0;
+$userid = GETPOST('userid', 'int');
+$leadstatus = GETPOST('leadstatus', 'int');
+$leadtype = GETPOST('leadtype', 'int');
+$amount_guess = GETPOST('amount_guess');
+$description = GETPOST('description');
+$deadline = dol_mktime(0, 0, 0, GETPOST('deadlinemonth'), GETPOST('deadlineday'), GETPOST('deadlineyear'));
+
+$date_relance = dol_mktime(0, 0, 0, GETPOST('date_relancemonth'), GETPOST('date_relanceday'), GETPOST('date_relanceyear'));
+
 
 $form = new Form($db);
 $object = new Leadext($db);
