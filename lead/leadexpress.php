@@ -297,9 +297,8 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 	print '</table>';
 
-	$out .= "\n";
-	$out .= '
-				<script type="text/javascript">
+	?>
+	<script type="text/javascript">
 				    jQuery(document).ready(function() {
 				    	function showOptions(child_list, parent_list)
 				    	{
@@ -329,6 +328,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 						$("#leadtype").change();
 				    });
 				</script>' . "\n";
+	<?php
 	$out .= '<!-- /showOptionalsInput --> ' . "\n";
 
 	print $out;
