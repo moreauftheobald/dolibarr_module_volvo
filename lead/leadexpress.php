@@ -383,126 +383,167 @@ if ($action == 'create' && $user->rights->lead->write) {
 			$printformconfirm = true;
 	}
 
-	$linkback = '<a href="' . dol_buildpath('/lead/lead/list.php', 1) . '">' . $langs->trans("BackToList") . '</a>';
+		$formconfirm = '';
+	if ($action == 'delete') {
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('LeadDelete'), $langs->trans('LeadConfirmDelete'), 'confirm_delete', '', 0, 1);
+	}
 
-	if (file_exists(dol_buildpath($conf->global->LEAD_PERSONNAL_TEMPLATE))) {
-		$res = include dol_buildpath($conf->global->LEAD_PERSONNAL_TEMPLATE);
-	} else {
+	if ($action == 'close') {
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('LeadLost'), $langs->trans('LeadConfirmLost'), 'confirm_lost', '', 0, 1);
+	}
 
-		if ($printformconfirm) {
-			print $formconfirm;
+	$userstatic = new User($db);
+	$result = $userstatic->fetch($object->fk_user_resp);
+	if ($result < 0) {
+		setEventMessages($userstatic->errors, 'errors');
+	}
+
+	if ($action == 'ext_order') {
+		$sql = $formquestion = array(
+				array(
+						'type' => 'text',
+						'name' => 'price',
+						'label' => 'Prix total HT de la commande',
+						'value' => ''
+				),
+				array(
+						'type' => 'date',
+						'name' => 'del_date',
+						'label' => 'Date de livraison prévue',
+						'value' => ''
+				)
+		);
+		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, 'Commander', 'Commander le véhicule ?', 'ext_head_confirm_order', $formquestion, 'yes', 1);
+	}
+
+	print $formconfirm;
+
+	print '<table class="border" width="100%">';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Descriptif Affaire</td></tr>';
+	print '<tr>';
+	print '<td width="15%">' . $langs->trans('Ref') . '</td>';
+	print '<td width="35%">' . $object->ref . '</td>';
+	print '<td width="15%">Numero de dossier</td>';
+	print '<td width="35%">' . $object->ref_int . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td> Canal de Vente </td>';
+	print '<td>' . $object->type_label . '</td>';
+	print '<td>Commercial</td>';
+	print '<td>' . $userstatic->getFullName($langs) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $langs->trans('LeadStatus') . '</td>';
+	print '<td>' . $object->status_label . '</td>';
+	print '<td colspan="2"><table width="100%" class="nobordernopadding"><tr><td>' . $extrafields->attribute_label["chaude"] . '</td>';
+	print '<td>' . $chaude . '</td>';
+	print '<td>' . $extrafields->attribute_label["new"] . '</td>';
+	print '<td>' . $new . '</td>';
+
+	print '</tr></table></tr>';
+
+	print '<tr>';
+	print '<td>Client</td>';
+	print '<td><a href="' . dol_buildpath('/lead/lead/list.php', 1) . '?socid=' . $object->thirdparty->id . '">' . $object->thirdparty->name . '</a></td>';
+	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("ctm", $object->array_options["options_ctm"]) . '</td>';
+	print '</tr>';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Caracteristiques</td></tr>';
+
+	print '<tr>';
+	print '<td width="15%">' . $langs->trans('LeadAmountGuess') . '</td>';
+	print '<td width="35%">' . price($object->amount_prosp, 'HTML') . $langs->getCurrencySymbol($conf->currency) . '</td>';
+	print '<td width="15%">' . $extrafields->attribute_label["nbchassis"] . '</td>';
+	print '<td width="35%">' . $extrafields->showOutputField("nbchassis", $object->array_options["options_nbchassis"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["gamme"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("gamme", $object->array_options["options_gamme"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["silouhette"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("silouhette", $object->array_options["options_silouhette"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["type"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("type", $object->array_options["options_type"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["carroserie"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("carroserie", $object->array_options["options_carroserie"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $langs->trans('LeadDescription') . '</td>';
+	print '<td>' .  $object->description . '</td>';
+	print '<td>' . $extrafields->attribute_label["specif"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("specif", $object->array_options["options_specif"]) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["soltrs"] . '</td>';
+	print '<td colspan="3">' . $extrafields->showOutputField("soltrs", $object->array_options["options_soltrs"]) . '</td>';
+	print '</tr>';
+
+	print '<tr class="liste_titre"><td align="center" colspan="4">Cloture</td></tr>';
+
+	print '<tr>';
+	print '<td width="15%">' . $langs->trans('LeadDeadLine') . '</td>';
+	print '<td width="35%">' . dol_print_date($object->date_closure, 'daytext') . '</td>';
+	print '<td> Statut</td>';
+	print '<td>' . $status . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td colspan="2"> Montant total commandé a date: ' . price($object->getRealAmount2(), 'HTML') . ' ' . $langs->getCurrencySymbol($conf->currency);
+	print '<br>Nb de chassis commandé a date: ' . $object->getnbchassisreal() . ' </td>';
+	print '<td colspan="2"> Marge réele totale a date: ' . price($object->getmargin('real'), 'HTML'). ' ' . $langs->getCurrencySymbol($conf->currency);
+	print "<br>Marge totale de l'affaire a date: " . price($object->getmargin('theo'), 'HTML'). ' ' . $langs->getCurrencySymbol($conf->currency) . ' </td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td>' . $extrafields->attribute_label["motif"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("motif", $object->array_options["options_motif"]) . '</td>';
+	print '<td>' . $extrafields->attribute_label["marque"] . '</td>';
+	print '<td>' . $extrafields->showOutputField("marque", $object->array_options["options_marque"]) . '</td>';
+	print '</tr>';
+
+	print '</table>';
+
+	print "</div>\n";
+
+	print '<div class="tabsAction">';
+	if ( $user->rights->lead->write) {
+		if ($object->fk_c_status == 6){
+		print '<div class="inline-block divButAction"><a href="javascript:popCreateOrder()" class="butAction">Passer une commande</a></div>';
 		}
-
-		print '<table class="border" width="100%">';
-		print '<tr>';
-		print '<td width="20%">';
-		print $langs->trans('Ref');
-		print '</td>';
-		print '<td>';
-		print $formlead->showrefnav($object, 'id', $linkback, 1, 'rowid', 'ref', '');
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td width="20%">';
-		print $langs->trans('LeadRefInt');
-		print '</td>';
-		print '<td>';
-		print $object->ref_int;
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td width="20%">';
-		print $langs->trans('LeadCommercial');
-		print '</td>';
-		print '<td>';
-		$userstatic = new User($db);
-		$result = $userstatic->fetch($object->fk_user_resp);
-		if ($result < 0) {
-			setEventMessages($userstatic->errors, 'errors');
-		}
-		print $userstatic->getFullName($langs);
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('Company');
-		print '</td>';
-		print '<td>';
-		print $object->getNomUrlCompany(1);
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadStatus');
-		print '</td>';
-		print '<td>';
-		print $object->status_label;
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadType');
-		print '</td>';
-		print '<td>';
-		print $object->type_label;
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadAmountGuess');
-		print '</td>';
-		print '<td>';
-		print price($object->amount_prosp, 'HTML') . $langs->getCurrencySymbol($conf->currency);
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadDeadLine');
-		print '</td>';
-		print '<td>';
-		print dol_print_date($object->date_closure, 'daytext');
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadRealAmount');
-		print '</td>';
-		print '<td>';
-		print $object->getRealAmount() . $langs->getCurrencySymbol($conf->currency);
-		print '</td>';
-		print '</tr>';
-
-		print '<tr>';
-		print '<td>';
-		print $langs->trans('LeadDescription');
-		print '</td>';
-		print '<td>';
-		print $object->description;
-		print '</td>';
-		print '</tr>';
-
-		// Other attributes
-		$reshook = $hookmanager->executeHooks('formObjectOptions', $parameters, $object, $action); // Note that $action and $object may have been modified by hook
-
-		if (empty($reshook) && ! empty($extrafields->attribute_label)) {
-			print $object->showOptionals($extrafields);
-		}
-
-		print '</table>';
-		print "</div>\n";
-
-		/*
-		 * Barre d'actions
-		 */
-		print '<div class="tabsAction">';
+		print '<div class="inline-block divButAction"><a href="javascript:popCreatecalendar()" class="butAction">Ettablir le calendrier</a></div>';
+		print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
+		print '<input type="hidden" name="calendarcreatedid" id="calendarcreatedid" />';
+		?>
+	<script type="text/javascript">
+		function popCreateOrder() {
+			$div = $('<div id="popCreateOrder"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) ?>"></iframe></div>');
+			$div.dialog({
+				modal:true
+				,width:"90%"
+				,height:$(window).height() - 50
+				,close:function() {document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
+			});
+	  	}
+		function popCreatecalendar() {
+			$div = $('<div id="popCreateCalendar"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) ?>"></iframe></div>');
+			$div.dialog({
+				modal:true
+				,width:"90%"
+				,height:$(window).height() - 50
+				//,close:function() {document.location.href='<?php echo dol_buildpath('/lead/lead/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
+			});
+	  	}
+	</script>
+<?php
 	}
 	// Delete
 	if ($user->rights->lead->write) {
