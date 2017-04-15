@@ -482,11 +482,6 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '<td>' . $extrafields->showOutputField("specif", $object->array_options["options_specif"]) . '</td>';
 	print '</tr>';
 
-	print '<tr>';
-	print '<td>' . $extrafields->attribute_label["soltrs"] . '</td>';
-	print '<td colspan="3">' . $extrafields->showOutputField("soltrs", $object->array_options["options_soltrs"]) . '</td>';
-	print '</tr>';
-
 	print '<tr class="liste_titre"><td align="center" colspan="4">Cloture</td></tr>';
 
 	print '<tr>';
@@ -528,7 +523,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 			$div = $('<div id="popCreateOrder"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) ?>"></iframe></div>');
 			$div.dialog({
 				modal:true
-				,width:"90%"
+				,width:"98%"
 				,height:$(window).height() - 50
 				,close:function() {document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
 			});
@@ -537,7 +532,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 			$div = $('<div id="popCreateCalendar"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) ?>"></iframe></div>');
 			$div.dialog({
 				modal:true
-				,width:"90%"
+				,width:"98%"
 				,height:$(window).height() - 50
 				//,close:function() {document.location.href='<?php echo dol_buildpath('/lead/lead/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
 			});
