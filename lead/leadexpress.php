@@ -39,7 +39,7 @@ if (! empty($conf->commande->enabled))
 $action = GETPOST('action', 'alpha');
 $confirm = GETPOST('confirm', 'alpha');
 $id = GETPOST('id',int);
-$ref_int = GETPOST('ref_int', 'alpha');
+
 $socid = GETPOST('socid', 'int');
 if ($socid == - 1)
 	$socid = 0;
@@ -120,7 +120,7 @@ if ($action == "add") {
 		header('Location:' . $_SERVER["PHP_SELF"] . '?id=' . $object->id);
 	}
 } elseif ($action == "update") {
-	$object->ref_int = $ref_int;
+
 	$object->fk_c_status = $leadstatus;
 	$object->fk_c_type = $leadtype;
 	$object->amount_prosp = $amount_guess;
