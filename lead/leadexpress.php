@@ -351,10 +351,10 @@ elseif ($action == 'edit') {
 
 	print '<tr class="liste_titre"><td align="center" colspan="4">Descriptif Affaire</td></tr>';
 	print '<tr>';
-	print '<td width="15%">' . $langs->trans('Ref') . '</td>';
-	print '<td width="35%">' . $object->ref . '</td>';
-	print '<td width="15%" class="fieldrequired">Numero de dossier</td>';
-	print '<td width="35%"><input type="text" name="ref_int" size="10" value="' . $object->ref_int . '"/></td>';
+	print '<td class="fieldrequired">Client</td>';
+	print '<td>' . $form->select_thirdparty_list($object->thirdparty->id, 'socid', 'client<>0', 1, 1, 0, $events) . '</td>';
+	print '<td class="fieldrequired">Numero de dossier</td>';
+	print '<td>' . $object->ref_int . '</td>';
 	print '</tr>';
 
 	print '<tr>';
@@ -374,19 +374,18 @@ elseif ($action == 'edit') {
 	print '</tr></table></tr>';
 
 	print '<tr>';
-	print '<td class="fieldrequired">Client</td>';
-	print '<td>' . $form->select_thirdparty_list($object->thirdparty->id, 'socid', 'client<>0', 1, 1, 0, $events) . '</td>';
 	print '<td>' . $extrafields->attribute_label["ctm"] . '</td>';
 	print '<td>' . $extrafields->showInputField("ctm", $object->array_options["options_ctm"]) . '</td>';
+	print '<td colspan=2"></td>';
 	print '</tr>';
 
 	print '<tr class="liste_titre"><td align="center" colspan="4">Caracteristiques</td></tr>';
 
 	print '<tr>';
-	print '<td width="15%" class="fieldrequired">' . $langs->trans('LeadAmountGuess') . '</td>';
-	print '<td width="35%"><input type="text" name="amount_guess" size="5" value="' . price2num($object->amount_prosp) . '"/></td>';
-	print '<td width="15%" class="fieldrequired">' . $extrafields->attribute_label["nbchassis"] . '</td>';
-	print '<td width="35%">' . $extrafields->showInputField("nbchassis", $object->array_options["options_nbchassis"]) . '</td>';
+	print '<td class="fieldrequired">' . $langs->trans('LeadAmountGuess') . '</td>';
+	print '<td><input type="text" name="amount_guess" size="5" value="' . price2num($object->amount_prosp) . '"/></td>';
+	print '<td class="fieldrequired">' . $extrafields->attribute_label["nbchassis"] . '</td>';
+	print '<td>' . $extrafields->showInputField("nbchassis", $object->array_options["options_nbchassis"]) . '</td>';
 	print '</tr>';
 
 	print '<tr>';
@@ -418,11 +417,6 @@ elseif ($action == 'edit') {
 	print '</td>';
 	print '</tr>';
 
-	print '<tr>';
-	print '<td>' . $extrafields->attribute_label["soltrs"] . '</td>';
-	print '<td colspan="3">' . $extrafields->showInputField("soltrs", $object->array_options["options_soltrs"]) . '</td>';
-	print '</tr>';
-
 	print '<tr class="liste_titre"><td align="center" colspan="4">Cloture</td></tr>';
 
 	print '<tr>';
@@ -433,13 +427,6 @@ elseif ($action == 'edit') {
 	print $form->select_date($object->date_closure, 'deadline', 0, 0, 0, "addlead", 1, 1, 0, 0);
 	print '</td>';
 	print '<td colspan ="2">' . ' ' . '</td>';
-	print '</tr>';
-
-	print '<tr>';
-	print '<td>' . ' ' . '</td>';
-	print '<td>' . ' ' . '</td>';
-	print '<td width="15%"> </td>';
-	print '<td width="35%"> </td>';
 	print '</tr>';
 
 	print '<tr>';
