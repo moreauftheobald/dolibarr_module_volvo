@@ -297,6 +297,12 @@ if ($action == 'create' && $user->rights->lead->write) {
 	print '</tr>';
 
 	print '</table>';
+	print '<div class="tabsAction">';
+	print '<input type="submit" class="button" value="' . $langs->trans("Create") . '">';
+	print '&nbsp;<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
+	print '</div>';
+
+	print '</form>';
 	dol_fiche_end();
 
 	?>
@@ -335,12 +341,7 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 	print $out;
 
-	print '<div class="tabsAction">';
-	print '<input type="submit" class="button" value="' . $langs->trans("Create") . '">';
-	print '&nbsp;<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
-	print '</div>';
 
-	print '</form>';
 }
 elseif ($action == 'edit') {
 
