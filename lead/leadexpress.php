@@ -335,13 +335,8 @@ if ($action == 'create' && $user->rights->lead->write) {
 
 						$("#leadtype").change();
 				    });
-				</script>;
+				</script>
 	<?php
-	$out .= '<!-- /showOptionalsInput --> ' . "\n";
-
-	print $out;
-
-
 }
 elseif ($action == 'edit') {
 
@@ -456,9 +451,16 @@ elseif ($action == 'edit') {
 
 	print '</table>';
 
-	$out .= "\n";
-	$out .= '
-					<script type="text/javascript">
+	print '<div class="tabsAction">';
+	print '<input type="submit" class="button" value="' . $langs->trans("Save") . '">';
+	print '&nbsp;<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
+	print '</div>';
+
+	print '</form>';
+
+	dol_fiche_end();
+	?>
+	<script type="text/javascript">
 				    jQuery(document).ready(function() {
 				    	function showOptions(child_list, parent_list)
 				    	{
@@ -486,21 +488,9 @@ elseif ($action == 'edit') {
 
 						$("#leadtype").change();
 				    });
-				</script>' . "\n";
-	$out .= '<!-- /showOptionalsInput --> ' . "\n";
-
-	print $out;
-
-	print "</div>\n";
-
-	print '<div class="tabsAction">';
-	print '<input type="submit" class="button" value="' . $langs->trans("Save") . '">';
-	print '&nbsp;<input type="button" class="button" value="' . $langs->trans("Cancel") . '" onClick="javascript:history.go(-1)">';
-	print '</div>';
-
-	print '</form>';
-}
-else{
+	</script>
+<?php
+}else{
 	/*
 	 * Show object in view mode
 	 */
@@ -519,13 +509,7 @@ else{
 
 	// Clone confirmation
 	if ($action == 'clone') {
-		// Create an array for form
 		$formquestion = array(
-				// 'text' => $langs->trans("ConfirmClone"),
-				// array('type' => 'checkbox', 'name' => 'clone_content', 'label' => $langs->trans("CloneMainAttributes"), 'value' =>
-				// 1),
-				// array('type' => 'checkbox', 'name' => 'update_prices', 'label' => $langs->trans("PuttingPricesUpToDate"), 'value'
-				// => 1),
 				array(
 						'type' => 'text',
 						'name' => 'ref_interne',
@@ -533,7 +517,6 @@ else{
 						'value' => $langs->trans('CopyOf') . ' ' . $object->ref_int
 				)
 		);
-		// Paiement incomplet. On demande si motif = escompte ou autre
 		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('Clone'), $langs->trans('ConfirmCloneLead', $object->ref), 'confirm_clone', $formquestion, 'yes', 1);
 	}
 
@@ -669,7 +652,7 @@ else{
 
 	print '</table>';
 
-	print "</div>\n";
+	dol_fiche_end();
 
 	print '<div class="tabsAction">';
 	if ( $user->rights->lead->write) {
