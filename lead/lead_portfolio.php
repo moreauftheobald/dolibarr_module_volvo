@@ -144,7 +144,7 @@ print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre" style="height:27px;">';
 print '<th class="liste_titre" align="center" width = "160px">';
 if($user->admin){
-	print '<div class="inline-block divButAction" style="height:13px;">'."</div>\n";
+	print '<div class="inline-block divButAction" style="height:13px;"><a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a></div>';
 }
 print '</th>';
 print '<th class="liste_titre" align="center" width = "160px">Année: ';
@@ -456,11 +456,6 @@ print "</table>";
 print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
 ?>
 <script type="text/javascript" language="javascript">';
-
-$(document).ready(function() {
-	$a = $('<a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a>');
-	$('div.fiche div.divButAction').first().append($a);
-});
 
 function createlead() {
 	$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1); ?> + '"></iframe></div>\');
