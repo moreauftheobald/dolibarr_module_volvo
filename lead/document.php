@@ -78,6 +78,8 @@ include_once DOL_DOCUMENT_ROOT . '/core/tpl/document_actions_pre_headers.tpl.php
  * View
  */
 
+top_htmlhead('', '');
+
 $form = new Form($db);
 $formlead = new FormLead($db);
 
