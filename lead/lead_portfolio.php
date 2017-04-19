@@ -470,7 +470,7 @@ function createlead() {
 }
 
 function wievlead(idlead) {
-	$div = $('<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id='; ?>' + idlead + '"></iframe></div>');
+	$div = $('<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id='; ?>' + idlead + '" style="display: block;"></iframe></div>');
 	$div.dialog({
  		modal:true,
 		width:"90%",
