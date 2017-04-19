@@ -144,7 +144,7 @@ print '<tr class="liste_titre">';
 print '<th align="center" colspan="5">' . "Ajouter des actions a l'affaire</th>";
 print '</tr>';
 print '<tr>';
-print '<td>Date: ' . $form->select_date($date_def,'date_',0,0,0,'',1,1,1) . '</td>';
+print '<td>' . $form->select_date($date_def,'date_',0,0,0,'',1,1,1) . '</td>';
 print '<td>Type: ';
 $formaction->select_type_actions($action_def,'action_type','systemauto',0,-1);
 print '</td>';
