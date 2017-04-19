@@ -25,7 +25,7 @@ $lines = $reprise->lines;
 
 top_htmlhead('', '');
 $head = leadexpress_prepare_head($object);
-dol_fiche_head($head, 'reprise', 'Affaire', 0, dol_buildpath('/volvo/img/iron02.png', 1), 1);
+dol_fiche_head($head, 'reprise', 'Affaire', 0, dol_buildpath('/lead/img/object_lead.png', 1), 1);
 $form = new Form($db);
 
 print '<table class="border" width="100%">';
