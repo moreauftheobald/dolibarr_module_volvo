@@ -24,9 +24,9 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once '../class/lead.class.php';
-require_once '../class/html.formlead.class.php';
-require_once '../lib/lead.lib.php';
+dol_include_once('/lead/class/lead.class.php');
+dol_include_once('/lead/class/html.formlead.class.php');
+dol_include_once('/volvo/lib/leadexpress.lib.php');
 
 $langs->load('lead@lead');
 
@@ -64,7 +64,7 @@ include DOL_DOCUMENT_ROOT.'/core/actions_setnotes.inc.php';	// Must be include, 
  * View
  */
 
-llxHeader();
+top_htmlhead('', '');
 
 $form = new Form($db);
 $formlead = new FormLead($db);
@@ -72,7 +72,7 @@ $formlead = new FormLead($db);
 if ($id > 0)
 {
 
-    $head = lead_prepare_head($object);
+    $head = leadexpress_prepare_head($object);
 	dol_fiche_head($head, 'note', $langs->trans('Module103111Name'), 0, dol_buildpath('/lead/img/object_lead.png', 1), 1);
 
 
@@ -88,7 +88,7 @@ if ($id > 0)
 	print $formlead->showrefnav($object, 'id', $linkback, 1, 'rowid', 'ref', '');
 	print '</td>';
 	print '</tr>';
-	
+
 	print '<tr>';
 	print '<td width="20%">';
 	print $langs->trans('LeadRefInt');
