@@ -145,11 +145,11 @@ print '<th align="center" colspan="5">' . "Ajouter des actions a l'affaire</th>"
 print '</tr>';
 print '<tr>';
 print '<td>' . $form->select_date($date_def,'date_',0,0,0,'',1,1,1) . '</td>';
-print '<td>Type: ';
+print '<td>';
 $formaction->select_type_actions($action_def,'action_type','systemauto',0,-1);
 print '</td>';
-print '<td>Description: <input type="text" name="libelle" size="50" value="'. GETPOST('libelle') . '"/></td>';
-print '<td>Contact: ';
+print '<td><input type="text" name="libelle" size="50" value="'. GETPOST('libelle') . '"/></td>';
+print '<td>';
 $form->select_contacts($lead->fk_soc, GETPOST('contactid'), 'contactid', 1, '', '', 0, 'minwidth200');
 print '</td>';
 print '<td><input type="submit" align="center" class="button" value="Ajouter" name="add" id="add"/></td>';
