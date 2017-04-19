@@ -458,14 +458,14 @@ print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
 <script type="text/javascript" language="javascript">';
 
 // function createlead() {
-	$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1); ?> + '"></iframe></div>\');
+//	$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1); ?> + '"></iframe></div>\');
 // 	$div.dialog({
 // 		modal:true,
 // 		width:"90%",
 // 		height:$(window).height() - 25,
 // 		close:function() {'
 // 			if($('#ordercreatedid').val()>0){
-				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();';
+//				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();';
 // 			}else{
 // 				document.location.reload(true);
 // 			}
