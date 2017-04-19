@@ -28,9 +28,9 @@ if (! $res)
 	die("Include of main fails");
 
 require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
-require_once '../class/lead.class.php';
-require_once '../lib/lead.lib.php';
-require_once '../class/html.formlead.class.php';
+require_once DOL_DOCUMENT_ROOT . '/lead/class/lead.class.php';
+require_once DOL_DOCUMENT_ROOT . 'lead/lib/lead.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/lead/class/html.formlead.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
