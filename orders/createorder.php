@@ -47,7 +47,6 @@ if ($action == 'creatorder') {
 		print '</script>'."\n";
 		llxFooter();
 		exit;
-		//header('Location:' . DOL_URL_ROOT . "/commande/card.php?id=" . $res);
 	}
 
 }

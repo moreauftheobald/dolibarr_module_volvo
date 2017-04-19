@@ -638,7 +638,7 @@ elseif ($action == 'edit') {
 		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande</a></div>';
 		}
 		print '<div class="inline-block divButAction"><a href="javascript:popCreatecalendar()" class="butAction">Ettablir le calendrier</a></div>';
-		print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
+
 		print '<input type="hidden" name="calendarcreatedid" id="calendarcreatedid" />';
 		?>
 	<script type="text/javascript">

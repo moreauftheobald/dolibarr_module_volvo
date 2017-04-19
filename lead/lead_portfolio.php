@@ -453,7 +453,7 @@ print '</div></td>';
 //fin de tableau
 print '</tr>';
 print "</table>";
-
+print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
 
 print '<script type="text/javascript" language="javascript">';
 
@@ -463,12 +463,16 @@ print '  		$(\'div.fiche div.divButAction\').first().append($a);' . "\n";
 print '  	});' . "\n";
 print '  	function createlead() {' . "\n";
 print '  		$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1) . '"></iframe></div>\');' . "\n";
-print '' . "\n";
 print '  		$div.dialog({' . "\n";
 print '  			modal:true' . "\n";
 print '  			,width:"90%"' . "\n";
 print '  			,height:$(window).height() - 25' . "\n";
-print '  			,close:function() {document.location.reload(true);}' . "\n";
+print '  			,close:function() {';
+print '					if($(\'#ordercreatedid\').val()>0){';
+print '						document.location.href=' . dol_buildpath('/commande/card.php',2).'?id='.'+$(\'#ordercreatedid\').val();';
+print '					}else{' . "\n";
+print '						document.location.reload(true);';
+print '					}}';
 print '  		});' . "\n";
 print '' . "\n";
 print '  	}' . "\n";
