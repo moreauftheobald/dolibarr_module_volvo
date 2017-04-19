@@ -13,15 +13,6 @@ dol_include_once('/core/class/doleditor.class.php');
 dol_include_once('/core/class/html.form.class.php');
 dol_include_once('/volvo/class/lead.extend.class.php');
 
-// if (! empty($conf->facture->enabled))
-// 	require_once DOL_DOCUMENT_ROOT . '/compta/facture/class/facture.class.php';
-// if (! empty($conf->contrat->enabled))
-// 	require_once DOL_DOCUMENT_ROOT . '/contrat/class/contrat.class.php';
-// if (! empty($conf->commande->enabled))
-// 	dol_include_once('/commande/class/commande.class.php');
-// if (! empty($conf->agenda->enabled))
-// 	dol_include_once('/comm/action/class/actioncomm.class.php');
-
 	// Security check
 if (! $user->rights->lead->read)
 	accessforbidden();

@@ -54,6 +54,11 @@ function leadexpress_prepare_head($object)
 	$head[$h][2] = 'documents';
 	$h ++;
 
+	$head[$h][0] = dol_buildpath("/volvo/lead/linked_object.php", 1) . '?id=' . $object->id;
+	$head[$h][1] = $langs->trans("Objets liées");
+	$head[$h][2] = 'object';
+	$h ++;
+
 	$nbNote = 0;
 	if(!empty($object->note_private)) $nbNote++;
 	if(!empty($object->note_public)) $nbNote++;
