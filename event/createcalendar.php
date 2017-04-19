@@ -143,6 +143,13 @@ print '<table class="nobordernopadding" width="100%">';
 print '<tr class="liste_titre">';
 print '<th align="center" colspan="5">' . "Ajouter des actions a l'affaire</th>";
 print '</tr>';
+print '<tr class="liste_titre">';
+print '<th align="center">date</th>';
+print '<th align="center">Type</th>';
+print '<th align="center">Libellé</th>';
+print '<th align="center">Contact</th>';
+print '<th align="center"></th>';
+print '</tr>';
 print '<tr>';
 print '<td>' . $form->select_date($date_def,'date_',0,0,0,'',1,1,1) . '</td>';
 print '<td>';
@@ -152,7 +159,7 @@ print '<td><input type="text" name="libelle" size="50" value="'. GETPOST('libell
 print '<td>';
 $form->select_contacts($lead->fk_soc, GETPOST('contactid'), 'contactid', 1, '', '', 0, 'minwidth200');
 print '</td>';
-print '<td><input type="submit" align="center" class="button" value="Ajouter" name="add" id="add"/></td>';
+print '<td><input type="submit" align="center" class="button" value="+" name="add" id="add"/></td>';
 print '</tr>';
 print '</table>';
 
