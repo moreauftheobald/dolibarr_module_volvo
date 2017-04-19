@@ -464,13 +464,8 @@ function createlead() {
 		width:"90%",
 		height:$(window).height() - 25,
 		close:function() {
-			alert( "erreur: " + $('#ordercreatedid').val() );
-			if($('#ordercreatedid').val()>0){
-				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();
-			}else{
-				document.location.reload(true);
-			}
-		}
+ 			document.location.reload(true);
+ 		}
 	});
 }
 
@@ -480,9 +475,14 @@ function wievlead(idlead) {
  		modal:true,
 		width:"90%",
 		height:$(window).height() - 25,
- 		close:function() {
- 			document.location.reload(true);
- 		}
+		close:function() {
+			alert( "erreur: " + $('#ordercreatedid').val() );
+			if($('#ordercreatedid').val()>0){
+				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();
+			}else{
+				document.location.reload(true);
+			}
+		}
  	})
 }
 
