@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * Copyright (C) 2014-2016 Florian HENRY <florian.henry@atm-consulting.fr>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -41,12 +41,12 @@ $id = GETPOST('id', 'int');
  * View
  */
 
-llxHeader('', $langs->trans("LeadInfo"));
+top_htmlhead('', '');
 
 $object = new Lead($db);
 $object->info($id);
 
-$head = lead_prepare_head($object);
+$head = leadexpress_prepare_head($object);
 
 dol_fiche_head($head, 'info', $langs->trans("LeadLead"), 0, 'bill');
 
