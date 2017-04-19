@@ -635,22 +635,22 @@ elseif ($action == 'edit') {
 	print '<div class="tabsAction">';
 	if ( $user->rights->lead->write) {
 		if ($object->fk_c_status == 6){
-		print '<div class="inline-block divButAction"><a href="javascript:popCreateOrder()" class="butAction">Passer une commande</a></div>';
+		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande</a></div>';
 		}
 		print '<div class="inline-block divButAction"><a href="javascript:popCreatecalendar()" class="butAction">Ettablir le calendrier</a></div>';
 		print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
 		print '<input type="hidden" name="calendarcreatedid" id="calendarcreatedid" />';
 		?>
 	<script type="text/javascript">
-		function popCreateOrder() {
+// 		function popCreateOrder() {
 			$div = $('<div id="popCreateOrder"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) ?>"></iframe></div>');
-			$div.dialog({
-				modal:true
-				,width:"98%"
-				,height:$(window).height() - 50
+// 			$div.dialog({
+// 				modal:true
+// 				,width:"98%"
+// 				,height:$(window).height() - 50
 				,close:function() {document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
-			});
-	  	}
+// 			});
+// 	  	}
 		function popCreatecalendar() {
 			$div = $('<div id="popCreateCalendar"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) ?>"></iframe></div>');
 			$div.dialog({
