@@ -457,34 +457,33 @@ print "</table>";
 
 print '<script type="text/javascript" language="javascript">';
 
-if($user->admin){
-	print '  	$(document).ready(function() {' . "\n";
-	print '		$a = $(\'<a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a>\');' . "\n";
-	print '  		$(\'div.fiche div.divButAction\').first().append($a);' . "\n";
-	print '  	});' . "\n";
-	print '  	function createlead() {' . "\n";
-	print '  		$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1) . '"></iframe></div>\');' . "\n";
-	print '' . "\n";
-	print '  		$div.dialog({' . "\n";
-	print '  			modal:true' . "\n";
-	print '  			,width:"90%"' . "\n";
-	print '  			,height:$(window).height() - 25' . "\n";
-	print '  			,close:function() {document.location.reload(true);}' . "\n";
-	print '  		});' . "\n";
-	print '' . "\n";
-	print '  	}' . "\n";
-	print '  	function wievlead(idlead) {' . "\n";
-	print '  		$div = $(\'<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id=\'+idlead +\'"></iframe></div>\');' . "\n";
-	print '' . "\n";
-	print '  		$div.dialog({' . "\n";
-	print '  			modal:true' . "\n";
-	print '  			,width:"90%"' . "\n";
-	print '  			,height:$(window).height() - 25' . "\n";
-	print '  			,close:function() {document.location.reload(true);}' . "\n";
-	print '  		});' . "\n";
-	print '' . "\n";
-	print '  	}' . "\n";
-}
+print '  	$(document).ready(function() {' . "\n";
+print '		$a = $(\'<a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a>\');' . "\n";
+print '  		$(\'div.fiche div.divButAction\').first().append($a);' . "\n";
+print '  	});' . "\n";
+print '  	function createlead() {' . "\n";
+print '  		$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1) . '"></iframe></div>\');' . "\n";
+print '' . "\n";
+print '  		$div.dialog({' . "\n";
+print '  			modal:true' . "\n";
+print '  			,width:"90%"' . "\n";
+print '  			,height:$(window).height() - 25' . "\n";
+print '  			,close:function() {document.location.reload(true);}' . "\n";
+print '  		});' . "\n";
+print '' . "\n";
+print '  	}' . "\n";
+print '  	function wievlead(idlead) {' . "\n";
+print '  		$div = $(\'<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id=\'+idlead +\'"></iframe></div>\');' . "\n";
+print '' . "\n";
+print '  		$div.dialog({' . "\n";
+print '  			modal:true' . "\n";
+print '  			,width:"90%"' . "\n";
+print '  			,height:$(window).height() - 25' . "\n";
+print '  			,close:function() {document.location.reload(true);}' . "\n";
+print '  		});' . "\n";
+print '' . "\n";
+print '  	}' . "\n";
+
 
 
 print 'function allowDrop(ev) {';
