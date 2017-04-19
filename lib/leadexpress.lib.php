@@ -44,7 +44,7 @@ function leadexpress_prepare_head($object)
 	$head[$h][2] = 'card';
 	$h ++;
 
-	$head[$h][0] = dol_buildpath("/volvo/reprise/card.php", 1) . '?id=' . $object->id;
+	$head[$h][0] = dol_buildpath("/volvo/lead/reprise.php", 1) . '?id=' . $object->id;
 	$head[$h][1] = $langs->trans("Reprise");
 	$head[$h][2] = 'reprise';
 	$h ++;

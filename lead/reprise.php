@@ -24,7 +24,7 @@ $lines = $reprise->lines;
 
 
 top_htmlhead('', '');
-$head = lead_prepare_head($object);
+$head = leadexpress_prepare_head($object);
 dol_fiche_head($head, 'reprise', 'Affaire', 0, dol_buildpath('/volvo/img/iron02.png', 1), 1);
 $form = new Form($db);
 
