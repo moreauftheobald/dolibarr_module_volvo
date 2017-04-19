@@ -44,6 +44,14 @@ if (! empty($conf->agenda->enabled))
 
 $langs->load('lead@lead');
 $langs->load('other');
+if (! empty($conf->propal->enabled))
+	$langs->load('propal');
+if (! empty($conf->facture->enabled))
+	$langs->load('bills');
+if (! empty($conf->contrat->enabled))
+	$langs->load('contracts');
+if (! empty($conf->commande->enabled))
+	$langs->load('order');
 
 $id=GETPOST('id','int');
 
