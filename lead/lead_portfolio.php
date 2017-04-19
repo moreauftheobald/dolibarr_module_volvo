@@ -472,7 +472,7 @@ print '					if($(\'#ordercreatedid\').val()>0){';
 print '						document.location.href=' . dol_buildpath('/commande/card.php',2).'?id='.'+$(\'#ordercreatedid\').val();';
 print '					}else{' . "\n";
 print '						document.location.reload(true);';
-print '					}}';
+print '					}';
 print '  		});' . "\n";
 print '' . "\n";
 print '  	}' . "\n";
