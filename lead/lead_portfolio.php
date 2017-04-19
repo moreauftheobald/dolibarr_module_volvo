@@ -454,79 +454,83 @@ print '</div></td>';
 print '</tr>';
 print "</table>";
 print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
+?>
+<script type="text/javascript" language="javascript">';
 
-print '<script type="text/javascript" language="javascript">';
+$(document).ready(function() {
+	$a = $('<a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a>');
+	$('div.fiche div.divButAction').first().append($a);
+});
 
-print '  	$(document).ready(function() {' . "\n";
-print '		$a = $(\'<a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a>\');' . "\n";
-print '  		$(\'div.fiche div.divButAction\').first().append($a);' . "\n";
-print '  	});' . "\n";
-print '  	function createlead() {' . "\n";
-print '  		$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1) . '"></iframe></div>\');' . "\n";
-print '  		$div.dialog({' . "\n";
-print '  			modal:true' . "\n";
-print '  			,width:"90%"' . "\n";
-print '  			,height:$(window).height() - 25' . "\n";
-print '  			,close:function() {';
-print '					if($(\'#ordercreatedid\').val()>0){';
-print '						document.location.href=' . dol_buildpath('/commande/card.php',2).'?id='.'+$(\'#ordercreatedid\').val();';
-print '					}else{' . "\n";
-print '						document.location.reload(true);';
-print '					}';
-print '  		});' . "\n";
-print '' . "\n";
-print '  	}' . "\n";
-print '  	function wievlead(idlead) {' . "\n";
-print '  		$div = $(\'<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="' . dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id=\'+idlead +\'"></iframe></div>\');' . "\n";
-print '' . "\n";
-print '  		$div.dialog({' . "\n";
-print '  			modal:true' . "\n";
-print '  			,width:"90%"' . "\n";
-print '  			,height:$(window).height() - 25' . "\n";
-print '  			,close:function() {document.location.reload(true);}' . "\n";
-print '  		});' . "\n";
-print '' . "\n";
-print '  	}' . "\n";
+function createlead() {
+	$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1); ?> + '"></iframe></div>\');
+	$div.dialog({
+		modal:true,
+		width:"90%",
+		height:$(window).height() - 25,
+		close:function() {'
+			if($('#ordercreatedid').val()>0){
+				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();';
+			}else{
+				document.location.reload(true);
+			}
+		}
+	});
+}
 
-
-
-print 'function allowDrop(ev) {';
-print 'ev.preventDefault();';
-print '}';
-
-print 'function drag(ev) {';
-print 'ev.dataTransfer.setData("text", ev.target.id);';
-print '}';
-
-print 'function drop(ev) {';
-print 'ev.preventDefault();';
-print 'var element = ev.dataTransfer.getData("text");';
-print 'var dest = ev.target.className;';
-print "if (ev.target.className.indexOf('cal_event cal_event_busy')!=-1){";
-print 'dest = ev.target.parentNode.id;';
-print 'ev.target.parentNode.appendChild(document.getElementById(element));';
-print '}';
-print "if (ev.target.className.indexOf('dropper')!=-1){";
-print 'dest = ev.target.id;';
-print 'ev.target.appendChild(document.getElementById(element));';
-print '}';
-print '$.ajax({';
-print 'method: "POST",';
-print 'url: "dragdrop.php",';
-print 'data: { id_lead: element, new_statut: dest },';
-print 'success: function(msg){';
-print 'if (msg != ""){';
-print '$(\'div.fiche \').first().prepend(msg);}';
-print '},';
-//print '},';
-print 'error: function(msg){';
-print 'alert( "erreur: " + msg );}';
-print '})';
-print '}';
+function wievlead(idlead) {
+	$div = $('<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id=';?> +idlead +'"></iframe></div>');
+	$div.dialog({
+		modal:true,
+		width:"90%",
+		height:$(window).height() - 25,
+		close:function() {
+			document.location.reload(true);
+		}
+	})
+}
 
 
-print '</script>';
+function allowDrop(ev) {
+	ev.preventDefault();
+}
 
+function drag(ev) {
+	ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+	ev.preventDefault();
+	var element = ev.dataTransfer.getData("text");
+	var dest = ev.target.className;
+	if (ev.target.className.indexOf('cal_event cal_event_busy')!=-1){
+		dest = ev.target.parentNode.id;
+		ev.target.parentNode.appendChild(document.getElementById(element));
+	}
+	if (ev.target.className.indexOf('dropper')!=-1){
+		dest = ev.target.id;
+		ev.target.appendChild(document.getElementById(element));
+	}
+	$.ajax({
+		method: "POST",
+		url: "dragdrop.php",
+		data: {
+			id_lead: element,
+			new_statut: dest
+		},
+		success: function(msg){
+			if (msg != ""){
+				$('div.fiche ').first().prepend(msg);
+			}
+		},
+		error: function(msg){
+			alert( "erreur: " + msg );
+		}
+	})
+}
+
+</script>
+<?php
 dol_fiche_end();
 llxFooter();
 $db->close();
