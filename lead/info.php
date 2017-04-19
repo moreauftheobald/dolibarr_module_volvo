@@ -27,9 +27,9 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once '../class/lead.class.php';
-require_once '../lib/lead.lib.php';
-require_once DOL_DOCUMENT_ROOT . '/core/lib/functions2.lib.php';
+dol_include_once('/lead/class/lead.class.php');
+dol_include_once('/volvo/lib/leadexpress.lib.php');
+dol_include_once('/core/lib/functions2.lib.php');
 
 // Security check
 if (! $user->rights->lead->read)
