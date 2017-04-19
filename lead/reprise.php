@@ -8,7 +8,7 @@ if (! $res)
 dol_include_once('/volvo/class/reprise.class.php');
 dol_include_once('/volvo/lib/reprise.lib.php');
 dol_include_once('/volvo/class/lead.extend.class.php');
-dol_include_once('/lead/lib/lead.lib.php');
+dol_include_once('/volvo/lib/leadexpress.lib.php');
 dol_include_once('/societe/class/societe.class.php');
 
 $action = GETPOST('action', 'alpha');
