@@ -463,7 +463,7 @@ function createlead() {
 		modal:true,
 		width:"90%",
 		height:$(window).height() - 25,
-		close:function() {'
+		close:function() {
 			if($('#ordercreatedid').val()>0){
 				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();
 			}else{
