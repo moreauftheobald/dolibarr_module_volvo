@@ -465,7 +465,7 @@ function createlead() {
 		height:$(window).height() - 25,
 		close:function() {
 			if($('#ordercreatedid').val()>0){
-				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();
+				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();
 			}else{
 				document.location.reload(true);
 			}
