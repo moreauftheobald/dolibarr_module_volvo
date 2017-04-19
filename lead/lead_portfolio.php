@@ -486,43 +486,43 @@ function createlead() {
 // }
 
 
-// function allowDrop(ev) {
-// 	ev.preventDefault();
-// }
+function allowDrop(ev) {
+ 	ev.preventDefault();
+}
 
-// function drag(ev) {
-// 	ev.dataTransfer.setData("text", ev.target.id);
-// }
+function drag(ev) {
+	ev.dataTransfer.setData("text", ev.target.id);
+}
 
-// function drop(ev) {
-// 	ev.preventDefault();
-// 	var element = ev.dataTransfer.getData("text");
-// 	var dest = ev.target.className;
-// 	if (ev.target.className.indexOf('cal_event cal_event_busy')!=-1){
-// 		dest = ev.target.parentNode.id;
-// 		ev.target.parentNode.appendChild(document.getElementById(element));
-// 	}
-// 	if (ev.target.className.indexOf('dropper')!=-1){
-// 		dest = ev.target.id;
-// 		ev.target.appendChild(document.getElementById(element));
-// 	}
-// 	$.ajax({
-// 		method: "POST",
-// 		url: "dragdrop.php",
-// 		data: {
-// 			id_lead: element,
-// 			new_statut: dest
-// 		},
-// 		success: function(msg){
-// 			if (msg != ""){
-// 				$('div.fiche ').first().prepend(msg);
-// 			}
-// 		},
-// 		error: function(msg){
-// 			alert( "erreur: " + msg );
-// 		}
-// 	})
-// }
+function drop(ev) {
+	ev.preventDefault();
+	var element = ev.dataTransfer.getData("text");
+	var dest = ev.target.className;
+	if (ev.target.className.indexOf('cal_event cal_event_busy')!=-1){
+		dest = ev.target.parentNode.id;
+		ev.target.parentNode.appendChild(document.getElementById(element));
+	}
+ 	if (ev.target.className.indexOf('dropper')!=-1){
+		dest = ev.target.id;
+		ev.target.appendChild(document.getElementById(element));
+ 	}
+ 	$.ajax({
+ 		method: "POST",
+ 		url: "dragdrop.php",
+ 		data: {
+ 			id_lead: element,
+ 			new_statut: dest
+ 		},
+ 		success: function(msg){
+ 			if (msg != ""){
+ 				$('div.fiche ').first().prepend(msg);
+ 			}
+ 		},
+ 		error: function(msg){
+ 			alert( "erreur: " + msg );
+ 		}
+ 	})
+}
 
 </script>
 <?php
