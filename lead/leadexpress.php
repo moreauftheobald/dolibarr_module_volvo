@@ -637,31 +637,7 @@ elseif ($action == 'edit') {
 		if ($object->fk_c_status == 6){
 		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande</a></div>';
 		}
-		print '<div class="inline-block divButAction"><a href="javascript:popCreatecalendar()" class="butAction">Ettablir le calendrier</a></div>';
-
-		print '<input type="hidden" name="calendarcreatedid" id="calendarcreatedid" />';
-		?>
-	<script type="text/javascript">
-// 		function popCreateOrder() {
-			$div = $('<div id="popCreateOrder"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) ?>"></iframe></div>');
-// 			$div.dialog({
-// 				modal:true
-// 				,width:"98%"
-// 				,height:$(window).height() - 50
-				,close:function() {document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
-// 			});
-// 	  	}
-		function popCreatecalendar() {
-			$div = $('<div id="popCreateCalendar"><iframe width="100%" height="100%" frameborder="0" src="<?php echo dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) ?>"></iframe></div>');
-			$div.dialog({
-				modal:true
-				,width:"98%"
-				,height:$(window).height() - 50
-				//,close:function() {document.location.href='<?php echo dol_buildpath('/lead/lead/card.php',2).'?id=';?>'+$('#ordercreatedid').val();}
-			});
-	  	}
-	</script>
-<?php
+		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) . '" class="butAction">Ettablir le calendrier</a></div>';
 	}
 	// Delete
 	if ($user->rights->lead->write) {
@@ -671,17 +647,11 @@ elseif ($action == 'edit') {
 		if ($object->status[7] == $langs->trans('LeadStatus_LOST') && $object->fk_c_status != 7) {
 			print '<div class="inline-block divButAction"><a class="butAction" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=close">' . $langs->trans("LeadLost") . "</a></div>\n";
 		}
-	} else {
-		print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="' . dol_escape_htmltag($langs->trans("anoughPermissions")) . '">' . $langs->trans("Edit") . "</a></div>";
-		print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="' . dol_escape_htmltag($langs->trans("anoughPermissions")) . '">' . $langs->trans("Clone") . "</a></div>";
-		// print '<div class="inline-block divButAction"><font class="butActionRefused" href="#" title="' . dol_escape_htmltag($langs->trans("NotEnoughPermissions")) . '">' . $langs->trans("LeadLost") . "</font></div>";
 	}
 
 	// Delete
 	if ($user->rights->lead->delete) {
 		print '<div class="inline-block divButAction"><a class="butActionDelete" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=delete">' . $langs->trans("Delete") . "</a></div>\n";
-	} else {
-		print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="' . dol_escape_htmltag($langs->trans("anoughPermissions")) . '">' . $langs->trans("Delete") . "</a></div>";
 	}
 	print '</div>';
 }

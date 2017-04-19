@@ -478,7 +478,7 @@ function wievlead(idlead) {
 		close:function() {
 			if($('#ordercreatedid').val()>0){
 				window.open('<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val());
-//				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$('#ordercreatedid').val();
+				document.location.reload(true);
 			}else{
 				document.location.reload(true);
 			}
