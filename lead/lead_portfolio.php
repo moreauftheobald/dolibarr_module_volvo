@@ -457,21 +457,21 @@ print '<input type="hidden" name="ordercreatedid" id="ordercreatedid" />';
 ?>
 <script type="text/javascript" language="javascript">';
 
-function createlead() {
+// function createlead() {
 	$div = $(\'<div id="createlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php?action=create&userid='.$search_commercial, 1); ?> + '"></iframe></div>\');
-	$div.dialog({
-		modal:true,
-		width:"90%",
-		height:$(window).height() - 25,
-		close:function() {'
-			if($('#ordercreatedid').val()>0){
+// 	$div.dialog({
+// 		modal:true,
+// 		width:"90%",
+// 		height:$(window).height() - 25,
+// 		close:function() {'
+// 			if($('#ordercreatedid').val()>0){
 				document.location.href='<?php echo dol_buildpath('/commande/card.php',2).'?id=';?>'+$(\'#ordercreatedid\').val();';
-			}else{
-				document.location.reload(true);
-			}
-		}
-	});
-}
+// 			}else{
+// 				document.location.reload(true);
+// 			}
+// 		}
+// 	});
+// }
 
 // function wievlead(idlead) {
 //	$div = $('<div id="wievlead"><iframe width="100%" height="100%" frameborder="0" src="'<?php echo dol_buildpath('/volvo/lead/leadexpress.php', 1) . '?id=';?> +idlead +'"></iframe></div>');
