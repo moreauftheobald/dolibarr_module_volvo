@@ -27,13 +27,13 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
-require_once DOL_DOCUMENT_ROOT . '/lead/class/lead.class.php';
-require_once DOL_DOCUMENT_ROOT . 'lead/lib/lead.lib.php';
-require_once DOL_DOCUMENT_ROOT . '/lead/class/html.formlead.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
-require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
+dol_include_once('/societe/class/societe.class.php');
+dol_include_once('/lead/class/lead.class.php');
+dol_include_once('lead/lib/lead.lib.php');
+dol_include_once('/lead/class/html.formlead.class.php');
+dol_include_once('/core/class/html.formother.class.php');
+dol_include_once('/core/class/extrafields.class.php');
+dol_include_once('/volvo/class/lead.extend.class.php');
 
 // Security check
 if (! $user->rights->lead->read)
