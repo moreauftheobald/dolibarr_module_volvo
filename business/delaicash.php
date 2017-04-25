@@ -209,13 +209,28 @@ if (empty($sortfield))
 	$sortfield = "diff_cash";
 
 if(GETPOST("button_export_x")){
+	$handler = fopen("php://output", "w");
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment;filename=délai_cash.csv');
+	$h = array(
+			'Commercial',
+			'N° O.M.',
+			'Dossier',
+			'Affaire',
+			'Client;VIN',
+			'Immat.',
+			'Date de Bloc. Modif.',
+			'Date de Livraison réelle Usine',
+			'Date de facturation',
+			'Date de Paiement',
+			'Délai de règlement accordé',
+			'Délai Cash',
+			'Prime Cash',
+			'Ecart de reglement'
+	);
 
-	$header = 'Commercial;N° O.M.;Dossier;Affaire;Client;VIN; Immat.;Date de Bloc. Modif.;Date de Livraison réelle Usine;Date de facturation;Date de Paiement;';
-	$header.= 'Délai de règlement accordé;Délai Cash;Prime Cash;Ecart de reglement' ."\n";
-	print html_entity_decode ($header, ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
-	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
+	fputcsv($handler, $fields, ';', '"');
+
 	if($resql != -1){
 		foreach ($object->business as $line) {
 			;$var = ! $var;
