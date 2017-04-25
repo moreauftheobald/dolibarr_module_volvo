@@ -272,7 +272,7 @@ if(GETPOST("button_export_x")){
 
 	fputcsv($handler, $h, ';', '"');
 
-	$resql = $object->$object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
+	$resql = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
 
 	if($resql != -1){
 		foreach ($object->business as $line) {
