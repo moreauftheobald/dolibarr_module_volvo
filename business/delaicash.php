@@ -214,7 +214,7 @@ if(GETPOST("button_export_x")){
 
 	$header = 'Commercial;N° O.M.;Dossier;Affaire;Client;VIN; Immat.;Date de Bloc. Modif.;Date de Livraison réelle Usine;Date de facturation;Date de Paiement;';
 	$header.= 'Délai de règlement accordé;Délai Cash;Prime Cash;Ecart de reglement' ."\n";
-	print $header;
+	print html_entity_decode ($header, ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
 	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
 	if($resql != -1){
 		foreach ($object->business as $line) {
