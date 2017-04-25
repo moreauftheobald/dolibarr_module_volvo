@@ -122,17 +122,10 @@ if($action=='confirm_set_date'){
 	$contrat->insertExtraFields();
 }
 
-
-/*
- * View
- */
-
 $now=dol_now();
 $form=new Form($db);
 $formother = new FormOther($db);
 $socstatic = new Societe($db);
-
-llxHeader();
 
 $sql = 'SELECT';
 $sql.= " c.rowid as cid, c.ref, c.datec, c.date_contrat, c.statut, c.ref_customer, c.ref_supplier,";
@@ -156,12 +149,12 @@ if ($socid) $sql.= " AND s.rowid = ".$db->escape($socid);
 if (!$user->rights->societe->client->voir && !$socid) $sql.= " AND s.rowid = sc.fk_soc AND sc.fk_user = " .$user->id;
 if ($month > 0)
 {
-    if ($year > 0 && empty($day))
-    $sql.= " AND ef.dt_enr BETWEEN '".$db->idate(dol_get_first_day($year,$month,false))."' AND '".$db->idate(dol_get_last_day($year,$month,false))."'";
-    else if ($year > 0 && ! empty($day))
-    $sql.= " AND ef.dt_enr BETWEEN '".$db->idate(dol_mktime(0, 0, 0, $month, $day, $year))."' AND '".$db->idate(dol_mktime(23, 59, 59, $month, $day, $year))."'";
-    else
-    $sql.= " AND date_format(ef.dt_enr, '%m') = '".$month."'";
+	if ($year > 0 && empty($day))
+		$sql.= " AND ef.dt_enr BETWEEN '".$db->idate(dol_get_first_day($year,$month,false))."' AND '".$db->idate(dol_get_last_day($year,$month,false))."'";
+		else if ($year > 0 && ! empty($day))
+			$sql.= " AND ef.dt_enr BETWEEN '".$db->idate(dol_mktime(0, 0, 0, $month, $day, $year))."' AND '".$db->idate(dol_mktime(23, 59, 59, $month, $day, $year))."'";
+			else
+				$sql.= " AND date_format(ef.dt_enr, '%m') = '".$month."'";
 }
 else if ($year > 0)
 {
@@ -198,20 +191,110 @@ $totalnboflines=0;
 $result=$db->query($sql);
 if ($result)
 {
-    $totalnboflines = $db->num_rows($result);
+	$totalnboflines = $db->num_rows($result);
 }
 $sql.= $db->order($sortfield,$sortorder);
+
+if(GETPOST("button_export_x")){
+	$handler = fopen("php://output", "w");
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment;filename=délai_cash.csv');
+	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+	$h = array(
+			'Réf.',
+			'Immatriculation',
+			'Chassis',
+			'Client',
+			'Commercial',
+			'Etat',
+			'Date d\'enr.',
+			'Inactif',
+			'En service',
+			'Expiré',
+			'Fermé'
+		);
+
+	fputcsv($handler, $h, ';', '"');
+
+	$resql=$db->query($sql);
+
+	if($resql){
+		 while ($obj = $db->fetch_object($resql)) {
+		 	$statut = '';
+		 	if (empty($obj->dt_env_cli)){
+		 		$statut = 'En attente envoi Client';
+		 	}elseif(!empty($obj->dt_env_cli) && empty($obj->dt_ret_cli)){
+		 		$statut = 'chez le Client';
+		 	}elseif(!empty($obj->dt_ret_cli) && empty($obj->dt_sig_the)){
+		 		$statut = 'En cours de signature Théobald';
+		 	}elseif(!empty($obj->dt_sig_the) && empty($obj->dt_env_vtf)){
+		 		$statut = 'En attente envoi VTF';
+		 	}elseif(!empty($obj->dt_env_vtf) && empty($obj->dt_enr)){
+		 		$statut = "En cours d'enregistrment VTF";
+		 	}elseif(!empty($obj->dt_enr)){
+		 		$statut = 'Enregistré';
+		 		if(empty($obj->dt_ret_vtf)){
+		 			$statut.= ' En attente retour VTF';
+		 		}elseif(!empty($obj->dt_ret_vtf) && empty($obj->dt_trait)){
+		 			$statut.= ' recu a traiter';
+		 		}
+		 	}
+
+			$ligne=array();
+
+			$ligne[]= $obj->ref;
+			$ligne[]= $obj->ref_customer;
+			$ligne[]= $obj->ref_supplier;
+			if($obj->socid){
+				$result=$socstatic->fetch($obj->socid);
+				if ($result < 0)
+				{
+					$ligne[]='error';
+					$ligne[]='';
+				}else{
+					$ligne[] = $socstatic->name;
+					$listsalesrepresentatives=$socstatic->getSalesRepresentatives($user);
+					$comm='';
+					foreach ($listsalesrepresentatives as $val){
+						$com.= $val['firstname'] . ' ' . $val['lastname'] . ',';
+					}
+					$com = substr($com, 0,-1);
+					$ligne[] = $com;
+				}
+			}
+			$ligne[]= $statut;
+			$ligne[]= dol_print_date($db->jdate($obj->dt_enr), 'day');
+			$ligne[]= ($obj->nb_initial>0?$obj->nb_initial:'');
+			$ligne[]= ($obj->nb_running>0?$obj->nb_running:'');
+			$ligne[]= ($obj->nb_expired>0?$obj->nb_expired:'');
+			$ligne[]= ($obj->nb_closed>0 ?$obj->nb_closed:'');
+
+			fputcsv($handler, $ligne, ';', '"');
+		}
+	}
+	exit;
+}
+
+
+
+/*
+ * View
+ */
+
+
+llxHeader();
 
 $nbtotalofrecords = 0;
 if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST))
 {
-    $result = $db->query($sql);
-    $nbtotalofrecords = $db->num_rows($result);
+	$result = $db->query($sql);
+	$nbtotalofrecords = $db->num_rows($result);
 }
 
 $sql.= $db->plimit($limit + 1, $offset);
 
 $resql=$db->query($sql);
+
 if ($resql)
 {
     $num = $db->num_rows($resql);
