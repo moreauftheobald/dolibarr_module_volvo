@@ -208,6 +208,10 @@ if (empty($sortorder))
 if (empty($sortfield))
 	$sortfield = "diff_cash";
 
+if(GETPOST("button_export_x")){
+
+}
+
 llxHeader('', $title);
 
 // Count total nb of records
@@ -240,7 +244,8 @@ $num = $resql;
 		$sel = '';
 	}
  	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
- 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
+ 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '">';
+ 	print '&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></div>';
 	print '<div align="left"><input type="checkbox" name="search_run" value="1"' . $sel . '> Selection uniquement sur les affaires en cours ?</div></br>';
  	print '<table class="noborder" width="100%">';
 
