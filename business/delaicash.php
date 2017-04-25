@@ -212,12 +212,14 @@ if(GETPOST("button_export_x")){
 	$handler = fopen("php://output", "w");
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment;filename=délai_cash.csv');
+	print chr(255) . chr(254) . "\n";
 	$h = array(
 			'Commercial',
 			'N° O.M.',
 			'Dossier',
 			'Affaire',
-			'Client;VIN',
+			'Client',
+			'VIN',
 			'Immat.',
 			'Date de Bloc. Modif.',
 			'Date de Livraison réelle Usine',
@@ -230,6 +232,7 @@ if(GETPOST("button_export_x")){
 	);
 
 	fputcsv($handler, $h, ';', '"');
+	fput
 
 	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
 
