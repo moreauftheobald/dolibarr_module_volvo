@@ -263,7 +263,7 @@ if(GETPOST("button_export_x")){
 			$ligne.= round($line->diff_cash,0) . ' Jour(s);';
 			$ligne.= "\n";
 
-			print html_entity_decode($ligne, ENT_COMPAT | ENT_HTML401, "ISO-8859-1");
+			print mb_convert_encoding($ligne, 'UTF-16LE', 'UTF-8');
 
 		}
 	}
