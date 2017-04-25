@@ -229,7 +229,9 @@ if(GETPOST("button_export_x")){
 			'Ecart de reglement'
 	);
 
-	fputcsv($handler, $fields, ';', '"');
+	fputcsv($handler, $h, ';', '"');
+
+	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
 
 	if($resql != -1){
 		foreach ($object->business as $line) {
