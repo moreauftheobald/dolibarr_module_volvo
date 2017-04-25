@@ -198,7 +198,7 @@ $sql.= $db->order($sortfield,$sortorder);
 if(GETPOST("button_export_x")){
 	$handler = fopen("php://output", "w");
 	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment;filename=délai_cash.csv');
+	header('Content-Disposition: attachment;filename=liste_contrat.csv');
 	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 	$h = array(
 			'Réf.',
