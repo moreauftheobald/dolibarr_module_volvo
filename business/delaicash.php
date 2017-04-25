@@ -211,6 +211,10 @@ if (empty($sortfield))
 if(GETPOST("button_export_x")){
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment;filename=délai_cash.csv');
+
+	$header = 'Commercial;N° O.M.;Dossier;Affaire;Client;VIN; Immat.;Date de Bloc. Modif.;Date de Livraison réelle Usine;Date de facturation;Date de Paiement;';
+	$header.= 'Délai de règlement accordé;Délai Cash;Prime Cash;Ecart de reglement' ."\n";
+	print $header;
 }
 
 llxHeader('', $title);
