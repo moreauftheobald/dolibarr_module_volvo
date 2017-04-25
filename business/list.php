@@ -242,6 +242,110 @@ if (empty($sortorder))
 if (empty($sortfield))
 	$sortfield = "cf.date_livraison";
 
+if(GETPOST("button_export_x")){
+	$handler = fopen("php://output", "w");
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment;filename=délai_cash.csv');
+	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+	$h = array(
+			'Commercial',
+			'N° O.M.',
+			'Dossier',
+			'Affaire',
+			'Client',
+			'VIN',
+			'Immat.',
+			'Date Envoi Cmd Usine',
+			'Date de bloc. Modif.',
+			'Date de livraison prévue',
+			'Date de Livraison réelle Usine',
+			'Validation fiche analyse',
+			'Date de livraison demandée Client',
+			'Date de livraison réelle Client',
+			'Date de facturation',
+			'Date de Paiement',
+			'Délai Cash',
+			'Délai préparation',
+			'Retard liv. Usine',
+			'Retard liv. Client'
+	);
+
+	fputcsv($handler, $h, ';', '"');
+
+	$resql = $object->$object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
+
+	if($resql != -1){
+		foreach ($object->business as $line) {
+
+			$comm = New User($db);
+			$comm->fetch($line->commercial);
+
+			$comfourn = new CommandeFournisseur($db);
+			$result=$comfourn->fetch($line->fournid);
+
+			$comcli = New Commande($db);
+			$comcli->fetch($line->com);
+
+			$lead = new Lead($db);
+			$lead->fetch($line->lead);
+
+			$soc = New Societe($db);
+			$soc->fetch($line->societe);
+
+			if (!empty($line->numom)){
+				$om_label = $line->numom;
+			}else{
+				$om_label = $comfourn->ref;
+			}
+			$ligne=array();
+
+			$ligne[]= $comm->firstname . ' ' . $comm->lastname;
+			$ligne[]= $om_label;
+			$ligne[]= $comcli->ref;
+			$ligne[]= $lead->ref;
+			$ligne[]= $soc->name;
+			$ligne[]= $line->vin;
+			$ligne[]= $line->immat;
+			$ligne[]= dol_print_date($line->dt_env_usi,'day');
+			$ligne[]= dol_print_date($line->dt_blockupdate,'day');
+			$ligne[]= dol_print_date($line->dt_liv_cons,'day');
+			$ligne[]= dol_print_date($line->dt_recep,'day');
+			$ligne[]= dol_print_date($line->dt_valid_ana,'day');
+			$ligne[]=dol_print_date($line->dt_liv_dem_cli,'day');
+			$ligne[]= dol_print_date($line->dt_liv_cli,'day');
+			$ligne[]= dol_print_date($line->dt_fac,'day');
+			$ligne[]= dol_print_date($line->dt_pay,'day');
+
+			if(!empty($line->dt_recep)){
+				$ligne[]= $line->delai_cash . ' Jour(s)';
+			}else{
+				$ligne[]=' ;';
+			}
+
+			if(!empty($line->dt_liv_dem_cli) && !empty($line->dt_liv_cons)){
+	 			$ligne[] = $line->delaiprep . ' Jour(s)';
+ 			}else{
+ 				$ligne[] ='';
+	 		}
+
+	 		if(!empty($line->dt_liv_cons) && !empty($line->dt_recep)){
+ 				$ligne[] = $line->retard_recept . ' Jour(s)';
+ 			}else{
+ 				$ligne[] ='';
+ 			}
+
+ 			if(!empty($line->dt_liv_dem_cli) && !empty($line->dt_liv_cli)){
+ 				$ligne[] = $line->retard_liv . ' Jour(s)';
+	 		}else{
+ 				$ligne[] ='';
+ 			}
+			fputcsv($handler, $ligne, ';', '"');
+		}
+	}
+	exit;
+}
+
+
 llxHeader('', $title);
 
 // Count total nb of records
@@ -274,7 +378,8 @@ $num = $resql;
 		$sel = '';
 	}
  	print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
- 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
+ 	print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '">';
+ 	print '&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></div>';
 	print '<div align="left"><input type="checkbox" name="search_run" value="1"' . $sel . '> Selection uniquement sur les affaires en cours ?</div></br>';
  	print '<table class="noborder" width="100%">';
 

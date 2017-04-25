@@ -237,8 +237,6 @@ if(GETPOST("button_export_x")){
 
 	if($resql != -1){
 		foreach ($object->business as $line) {
-			;$var = ! $var;
-
 			$comm = New User($db);
 			$comm->fetch($line->commercial);
 
