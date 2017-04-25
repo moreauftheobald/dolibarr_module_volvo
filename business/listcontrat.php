@@ -307,6 +307,7 @@ if ($resql)
 
     print '<td class="liste_titre" colspan="4" align="right"></td>';
     print '<td>';
+    print '<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter">&nbsp;';
     $searchpitco=$form->showFilterAndCheckAddButtons(0);
     print $searchpitco;
     print '</td>';
