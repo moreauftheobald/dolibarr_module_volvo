@@ -232,7 +232,6 @@ if(GETPOST("button_export_x")){
 	);
 
 	fputcsv($handler, $h, ';', '"');
-	fput
 
 	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
 
