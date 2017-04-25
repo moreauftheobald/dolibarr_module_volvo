@@ -241,26 +241,26 @@ if(GETPOST("button_export_x")){
 				$om_label.= $comfourn->ref;
 			}
 
-			$ligne = $comm->firstname . ' ' . $comm->lastname . ';';
-			$ligne.= $om_label .';';
-			$ligne.= $comcli->ref . ';';
-			$ligne.= $lead->ref . ';';
-			$ligne.= $soc->name .';';
-			$ligne.= $line->vin . ';';
-			$ligne.= $line->immat . ';';
-			$ligne.= dol_print_date($line->dt_blockupdate,'day') . ';';
-			$ligne.= dol_print_date($line->dt_recep,'day') . ';';
-			$ligne.= dol_print_date($line->dt_fac,'day') . ';';
-			$linge.= dol_print_date($line->dt_pay,'day') . ';';
-			$ligne.= $line->cond_reg . ';';
-			$ligne.= dol_print_date($line->date_lim_reg,'day') . ';';
+			$ligne = '\'' . $comm->firstname . ' ' . $comm->lastname . '\';';
+			$ligne.= '\'' .$om_label .'\';';
+			$ligne.= '\'' .$comcli->ref . '\';';
+			$ligne.= '\'' .$lead->ref . '\';';
+			$ligne.= '\'' .$soc->name .'\';';
+			$ligne.= '\'' .$line->vin . '\';';
+			$ligne.= '\'' .$line->immat . '\';';
+			$ligne.= '\'' .dol_print_date($line->dt_blockupdate,'day') . '\';';
+			$ligne.= '\'' .dol_print_date($line->dt_recep,'day') . '\';';
+			$ligne.= '\'' .dol_print_date($line->dt_fac,'day') . '\';';
+			$linge.= '\'' .dol_print_date($line->dt_pay,'day') . '\';';
+			$ligne.= '\'' .$line->cond_reg . '\';';
+			$ligne.= '\'' .dol_print_date($line->date_lim_reg,'day') . '\';';
 			if(!empty($line->dt_recep)){
-				$ligne.= $line->delai_cash . ' Jour(s);';
+				$ligne.= '\'' .$line->delai_cash . ' Jour(s)\';';
 			}else{
 				$ligne.=' ;';
 			}
-			$ligne.= price(round($line->comm_cash,2)) . ' €;';
-			$ligne.= round($line->diff_cash,0) . ' Jour(s);';
+			$ligne.= '\'' .price(round($line->comm_cash,2)) . ' €\';';
+			$ligne.= '\'' .round($line->diff_cash,0) . ' Jour(s)\';';
 			$ligne.= "\n";
 
 			print $ligne;
