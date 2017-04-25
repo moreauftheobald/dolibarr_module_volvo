@@ -275,7 +275,7 @@ if(GETPOST("button_export_x")){
 			if(!empty($line->dt_recep)){
 				$ligne[]= $line->delai_cash . ' Jour(s)';
 			}else{
-				$ligne[]=' ;';
+				$ligne[]='';
 			}
 			$ligne[]= price(round($line->comm_cash,2)) . ' €';
 			$ligne[]= round($line->diff_cash,0) . ' Jour(s)';

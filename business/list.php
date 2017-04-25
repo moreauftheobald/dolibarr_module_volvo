@@ -319,7 +319,7 @@ if(GETPOST("button_export_x")){
 			if(!empty($line->dt_recep)){
 				$ligne[]= $line->delai_cash . ' Jour(s)';
 			}else{
-				$ligne[]=' ;';
+				$ligne[]='';
 			}
 
 			if(!empty($line->dt_liv_dem_cli) && !empty($line->dt_liv_cons)){
