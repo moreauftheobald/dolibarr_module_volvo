@@ -265,7 +265,7 @@ if ($resql)
     print_liste_field_titre($staticcontratligne->LibStatut(4,3,0), '', '', '', '', 'width="16"');
     print_liste_field_titre($staticcontratligne->LibStatut(4,3,1), '', '', '', '', 'width="16"');
     print_liste_field_titre($staticcontratligne->LibStatut(5,3), '', '', '', '', 'width="16"');
-    print '<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter">&nbsp;';
+    print '<td class="liste_titre"><input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></td>';
     //print_liste_field_titre('',$_SERVER["PHP_SELF"],"",'','','',$sortfield,$sortorder,'maxwidthsearch ');
     print "</tr>\n";
 
