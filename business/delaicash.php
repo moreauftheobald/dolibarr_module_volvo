@@ -259,7 +259,7 @@ if(GETPOST("button_export_x")){
 			}else{
 				$ligne.=' ;';
 			}
-			$ligne.= price(round($line->comm_cash,2)) . ' €;';
+			$ligne.= price(round($line->comm_cash,2)) . " €;";
 			$ligne.= round($line->diff_cash,0) . ' Jour(s);';
 			$ligne.= "\n";
 
