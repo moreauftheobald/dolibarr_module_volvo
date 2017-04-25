@@ -254,7 +254,7 @@ if(GETPOST("button_export_x")){
 				}else{
 					$ligne[] = $socstatic->name;
 					$listsalesrepresentatives=$socstatic->getSalesRepresentatives($user);
-					$comm='';
+					$com='';
 					foreach ($listsalesrepresentatives as $val){
 						$com.= $val['firstname'] . ' ' . $val['lastname'] . ',';
 					}
