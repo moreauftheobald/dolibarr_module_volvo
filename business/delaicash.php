@@ -209,7 +209,8 @@ if (empty($sortfield))
 	$sortfield = "diff_cash";
 
 if(GETPOST("button_export_x")){
-
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment;filename=délai_cash.csv');
 }
 
 llxHeader('', $title);
