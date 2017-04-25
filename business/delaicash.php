@@ -215,6 +215,59 @@ if(GETPOST("button_export_x")){
 	$header = 'Commercial;N° O.M.;Dossier;Affaire;Client;VIN; Immat.;Date de Bloc. Modif.;Date de Livraison réelle Usine;Date de facturation;Date de Paiement;';
 	$header.= 'Délai de règlement accordé;Délai Cash;Prime Cash;Ecart de reglement' ."\n";
 	print $header;
+	$resql = $object->fetchdelaicash($sortorder, $sortfield, 0, 0, $filter);
+	if($resql != -1){
+		foreach ($object->business as $line) {
+			;$var = ! $var;
+
+			$comm = New User($db);
+			$comm->fetch($line->commercial);
+
+			$comfourn = new CommandeFournisseur($db);
+			$result=$comfourn->fetch($line->fournid);
+
+			$comcli = New Commande($db);
+			$comcli->fetch($line->com);
+
+			$lead = new Lead($db);
+			$lead->fetch($line->lead);
+
+			$soc = New Societe($db);
+			$soc->fetch($line->societe);
+
+			if (!empty($line->numom)){
+				$om_label.= $line->numom;
+			}else{
+				$om_label.= $comfourn->ref;
+			}
+
+			$ligne = $comm->firstname . ' ' . $comm->lastname . ';';
+			$ligne.= $om_label .';';
+			$ligne.= $comcli->ref . ';';
+			$ligne.= $lead->ref . ';';
+			$ligne.= $soc->name .';';
+			$ligne.= $line->vin . ';';
+			$ligne.= $line->immat . ';';
+			$ligne.= dol_print_date($line->dt_blockupdate,'day') . ';';
+			$ligne.= dol_print_date($line->dt_recep,'day') . ';';
+			$ligne.= dol_print_date($line->dt_fac,'day') . ';';
+			$linge.= dol_print_date($line->dt_pay,'day') . ';';
+			$ligne.= $line->cond_reg . ';';
+			$ligne.= dol_print_date($line->date_lim_reg,'day') . ';';
+			if(!empty($line->dt_recep)){
+				$ligne.= $line->delai_cash . ' Jour(s);';
+			}else{
+				$ligne.=' ;';
+			}
+			$ligne.= price(round($line->comm_cash,2)) . ' €;';
+			$ligne.= round($line->diff_cash,0) . ' Jour(s);';
+			$ligne.= "\n";
+
+			print $ligne;
+
+		}
+	}
+	exit;
 }
 
 llxHeader('', $title);
