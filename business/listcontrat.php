@@ -265,7 +265,8 @@ if ($resql)
     print_liste_field_titre($staticcontratligne->LibStatut(4,3,0), '', '', '', '', 'width="16"');
     print_liste_field_titre($staticcontratligne->LibStatut(4,3,1), '', '', '', '', 'width="16"');
     print_liste_field_titre($staticcontratligne->LibStatut(5,3), '', '', '', '', 'width="16"');
-    print_liste_field_titre('',$_SERVER["PHP_SELF"],"",'','','',$sortfield,$sortorder,'maxwidthsearch ');
+    print '<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter">&nbsp;';
+    //print_liste_field_titre('',$_SERVER["PHP_SELF"],"",'','','',$sortfield,$sortorder,'maxwidthsearch ');
     print "</tr>\n";
 
     print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
@@ -307,7 +308,7 @@ if ($resql)
 
     print '<td class="liste_titre" colspan="4" align="right"></td>';
     print '<td>';
-    print '<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter">&nbsp;';
+
     $searchpitco=$form->showFilterAndCheckAddButtons(0);
     print $searchpitco;
     print '</td>';
