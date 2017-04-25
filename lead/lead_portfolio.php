@@ -143,9 +143,8 @@ print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_fo
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre" style="height:27px;">';
 print '<th class="liste_titre" align="center" width = "160px">';
-if($user->admin){
-	print '<div class="inline-block divButAction" style="height:13px;"><a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a></div>';
-}
+print '<div class="inline-block divButAction" style="height:13px;"><a href="javascript:createlead()" class="butAction">Nouvelle Affaire .</a></div>';
+
 print '</th>';
 print '<th class="liste_titre" align="center" width = "160px">Année: ';
 $formother->select_year($year,'year',1, 5, 0);
