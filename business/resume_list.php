@@ -156,7 +156,7 @@ $nbtotalofrecords = 0;
 
 print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
 
-print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a>&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></div>';
+print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a>&nbsp;<a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '&button_export_x=1"><img src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png"></div>';
 
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre">';
