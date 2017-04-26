@@ -130,8 +130,8 @@ foreach ($arrayperiode as $m) {
 	$total_margereal+=$arrayresult4['margereal'][$m];
 
 	if(!empty($arrayresult1['nb_fact'][$m])){
-		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
-		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
+		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
 		$m_moy = price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2));
 		$m_moy_r = price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2));
 		$m_moy_e = price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2));
@@ -147,7 +147,7 @@ foreach ($arrayperiode as $m) {
 	$array_display[$m]=array(
 			'class' => $bc[$var],
 			'class_td' => '',
-			'mois' => $m,
+			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
 			'ca_total' => price($arrayresult1['catotalht'][$m]),
 			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
@@ -169,8 +169,8 @@ foreach ($arrayperiode as $m) {
 	);
 }
 if(!empty($total_fact)){
-	$tracteur_percent = round(($total_tracteur /($total_fact))*100,2) . ' %';
-	$porteur_percent = round(($total_porteur /($total_fact))*100,2) . ' %';
+	$tracteur_percent = round(($total_tracteur /($total_fact))*100,2);
+	$porteur_percent = round(($total_porteur /($total_fact))*100,2);
 	$m_moy = price(round($total_margetheo/$total_fact,2));
 	$m_moy_r = price(round($total_margereal/$total_fact,2));
 	$m_moy_e = price(round(($total_margereal-$total_margetheo)/$total_fact,2));
