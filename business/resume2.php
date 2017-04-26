@@ -22,8 +22,7 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
+
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
 
@@ -64,8 +63,7 @@ if($resqlusers){
 if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 
 
-$form = new Form($db);
-$formother = new FormOther($db);
+
 
 $var = true;
 $month = array(
@@ -139,139 +137,58 @@ $colomun = array(
 	);
 
 
-if(GETPOST("button_export_x")){
-	$handler = fopen("php://output", "w");
-	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment;filename=suivi_activite.csv');
-	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
-	$commercial = new user($db);
-	if(!empty($search_commercial)){
-		$commercial->fetch($search_commercial);
-		$com = $commercial->firstname . ' ' . $commercial->lastname;
-	}
+$extra_tools=array(
+		1 => array(
+				'type' => 'select_year',
+				'title' => 'Année',
+				'value' => $year,
+				'html_name' => 'year',
+				'use_empty' => 0,
+				'min_year' => 0,
+				'max_year' => 5
+		),
+		2 => array(
+				'type' => 'select_user',
+				'title' => 'Commercial',
+				'value' => $search_commercial,
+				'html_name' => 'search_commercial',
+				'use_empty' => 1,
+				'disabled' => $search_commercial_disabled,
+				'excluded' => array(),
+				'included' => $user_included
+		),
+		2 => array(
+				'type' => 'select_array',
+				'title' => 'Periode',
+				'value' => $search_periode,
+				'html_name' => 'search_periode',
+				'use_empty' => 1,
+				'array' => array(1=>'1er Trimestre', 2=> '2eme Trimestre', 3=>'3eme Trimestre', 4=>'4eme Trimestre', 5=>'1er Semestre',6=>'2eme Semestre'),
+				'value' => $search_periode,
+		)
+);
 
-	if(!empty($search_periode)){
-		if($search_periode == 1){
-			$periode = '1er Trimestre';
-		}elseif($search_periode==2){
-			$periode = '2eme Trimestre';
-		}elseif($search_periode==3){
-			$periode = '3eme Trimestre';
-		}elseif($search_periode==4){
-			$periode = '4eme Trimestre';
-		}elseif($search_periode==5){
-			$periode = '1er Semestre';
-		}elseif($search_periode==6){
-			$periode = '2eme Semestre';
-		}
-	}
+$tools=array(
+		'search_button' => 1,
+		'remove_filter_button' => 1,
+		'export_button' => 1,
+		'extra _tools' => $extra_tools
+);
 
-	$h=array(
-			'Année:',
-			$year,
-			'',
-			'commercial:',
-			$com,
-			'',
-			'Periode:',
-			$periode
-	);
 
-	fputcsv($handler, $h, ';', '"');
-
-	$h = array(
-			'mois',
-			'Nb Factures',
-			'C.A. Total HT',
-			'C.A. Fac. Volvo',
-			'Nb Tracteurs',
-			'Nb Porteur',
-			'% Tracteur',
-			'% Porteur',
-			'VCM',
-			'DFOL',
-			'DDED',
-			'VFS',
-			'Lixbail',
-			'Marge Totale',
-			'Marge moyenne',
-			'Marge réélle Totale',
-			'Marge réélle Moyenne',
-			'Marge réélle Totale - Ecart',
-			'Marge réélle Moyenne - Ecart'
-	);
-
-	fputcsv($handler, $h, ';', '"');
-	foreach ($arrayperiode as $m) {
-		$ligne=array();
-		$ligne[]=$month[$m];
-		$ligne[]=$arrayresult1['nb_fact'][$m];
-
-		if(!empty($arrayresult1['catotalht'][$m])){
-			$ligne[]=price($arrayresult1['catotalht'][$m]) .' €';
-		}else{
-			$ligne[]='';
-		}
-
-		if(!empty($arrayresult3['cavolvo'][$m])){
-			$ligne[]=price($arrayresult3['cavolvo'][$m]) .' €';
-		}else{
-			$ligne[]='';
-		}
-
-		$ligne[]=$arrayresult1['nbtracteur'][$m];
-		$ligne[]=$arrayresult1['nbporteur'][$m];
-
-		if(!empty($arrayresult1['nb_fact'][$m])){
-			$ligne[]= round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
-			$ligne[]= round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
-		}else{
-			$ligne[]= '';
-			$ligne[]= '';
-		}
-
-		$ligne[]= $arrayresult2['vcm'][$m];
-		$ligne[]= $arrayresult2['dfol'][$m];
-		$ligne[]= $arrayresult2['dded'][$m];
-		$ligne[]= $arrayresult2['vfs'][$m];
-		$ligne[]= $arrayresult2['lixbail'][$m];
-
-		if(!empty($arrayresult4['margetheo'][$m])){
-			$ligne[]= price($arrayresult4['margetheo'][$m]) .' €';
-			$ligne[]= price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €';
-		}else{
-			$ligne[]='';
-			$ligne[]='';
-		}
-
-		if(!empty($arrayresult4['margereal'][$m])){
-			$ligne[]= price($arrayresult4['margereal'][$m]) .' €';
-			$ligne[]= price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €';
-		}else{
-			$ligne[]='';
-			$ligne[]='';
-		}
-
-		if(!empty($arrayresult4['margetheo'][$m]) && !empty($arrayresult4['margereal'][$m])){
-			$ligne[]= price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)) .' €';
-			$ligne[]= price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2)) .' €';
-		}else{
-			$ligne[]='';
-			$ligne[]='';
-		}
-
-		fputcsv($handler, $ligne, ';', '"');
-	}
-
-	exit;
-}
+$list_config=array(
+		'title' =>	 'Suivis d\'activité VN volvo',
+		'sortfield' => GETPOST("sortfield",'alpha'),
+		'sortorder' => GETPOST("sortorder",'alpha'),
+		'page' => GETPOST("page",'int'),
+		'tools_active' =>1,
+		'tools' => $tools
+);
 
 
 
-llxHeader('', $title);
 
-$test='ca marche';
 
 dol_include_once('/volvo/class/table_template.php');
 
@@ -279,5 +196,4 @@ dol_include_once('/volvo/class/table_template.php');
 
 
 
-llxFooter();
-$db->close();
+
