@@ -114,7 +114,6 @@ $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 $array_display=array();
 
 foreach ($arrayperiode as $m) {
-	print $month[$m];
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
 	$var = ! $var;
 	$total_fact+=$arrayresult1['nb_fact'][$m];
@@ -148,9 +147,9 @@ foreach ($arrayperiode as $m) {
 	$array_display[$m]=array(
 			'class' => $bc[$var],
 			'class_td' => '',
-			'mois' => $month[$m],
+			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
-			'ca_total' => price($arrayresult1['catotalht'][$m]),
+			'ca_total' => $arrayresult1['catotalht'][$m],
 			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
 			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
 			'nb_port'=> $arrayresult1['nbporteur'][$m],
