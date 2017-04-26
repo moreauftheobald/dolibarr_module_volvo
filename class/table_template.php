@@ -92,7 +92,7 @@ if(is_array($list_config['sub_title'])){
 		if($f['sub_title']>0 && $f['checked'] == 1 && $group[$f['sub_title']]['done']==0){
 			print '<th class="liste_titre" colspan="' . $group[$f['sub_title']] . '" align="center">' . $list_config['sub_title'][$f['sub_title']] . '</th>';
 			$group[$f['sub_title']]['done'] = 1;
-		}elseif($f['sub_title']>0 && $f['checked'] == 1){
+		}elseif($f['sub_title']==0 && $f['checked'] == 1){
 			print '<th class="liste_titre" rowspan="2" align="center">' . $f['label'] . '</th>';
 		}
 	}
