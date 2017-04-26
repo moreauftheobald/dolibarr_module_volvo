@@ -22,8 +22,6 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-
-require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
 
 $title = 'Suivis d\'activité VN volvo';
@@ -385,6 +383,7 @@ $list_config=array(
 		'array_fields' => $arrayfields,
 		'sub_title' => $subtitle,
 		'array_data' => $array_display,
+		'export_name' => 'suivi_activité',
 );
 
 
