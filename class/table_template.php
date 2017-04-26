@@ -81,6 +81,11 @@ if($list_config['tools_active']==1){
 	print '</form>';
 }
 
+$group= array();
+foreach ($list_config['array_fields'] as $f){
+	if($f['checked']==1)$group[$f['sub_title']]+=1;
+}
+
 print '<table class="noborder" width="100%">';
 if(is_array($list_config['sub_title'])){
 	print '<tr class="liste_titre" style="height:22px;">';
@@ -110,10 +115,7 @@ if(is_array($list_config['sub_title'])){
 	print "</tr>";
 }
 
-$group= array();
-foreach ($list_config['array_fields'] as $f){
-	if($f['checked']==1)$group[$f['sub_title']]+=1;
-}
+
 //var_dump($group);
 
 foreach ($list_config['array_data'] as $l){
