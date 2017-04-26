@@ -111,27 +111,58 @@ $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 
-$colomun = array(
-			'mois',
-			'Nb Factures',
-			'C.A. Total HT',
-			'C.A. Fac. Volvo',
-			'Nb Tracteurs',
-			'Nb Porteur',
-			'% Tracteur',
-			'% Porteur',
-			'VCM',
-			'DFOL',
-			'DDED',
-			'VFS',
-			'Lixbail',
-			'Marge Totale',
-			'Marge moyenne',
-			'Marge réélle Totale',
-			'Marge réélle Moyenne',
-			'Marge réélle Totale - Ecart',
-			'Marge réélle Moyenne - Ecart'
+$array_display=array();
+
+foreach ($arrayperiode as $m) {
+	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
+	$var = ! $var;
+	$total_fact+=$arrayresult1['nb_fact'][$m];
+	$total_caht+=$arrayresult1['catotalht'][$m];
+	$total_tracteur+=$arrayresult1['nbtracteur'][$m];
+	$total_porteur+=$arrayresult1['nbporteur'][$m];
+	$total_vcm+=$arrayresult2['vcm'][$m];
+	$total_dfol+=$arrayresult2['dfol'][$m];
+	$total_dded+=$arrayresult2['dded'][$m];
+	$total_vfs+=$arrayresult2['vfs'][$m];
+	$total_lixbail+=$arrayresult2['lixbail'][$m];
+	$total_cavolvo+=$arrayresult3['cavolvo'][$m];
+	$total_margetheo+=$arrayresult4['margetheo'][$m];
+	$total_margereal+=$arrayresult4['margereal'][$m];
+
+	if(!empty($arrayresult1['nb_fact'][$m])){
+		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+	}else{
+		$tracteur_percent = '';
+		$porteur_percent = '';
+	}
+
+
+	$array_display[$m]=array(
+			'var' => $var,
+			'mois' => $link,
+			'nb_facture' => $arrayresult1['nb_fact'][$m],
+			'ca_total' => price($arrayresult1['catotalht'][$m]),
+			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
+			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
+			'nb_port'=> $arrayresult1['nbporteur'][$m],
+			'precent_trt'=> $tracteur_percent,
+			'percent_prt'=> $porteur_percent,
+			'vcm'=> $arrayresult2['vcm'][$m],
+			'dfol'=> $arrayresult2['dfol'][$m],
+			'dded'=> $arrayresult2['dded'][$m],
+			'vfs'=> $arrayresult2['vfs'][$m],
+			'lixbail'=> $arrayresult2['lixbail'][$m],
+			'm_tot'=> price($arrayresult4['margetheo'][$m]),
+			'm_moy'=> price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2)),
+			'm_tot_r'=> price($arrayresult4['margereal'][$m]),
+			'm_moy_r'=> price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2)),
+			'm_tot_e'=> price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)),
+			'm_moy_e'=> price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2))
 	);
+
+
+}
 
 $arrayfields=array(
 		'mois'=>array(
@@ -148,12 +179,14 @@ $arrayfields=array(
 		'ca_total'=>array(
 				'label'=>'C.A. Total HT',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'ca_volvo'=>array(
 				'label'=>'C.A. Fac. Volvo',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'nb_trt'=>array(
 				'label'=>'Nb Tracteurs',
@@ -168,12 +201,14 @@ $arrayfields=array(
 		'precent_trt'=>array(
 				'label'=>'% Tracteurs',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'%'
 		),
 		'percent_prt'=>array(
 				'label'=>'% Porteurs',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'%'
 		),
 		'vcm'=>array(
 				'label'=>'VCM',
@@ -203,32 +238,38 @@ $arrayfields=array(
 		'm_tot'=>array(
 				'label'=>'Marge totale',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'm_moy'=>array(
 				'label'=>'Marge moyenne',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'm_tot_r'=>array(
 				'label'=>'Marge Totale Réélle',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'm_moy_r'=>array(
 				'label'=>'Marge Moyenne Réélle',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'm_tot_e'=>array(
 				'label'=>'Marge totale - Ecart',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 		'm_moy_e'=>array(
 				'label'=>'Marge Moyenne - Ecart',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'unit'=>'€'
 		),
 );
 
@@ -283,6 +324,7 @@ $list_config=array(
 		'tools' => $tools,
 		'array_fields' => $arrayfields,
 		'sub_title' => $subtitle,
+		'array_data' => $array_display,
 );
 
 
