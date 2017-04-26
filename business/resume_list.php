@@ -41,6 +41,113 @@ $year = GETPOST('year');
 $form = new Form($db);
 $formother = new FormOther($db);
 
+$month = array(
+		1=>'Janvier',
+		2=>'Fevrier',
+		3=>'Mars',
+		4=>'Avril',
+		5=>'Mai',
+		6=>'Juin',
+		7=>'Juillet',
+		8=>'Aout',
+		9=>'Septembre',
+		10=>'Octobre',
+		11=>'Novembre',
+		12=>'Décembre'
+);
+
+
+$monthlist=$search_month;
+
+$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
+$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
+
+if(GETPOST("button_export_x")){
+	$handler = fopen("php://output", "w");
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment;filename=suivi_activite_detail.csv');
+	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+
+	$commercial = new user($db);
+	if(!empty($search_commercial)){
+		$commercial->fetch($search_commercial);
+		$com = $commercial->firstname . ' ' . $commercial->lastname;
+	}
+
+	$h=array(
+			'Année:',
+			$year,
+			'',
+			'commercial:',
+			$com,
+			'',
+			'Mois:',
+			$month[$monthlist]
+	);
+	fputcsv($handler, $h, ';', '"');
+
+	$h = array(
+			'Dossier',
+			'C.A. Total HT',
+			'C.A. Fac. Volvo',
+			'VCM',
+			'DFOL',
+			'DDED',
+			'VFS',
+			'Lixbail',
+			'Marge',
+			'Marge réélle',
+			'Marge réélle - Ecart'
+	);
+	fputcsv($handler, $h, ';', '"');
+
+	foreach ($arrayresult1 as $key => $values) {
+		$ligne=array();
+		$ligne[]= $key;
+
+		if(!empty($arrayresult1[$key]['catotalht'])){
+			$ligne[]= price($values['catotalht']) .' €';
+		}else{
+			$ligne[]= '';
+		}
+
+		if(!empty($arrayresult3[$key]['cavolvo'])){
+			$ligne[]= price($arrayresult3[$key]['cavolvo']) .' €';
+		}else{
+			$ligne[]= '';
+		}
+
+		$ligne[]= $arrayresult2[$key]['vcm'];
+		$ligne[]= $arrayresult2[$key]['dfol'];
+		$ligne[]= $arrayresult2[$key]['dded'];
+		$ligne[]= $arrayresult2[$key]['vfs'];
+		$ligne[]= $arrayresult2[$key]['lixbail'];
+
+		if(!empty($arrayresult4[$key]['margetheo'])){
+			$ligne[]= price($arrayresult4[$key]['margetheo']) .' €';
+		}else{
+			$ligne[]= '';
+		}
+
+		if(!empty($arrayresult4[$key]['margereal'])){
+			$ligne[]= price($arrayresult4[$key]['margereal']) .' €';
+		}else{
+			$ligne[]= '';
+		}
+
+		if(!empty($arrayresult4[$key]['margetheo']) && !empty($arrayresult4[$key]['margereal'])){
+			$ligne[]= price($arrayresult4[$key]['margereal']-$arrayresult4[$key]['margetheo']) .' €';
+		}else{
+			$ligne[]= '';
+		}
+
+		fputcsv($handler, $ligne, ';', '"');
+	}
+	exit;
+}
+
 
 llxHeader('', $title);
 
@@ -49,7 +156,7 @@ $nbtotalofrecords = 0;
 
 print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
 
-print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a></div>';
+print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a>&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></div>';
 
 print '<table class="noborder" width="100%">';
 print '<tr class="liste_titre">';
@@ -70,13 +177,6 @@ print '<th class="liste_titre" align="center">Lixbail</th>';
 print "</tr>";
 
 $var = true;
-
-$monthlist=$search_month;
-
-$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 
 foreach ($arrayresult1 as $key => $values) {
  	$var = ! $var;
