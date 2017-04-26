@@ -113,10 +113,20 @@ if(is_array($list_config['sub_title'])){
 	}
 	print "</tr>";
 }
+foreach ($list_config['array_data'] as $l){
+	print '<tr ' . $l['class'] . '>';
+	$td_class = $l['class_td'];
+	foreach ($l as $key => $val){
+		if($list_config['array_fields'][$key]['checked']==1){
+			print '<td ' . $td_class . ' align="' . $list_config['array_fields'][$key]['align'] . '">';
+			if($val !=0) print $val . $list_config['array_fields'][$key]['unit'];
+			print '</td>';
+		}
+	}
+	print '</tr>';
+}
 
 print '</table>';
-print_r($list_config['array_data']);
-
 
 // footer
 llxFooter();

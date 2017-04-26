@@ -167,9 +167,46 @@ foreach ($arrayperiode as $m) {
 			'm_tot_e'=> price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)),
 			'm_moy_e'=> $m_moy_e
 	);
-
-
 }
+if(!empty($total_fact)){
+	$tracteur_percent = round(($total_tracteur /($total_fact))*100,2) . ' %';
+	$porteur_percent = round(($total_porteur /($total_fact))*100,2) . ' %';
+	$m_moy = price(round($total_margetheo/$total_fact,2));
+	$m_moy_r = price(round($total_margereal/$total_fact,2));
+	$m_moy_e = price(round(($total_margereal-$total_margetheo)/$total_fact,2));
+}else{
+	$tracteur_percent = '';
+	$porteur_percent = '';
+	$m_moy = '';
+	$m_moy_r = '';
+	$m_moy_e = '';
+}
+
+
+$array_display[13]=array(
+		'class' => ' class="liste_titre"',
+		'class_td' => ' class="liste_titre"',
+		'mois' => 'Total',
+		'nb_facture' => price($total_fact),
+		'ca_total' => price($total_caht),
+		'ca_volvo'=> price($total_cavolvo),
+		'nb_trt'=> $total_tracteur,
+		'nb_port'=> $total_porteur,
+		'precent_trt'=> $tracteur_percent,
+		'percent_prt'=> $porteur_percent,
+		'vcm'=> $total_vcm,
+		'dfol'=> $total_dfol,
+		'dded'=> $total_dded,
+		'vfs'=> $total_vfs,
+		'lixbail'=> $total_lixbail,
+		'm_tot'=> price($total_margetheo),
+		'm_moy'=> $m_moy,
+		'm_tot_r'=> price($total_margereal),
+		'm_moy_r'=> $m_moy_r,
+		'm_tot_e'=> price(round($total_margereal-$total_margetheo,2)),
+		'm_moy_e'=> $m_moy_e
+);
+
 
 $arrayfields=array(
 		'mois'=>array(
