@@ -67,66 +67,6 @@ if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 $form = new Form($db);
 $formother = new FormOther($db);
 
-
-llxHeader('', $title);
-
-// Count total nb of records
-$nbtotalofrecords = 0;
-
-print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
-print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
-print '<table class="noborder" width="100%">';
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" align="center">Année: ';
-$formother->select_year($year,'year',0, 5, 0);
-print '</th>';
-print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled,$user_included) . '</th>';
-print '<th class="liste_titre" align="center">Periode: ';
-print '<select class="flat" id="search_periode" name="search_periode">';
-print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
-print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
-print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
-print '<option value="3"'.($search_periode==3?' selected':'').'>3eme Trimestre</option>';
-print '<option value="4"'.($search_periode==4?' selected':'').'>4eme Trimestre</option>';
-print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</option>';
-print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
-print '</select>';
-print '</th>';
-print '<th class="liste_titre" align="center">';
-print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
-print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '"></div>';
-print '</th>';
-print "</tr>";
-print '</table>';
-print '</br>';
-print '</form>';
-
-print '<table class="noborder" width="100%">';
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" rowspan="2" align="center">Mois</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Factures</th>';
-print '<th class="liste_titre" rowspan="2" align="center">C.A.</br>Total HT</th>';
-print '<th class="liste_titre" rowspan="2" align="center">C.A. Fac.</br>Volvo</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Tracteurs</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Porteur</th>';
-print '<th class="liste_titre" rowspan="2" align="center">%</br>Tracteur</th>';
-print '<th class="liste_titre" rowspan="2" align="center">%</br>Porteur</th>';
-print '<th class="liste_titre" colspan="5" align="center">Soft Offers</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge</br>Totale</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge</br>moyenne</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale - Ecart</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne - Ecart</th>';
-print "</tr>";
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" align="center">VCM</th>';
-print '<th class="liste_titre" align="center">DFOL</th>';
-print '<th class="liste_titre" align="center">DDED</th>';
-print '<th class="liste_titre" align="center">VFS</th>';
-print '<th class="liste_titre" align="center">Lixbail</th>';
-print "</tr>";
-
 $var = true;
 $month = array(
 		1=>'Janvier',
@@ -175,6 +115,160 @@ $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
+
+if(GETPOST("button_export_x")){
+	$handler = fopen("php://output", "w");
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment;filename=suivi_activite.csv');
+	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+	$h = array(
+			'mois',
+			'Nb Factures',
+			'C.A. Total HT',
+			'C.A. Fac. Volvo',
+			'Nb Tracteurs',
+			'Nb Porteur',
+			'% Tracteur',
+			'% Porteur',
+			'VCM',
+			'DFOL',
+			'DDED',
+			'VFS',
+			'Lixbail',
+			'Marge Totale',
+			'Marge moyenne',
+			'Marge réélle Totale',
+			'Marge réélle Moyenne',
+			'Marge réélle Totale - Ecart',
+			'Marge réélle Moyenne - Ecart'
+	);
+
+	fputcsv($handler, $h, ';', '"');
+	foreach ($arrayperiode as $m) {
+		$ligne=array();
+		$ligne[]=$month[$m];
+		$ligne[]=$arrayresult1['nb_fact'][$m];
+
+		if(!empty($arrayresult1['catotalht'][$m])){
+			$ligne[]=price($arrayresult1['catotalht'][$m]) .' €';
+		}else{
+			$ligne[]='';
+		}
+
+		if(!empty($arrayresult3['cavolvo'][$m])){
+			$ligne[]=price($arrayresult3['cavolvo'][$m]) .' €';
+		}else{
+			$ligne[]='';
+		}
+
+		$ligne[]=$arrayresult1['nbtracteur'][$m];
+		$ligne[]=$arrayresult1['nbporteur'][$m];
+
+		if(!empty($arrayresult1['nb_fact'][$m])){
+			$ligne[]= round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+			$ligne[]= round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+		}else{
+			$ligne[]= '';
+			$ligne[]= '';
+		}
+
+		$ligne[]= $arrayresult2['vcm'][$m];
+		$ligne[]= $arrayresult2['dfol'][$m];
+		$ligne[]= $arrayresult2['dded'][$m];
+		$ligne[]= $arrayresult2['vfs'][$m];
+		$ligne[]= $arrayresult2['lixbail'][$m];
+
+		if(!empty($arrayresult4['margetheo'][$m])){
+			$ligne[]= price($arrayresult4['margetheo'][$m]) .' €';
+			$ligne[]= price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €';
+		}else{
+			$ligne[]='';
+			$ligne[]='';
+		}
+
+		if(!empty($arrayresult4['margereal'][$m])){
+			$ligne[]= price($arrayresult4['margereal'][$m]) .' €';
+			$ligne[]= price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2)) .' €';
+		}else{
+			$ligne[]='';
+			$ligne[]='';
+		}
+
+		if(!empty($arrayresult4['margetheo'][$m]) && !empty($arrayresult4['margereal'][$m])){
+			$ligne[]= price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)) .' €';
+			$ligne[]= price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2)) .' €';
+		}else{
+			$ligne[]='';
+			$ligne[]='';
+		}
+
+		fputcsv($handler, $ligne, ';', '"');
+	}
+
+	exit;
+}
+
+
+
+llxHeader('', $title);
+
+// Count total nb of records
+$nbtotalofrecords = 0;
+
+print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
+print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
+print '<table class="noborder" width="100%">';
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" align="center">Année: ';
+$formother->select_year($year,'year',0, 5, 0);
+print '</th>';
+print '<th class="liste_titre" align="center">Commercial: '. $form->select_dolusers($search_commercial,'search_commercial',1,array(),$search_commercial_disabled,$user_included) . '</th>';
+print '<th class="liste_titre" align="center">Periode: ';
+print '<select class="flat" id="search_periode" name="search_periode">';
+print '<option value="0"'.(empty($search_periode)?' selected':'').'> </option>';
+print '<option value="1"'.($search_periode==1?' selected':'').'>1er Trimestre</option>';
+print '<option value="2"'.($search_periode==2?' selected':'').'>2eme Trimestre</option>';
+print '<option value="3"'.($search_periode==3?' selected':'').'>3eme Trimestre</option>';
+print '<option value="4"'.($search_periode==4?' selected':'').'>4eme Trimestre</option>';
+print '<option value="5"'.($search_periode==5?' selected':'').'>1er Semestre</option>';
+print '<option value="6"'.($search_periode==6?' selected':'').'>2eme Semestre</option>';
+print '</select>';
+print '</th>';
+print '<th class="liste_titre" align="center">';
+print '<div align="left"><input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="' . dol_escape_htmltag($langs->trans("Search")) . '" title="' . dol_escape_htmltag($langs->trans("Search")) . '">';
+print '&nbsp;<input type="image" class="liste_titre" name="button_removefilter" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/searchclear.png" value="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '" title="' . dol_escape_htmltag($langs->trans("RemoveFilter")) . '">';
+print '&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter"></div>';
+print '</th>';
+print "</tr>";
+print '</table>';
+print '</br>';
+print '</form>';
+
+print '<table class="noborder" width="100%">';
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" rowspan="2" align="center">Mois</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Factures</th>';
+print '<th class="liste_titre" rowspan="2" align="center">C.A.</br>Total HT</th>';
+print '<th class="liste_titre" rowspan="2" align="center">C.A. Fac.</br>Volvo</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Tracteurs</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Nb</br>Porteur</th>';
+print '<th class="liste_titre" rowspan="2" align="center">%</br>Tracteur</th>';
+print '<th class="liste_titre" rowspan="2" align="center">%</br>Porteur</th>';
+print '<th class="liste_titre" colspan="5" align="center">Soft Offers</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge</br>Totale</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge</br>moyenne</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Totale - Ecart</th>';
+print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Moyenne - Ecart</th>';
+print "</tr>";
+print '<tr class="liste_titre">';
+print '<th class="liste_titre" align="center">VCM</th>';
+print '<th class="liste_titre" align="center">DFOL</th>';
+print '<th class="liste_titre" align="center">DDED</th>';
+print '<th class="liste_titre" align="center">VFS</th>';
+print '<th class="liste_titre" align="center">Lixbail</th>';
+print "</tr>";
 
 foreach ($arrayperiode as $m) {
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
@@ -236,7 +330,7 @@ foreach ($arrayperiode as $m) {
 		print '<td align="center"></td>';
 	}
 	if(!empty($arrayresult4['margetheo'][$m]) && !empty($arrayresult4['margereal'][$m])){
-		print '<td align="center">'. price($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m]) .' €</td>';
+		print '<td align="center">'. price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)) .' €</td>';
 		print '<td align="center">'. price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2)) .' €</td>';
 	}else{
 		print '<td align="center"></td>';
