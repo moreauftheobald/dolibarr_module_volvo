@@ -150,7 +150,7 @@ foreach ($arrayperiode as $m) {
 			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
 			'ca_total' => ($arrayresult1['catotalht'][$m]==0?"":price($arrayresult1['catotalht'][$m])),
-			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
+			'ca_volvo'=> ($arrayresult3['cavolvo'][$m]==0?"":price($arrayresult3['cavolvo'][$m])),
 			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
 			'nb_port'=> $arrayresult1['nbporteur'][$m],
 			'precent_trt'=> $tracteur_percent,
@@ -160,11 +160,11 @@ foreach ($arrayperiode as $m) {
 			'dded'=> $arrayresult2['dded'][$m],
 			'vfs'=> $arrayresult2['vfs'][$m],
 			'lixbail'=> $arrayresult2['lixbail'][$m],
-			'm_tot'=> price($arrayresult4['margetheo'][$m]),
+			'm_tot'=> ($arrayresult4['margetheo'][$m]==0?"":price($arrayresult4['margetheo'][$m])),
 			'm_moy'=> $m_moy,
-			'm_tot_r'=> price($arrayresult4['margereal'][$m]),
+			'm_tot_r'=> ($arrayresult4['margereal'][$m]==0?"":price($arrayresult4['margereal'][$m])),
 			'm_moy_r'=> $m_moy_r,
-			'm_tot_e'=> price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)),
+			'm_tot_e'=> (($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])==0?"":price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2))),
 			'm_moy_e'=> $m_moy_e
 	);
 }
