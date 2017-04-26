@@ -20,7 +20,7 @@ if($list_config['tools_active']==1){
 	print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 	print '<table class="noborder" width="100%">';
 	print '<tr class="liste_titre" style="height:22px;">';
-	print '<th class="liste_titre" align="center" width="90px">';
+	print '<th class="liste_titre" align="center" style="white-space:nowrap; width:90px;">';
 	if($list_config['tools']['search_button']==1){
 		print '<input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="Search" title="Search">';
 	}
