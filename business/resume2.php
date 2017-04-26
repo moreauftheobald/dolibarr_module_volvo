@@ -282,7 +282,7 @@ $list_config=array(
 		'tools_active' =>1,
 		'tools' => $tools,
 		'array_fields' => $arrayfields,
-		//'sub_title' => $subtitle,
+		'sub_title' => $subtitle,
 );
 
 
