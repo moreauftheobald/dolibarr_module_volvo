@@ -22,11 +22,7 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
 }
-$group= array();
-foreach ($list_config['array_fields'] as $f){
-	if($f['checked']==1)$group[$f['sub_title']]+=1;
-}
-var_dump($group);
+
 //header
 llxHeader('', $list_config['title']);
 
@@ -113,6 +109,13 @@ if(is_array($list_config['sub_title'])){
 	}
 	print "</tr>";
 }
+
+$group= array();
+foreach ($list_config['array_fields'] as $f){
+	if($f['checked']==1)$group[$f['sub_title']]+=1;
+}
+var_dump($group);
+
 foreach ($list_config['array_data'] as $l){
 	print '<tr ' . $l['class'] . '>';
 	$td_class = $l['class_td'];
