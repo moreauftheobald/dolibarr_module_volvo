@@ -63,7 +63,7 @@ if($list_config['tools_active']==1){
 	print '</form>';
 }
 
-
+var_dump($p['array_fields']);
 
 
 // footer
