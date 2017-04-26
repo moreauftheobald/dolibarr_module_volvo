@@ -9,12 +9,10 @@ $form = new Form($db);
 $formother = new FormOther($db);
 
 $limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
-
+$varpage=$list_config['context'];
 if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 {
 	$tabparam=array();
-
-	$varpage=empty($contextpage)?$_SERVER["PHP_SELF"]:$contextpage;
 
 	if (GETPOST("selectedfields")) $tabparam["MAIN_SELECTEDFIELDS_".$varpage]=GETPOST("selectedfields");
 	else $tabparam["MAIN_SELECTEDFIELDS_".$varpage]='';
@@ -23,7 +21,7 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
 }
-$varpage=$list_config['context'];
+
 $selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 
 if(GETPOST("button_export_x")){
