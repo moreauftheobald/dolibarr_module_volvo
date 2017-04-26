@@ -23,7 +23,7 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
 }
-
+$varpage=$_SERVER["PHP_SELF"];
 $selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 
 if(GETPOST("button_export_x")){
@@ -113,7 +113,6 @@ if($list_config['tools_active']==1){
 	print '</th>';
 	if($list_config['tools']['select_fields_button']==1){
 		print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
-		$varpage=$_SERVER["PHP_SELF"];
 		print $selectfields;
 		print '</th>';
 	}
