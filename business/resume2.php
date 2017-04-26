@@ -149,7 +149,7 @@ foreach ($arrayperiode as $m) {
 			'class_td' => '',
 			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
-			'ca_total' => $arrayresult1['catotalht'][$m],
+			'ca_total' => price((!empty($arrayresult1['catotalht'][$m])?$arrayresult1['catotalht'][$m]:"")),
 			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
 			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
 			'nb_port'=> $arrayresult1['nbporteur'][$m],
