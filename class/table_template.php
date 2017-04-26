@@ -9,6 +9,7 @@ $form = new Form($db);
 $formother = new FormOther($db);
 
 $limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
+$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 
 if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 {
@@ -112,7 +113,7 @@ if($list_config['tools_active']==1){
 	if($list_config['tools']['select_fields_button']==1){
 		print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
 		$varpage=$_SERVER["PHP_SELF"];
-		print $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
+		print $selectfields;
 		print '</th>';
 	}
 
