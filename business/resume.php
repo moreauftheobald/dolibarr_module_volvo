@@ -121,6 +121,42 @@ if(GETPOST("button_export_x")){
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment;filename=suivi_activite.csv');
 	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+
+	$commercial = new user($db);
+	if(!empty($search_commercial)){
+		$commercial->fetch($search_commercial);
+		$com = $commercial->firstname . ' ' . $commercial->lastname;
+	}
+
+	if(!empty($search_periode)){
+		if($search_periode == 1){
+			$periode = '1er Trimestre';
+		}elseif($search_periode==2){
+			$periode = '2eme Trimestre';
+		}elseif($search_periode==3){
+			$periode = '3eme Trimestre';
+		}elseif($search_periode==4){
+			$periode = '4eme Trimestre';
+		}elseif($search_periode==5){
+			$periode = '1er Semestre';
+		}elseif($search_periode==6){
+			$periode = '2eme Semestre';
+		}
+	}
+
+	$h=array(
+			'Année:',
+			$year,
+			'',
+			'commercial:',
+			$com,
+			'',
+			'Periode:',
+			$periode
+	);
+
+	fputcsv($handler, $h, ';', '"');
+
 	$h = array(
 			'mois',
 			'Nb Factures',
