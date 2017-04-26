@@ -270,7 +270,9 @@ $tools=array(
 		'select_fields_button' => 1,
 		'extra _tools' => $extra_tools
 );
-
+$subtitle = array(
+		1=>'Soft Offers'
+);
 
 $list_config=array(
 		'title' =>	 'Suivis d\'activité VN volvo',
@@ -280,7 +282,7 @@ $list_config=array(
 		'tools_active' =>1,
 		'tools' => $tools,
 		'array_fields' => $arrayfields,
-		'sub_title' => 1,
+		'sub_title' => $subtitle,
 );
 
 
