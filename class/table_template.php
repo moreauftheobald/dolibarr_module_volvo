@@ -26,7 +26,7 @@ $group= array();
 foreach ($list_config['array_fields'] as $f){
 	$group[$f['sub_title']]+=$f['checked'];
 }
-
+var_dump($group);
 //header
 llxHeader('', $list_config['title']);
 
