@@ -115,7 +115,7 @@ if(is_array($list_config['sub_title'])){
 }
 
 print '</table>';
-print_r($group);
+print_r($list_config['array_data']);
 
 
 // footer
