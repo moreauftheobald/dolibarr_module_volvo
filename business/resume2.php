@@ -136,7 +136,27 @@ $colomun = array(
 			'Marge réélle Moyenne - Ecart'
 	);
 
-
+$arrayfields=array(
+		'mois'=>array('label'=>'Mois', 'checked'=>1),
+		'nb_facture'=>array('label'=>'Nb Factures', 'checked'=>1),
+		'ca_total'=>array('label'=>'C.A. Total HT', 'checked'=>1),
+		'ca_volvo'=>array('label'=>'C.A. Fac. Volvo', 'checked'=>1),
+		'nb_trt'=>array('label'=>'Nb Tracteurs', 'checked'=>1),
+		'nb_port'=>array('label'=>'Nb Porteurs', 'checked'=>1),
+		'precent_trt'=>array('label'=>'% Tracteurs', 'checked'=>1),
+		'percent_prt'=>array('label'=>'% Porteurs', 'checked'=>1),
+		'vcm'=>array('label'=>'VCM', 'checked'=>1),
+		'dfol'=>array('label'=>'DFOL', 'checked'=>1),
+		'dded'=>array('label'=>'DDED', 'checked'=>1),
+		'vfs'=>array('label'=>'VFS', 'checked'=>1),
+		'lixbail'=>array('label'=>'Lixbail', 'checked'=>1),
+		'm_tot'=>array('label'=>'Marge totale', 'checked'=>1),
+		'm_moy'=>array('label'=>'Marge moyenne', 'checked'=>1),
+		'm_tot_r'=>array('label'=>'Marge Totale Réélle', 'checked'=>1),
+		'm_moy_r'=>array('label'=>'Marge Moyenne Réélle', 'checked'=>1),
+		'm_tot_e'=>array('label'=>'Marge totale - Ecart', 'checked'=>1),
+		'm_moy_e'=>array('label'=>'Marge Moyenne - Ecart', 'checked'=>1),
+);
 
 $extra_tools=array(
 		1 => array(
@@ -173,6 +193,7 @@ $tools=array(
 		'search_button' => 1,
 		'remove_filter_button' => 1,
 		'export_button' => 1,
+		'select_fields_button' => 1,
 		'extra _tools' => $extra_tools
 );
 
@@ -183,7 +204,8 @@ $list_config=array(
 		'sortorder' => GETPOST("sortorder",'alpha'),
 		'page' => GETPOST("page",'int'),
 		'tools_active' =>1,
-		'tools' => $tools
+		'tools' => $tools,
+		'Array_fields' => $arrayfields
 );
 
 
