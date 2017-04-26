@@ -145,7 +145,8 @@ foreach ($arrayperiode as $m) {
 
 
 	$array_display[$m]=array(
-			'var' => $var,
+			'class' => $bc[$var],
+			'class_td' => '',
 			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
 			'ca_total' => price($arrayresult1['catotalht'][$m]),
@@ -175,61 +176,72 @@ $arrayfields=array(
 				'label'=>'Mois',
 				'checked'=>1,
 				'enabled'=>0,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'align'=>'center'
 		),
 		'nb_facture'=>array(
 				'label'=>'Nb Factures',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'align'=>'center'
 		),
 		'ca_total'=>array(
 				'label'=>'C.A. Total HT',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'ca_volvo'=>array(
 				'label'=>'C.A. Fac. Volvo',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'nb_trt'=>array(
 				'label'=>'Nb Tracteurs',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'align'=>'center'
 		),
 		'nb_port'=>array(
 				'label'=>'Nb Porteurs',
 				'checked'=>1,
-				'sub_title'=>0
+				'sub_title'=>0,
+				'align'=>'center'
 		),
 		'precent_trt'=>array(
 				'label'=>'% Tracteurs',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'%'
+				'unit'=>'%',
+				'align'=>'center'
 		),
 		'percent_prt'=>array(
 				'label'=>'% Porteurs',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'%'
+				'unit'=>'%',
+				'align'=>'center'
 		),
 		'vcm'=>array(
 				'label'=>'VCM',
 				'checked'=>1,
-				'sub_title'=>1
+				'sub_title'=>1,
+				'align'=>'center'
 		),
 		'dfol'=>array(
 				'label'=>'DFOL',
 				'checked'=>1,
-				'sub_title'=>1
+				'sub_title'=>1,
+				'align'=>'center'
 		),
 		'dded'=>array(
 				'label'=>'DDED',
 				'checked'=>1,
-				'sub_title'=>1
+				'sub_title'=>1,
+				'align'=>'center'
 		),
 		'vfs'=>array(
 				'label'=>'VFS',
@@ -239,43 +251,50 @@ $arrayfields=array(
 		'lixbail'=>array(
 				'label'=>'Lixbail',
 				'checked'=>1,
-				'sub_title'=>1
+				'sub_title'=>1,
+				'align'=>'center'
 		),
 		'm_tot'=>array(
 				'label'=>'Marge totale',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'm_moy'=>array(
 				'label'=>'Marge moyenne',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'm_tot_r'=>array(
 				'label'=>'Marge Totale Réélle',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'm_moy_r'=>array(
 				'label'=>'Marge Moyenne Réélle',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'm_tot_e'=>array(
 				'label'=>'Marge totale - Ecart',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 		'm_moy_e'=>array(
 				'label'=>'Marge Moyenne - Ecart',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'€'
+				'unit'=>'€',
+				'align'=>'center'
 		),
 );
 
