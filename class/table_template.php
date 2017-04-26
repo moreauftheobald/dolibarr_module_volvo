@@ -9,7 +9,7 @@ $form = new Form($db);
 $formother = new FormOther($db);
 
 $limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
-$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
+
 
 if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 {
@@ -24,6 +24,8 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
 }
+
+$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 
 if(GETPOST("button_export_x")){
 	$handler = fopen("php://output", "w");
