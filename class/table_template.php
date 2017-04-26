@@ -42,7 +42,7 @@ if($list_config['tools_active']==1){
 					$formother->select_year($p['value'],$p['html_name'],$p['use_empty'],$p['min_year'],$p['max_year']);
 					break;
 				case 'select_array':
-					$form->selectarray($p['html_name'], $p['array'],$p['value'],$p['use_empty']);
+					print $form->selectarray($p['html_name'], $p['array'],$p['value'],$p['use_empty']);
 			}
 			print '</th>';
 		}
