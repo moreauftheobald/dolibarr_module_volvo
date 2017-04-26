@@ -207,7 +207,7 @@ $array_display[13]=array(
 		'm_moy_e'=> $m_moy_e
 );
 
-print_r($list_config['array_data']);
+print_r($array_display);
 
 $arrayfields=array(
 		'mois'=>array(
