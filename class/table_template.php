@@ -119,7 +119,7 @@ foreach ($list_config['array_data'] as $l){
 	foreach ($l as $key => $val){
 		if($list_config['array_fields'][$key]['checked']==1){
 			print '<td ' . $td_class . ' align="' . $list_config['array_fields'][$key]['align'] . '" style="white-space:nowrap;">';
-			if($val !=0) print $val . $list_config['array_fields'][$key]['unit'];
+			if(!empty($val)) print $val .' ' . $list_config['array_fields'][$key]['unit'];
 			print '</td>';
 		}
 	}
