@@ -104,6 +104,14 @@ if(is_array($list_config['sub_title'])){
 		}
 	}
 	print "</tr>";
+}else{
+	print '<tr class="liste_titre" style="height:22px;">';
+	foreach ($list_config['array_fields'] as $f){
+		if($f['checked'] == 1){
+			print '<th class="liste_titre" align="center">' . $f['label'] . '</th>';
+		}
+	}
+	print "</tr>";
 }
 
 print '</table>';
