@@ -20,7 +20,7 @@ if($list_config['tools_active']==1){
 	print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 	print '<table class="noborder" width="100%">';
 	print '<tr class="liste_titre" style="height:22px;">';
-	print '<th class="liste_titre" align="center" style="white-space:nowrap; width:130px;">';
+	print '<th class="liste_titre" align="center" style="white-space:nowrap; width:90px;">';
 	if($list_config['tools']['search_button']==1){
 		print '<input class="liste_titre" type="image" src="' . DOL_URL_ROOT . '/theme/' . $conf->theme . '/img/search.png" value="Search" title="Search">';
 	}
@@ -30,11 +30,14 @@ if($list_config['tools_active']==1){
 	if($list_config['tools']['export_button']==1){
 		print '&nbsp;<input type="image" class="liste_titre" name="button_export" src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png" value="export" title="Exporter" width="16px" height="16px">';
 	}
-	if($list_config['tools']['select_fields_button']==1){
-		$varpage=$_SERVER["PHP_SELF"];
-		print '&nbsp;' . $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
-	}
 	print '</th>';
+	if($list_config['tools']['select_fields_button']==1){
+		print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
+		$varpage=$_SERVER["PHP_SELF"];
+		print $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
+		print '</th>';
+	}
+
 	if(is_array($list_config['tools']['extra _tools'])){
 		foreach ($list_config['tools']['extra _tools'] as $key => $p){
 			print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
