@@ -50,7 +50,7 @@ if($list_config['tools_active']==1){
 			print '</th>';
 		}
 	}
-
+	print '<th class="liste_titre"></th>';
 	print "</tr>";
 	print '</table>';
 	print '</form>';
