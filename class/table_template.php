@@ -22,7 +22,10 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
 }
-
+$group= array();
+foreach ($list_config['array_fields'] as $f){
+	$group[$f['sub_title']]++;
+}
 
 //header
 llxHeader('', $list_config['title']);
@@ -82,7 +85,7 @@ if($list_config['tools_active']==1){
 	print '</form>';
 }
 
-print_r($list_config['array_fields']);
+print_r($group);
 
 
 // footer
