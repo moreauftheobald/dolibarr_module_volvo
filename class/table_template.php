@@ -21,9 +21,6 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 	include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
 	$result=dol_set_user_param($db, $conf, $user, $tabparam);
-
-	//$action='list';
-	//var_dump($tabparam);exit;
 }
 
 

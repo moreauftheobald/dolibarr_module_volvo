@@ -137,7 +137,11 @@ $colomun = array(
 	);
 
 $arrayfields=array(
-		'mois'=>array('label'=>'Mois', 'checked'=>1),
+		'mois'=>array(
+				'label'=>'Mois',
+				'checked'=>1,
+				'enabled'=>0
+		),
 		'nb_facture'=>array('label'=>'Nb Factures', 'checked'=>1),
 		'ca_total'=>array('label'=>'C.A. Total HT', 'checked'=>1),
 		'ca_volvo'=>array('label'=>'C.A. Fac. Volvo', 'checked'=>1),
