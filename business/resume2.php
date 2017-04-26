@@ -212,7 +212,7 @@ $arrayfields=array(
 		'mois'=>array(
 				'label'=>'Mois',
 				'checked'=>1,
-				'enabled'=>1,
+				'enabled'=>0,
 				'sub_title'=>0,
 				'align'=>'center'
 		),
