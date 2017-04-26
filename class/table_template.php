@@ -128,7 +128,7 @@ foreach ($list_config['array_data'] as $l){
 
 print '</table>';
 
-print_r($list_config['array_data']);
+
 
 // footer
 llxFooter();
