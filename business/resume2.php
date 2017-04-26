@@ -205,7 +205,7 @@ $list_config=array(
 		'page' => GETPOST("page",'int'),
 		'tools_active' =>1,
 		'tools' => $tools,
-		'Array_fields' => $arrayfields
+		'array_fields' => $arrayfields
 );
 
 

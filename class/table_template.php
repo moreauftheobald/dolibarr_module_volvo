@@ -32,7 +32,7 @@ if($list_config['tools_active']==1){
 	}
 	if($list_config['tools']['select_fields_button']==1){
 		$varpage=$_SERVER["PHP_SELF"];
-		print '&nbsp;' . $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['arrayfields'], $varpage);
+		print '&nbsp;' . $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 	}
 	print '</th>';
 	if(is_array($list_config['tools']['extra _tools'])){
