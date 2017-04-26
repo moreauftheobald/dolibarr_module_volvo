@@ -114,7 +114,7 @@ $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 $array_display=array();
 
 foreach ($arrayperiode as $m) {
-	print $month;
+	print $month[$m];
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
 	$var = ! $var;
 	$total_fact+=$arrayresult1['nb_fact'][$m];
@@ -207,8 +207,6 @@ $array_display[13]=array(
 		'm_tot_e'=> price(round($total_margereal-$total_margetheo,2)),
 		'm_moy_e'=> $m_moy_e
 );
-
-print_r($array_display);
 
 $arrayfields=array(
 		'mois'=>array(
