@@ -1,5 +1,5 @@
 <?php
-global $list_config,$conf;
+global $list_config,$conf,$db;
 
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
 require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
