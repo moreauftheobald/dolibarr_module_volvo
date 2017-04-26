@@ -36,15 +36,15 @@ if($list_config['tools_active']==1){
 			print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
 			switch($p['type']){
 				case 'select_user':
-					print $p['title'];
+					print '&nbsp; &nbsp;' . $p['title'];
 					print $form->select_dolusers($p['value'],$p['html_name'],$p['use_empty'],$p['excluded'],$p['disabled'],$p['included']);
 					break;
 				case 'select_year':
-					print $p['title'];
+					print '&nbsp; &nbsp;' . $p['title'];
 					$formother->select_year($p['value'],$p['html_name'],$p['use_empty'],$p['min_year'],$p['max_year']);
 					break;
 				case 'select_array':
-					print $p['title'];
+					print '&nbsp; &nbsp;' . $p['title'];
 					print $form->selectarray($p['html_name'], $p['array'],$p['value'],$p['use_empty']);
 			}
 			print '</th>';
