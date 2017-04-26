@@ -114,6 +114,7 @@ $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 $array_display=array();
 
 foreach ($arrayperiode as $m) {
+	print $month;
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
 	$var = ! $var;
 	$total_fact+=$arrayresult1['nb_fact'][$m];
