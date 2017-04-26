@@ -384,6 +384,7 @@ $list_config=array(
 		'sub_title' => $subtitle,
 		'array_data' => $array_display,
 		'export_name' => 'suivi_activité_new',
+		'context' => 'suivi_business',
 );
 
 dol_include_once('/volvo/class/table_template.php');
