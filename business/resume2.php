@@ -132,9 +132,15 @@ foreach ($arrayperiode as $m) {
 	if(!empty($arrayresult1['nb_fact'][$m])){
 		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
 		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2) . ' %';
+		$m_moy = price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2));
+		$m_moy_r = price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2));
+		$m_moy_e = price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2));
 	}else{
 		$tracteur_percent = '';
 		$porteur_percent = '';
+		$m_moy = '';
+		$m_moy_r = '';
+		$m_moy_e = '';
 	}
 
 
@@ -154,11 +160,11 @@ foreach ($arrayperiode as $m) {
 			'vfs'=> $arrayresult2['vfs'][$m],
 			'lixbail'=> $arrayresult2['lixbail'][$m],
 			'm_tot'=> price($arrayresult4['margetheo'][$m]),
-			'm_moy'=> price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2)),
+			'm_moy'=> $m_moy,
 			'm_tot_r'=> price($arrayresult4['margereal'][$m]),
-			'm_moy_r'=> price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2)),
+			'm_moy_r'=> $m_moy_r,
 			'm_tot_e'=> price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2)),
-			'm_moy_e'=> price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2))
+			'm_moy_e'=> $m_moy_e
 	);
 
 
