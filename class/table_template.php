@@ -100,7 +100,7 @@ if(is_array($list_config['sub_title'])){
 	print '<tr class="liste_titre" style="height:22px;">';
 	foreach ($list_config['array_fields'] as $f){
 		if($f['sub_title']>0 && $f['checked'] == 1){
-			print '<th class="liste_titre" align="center">' . $f['label'] . '</th>';
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'align="center"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
@@ -108,7 +108,7 @@ if(is_array($list_config['sub_title'])){
 	print '<tr class="liste_titre" style="height:22px;">';
 	foreach ($list_config['array_fields'] as $f){
 		if($f['checked'] == 1){
-			print '<th class="liste_titre" align="center">' . $f['label'] . '</th>';
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'align="center"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
