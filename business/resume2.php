@@ -147,7 +147,7 @@ foreach ($arrayperiode as $m) {
 	$array_display[$m]=array(
 			'class' => $bc[$var],
 			'class_td' => '',
-			'mois' => $link,
+			'mois' => $m,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
 			'ca_total' => price($arrayresult1['catotalht'][$m]),
 			'ca_volvo'=> price($arrayresult3['cavolvo'][$m]),
