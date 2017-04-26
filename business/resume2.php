@@ -210,8 +210,6 @@ $list_config=array(
 
 
 
-
-
 dol_include_once('/volvo/class/table_template.php');
 
 

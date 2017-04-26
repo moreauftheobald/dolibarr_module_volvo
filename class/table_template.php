@@ -18,6 +18,10 @@ print_barre_liste($list_config['title'], $page, $_SERVER['PHP_SELF'], $list_conf
 //affichage de la barre d'outils et de recherche
 if($list_config['tools_active']==1){
 	print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
+	print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
+	print '<input type="hidden" name="formfilteraction" id="formfilteraction" value="list">';
+	print '<input type="hidden" name="sortfield" value="'.$list_config['sortfield'].'">';
+	print '<input type="hidden" name="sortorder" value="'. $list_config['sortorder'].'">';
 	print '<table class="noborder" width="100%">';
 	print '<tr class="liste_titre" style="height:22px;">';
 	print '<th class="liste_titre" align="center" style="white-space:nowrap; width:90px;">';
