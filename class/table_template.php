@@ -33,7 +33,7 @@ if($list_config['tools_active']==1){
 	print '</th>';
 	if(is_array($list_config['tools']['extra _tools'])){
 		foreach ($list_config['tools']['extra _tools'] as $key => $p){
-			print '<th class="liste_titre" align="center">';
+			print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
 			switch($p['type']){
 				case 'select_user':
 					print $p['title'];
