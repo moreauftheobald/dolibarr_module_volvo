@@ -114,7 +114,7 @@ $group= array();
 foreach ($list_config['array_fields'] as $f){
 	if($f['checked']==1)$group[$f['sub_title']]+=1;
 }
-var_dump($group);
+//var_dump($group);
 
 foreach ($list_config['array_data'] as $l){
 	print '<tr ' . $l['class'] . '>';
