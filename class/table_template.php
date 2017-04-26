@@ -93,7 +93,7 @@ if(is_array($list_config['sub_title'])){
 			print '<th class="liste_titre" colspan="' . $group[$f['sub_title']] . '" align="center">' . $list_config['sub_title'][$f['sub_title']] . '</th>';
 			$groupdone[$f['sub_title']] = 1;
 		}elseif($f['sub_title']==0 && $f['checked'] == 1){
-			print '<th class="liste_titre" rowspan="2" align="center">' . $f['label'] . '</th>';
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'rowspan="2" align="center"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
