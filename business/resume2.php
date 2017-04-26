@@ -271,6 +271,8 @@ if(GETPOST("button_export_x")){
 
 llxHeader('', $title);
 
+$test='ca marche';
+
 dol_include_once('/volvo/class/table_template.php');
 
 
