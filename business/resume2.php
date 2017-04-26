@@ -40,7 +40,7 @@ $year = GETPOST('year');
 if (GETPOST("button_removefilter_x")) {
  	$search_commercial = '';
  	$search_periode = '';
- 	$year = dol_print_date(dol_now(),'Y');
+ 	$year = dol_print_date(dol_now(),'%Y');
 }
 
 $search_commercial_disabled = 0;
@@ -383,10 +383,8 @@ $list_config=array(
 		'array_fields' => $arrayfields,
 		'sub_title' => $subtitle,
 		'array_data' => $array_display,
-		'export_name' => 'suivi_activité',
+		'export_name' => 'suivi_activité_new',
 );
-
-
 
 dol_include_once('/volvo/class/table_template.php');
 

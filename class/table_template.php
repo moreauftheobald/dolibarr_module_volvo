@@ -10,7 +10,6 @@ $formother = new FormOther($db);
 
 $limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
 
-
 if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 {
 	$tabparam=array();
