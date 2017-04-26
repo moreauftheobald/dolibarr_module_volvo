@@ -24,7 +24,7 @@ if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 }
 $group= array();
 foreach ($list_config['array_fields'] as $f){
-	$group[$f['sub_title']]+=$f['checked'];
+	if($f['checked']==1)$group[$f['sub_title']]+=1;
 }
 var_dump($group);
 //header
