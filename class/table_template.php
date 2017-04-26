@@ -66,12 +66,12 @@ if(GETPOST("button_export_x")){
 
 	$h=array();
 
-	foreach ($config_list['array_fields'] as $f){
+	foreach ($list_config['array_fields'] as $f){
 		if($f['checked']==1) $h[] = $f['label'];
 	}
 	fputcsv($handler, $h, ';', '"');
 
-	foreach ($config_list['array_data'] as $d) {
+	foreach ($list_config['array_data'] as $d) {
 		$ligne=array();
 		foreach ($d as $key=>$val){
 			if($list_config['array_fields'][$key]['checked']==1) $ligne[] = strip_tags($val);
