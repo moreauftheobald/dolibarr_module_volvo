@@ -680,7 +680,8 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = c.rowid ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS el ON el.fk_target = c.rowid AND el.targettype =  'order_supplier' AND el.sourcetype =  'commande' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande AS cmd ON cmd.rowid = el.fk_source ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = cmd.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = cmd.rowid AND event.elementtype = 'order' AND
+			event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = cmd.rowid AND elm.targettype =  'lead' AND elm.sourcetype =  'commande' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
 	$sql.= "WHERE YEAR( IFNULL( ef.dt_liv_maj, c.date_livraison ) ) = " . $year . " AND c.fk_soc =32553 AND c.fk_statut >0 AND event.datep IS NULL ";
