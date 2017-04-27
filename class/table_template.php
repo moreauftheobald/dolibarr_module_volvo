@@ -87,7 +87,7 @@ if(GETPOST("button_export_x")){
 llxHeader('', $list_config['title']);
 
 //affichage du tritre de la liste
-print_barre_liste($list_config['title'], $page, $_SERVER['PHP_SELF'], $list_config['option'], $list_config['sortfield'], $list_config['sortorder'], '', $list_config['num'], $list_config['nbtotalofrecords']);
+print_barre_liste($list_config['title'], $list_config['page'], $_SERVER['PHP_SELF'], $list_config['option'], $list_config['sortfield'], $list_config['sortorder'], '', $list_config['num'], $list_config['nbtotalofrecords']);
 
 //affichage de la barre d'outils et de recherche
 if($list_config['tools_active']==1){
