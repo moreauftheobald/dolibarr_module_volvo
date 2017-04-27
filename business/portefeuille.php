@@ -124,6 +124,7 @@ $nbtotalofrecords = 0;
 $array_display=array();
 
 $nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
+$nbtotalofrecords = count($object->lines);
 
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 
