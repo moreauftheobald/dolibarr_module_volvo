@@ -541,6 +541,7 @@ class Leadext extends Lead
 		$sql .= " com.rowid AS comid,";
 		$sql .= " cf.ref AS fourn,";
 		$sql .= " cf.rowid AS fournid,";
+		$sql .= " cf.fk_statut AS statut,";
 		$sql .= " ef.vin AS vin,";
 		$sql .= " ef.immat AS immat,";
 		$sql .= " ef.numom AS numom,";
