@@ -222,7 +222,7 @@ $arrayfields=array(
 				'sub_title'=>0,
 				'align'=>'center'
 		),
-		'nb_portefeuille'=>array(
+		'nb_portfeuille'=>array(
 				'label'=>'Nb portefeuille',
 				'checked'=>1,
 				'sub_title'=>0,
