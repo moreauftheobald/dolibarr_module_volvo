@@ -651,13 +651,13 @@ class Leadext extends Lead
 			}
 			$this->db->free($resql);
 			dol_syslog(__METHOD__ . ' ' . $sql, LOG_ERR);
-			return $num;
+			return $compteur;
 		} else {
 			$this->errors[] = 'Error ' . $this->db->lasterror();
 			$this->errors[] = 'Error ' . $sql;
 			dol_syslog(__METHOD__ . ' ' . join(',', $this->errors), LOG_ERR);
 
-			return $sql;
+			return -1;
 		}
 	}
 
