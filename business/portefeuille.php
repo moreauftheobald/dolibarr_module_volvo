@@ -142,7 +142,7 @@ if ($resql != - 1) {
 				'mois' => dol_print_date($line->dt_sortie,'%m'),
 				'typ' => '',
 				'genre' => '',
-				'sil' => '',
+				'sil' => 'test',
 				'pv' => price($line->pv)
 		);
 	}
