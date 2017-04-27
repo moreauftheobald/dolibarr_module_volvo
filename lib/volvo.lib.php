@@ -713,7 +713,7 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 		}
 		return $result;
 	}else{
-		return -1;
+		return $sql;
 	}
 
 }
