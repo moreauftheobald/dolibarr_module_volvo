@@ -123,10 +123,6 @@ if (empty($sortfield))
 $nbtotalofrecords = 0;
 $array_display=array();
 
-if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
-	$nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
-	print $nbtotalofrecords;
-}
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 
 if ($resql != - 1) {
@@ -154,6 +150,7 @@ if ($resql != - 1) {
 	}
 }
 
+$nbtotalofrecords = count($array_display);
 
 $arrayfields=array(
 		'comm'=>array(
