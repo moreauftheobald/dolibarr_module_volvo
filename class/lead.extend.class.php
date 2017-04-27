@@ -609,7 +609,7 @@ class Leadext extends Lead
 			$sql .= $this->db->order($sortfield, $sortorder);
 		}
 		if (! empty($limit)) {
-			$sql .= ' ' . $this->db->plimit(-1, $offset);
+			$sql .= ' ' . $this->db->plimit($limit, $offset);
 		}
 		$this->business = array();
 
