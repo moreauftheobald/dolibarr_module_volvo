@@ -143,7 +143,7 @@ if ($resql != - 1) {
 				'typ' => '',
 				'genre' => '',
 				'sil' => '',
-				'pv' => $line->pv
+				'pv' => price($line->pv)
 		);
 	}
 }
