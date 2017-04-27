@@ -662,7 +662,7 @@ class Leadext extends Lead
 			}
 			$this->db->free($resql);
 			dol_syslog(__METHOD__ . ' ' . $sql, LOG_ERR);
-			return $num;
+			return $sql;
 		} else {
 			$this->errors[] = 'Error ' . $this->db->lasterror();
 			$this->errors[] = 'Error ' . $sql;
