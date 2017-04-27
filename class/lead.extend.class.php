@@ -547,6 +547,7 @@ class Leadext extends Lead
 		$sql .= " ef.numom AS numom,";
 		$sql .= " genre.genre AS genre,";
 		$sql .= " gamme.gamme AS gamme,";
+		$sql .= " silouhette.silouhette AS silouhette,";
 		$sql .= " com.date_valid AS dt_valid_ana,";
 		$sql .= " cf.date_commande AS dt_env_usi,";
 		$sql .= " ef.dt_blockupdate AS dt_blockupdate,";
@@ -572,7 +573,8 @@ class Leadext extends Lead
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields as lef on lead.rowid = lef.fk_object";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "c_volvo_genre as genre on lef.type = genre.rowid";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "c_volvo_gamme as gamme on lef.gamme = gamme.rowid";
-		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "c_volvo_silouhette as silouhette on lef.ilouhette = silouhette.rowid";
+		//$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = cf.rowid";
@@ -653,6 +655,7 @@ class Leadext extends Lead
 				$line->socnom = $obj->socnom;
 				$line->genre = $obj->genre;
 				$line->gamme = $obj->gamme;
+				$line->silouhette = $obj->silouhette;
 
 				$this->business[$compteur] = $line;
 				$compteur++;
