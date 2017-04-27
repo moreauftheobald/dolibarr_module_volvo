@@ -139,8 +139,8 @@ if ($resql != - 1) {
 				'dt_liv_usi' => dol_print_date($line->dt_sortie,'day'),
 				'vin' => substr($line->vin, -7),
 				'mois' => dol_print_date($line->dt_sortie,'%m'),
-				'type' => $line->gamme,
 				'genre' => $line->genre,
+				'type' => $line->gamme,
 				'sil' => $line->silouhette,
 				'pv' => price($line->pv)
 		);
@@ -213,14 +213,14 @@ $arrayfields=array(
 				'field'=>'dt_sortie',
 				'align'=>'center'
 		),
-		'type'=>array(
-				'label'=>'type',
+		'genre'=>array(
+				'label'=>'genre',
 				'checked'=>1,
 				'sub_title'=>0,
 				'align'=>'center'
 		),
-		'genre'=>array(
-				'label'=>'genre',
+		'type'=>array(
+				'label'=>'type',
 				'checked'=>1,
 				'sub_title'=>0,
 				'align'=>'center'
