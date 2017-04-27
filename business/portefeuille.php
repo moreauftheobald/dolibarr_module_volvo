@@ -97,7 +97,7 @@ $array_display=array();
 
 $arrayfields=array(
 		'comm'=>array(
-				'label'=>'comm',
+				'label'=>'Commercial',
 				'checked'=>1,
 				'sub_title'=>0,
 				'align'=>'center'
