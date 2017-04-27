@@ -591,9 +591,9 @@ class Leadext extends Lead
 				}elseif(($key== 'search_run')) {
 					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
 				}elseif(($key== 'MONTH_IN')) {
-					$sqlwhere[] = 'MONTH(IFNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
+					$sqlwhere[] = 'MONTH(dt_sortie) IN (' . $value . ')';
 				}elseif(($key== 'YEAR_IN')) {
-					$sqlwhere[] = 'YEAR(IFNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
+					$sqlwhere[] = 'YEAR(dt_sortie) IN (' . $value . ')';
 				}elseif(($key== 'PORT')) {
 					$sqlwhere[] = '(cf.date_commande IS NOT NULL AND event3.datep IS NULL)';
 				}else {
