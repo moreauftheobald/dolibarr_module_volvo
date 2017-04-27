@@ -140,9 +140,9 @@ if ($resql != - 1) {
 				'dt_liv_usi' => dol_print_date($line->dt_sortie,'day'),
 				'vin' => $line->vin,
 				'mois' => dol_print_date($line->dt_sortie,'%m'),
-				'typ' => '',
+				'type' => '',
 				'genre' => '',
-				'sil' => 'test',
+				'sil' => '',
 				'pv' => price($line->pv)
 		);
 	}
