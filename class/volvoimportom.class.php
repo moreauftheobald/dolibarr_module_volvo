@@ -98,7 +98,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date de livraison demandée'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur',
 				'tabletrans' => $langs->trans('Commande Fournisseur'),
-				'filecolumntitle' => 'Date de livraison demandée',
+				'filecolumntitle' => 'CDD',
 				'editable' => 0,
 				'noinsert' => 1
 		);
@@ -640,6 +640,23 @@ class VolvoImportom extends VolvoImport
 					$year = substr($value['date_facture'], 4,4);
 					$cmd->date_billed = dol_mktime(0, 0, 0, $month, $day, $year);
 					$cmd->classifyBilled($user);
+
+				}
+
+				if(!empty($object->array_options['options_ctm'])){
+					dol_include_once('/societe/class/societe.class.php');
+					$socctm = New Societe($db);
+					$socctm->fetch($object->array_options['options_ctm']);
+					$note = 'Client: ' . $cmd->thirdparty->name . "\n";
+					$note.= 'Contremarque: ' . $socctm->name . "\n";
+					$note.= 'N° de Chassis :' . $cmd->array_options['options_vin'] . "\n";
+					$note.= 'Immatriculation :' . $cmd->array_options['options_immat'] . "\n";
+					$note.= 'Date de Livraison :' . dol_print_date($cmd->date_livraison, 'daytext');
+				} else {
+					$note = 'Client: ' . $cmd->thirdparty->name . "\n";
+					$note.= 'N° de Chassis :' . $cmd->array_options['options_vin'] . "\n";
+					$note.= 'Immatriculation :' . $cmd->array_options['options_immat'] . "\n";
+					$note.= 'Date de Livraison :' . dol_print_date($cmd->date_livraison, 'daytext');
 				}
 
 			}
@@ -679,6 +696,22 @@ class VolvoImportom extends VolvoImport
 					$year = substr($value['date_livraison'], 4,4);
 					$date = dol_mktime(0, 0, 0, $month, $day, $year);
 					$result=$cmd_fourn->set_date_livraison($user,dol_mktime(0, 0, 0, $month, $day, $year));
+				}
+
+				if(!empty($object->array_options['options_ctm'])){
+					dol_include_once('/societe/class/societe.class.php');
+					$socctm = New Societe($db);
+					$socctm->fetch($object->array_options['options_ctm']);
+					$note = 'Client: ' . $cmd->thirdparty->name . "\n";
+					$note.= 'Contremarque: ' . $socctm->name . "\n";
+					$note.= 'N° de Chassis :' . $cmd->array_options['options_vin'] . "\n";
+					$note.= 'Immatriculation :' . $cmd->array_options['options_immat'] . "\n";
+					$note.= 'Date de Livraison :' . dol_print_date($cmd->date_livraison, 'daytext');
+				} else {
+					$note = 'Client: ' . $cmd->thirdparty->name . "\n";
+					$note.= 'N° de Chassis :' . $cmd->array_options['options_vin'] . "\n";
+					$note.= 'Immatriculation :' . $cmd->array_options['options_immat'] . "\n";
+					$note.= 'Date de Livraison :' . dol_print_date($cmd->date_livraison, 'daytext');
 				}
 			}
 		}
