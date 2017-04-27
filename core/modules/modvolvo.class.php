@@ -938,6 +938,12 @@ class modvolvo extends DolibarrModules
 		$this->rights[$r][4] = 'immat';
 		$r ++;
 
+		$this->rights[$r][0] = 0101776;
+		$this->rights[$r][1] = 'Consulter le portefeuille de commande';
+		$this->rights[$r][3] = 1;
+		$this->rights[$r][4] = 'port';
+		$r ++;
+
 
 		// $r++;
 		// Main menu entries
@@ -1131,6 +1137,21 @@ $this->menus = array(); // List of menus to add
 				'position' => 100+$r,
 				'enabled' => '$user->rights->volvo->chaudes',
 				'perms' => '$user->rights->volvo->chaudes',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
+				'type' => 'left',
+				'titre' => 'Portefeuille cmd',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'portefeuille',
+				'url' => '/volvo/business/portfeuille.php',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->port',
+				'perms' => '$user->rights->volvo->port',
 				'target' => '',
 				'user' => 0
 		);
