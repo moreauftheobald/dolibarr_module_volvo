@@ -657,7 +657,7 @@ class Leadext extends Lead
 			$this->errors[] = 'Error ' . $sql;
 			dol_syslog(__METHOD__ . ' ' . join(',', $this->errors), LOG_ERR);
 
-			return - 1;
+			return $sql;
 		}
 	}
 
