@@ -124,7 +124,7 @@ $nbtotalofrecords = 0;
 $array_display=array();
 
 if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
-	$nbtotalofrecords = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
+	$nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
 }
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 
@@ -247,6 +247,29 @@ $arrayfields=array(
 
 );
 
+$periodarray= array(
+		1 => 'Janvier',
+		2 => 'Fevrier',
+		3 => 'Mars',
+		4 => 'Avril',
+		5=> 'Mai',
+		6=> 'Juin',
+		7 => 'Juillet',
+		8 => 'Aout',
+		9 => 'Septembre',
+		10 => 'Octobre',
+		11 => 'Novembre',
+		12 => 'Décembre',
+		13=>'1er Trimestre',
+		14=> '2eme Trimestre',
+		15=>'3eme Trimestre',
+		16=>'4eme Trimestre',
+		17=>'1er Semestre',
+		18=>'2eme Semestre'
+
+);
+
+
 $extra_tools=array(
 		1 => array(
 				'type' => 'select_year',
@@ -273,7 +296,7 @@ $extra_tools=array(
 				'value' => $search_periode,
 				'html_name' => 'search_periode',
 				'use_empty' => 1,
-				'array' => array(1=>'1er Trimestre', 2=> '2eme Trimestre', 3=>'3eme Trimestre', 4=>'4eme Trimestre', 5=>'1er Semestre',6=>'2eme Semestre'),
+				'array' => $periodarray,
 				'value' => $search_periode,
 		)
 );
