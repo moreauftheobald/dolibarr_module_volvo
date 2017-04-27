@@ -129,7 +129,7 @@ $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $off
 if ($resql != - 1) {
 	$num = $resql;
 	$var = true;
-
+	print $num;
 	foreach ($object->business as $line) {
 		$array_display[]=array(
 				'class' => $bc[$var],
