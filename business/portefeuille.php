@@ -113,7 +113,7 @@ if (! empty($year)) {
 	$option .= '&year=' . $year;
 }
 
-$offset = $conf->liste_limit * $page;
+$offset = $conf->liste_limit+1 * $page;
 
 if (empty($sortorder))
 	$sortorder = "ASC";
