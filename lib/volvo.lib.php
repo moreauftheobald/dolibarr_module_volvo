@@ -711,7 +711,7 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->ref]['id'] = $obj->id;
 			}
 		}
-		return $result;
+		return $sql;
 	}else{
 		return $sql;
 	}
