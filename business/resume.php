@@ -110,6 +110,8 @@ $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 $arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
 
+print_r $arrayresult5;
+
 $array_display=array();
 
 foreach ($arrayperiode as $m) {
