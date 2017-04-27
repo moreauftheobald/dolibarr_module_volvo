@@ -108,6 +108,7 @@ $arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 $arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
+$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
 
 $array_display=array();
 
@@ -115,6 +116,7 @@ foreach ($arrayperiode as $m) {
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
 	$var = ! $var;
 	$total_fact+=$arrayresult1['nb_fact'][$m];
+	$total_port+=$arrayresult5['nb_port'][$m];
 	$total_caht+=$arrayresult1['catotalht'][$m];
 	$total_tracteur+=$arrayresult1['nbtracteur'][$m];
 	$total_porteur+=$arrayresult1['nbporteur'][$m];
@@ -147,6 +149,7 @@ foreach ($arrayperiode as $m) {
 			'class_td' => '',
 			'mois' => $link,
 			'nb_facture' => $arrayresult1['nb_fact'][$m],
+			'nb_port' => $arrayresult1['nb_port'][$m],
 			'ca_total' => ($arrayresult1['catotalht'][$m]==0?"":price($arrayresult1['catotalht'][$m])),
 			'ca_volvo'=> ($arrayresult3['cavolvo'][$m]==0?"":price($arrayresult3['cavolvo'][$m])),
 			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
@@ -186,6 +189,7 @@ $array_display[13]=array(
 		'class_td' => ' class="liste_titre"',
 		'mois' => 'Total',
 		'nb_facture' => price($total_fact),
+		'nb_port' => price($total_port),
 		'ca_total' => price($total_caht),
 		'ca_volvo'=> price($total_cavolvo),
 		'nb_trt'=> $total_tracteur,
@@ -214,6 +218,12 @@ $arrayfields=array(
 		),
 		'nb_facture'=>array(
 				'label'=>'Nb Factures',
+				'checked'=>1,
+				'sub_title'=>0,
+				'align'=>'center'
+		),
+		'nb_facture'=>array(
+				'label'=>'Nb portefeuille',
 				'checked'=>1,
 				'sub_title'=>0,
 				'align'=>'center'
