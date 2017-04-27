@@ -28,7 +28,7 @@ $object = new Leadext($db);
 $title = 'Suivis d\'activité VN volvo';
 
 // Security check
-if (! $user->rights->volvo->activite)
+if (! $user->rights->volvo->port)
 	accessforbidden();
 
 // Search criteria
