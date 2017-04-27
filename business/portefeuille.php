@@ -141,7 +141,7 @@ if ($resql != - 1) {
 				'vin' => substr($line->vin, -7),
 				'mois' => dol_print_date($line->dt_sortie,'%m'),
 				'type' => '',
-				'genre' => '',
+				'genre' => $line->genre,
 				'sil' => '',
 				'pv' => price($line->pv)
 		);

@@ -545,6 +545,7 @@ class Leadext extends Lead
 		$sql .= " ef.vin AS vin,";
 		$sql .= " ef.immat AS immat,";
 		$sql .= " ef.numom AS numom,";
+		$sql .= " genre.genre AS genre,";
 		$sql .= " com.date_valid AS dt_valid_ana,";
 		$sql .= " cf.date_commande AS dt_env_usi,";
 		$sql .= " ef.dt_blockupdate AS dt_blockupdate,";
@@ -568,6 +569,7 @@ class Leadext extends Lead
 
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields as lef on lead.rowid = lef.fk_object";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "c_volvo_genre as genre on lef.type = genre.rowid";
 		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
@@ -647,6 +649,7 @@ class Leadext extends Lead
 				$line->pv = $obj->pv;
 				$line->commande = $obj->com;
 				$line->socnom = $obj->socnom;
+				$line->genre = $obj->genre;
 
 				$this->business[$compteur] = $line;
 				$compteur++;
