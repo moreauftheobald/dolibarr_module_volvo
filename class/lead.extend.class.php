@@ -559,7 +559,7 @@ class Leadext extends Lead
 		$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
 		$sql .= " lead.fk_user_resp AS commercial,";
 		$sql .= " CONCAT(u.firstname, ' ',u.lastname) AS comm,";
-		$sql .= " ISNULL(ef.dt_liv_maj,cf.date_livraison) AS dt_sortie,";
+		$sql .= " IFNULL(ef.dt_liv_maj,cf.date_livraison) AS dt_sortie,";
 		$sql .= " com.total_ht AS pv";
 
 		$sql .= " FROM (" . $subsql1 . ") as idx";
@@ -591,9 +591,9 @@ class Leadext extends Lead
 				}elseif(($key== 'search_run')) {
 					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
 				}elseif(($key== 'MONTH_IN')) {
-					$sqlwhere[] = 'MONTH(ISNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
+					$sqlwhere[] = 'MONTH(IFNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
 				}elseif(($key== 'YEAR_IN')) {
-					$sqlwhere[] = 'YEAR(ISNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
+					$sqlwhere[] = 'YEAR(IFNULL(ef.dt_liv_maj,cf.date_livraison)) IN (' . $value . ')';
 				}elseif(($key== 'PORT')) {
 					$sqlwhere[] = '(cf.date_commande IS NOT NULL AND event3.datep IS NULL)';
 				}else {
