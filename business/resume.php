@@ -110,8 +110,6 @@ $arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 $arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 $arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
 
-print_r($arrayresult5);
-
 $array_display=array();
 
 foreach ($arrayperiode as $m) {
@@ -191,7 +189,7 @@ $array_display[13]=array(
 		'class_td' => ' class="liste_titre"',
 		'mois' => 'Total',
 		'nb_facture' => price($total_fact),
-		'nb_portfeuille' => price($total_port),
+		'nb_portfeuille' => price($total_portfeuille),
 		'ca_total' => price($total_caht),
 		'ca_volvo'=> price($total_cavolvo),
 		'nb_trt'=> $total_tracteur,
