@@ -23,7 +23,7 @@ if (! $res)
 	die("Include of main fails");
 
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
-$lead = new Leadext($db);
+$object = new Leadext($db);
 
 $title = 'Suivis d\'activité VN volvo';
 
