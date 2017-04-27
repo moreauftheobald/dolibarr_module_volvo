@@ -123,6 +123,8 @@ if (empty($sortfield))
 $nbtotalofrecords = 0;
 $array_display=array();
 
+$nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
+
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
 
 if ($resql != - 1) {
@@ -150,7 +152,7 @@ if ($resql != - 1) {
 	}
 }
 
-$nbtotalofrecords = count($array_display);
+
 
 $arrayfields=array(
 		'comm'=>array(
