@@ -665,3 +665,55 @@ function stat_sell4($year, $commercial,$monthlist,$mode='GROUP'){
 		return $sql;
 	}
 }
+
+function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
+	global $db;
+
+	$sql = "SELECT  ";
+	if($mode=='BY_REF'){
+		$sql.="cmd.ref as ref, ";
+		$sql.="cmd.rowid as id, ";
+	}
+	$sql.= "MONTH( IFNULL( ef.dt_liv_maj, c.date_livraison ) ) AS Mois, ";
+	$sql.= "COUNT(DISTINCT c.rowid) as nb_port ";
+	$sql.= "FROM " . MAIN_DB_PREFIX . "commande_fournisseur AS c ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = c.rowid ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS el ON el.fk_target = c.rowid AND el.targettype =  'order_supplier' AND el.sourcetype =  'commande' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande AS cmd ON cmd.rowid = el.fk_source ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = cmd.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON el.fk_source = cmd.rowid AND el.targettype =  'lead' AND el.sourcetype =  'commande' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "WHERE YEAR( IFNULL( ef.dt_liv_maj, c.date_livraison ) ) = " . $year . " c.fk_soc =32553 AND c.fk_statut >0 AND event.datep IS NULL ";
+
+	if(!empty($monthlist)){
+		$sql.= "AND MONTH( IFNULL( ef.dt_liv_maj, c.date_livraison ) ) IN (" . $monthlist . ") ";
+	}
+	if ($commercial > 0){
+		$sql.= "AND l.fk_user_resp = '" . $commercial . "' ";
+	}
+
+	if($mode=='GROUP'){
+		$sql.= "GROUP BY MONTH(event.datep) ";
+	}elseif($mode=='BY_REF'){
+		$sql.= "GROUP BY c.ref ";
+	}
+
+
+
+
+	$resql = $db->query($sql);
+	if($resql){
+		$result =array();
+		while($obj = $db->fetch_object($resql)){
+			if($mode=='GROUP'){
+				$result['nb_port'][$obj->Mois] = $obj->nb_port;
+			}elseif($mode=='BY_REF'){
+				$result[$obj->ref]['id'] = $obj->id;
+			}
+		}
+		return $result;
+	}else{
+		return -1;
+	}
+
+}
