@@ -94,7 +94,7 @@ if(!empty($search_periode)){
 $filter = array();
 $filter['PORT'] = 1;
 
-if (! empty($search_periode)) {
+if (! empty($search_periode) && $search_periode != -1 ) {
 	$filter['MONTH_IN'] = $monthlist;
 	$option .= '&search_periode=' . $search_periode;
 }
