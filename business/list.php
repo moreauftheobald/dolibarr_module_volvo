@@ -355,7 +355,6 @@ if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
 $nbtotalofrecords = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
 }
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
-print $resql;
 if ($resql != - 1) {
 $num = $resql;
   	print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
