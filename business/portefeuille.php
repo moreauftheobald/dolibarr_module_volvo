@@ -122,7 +122,7 @@ $nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
 $nbtotalofrecords = count($object->business);
 
 $resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
-print $resql;
+
 if ($resql != - 1) {
 	$num = $resql;
 	$var = true;
