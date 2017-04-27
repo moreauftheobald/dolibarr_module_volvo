@@ -68,33 +68,28 @@ $var = true;
 
 if(!empty($search_periode)){
 	switch($search_periode){
-		case 1:
+		case 13:
 			$monthlist = '1,2,3';
 			break;
-		case 2:
+		case 14:
 			$monthlist = '4,5,6';
 			break;
-		case 3:
+		case 15:
 			$monthlist = '7,8,9';
 			break;
-		case 4:
+		case 16:
 			$monthlist = '10,11,12';
 			break;
-		case 5:
+		case 17:
 			$monthlist = '1,2,3,4,5,6';
 			break;
-		case 6:
+		case 18:
 			$monthlist = '7,8,9,10,11,12';
 			break;
+		default:
+			$monthlist = $search_periode;
 	}
 }
-if(!empty($monthlist)){
-	$arrayperiode = explode(',',$monthlist);
-}else{
-	$arrayperiode=array(1,2,3,4,5,6,7,8,9,10,11,12);
-}
-
-
 
 $filter = array();
 $filter['PORT'] = 1;
