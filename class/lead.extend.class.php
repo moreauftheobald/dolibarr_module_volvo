@@ -566,7 +566,7 @@ class Leadext extends Lead
 
 
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
-		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields as lead on lead.rowid = idx.lead";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields as lef on lead.rowid = lef.fk_object";
 		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
