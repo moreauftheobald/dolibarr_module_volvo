@@ -22,7 +22,8 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/volvo/cmass/lead.extend.class.php';
+$lead = new Leadext($db);
 
 $title = 'Suivis d\'activité VN volvo';
 
@@ -34,6 +35,9 @@ if (! $user->rights->volvo->activite)
 $search_commercial = GETPOST("search_commercial", 'int');
 $search_periode = GETPOST("search_periode");
 $year = GETPOST('year');
+$sortorder = GETPOST('sortorder', 'alpha');
+$sortfield = GETPOST('sortfield', 'alpha');
+$page = GETPOST('page', 'int');
 
 
 // Do we click on purge search criteria ?
@@ -90,9 +94,62 @@ if(!empty($monthlist)){
 	$arrayperiode=array(1,2,3,4,5,6,7,8,9,10,11,12);
 }
 
+$filter['PORT'] = 1;
 
+$filter = array();
+if (! empty($search_periode)) {
+	$filter['MONTH_IN'] = $monthlist;
+	$option .= '&search_periode=' . $search_periode;
+}
+if (! empty($search_commercial) && $search_commercial != -1) {
+	$filter['lead.fk_user_resp'] = $search_commercial;
+	$option .= '&search_commercial=' . $search_commercial;
+}
+
+if (! empty($year)) {
+	$filter['YEAR_IN'] = $year;
+	$option .= '&year=' . $year;
+}
+
+$offset = $conf->liste_limit * $page;
+
+if (empty($sortorder))
+	$sortorder = "ASC";
+if (empty($sortfield))
+	$sortfield = "MONTH(ISNULL(ef.dt_liv_maj,cf.date_livraison))";
+
+$nbtotalofrecords = 0;
 $array_display=array();
 
+if (empty($conf->global->MAIN_DISABLE_FULL_SCANLIST)) {
+	$nbtotalofrecords = $object->fetchAllfolow($sortorder, $sortfield, 0, 0, $filter);
+}
+$resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
+
+if ($resql != - 1) {
+	$num = $resql;
+	$var = true;
+
+	foreach ($object->business as $line) {
+		$array_display[]=array(
+				'class' => $bc[$var],
+				'class_td' => '',
+				'comm' => $line->comm,
+				'dossier' => $line->commande,
+				'om' => $line->numom,
+				'client' => $line->socnom,
+				'dt_cmd' => $line->dt_env_usi,
+				'dt_liv' => $line->dt_liv_dem_cli,
+				'dt_liv_usi' => $line->dt_sortie,
+				'vin' => $line->vin,
+				'mois' => dol_print_date($line->dt_sortie,'%m'),
+				'typ' => '',
+				'genre' => '',
+				'sil' => '',
+				'pv' => $line->pv
+		);
+	}
+}
 
 
 $arrayfields=array(
@@ -100,68 +157,75 @@ $arrayfields=array(
 				'label'=>'Commercial',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field' => 'comm',
 				'align'=>'center'
 		),
 		'dossier'=>array(
 				'label'=>'Dossier',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=> 'com.ref',
 				'align'=>'center'
 		),
 		'om'=>array(
 				'label'=>'N° O.M.',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'ef.numom',
 				'align'=>'center'
 		),
 		'client'=>array(
 				'label'=>'Client',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'socnom',
 				'align'=>'center'
 		),
 		'dt_cmd'=>array(
 				'label'=>'Date de Commande',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'cf.date_commande',
 				'align'=>'center'
 		),
 		'dt_liv'=>array(
 				'label'=>'Date de livraison',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field' => 'com.date_livraison',
 				'align'=>'center'
 		),
 		'dt_liv_usi'=>array(
 				'label'=>'Date de sortie d\'usine',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'dt_sortie',
 				'align'=>'center'
 		),
 		'vin'=>array(
 				'label'=>'N° de Chassis',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'ef.vin',
 				'align'=>'center'
 		),
 		'mois'=>array(
 				'label'=>'Mois',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'MONTH(ISNULL(ef.dt_liv_maj,cf.date_livraison))',
 				'align'=>'center'
 		),
 		'type'=>array(
 				'label'=>'type',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'%',
 				'align'=>'center'
 		),
 		'genre'=>array(
 				'label'=>'genre',
 				'checked'=>1,
 				'sub_title'=>0,
-				'unit'=>'%',
 				'align'=>'center'
 		),
 		'sil'=>array(
@@ -174,6 +238,8 @@ $arrayfields=array(
 				'label'=>'Prix de vente',
 				'checked'=>1,
 				'sub_title'=>0,
+				'field'=>'com.total_ht',
+				'unit' => '€',
 				'align'=>'center'
 		),
 
@@ -220,9 +286,12 @@ $tools=array(
 
 $list_config=array(
 		'title' =>	 'Suivis d\'activité VN volvo',
-		'sortfield' => GETPOST("sortfield",'alpha'),
-		'sortorder' => GETPOST("sortorder",'alpha'),
-		'page' => GETPOST("page",'int'),
+		'sortfield' => $sortfield,
+		'sortorder' => $sortorder,
+		'page' => $page,
+		'num' => $num,
+		'nbtotalofrecords' => $nbtotalofrecords,
+		'option' => $option,
 		'tools_active' =>1,
 		'tools' => $tools,
 		'array_fields' => $arrayfields,
