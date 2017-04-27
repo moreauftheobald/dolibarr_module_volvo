@@ -96,6 +96,12 @@ $array_display=array();
 
 
 $arrayfields=array(
+		'comm'=>array(
+				'label'=>'comm',
+				'checked'=>1,
+				'sub_title'=>0,
+				'align'=>'center'
+		),
 		'dossier'=>array(
 				'label'=>'Dossier',
 				'checked'=>1,
@@ -134,6 +140,12 @@ $arrayfields=array(
 		),
 		'vin'=>array(
 				'label'=>'N° de Chassis',
+				'checked'=>1,
+				'sub_title'=>0,
+				'align'=>'center'
+		),
+		'mois'=>array(
+				'label'=>'Mois',
 				'checked'=>1,
 				'sub_title'=>0,
 				'align'=>'center'
