@@ -116,7 +116,7 @@ $offset = $conf->liste_limit * $page;
 if (empty($sortorder))
 	$sortorder = "ASC";
 if (empty($sortfield))
-	$sortfield = "MONTH(ISNULL(ef.dt_liv_maj,cf.date_livraison))";
+	$sortfield = "MONTH(IFNULL(ef.dt_liv_maj,cf.date_livraison))";
 
 $nbtotalofrecords = 0;
 $array_display=array();
@@ -213,7 +213,7 @@ $arrayfields=array(
 				'label'=>'Mois',
 				'checked'=>1,
 				'sub_title'=>0,
-				'field'=>'MONTH(ISNULL(ef.dt_liv_maj,cf.date_livraison))',
+				'field'=>'MONTH(IFNULL(ef.dt_liv_maj,cf.date_livraison))',
 				'align'=>'center'
 		),
 		'type'=>array(
