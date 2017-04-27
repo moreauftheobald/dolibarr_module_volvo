@@ -348,7 +348,7 @@ $extra_tools=array(
 				'value' => $year,
 				'html_name' => 'year',
 				'use_empty' => 0,
-				'min_year' => -5,
+				'min_year' => 5,
 				'max_year' => 0
 		),
 		2 => array(
