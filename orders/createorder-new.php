@@ -115,9 +115,10 @@ if ($resql) {
 } else {
 	setEventMessage($db->lasterror, 'errors');
 }
+
 $sql3 = "SELECT c.rowid, c.label ";
 $sql3.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
-$sql3.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
+$sql3.= "WHERE fk_parent = ". $conf->global->VOLVO_DIVERS;
 $sql3.= " ORDER BY c.label";
 $resql = $db->query($sql3);
 $divers = array();
@@ -147,27 +148,6 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-
-
-
-$sql3 = "SELECT DISTINCT p.rowid, p.label, ";
-$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_DIVERS .",1,0)) AS CATEG, ";
-$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-$sql3.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql3.= "WHERE p.tosell = 1 ";
-$sql3.= "GROUP BY p.rowid ";
-$sql3.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-$sql3.= "ORDER BY p.label";
-
-$resql = $db->query($sql3);
-$divers = array();
-if ($resql) {
-	while ( $obj = $db->fetch_object($resql) ) {
-		$divers[$obj->rowid] = $obj->label;
-	}
-} else {
-	setEventMessage($db->lasterror, 'errors');
-}
 $internesection='';
 foreach ($interne as $key=>$array){
 	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
