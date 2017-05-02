@@ -167,7 +167,7 @@ foreach ($divers as $key=>$array){
 	$diversection.= 'border-radius:6px; margin-bottom: 3px;">';
 	$diversection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
 	$diversection.= '<div id="' . $key . '" style="display:none;">';
-	$diversection.= $formvolvo->select_withcheckbox("interne_".$key,$array);
+	$diversection.= $formvolvo->select_withcheckbox("divers",$array);
 	$diversection.= '</div>';
 	$diversection.= '</di>';
 }
