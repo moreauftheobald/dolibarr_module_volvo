@@ -71,10 +71,8 @@ $sql1.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
 $sql1.= " ORDER BY c.label";
 $resql = $db->query($sql1);
 $interne = array();
-$count1 = 0;
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
-		$count1++;
 		$sql10 = "SELECT DISTINCT p.rowid, p.label, ";
 		$sql10.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
 		$sql10.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
@@ -117,6 +115,40 @@ if ($resql) {
 } else {
 	setEventMessage($db->lasterror, 'errors');
 }
+$sql3 = "SELECT c.rowid, c.label ";
+$sql3.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql3.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
+$sql3.= " ORDER BY c.label";
+$resql = $db->query($sql3);
+$divers = array();
+if ($resql) {
+	while ( $obj = $db->fetch_object($resql) ) {
+		$sql30 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql30.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql30.= "WHERE p.tosell = 1 ";
+		$sql30.= "GROUP BY p.rowid ";
+		$sql30.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql30.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql30);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$divers[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
+	}
+} else {
+	setEventMessage($db->lasterror, 'errors');
+}
+
+
+
 
 $sql3 = "SELECT DISTINCT p.rowid, p.label, ";
 $sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_DIVERS .",1,0)) AS CATEG, ";
@@ -148,7 +180,17 @@ foreach ($interne as $key=>$array){
 	$internesection.= '</di>';
 }
 
-
+$diversection='';
+foreach ($divers as $key=>$array){
+	$diversection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
+	$diversection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
+	$diversection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$diversection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
+	$diversection.= '<div id="' . $key . '" style="display:none;">';
+	$diversection.= $formvolvo->select_withcheckbox("interne_".$key,$array);
+	$diversection.= '</div>';
+	$diversection.= '</di>';
+}
 
 top_htmlhead('', '');
 $var = ! $var;
@@ -182,7 +224,7 @@ print '</tr>';
 print '<tr >';
 print '<td align="left" valign="top">' . $internesection . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("externe", $externe) . '</td>';
-print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("divers", $divers) . '</td>';
+print '<td align="left" valign="top">' . $diversection . '</td>';
 print '</tr>';
 
 print '</table>';
