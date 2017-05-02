@@ -653,6 +653,9 @@ elseif ($action == 'edit') {
 	if ($user->rights->lead->delete) {
 		print '<div class="inline-block divButAction"><a class="butActionDelete" href="' . $_SERVER['PHP_SELF'] . '?id=' . $object->id . '&action=delete">' . $langs->trans("Delete") . "</a></div>\n";
 	}
+	if($user->admin){
+		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorder-new.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande</a></div>';
+	}
 	print '</div>';
 }
 $db->close();
