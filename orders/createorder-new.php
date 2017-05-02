@@ -86,9 +86,11 @@ if ($resql) {
 
 		$resql2 = $db->query($sql10);
 		if ($resql2) {
+			$list=array()
 			while ( $obj2 = $db->fetch_object($resql2) ) {
-				$interne[$obj->label][$obj2->rowid] = $obj2->label;
+				$list[$obj2->rowid] = $obj2->label;
 			}
+			$interne[$obj->label] = $list;
 		} else {
 			setEventMessage($db->lasterror, 'errors');
 		}
