@@ -86,7 +86,7 @@ if ($resql) {
 
 		$resql2 = $db->query($sql10);
 		if ($resql2) {
-			$list=array()
+			$list=array();
 			while ( $obj2 = $db->fetch_object($resql2) ) {
 				$list[$obj2->rowid] = $obj2->label;
 			}
