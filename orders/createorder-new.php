@@ -84,7 +84,7 @@ if ($resql) {
 		$sql10.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
 		$sql10.= "ORDER BY p.label";
 
-		$resql2 = $db->query($sql1);
+		$resql2 = $db->query($sql10);
 		if ($resql2) {
 			while ( $obj2 = $db->fetch_object($resql2) ) {
 				$interne[$obj->label][$obj2->rowid] = $obj2->label;
