@@ -43,8 +43,8 @@ if ($action == 'creatorder') {
 		print '	window.parent.$(\'#ordercreatedid\').val(\''.$res.'\');'."\n";
 		print '	window.parent.$(\'#popCreateOrder\').dialog(\'close\');'."\n";
 		print '	window.parent.$(\'#popCreateOrder\').remove();'."\n";
-		print '	window.parent.$(\'#wievlead\').dialog(\'close\');'."\n";
-		print '	window.parent.$(\'#wievlead\').remove();'."\n";
+		//print '	window.parent.$(\'#wievlead\').dialog(\'close\');'."\n";
+		//print '	window.parent.$(\'#wievlead\').remove();'."\n";
 		print '});'."\n";
 		print '</script>'."\n";
 		llxFooter();
