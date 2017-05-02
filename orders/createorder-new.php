@@ -65,6 +65,7 @@ if ($resql) {
 } else {
 	setEventMessage($db->lasterror, 'errors');
 }
+
 $sql1 = "SELECT c.rowid, c.label ";
 $sql1.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
 $sql1.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
