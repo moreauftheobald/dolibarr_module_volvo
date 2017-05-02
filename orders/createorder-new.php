@@ -179,7 +179,7 @@ print '<th align="center">' . $langs->trans('Travaux internes') . '</th>';
 print '<th align="center">' . $langs->trans('Travaux externes') . '</th>';
 print '<th align="center">' . $langs->trans('Travaux divers') . '</th>';
 print '</tr>';
-print '<tr ' . $bc[$var] . '>';
+print '<tr >';
 print '<td align="left" valign="top">' . $internesection . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("externe", $externe) . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("divers", $divers) . '</td>';
