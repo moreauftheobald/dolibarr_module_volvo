@@ -135,16 +135,16 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 $internesection='';
-foreach ($interne as $key=>$array){
-	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:' . $color .'; ';
-	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from('.$color.'), to('.$color2.')); ';
-	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
-	$internesection.= '<h><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '</a>' . $key . '</h>';
-	$internesection.= '<div id="' . $key . '" style="display:none;">';
-	$internesection.= $formvolvo->select_withcheckbox("interne_".$key,$array);
-	$internesection.= '</div>';
-	$internesection.= '</di>';
-}
+// foreach ($interne as $key=>$array){
+// 	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:' . $color .'; ';
+// 	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from('.$color.'), to('.$color2.')); ';
+// 	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
+// 	$internesection.= '<h><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '</a>' . $key . '</h>';
+// 	$internesection.= '<div id="' . $key . '" style="display:none;">';
+// 	$internesection.= $formvolvo->select_withcheckbox("interne_".$key,$array);
+// 	$internesection.= '</div>';
+// 	$internesection.= '</di>';
+// }
 
 
 
@@ -178,7 +178,7 @@ print '<th align="center">' . $langs->trans('Travaux externes') . '</th>';
 print '<th align="center">' . $langs->trans('Travaux divers') . '</th>';
 print '</tr>';
 print '<tr ' . $bc[$var] . '>';
-print '<td align="left" valign="top">' . $internesection . '</td>';
+print '<td align="left" valign="top">' . print_r($interne) . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("externe", $externe) . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("divers", $divers) . '</td>';
 print '</tr>';
