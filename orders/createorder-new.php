@@ -43,8 +43,8 @@ if ($action == 'creatorder') {
 		print '	window.parent.$(\'#ordercreatedid\').val(\''.$res.'\');'."\n";
 		print '	window.parent.$(\'#popCreateOrder\').dialog(\'close\');'."\n";
 		print '	window.parent.$(\'#popCreateOrder\').remove();'."\n";
-		//print '	window.parent.$(\'#wievlead\').dialog(\'close\');'."\n";
-		//print '	window.parent.$(\'#wievlead\').remove();'."\n";
+		print '	window.parent.$(\'#wievlead\').dialog(\'close\');'."\n";
+		print '	window.parent.$(\'#wievlead\').remove();'."\n";
 		print '});'."\n";
 		print '</script>'."\n";
 		llxFooter();
@@ -98,20 +98,33 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql2 = "SELECT DISTINCT p.rowid, p.label, ";
-$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_EXTERNE .",1,0)) AS CATEG, ";
-$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-$sql2.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql2.= "WHERE p.tosell = 1 ";
-$sql2.= "GROUP BY p.rowid ";
-$sql2.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-$sql2.= "ORDER BY p.label";
-
-$resql = $db->query($sql2);
+$sql2 = "SELECT c.rowid, c.label ";
+$sql2.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql2.= "WHERE fk_parent = ". $conf->global->VOLVO_EXTERNE;
+$sql2.= " ORDER BY c.label";
+$resql = $db->query($sql3);
 $externe = array();
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
-		$externe[$obj->rowid] = $obj->label;
+		$sql20 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql20.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql20.= "WHERE p.tosell = 1 ";
+		$sql20.= "GROUP BY p.rowid ";
+		$sql20.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql20.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql20);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$externe[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
 	}
 } else {
 	setEventMessage($db->lasterror, 'errors');
@@ -156,7 +169,7 @@ foreach ($interne as $key=>$array){
 	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
 	$internesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
 	$internesection.= '<div id="' . $key . '" style="display:none;">';
-	$internesection.= $formvolvo->select_withcheckbox("interne_".$key,$array);
+	$internesection.= $formvolvo->select_withcheckbox("interne" ,$array);
 	$internesection.= '</div>';
 	$internesection.= '</di>';
 }
