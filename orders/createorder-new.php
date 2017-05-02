@@ -75,25 +75,25 @@ $count1 = 0;
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
 		$count1++;
-		$sql10 = "SELECT DISTINCT p.rowid, p.label, ";
-		$sql10.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
-		$sql10.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-		$sql10.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-		$sql10.= "WHERE p.tosell = 1 ";
-		$sql10.= "GROUP BY p.rowid ";
-		$sql10.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-		$sql10.= "ORDER BY p.label";
+// 		$sql10 = "SELECT DISTINCT p.rowid, p.label, ";
+// 		$sql10.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+// 		$sql10.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+// 		$sql10.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+// 		$sql10.= "WHERE p.tosell = 1 ";
+// 		$sql10.= "GROUP BY p.rowid ";
+// 		$sql10.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+// 		$sql10.= "ORDER BY p.label";
 
-		$resql2 = $db->query($sql10);
-		if ($resql2) {
-			$list=array();
-			while ( $obj2 = $db->fetch_object($resql2) ) {
-				$list[$obj2->rowid] = $obj2->label;
-			}
+// 		$resql2 = $db->query($sql10);
+// 		if ($resql2) {
+// 			$list=array();
+// 			while ( $obj2 = $db->fetch_object($resql2) ) {
+// 				$list[$obj2->rowid] = $obj2->label;
+// 			}
 			$interne[$obj->label] = $list;
-		} else {
-			setEventMessage($db->lasterror, 'errors');
-		}
+// 		} else {
+// 			setEventMessage($db->lasterror, 'errors');
+// 		}
 	}
 } else {
 	setEventMessage($db->lasterror, 'errors');
@@ -180,7 +180,7 @@ print '<th align="center">' . $langs->trans('Travaux externes') . '</th>';
 print '<th align="center">' . $langs->trans('Travaux divers') . '</th>';
 print '</tr>';
 print '<tr ' . $bc[$var] . '>';
-print '<td align="left" valign="top">' . $internesection . '</td>';
+print '<td align="left" valign="top">' ;print_r($interne) . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("externe", $externe) . '</td>';
 print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("divers", $divers) . '</td>';
 print '</tr>';
