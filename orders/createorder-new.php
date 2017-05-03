@@ -168,10 +168,11 @@ foreach ($interne as $key=>$array){
 	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
 	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
 	$internesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
+	$internesection.= '</div>';
 	$internesection.= '<div id="' . $key . '" style="display:none;">';
 	$internesection.= $formvolvo->select_withcheckbox("interne" ,$array);
 	$internesection.= '</div>';
-	$internesection.= '</di>';
+
 }
 
 $diversection='';
