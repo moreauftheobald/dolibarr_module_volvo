@@ -164,8 +164,8 @@ if ($resql) {
 
 $internesection='';
 foreach ($interne as $key=>$array){
-	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
-	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
+	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#ffffff)); ';
 	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
 	$internesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
 	$internesection.= '</div>';
