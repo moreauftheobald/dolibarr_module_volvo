@@ -166,9 +166,9 @@ $internesection='';
 foreach ($interne as $key=>$array){
 	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
 	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
-	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$internesection.= 'border-radius:6px; margin-bottom: 3px; width: 33%;">';
 	$internesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
-	$internesection.= '</div>';
+	$internesection.= '</div style="width: 33%;">';
 	$internesection.= '<div id="' . $key . '" style="display:none;">';
 	$internesection.= $formvolvo->select_withcheckbox("interne" ,$array);
 	$internesection.= '</div>';
