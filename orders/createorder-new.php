@@ -102,7 +102,7 @@ $sql2 = "SELECT c.rowid, c.label ";
 $sql2.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
 $sql2.= "WHERE fk_parent = ". $conf->global->VOLVO_EXTERNE;
 $sql2.= " ORDER BY c.label";
-$resql = $db->query($sql3);
+$resql = $db->query($sql2);
 $externe = array();
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
