@@ -176,14 +176,14 @@ foreach ($interne as $key=>$array){
 }
 
 $externesection='';
-foreach ($interne as $key=>$array){
+foreach ($externe as $key=>$array){
 	$externesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
 	$externesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
 	$externesection.= 'border-radius:6px; margin-bottom: 3px;">';
 	$externesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
 	$externesection.= '</div>';
 	$externesection.= '<div id="' . $key . '" style="display:none;">';
-	$externesection.= $formvolvo->select_withcheckbox("interne" ,$array);
+	$externesection.= $formvolvo->select_withcheckbox("externe" ,$array);
 	$externesection.= '</div>';
 
 }
