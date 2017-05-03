@@ -66,61 +66,138 @@ if ($resql) {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql1 = "SELECT DISTINCT p.rowid, p.label, ";
-$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_INTERNE .",1,0)) AS CATEG, ";
-$sql1.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-$sql1.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql1.= "WHERE p.tosell = 1 ";
-$sql1.= "GROUP BY p.rowid ";
-$sql1.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-$sql1.= "ORDER BY p.label";
-
+$sql1 = "SELECT c.rowid, c.label ";
+$sql1.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql1.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
+$sql1.= " ORDER BY c.label";
 $resql = $db->query($sql1);
 $interne = array();
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
-		$interne[$obj->rowid] = $obj->label;
+		$sql10 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql10.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql10.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql10.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql10.= "WHERE p.tosell = 1 ";
+		$sql10.= "GROUP BY p.rowid ";
+		$sql10.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql10.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql10);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$interne[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
 	}
 } else {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql2 = "SELECT DISTINCT p.rowid, p.label, ";
-$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_EXTERNE .",1,0)) AS CATEG, ";
-$sql2.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-$sql2.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql2.= "WHERE p.tosell = 1 ";
-$sql2.= "GROUP BY p.rowid ";
-$sql2.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-$sql2.= "ORDER BY p.label";
-
+$sql2 = "SELECT c.rowid, c.label ";
+$sql2.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql2.= "WHERE fk_parent = ". $conf->global->VOLVO_EXTERNE;
+$sql2.= " ORDER BY c.label";
 $resql = $db->query($sql2);
 $externe = array();
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
-		$externe[$obj->rowid] = $obj->label;
+		$sql20 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql20.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql20.= "WHERE p.tosell = 1 ";
+		$sql20.= "GROUP BY p.rowid ";
+		$sql20.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql20.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql20);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$externe[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
 	}
 } else {
 	setEventMessage($db->lasterror, 'errors');
 }
 
-$sql3 = "SELECT DISTINCT p.rowid, p.label, ";
-$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_DIVERS .",1,0)) AS CATEG, ";
-$sql3.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
-$sql3.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-$sql3.= "WHERE p.tosell = 1 ";
-$sql3.= "GROUP BY p.rowid ";
-$sql3.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
-$sql3.= "ORDER BY p.label";
-
+$sql3 = "SELECT c.rowid, c.label ";
+$sql3.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql3.= "WHERE fk_parent = ". $conf->global->VOLVO_DIVERS;
+$sql3.= " ORDER BY c.label";
 $resql = $db->query($sql3);
 $divers = array();
 if ($resql) {
 	while ( $obj = $db->fetch_object($resql) ) {
-		$divers[$obj->rowid] = $obj->label;
+		$sql30 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql30.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql30.= "WHERE p.tosell = 1 ";
+		$sql30.= "GROUP BY p.rowid ";
+		$sql30.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql30.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql30);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$divers[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
 	}
 } else {
 	setEventMessage($db->lasterror, 'errors');
+}
+
+$internesection='';
+foreach ($interne as $key=>$array){
+	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$internesection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$internesection.= '</div>';
+	$internesection.= '<div id="' . $key . '" style="display:none;">';
+	$internesection.= $formvolvo->select_withcheckbox("interne" ,$array);
+	$internesection.= '</div>';
+
+}
+
+$externesection='';
+foreach ($externe as $key=>$array){
+	$externesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$externesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$externesection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$externesection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$externesection.= '</div>';
+	$externesection.= '<div id="' . $key . '" style="display:none;">';
+	$externesection.= $formvolvo->select_withcheckbox("externe" ,$array);
+	$externesection.= '</div>';
+
+}
+
+$diversection='';
+foreach ($divers as $key=>$array){
+	$diversection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$diversection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$diversection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$diversection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$diversection.= '</div>';
+	$diversection.= '<div id="' . $key . '" style="display:none;">';
+	$diversection.= $formvolvo->select_withcheckbox("divers",$array);
+	$diversection.= '</div>';
 }
 
 top_htmlhead('', '');
@@ -148,14 +225,14 @@ print '</table>';
 print '</td>';
 print '</tr>';
 print '<tr class="liste_titre">';
-print '<th align="center">' . $langs->trans('Travaux internes') . '</th>';
-print '<th align="center">' . $langs->trans('Travaux externes') . '</th>';
-print '<th align="center">' . $langs->trans('Travaux divers') . '</th>';
+print '<th align="center" width="33%">' . $langs->trans('Travaux internes') . '</th>';
+print '<th align="center" width="33%">' . $langs->trans('Travaux externes') . '</th>';
+print '<th align="center" width="33%">' . $langs->trans('Travaux divers') . '</th>';
 print '</tr>';
-print '<tr ' . $bc[$var] . '>';
-print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("interne", $interne) . '</td>';
-print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("externe", $externe) . '</td>';
-print '<td align="left" valign="top">' . $formvolvo->select_withcheckbox("divers", $divers) . '</td>';
+print '<tr >';
+print '<td align="left" valign="top">' . $internesection . '</td>';
+print '<td align="left" valign="top">' . $externesection . '</td>';
+print '<td align="left" valign="top">' . $diversection . '</td>';
 print '</tr>';
 
 print '</table>';
@@ -164,5 +241,20 @@ print '<input type="submit" align="center" class="button" value="' . $langs->tra
 print '</div>';
 print '</form>';
 
+
+?>
+<script type="text/javascript" language="javascript">
+function visibilite(thingId) {
+	var targetElement;
+	targetElement = document.getElementById(thingId) ;
+	if (targetElement.style.display == "none") {
+		targetElement.style.display = "" ;
+	} else {
+		targetElement.style.display = "none" ;
+	}
+}
+</script>
+<?php
 llxFooter();
 $db->close();
+?>
