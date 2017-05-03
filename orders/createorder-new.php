@@ -177,10 +177,10 @@ foreach ($interne as $key=>$array){
 
 $externesection='';
 foreach ($externe as $key=>$array){
-	$externesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
-	$externesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
+	$externesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$externesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
 	$externesection.= 'border-radius:6px; margin-bottom: 3px;">';
-	$externesection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
+	$externesection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
 	$externesection.= '</div>';
 	$externesection.= '<div id="' . $key . '" style="display:none;">';
 	$externesection.= $formvolvo->select_withcheckbox("externe" ,$array);
@@ -190,10 +190,10 @@ foreach ($externe as $key=>$array){
 
 $diversection='';
 foreach ($divers as $key=>$array){
-	$diversection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#cccccc; ';
-	$diversection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#b2b2b2)); ';
+	$diversection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$diversection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
 	$diversection.= 'border-radius:6px; margin-bottom: 3px;">';
-	$diversection.= '<h style="font-size: large;><a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<b></a> ' . $key . ' </b></h>';
+	$diversection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
 	$diversection.= '</div>';
 	$diversection.= '<div id="' . $key . '" style="display:none;">';
 	$diversection.= $formvolvo->select_withcheckbox("divers",$array);
