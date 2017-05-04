@@ -153,7 +153,9 @@ $extra_tools=array(
 		'html_name' => 'year',
 		'use_empty' => 0,
 		'min_year' => 5,
-		'max_year' => 0
+		'max_year' => 0,
+		'default' => dol_print_date(dol_now(),'%Y'),
+		'filter' => 'YEAR_IN'
 	),
 	2 => array(
 		'type' => 'select_user',
@@ -163,7 +165,7 @@ $extra_tools=array(
 		'use_empty' => 1,
 		'see_all' => $user->rights->volvo->stat_all,
 		'limit_to_group' => '1',
-
+		'filter' => 'lead.fk_user_resp'
 	),
 	3 => array(
 		'type' => 'select_array',
@@ -173,18 +175,34 @@ $extra_tools=array(
 		'use_empty' => 1,
 		'array' => $periodarray,
 		'value' => $search_periode,
+		'filter' => 'MONTH_IN'
 	)
 );
-
+foreach ($extra_tools as $key => $array){
+	if(!empty($_POST[$p['html_name']])){
+		$$p['html_name'] = GETPOST($p['html_name']);
+		if($$p['html_name']==-1) $$p['html_name'] ="";
+		$p['value'] = $$p['html_name'];
+		$filter[$p['filter']] = $$p['html_name'];
+		$option .= '&' . $p['html_name'] . '=' . $$p['html_name'];
+	}
+}
 
 // Search criteria
-$search_commercial = GETPOST("search_commercial", 'int');
-$search_periode = GETPOST("search_periode");
-$year = GETPOST('year');
+
 $sortorder = GETPOST('sortorder', 'alpha');
 $sortfield = GETPOST('sortfield', 'alpha');
 $page = GETPOST('page', 'int');
 
+$offset = ($conf->liste_limit+1) * $page;
+
+if (empty($sortorder))
+	$sortorder = "ASC";
+if (empty($sortfield))
+	$sortfield = "dt_sortie";
+
+$filter = array();
+$filter['PORT'] = 1;
 
 // Do we click on purge search criteria ?
 if (GETPOST("button_removefilter_x")) {
@@ -192,23 +210,6 @@ if (GETPOST("button_removefilter_x")) {
  	$search_periode = '';
  	$year = dol_print_date(dol_now(),'%Y');
 }
-
-$search_commercial_disabled = 0;
-if (empty($user->rights->volvo->stat_all)){
-	$search_commercial = $user->id;
-	$search_commercial_disabled = 1;
-}
-
-$user_included=array();
-$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
-$resqlusers  = $db->query($sqlusers);
-if($resqlusers){
-	while ($users = $db->fetch_object($resqlusers)){
-		$user_included[] = $users->fk_user;
-	}
-}
-
-if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
 
 $var = true;
 
@@ -237,29 +238,6 @@ if(!empty($search_periode)){
 	}
 }
 
-$filter = array();
-$filter['PORT'] = 1;
-
-if (! empty($search_periode) && $search_periode != -1 ) {
-	$filter['MONTH_IN'] = $monthlist;
-	$option .= '&search_periode=' . $search_periode;
-}
-if (! empty($search_commercial) && $search_commercial != -1) {
-	$filter['lead.fk_user_resp'] = $search_commercial;
-	$option .= '&search_commercial=' . $search_commercial;
-}
-
-if (! empty($year)) {
-	$filter['YEAR_IN'] = $year;
-	$option .= '&year=' . $year;
-}
-
-$offset = ($conf->liste_limit+1) * $page;
-
-if (empty($sortorder))
-	$sortorder = "ASC";
-if (empty($sortfield))
-	$sortfield = "dt_sortie";
 
 $nbtotalofrecords = 0;
 $array_display=array();
@@ -293,14 +271,6 @@ if ($resql != - 1) {
 		);
 	}
 }
-
-
-
-
-
-
-
-
 
 
 $tools=array(

@@ -120,10 +120,13 @@ if($list_config['tools_active']==1){
 			print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
 			switch($p['type']){
 				case 'select_user':
+					if($p['value'] == -1) $p['value']="";
+
 					if($p['see_all']!=1){
 						$p['value'] = $user->id;
 						$disabled = 1;
 					}
+
 					if(!empty($p['limit_to_group'])){
 						$user_included=array();
 						$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup IN(" . $p['limit_to_group'] . ") ";
@@ -150,10 +153,16 @@ if($list_config['tools_active']==1){
 					print $form->select_dolusers($p['value'],$p['html_name'],$p['use_empty'],$user_excluded,$disabled,$user_included);
 					break;
 				case 'select_year':
+					if($p['value'] == -1) $p['value']="";
+
+					if(empty($p['value']) && !empty($p['default'])){
+						$p['value'] = $p['default'];
+					}
 					print '&nbsp; &nbsp;' . $p['title'];
 					$formother->select_year($p['value'],$p['html_name'],$p['use_empty'],$p['min_year'],$p['max_year']);
 					break;
 				case 'select_array':
+					if($p['value'] == -1) $p['value']="";
 					print '&nbsp; &nbsp;' . $p['title'];
 					print $form->selectarray($p['html_name'], $p['array'],$p['value'],$p['use_empty']);
 			}
