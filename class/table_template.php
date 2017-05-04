@@ -153,14 +153,14 @@ if(is_array($list_config['sub_title'])){
 			print '<th class="liste_titre" colspan="' . $group[$f['sub_title']] . '" align="center">' . $list_config['sub_title'][$f['sub_title']] . '</th>';
 			$groupdone[$f['sub_title']] = 1;
 		}elseif($f['sub_title']==0 && $f['checked'] == 1){
-			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'rowspan="2" align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['option'],'rowspan="2" align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
 	print '<tr class="liste_titre" style="height:22px;">';
 	foreach ($list_config['array_fields'] as $f){
 		if($f['sub_title']>0 && $f['checked'] == 1){
-			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['option'],'align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
@@ -168,7 +168,7 @@ if(is_array($list_config['sub_title'])){
 	print '<tr class="liste_titre" style="height:22px;">';
 	foreach ($list_config['array_fields'] as $f){
 		if($f['checked'] == 1){
-			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['param'],'align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
+			print_liste_field_titre($f['label'],$_SERVER["PHP_SELF"],$f['field'],'',$list_config['option'],'align="' . $f['align'] .'"',$list_config['sortfield'],$list_config['sortorder']);
 		}
 	}
 	print "</tr>";
