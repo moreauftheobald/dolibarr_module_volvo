@@ -269,9 +269,13 @@ class Dyntable
 			$param = $this->param1;
 			$result = $this->result;
 			$object = new $this->object($this->db);
-			$object->$methode('','','','',$$param);
+			//$object->$methode('','','','',$$param);
+			$this->test($$param);
 			var_dump($object->$result);
 		}
+	}
+	function test($param){
+		var_dump($param);
 	}
 }
 
