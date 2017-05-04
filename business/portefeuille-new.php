@@ -222,6 +222,11 @@ if (empty($sortfield))
 
 $table->export_name = 'portefeuille';
 $table->context = 'portefeuille';
+$table->search_button = 1;
+$table->remove_filter_button = 1;
+$table->export_button = 1;
+$table->select_fields_button = 1;
+
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
