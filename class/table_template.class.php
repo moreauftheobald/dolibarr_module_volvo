@@ -32,6 +32,17 @@ class Dyntable
 	public $object;
 	public $mode;
 	public $result;
+	public $limit;
+	public $param0;
+	public $param1;
+	public $param2;
+	public $param3;
+	public $param4;
+	public $param5;
+	public $param6;
+	public $param7;
+	public $param8;
+	public $param9;
 
 
 	function __construct($db)
@@ -266,11 +277,20 @@ class Dyntable
 		if($this->mode=='object_methode'){
 			dol_include_once($this->include);
 			$methode = $this->method;
+			$param0 = $this->param0;
 			$param1 = $this->param1;
+			$param2 = $this->param2;
+			$param3 = $this->param3;
+			$param4 = $this->param4;
+			$param5 = $this->param5;
+			$param6 = $this->param6;
+			$param7 = $this->param7;
+			$param8 = $this->param8;
+			$param9 = $this->param9;
 			$result = $this->result;
 			$object = new $this->object($this->db);
-			$object->$methode('','','','',$this->$this->param1);
-			//$this->test($this->$param);
+			$object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
+					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
 			var_dump($object->$result);
 		}
 	}
