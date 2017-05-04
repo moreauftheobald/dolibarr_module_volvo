@@ -185,6 +185,7 @@ foreach ($extra_tools as $key => $array){
 		$p['value'] = $$p['html_name'];
 		$filter[$p['filter']] = $$p['html_name'];
 		$option .= '&' . $p['html_name'] . '=' . $$p['html_name'];
+		var_dump($$p['html_name']);
 	}
 }
 
