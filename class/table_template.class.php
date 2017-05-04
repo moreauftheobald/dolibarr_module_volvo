@@ -164,8 +164,8 @@ class Dyntable
 			{
 				$tabparam=array();
 
-				if (GETPOST("selectedfields")) $tabparam["MAIN_SELECTEDFIELDS_".$varpage]=GETPOST("selectedfields");
-				else $tabparam["MAIN_SELECTEDFIELDS_".$varpage]='';
+				if (GETPOST("selectedfields")) $tabparam["MAIN_SELECTEDFIELDS_".$this->context]=GETPOST("selectedfields");
+				else $tabparam["MAIN_SELECTEDFIELDS_".$this->context]='';
 
 				include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
