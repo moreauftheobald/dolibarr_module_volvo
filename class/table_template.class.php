@@ -253,7 +253,7 @@ class Dyntable
 
 		// footer
 		llxFooter();
-		$db->close();
+		$this->db->close();
 	}
 }
 
