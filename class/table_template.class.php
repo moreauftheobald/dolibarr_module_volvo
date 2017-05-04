@@ -266,10 +266,10 @@ class Dyntable
 		if($this->mode=='object_methode'){
 			dol_include_once($this->include);
 			$methode = $this->method;
-			$param = $this->param1;
+			$param1 = $this->param1;
 			$result = $this->result;
 			$object = new $this->object($this->db);
-			$object->$methode('','','','',$this->$param);
+			$object->$methode('','','','',$this->$this->param1);
 			//$this->test($this->$param);
 			var_dump($object->$result);
 		}
