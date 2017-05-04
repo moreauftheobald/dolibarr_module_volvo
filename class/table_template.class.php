@@ -34,6 +34,98 @@ class Dyntable
 
 	}
 
+	static function multiSelectArrayWithCheckbox($htmlname)
+	{
+		global $conf,$user;
+
+		if (! empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) return '';
+
+		$tmpvar="MAIN_SELECTEDFIELDS_".$this->context;
+		if (! empty($user->conf->$tmpvar))
+		{
+			$tmparray=explode(',', $user->conf->$tmpvar);
+			foreach($this->arrayfields as $key => $val)
+			{
+				if (in_array($key, $tmparray)) $array[$key]->checked=1;
+				else $array[$key]->checked=0;
+			}
+		}
+
+		$lis='';
+		$listcheckedstring='';
+
+		foreach($this->arrayfields as $key => $val)
+		{
+			if (isset($val->enabled) && ! $val->enabled)
+			{
+				unset($this->arrayfields[$key]);     // We don't want this field
+				continue;
+			}
+			if ($val->label)
+			{
+				$lis.='<li><input type="checkbox" value="'.$key.'"'.(empty($val->checked)?'':' checked="checked"').'/>'.dol_escape_htmltag($val->label).'</li>';
+				$listcheckedstring.=(empty($val->checked)?'':$key.',');
+			}
+		}
+
+		$out ='<!-- Component multiSelectArrayWithCheckbox selectedfields -->
+
+            <dl class="dropdown">
+            <dt>
+            <a href="#">
+              '.img_picto('','list').'
+            </a>
+            <input type="hidden" class="selectedfields" name="selectedfields" value="'.$listcheckedstring.'">
+            </dt>
+            <dd>
+                <div class="multiselectcheckboxselectedfields">
+                    <ul class="ulselectedfields">
+                    '.$lis.'
+                    </ul>
+                </div>
+            </dd>
+        </dl>
+
+        <script type="text/javascript">
+          $(".dropdown dt a").on(\'click\', function () {
+              $(".dropdown dd ul").slideToggle(\'fast\');
+          });
+
+          $(".dropdown dd ul li a").on(\'click\', function () {
+              $(".dropdown dd ul").hide();
+          });
+
+          function getSelectedValue(id) {
+               return $("#" + id).find("dt a span.value").html();
+          }
+
+          $(document).bind(\'click\', function (e) {
+              var $clicked = $(e.target);
+              if (!$clicked.parents().hasClass("dropdown")) $(".dropdown dd ul").hide();
+          });
+
+          $(\'.multiselectcheckboxselectedfields input[type="checkbox"]\').on(\'click\', function () {
+              console.log("A new field was added/removed")
+              $("input:hidden[name=formfilteraction]").val(\'listafterchangingselectedfields\')
+              var title = $(this).val() + ",";
+              if ($(this).is(\':checked\')) {
+                  $(\'.selectedfields\').val(title + $(\'.selectedfields\').val());
+              }
+              else {
+                  $(\'.selectedfields\').val( $(\'.selectedfields\').val().replace(title, \'\') )
+              }
+              // Now, we submit page
+              $(this).parents(\'form:first\').submit();
+        });
+
+        </script>
+
+        ';
+		return $out;
+	}
+
+
+
 	function header(){
 		llxHeader('', $this->title);
 		print_barre_liste($this->title, $this->page, $_SERVER['PHP_SELF'], $this->option, $this->sortfield, $this->sortorder, '', $this->num, $this->nbtotalofrecords);
@@ -62,7 +154,6 @@ class Dyntable
 		}
 		print '</th>';
 		if($this->select_fields_button==1){
-			$varpage=$this->context;
 			if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
 			{
 				$tabparam=array();
@@ -75,7 +166,7 @@ class Dyntable
 				$result=dol_set_user_param($this->db, $conf, $user, $tabparam);
 			}
 
-			$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $this->array_fields, $varpage);
+			$selectfields = $this->multiSelectArrayWithCheckbox('selectedfields', $this->array_fields, $varpage);
 
 			print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
 			print $selectfields;
