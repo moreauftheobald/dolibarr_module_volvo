@@ -262,9 +262,11 @@ class Dyntable
 	}
 
 	function data_array(){
-		dol_include_once($this->include);
-		$object = new $this->object($this->db);
-
+		if($this->mode=='object_methode'){
+			dol_include_once($this->include);
+			$object = new $this->object($this->db);
+			$object->$this->methode;
+		}
 	}
 }
 
