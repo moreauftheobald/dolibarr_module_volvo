@@ -230,13 +230,13 @@ $table->select_fields_button = 1;
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
-$table->header();
+//$table->header();
 
 //$table->draw_tool_bar();
 
 //$table->draw_table_head();
 
-$table->end_table();
+//$table->end_table();
 
 
 
