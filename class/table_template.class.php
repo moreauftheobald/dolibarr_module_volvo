@@ -46,8 +46,14 @@ class Dyntable
 			$tmparray=explode(',', $user->conf->$tmpvar);
 			foreach($this->arrayfields as $key => $val)
 			{
-				if (in_array($key, $tmparray)) $array[$key]->checked=1;
-				else $array[$key]->checked=0;
+				if (in_array($key, $tmparray)){
+					$val->checked=1;
+					$array[$key] = $val;
+				}
+				else {
+					$val->checked=0;
+					$array[$key]=$val;
+				}
 			}
 		}
 
