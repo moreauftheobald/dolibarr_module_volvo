@@ -178,7 +178,7 @@ $extra_tools=array(
 		'filter' => 'MONTH_IN'
 	)
 );
-foreach ($extra_tools as $key => $array){
+foreach ($extra_tools as $key => $p){
 	$var = GETPOST($p['html_name']);
 	print $var;
 	if(!empty($_POST[$p['html_name']])){
