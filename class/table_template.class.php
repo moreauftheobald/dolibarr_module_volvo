@@ -31,6 +31,7 @@ class Dyntable
 	public $include;
 	public $object;
 	public $mode;
+	public $result;
 
 
 	function __construct($db)
@@ -265,8 +266,10 @@ class Dyntable
 		if($this->mode=='object_methode'){
 			dol_include_once($this->include);
 			$methode = $this->method;
+			$result = $this->result;
 			$object = new $this->object($this->db);
 			$object->$methode;
+			var_dump($object->$result);
 		}
 	}
 }
