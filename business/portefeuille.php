@@ -179,6 +179,7 @@ $extra_tools=array(
 	)
 );
 foreach ($extra_tools as $key => $array){
+	print 'ok';
 	if(!empty($_POST[$p['html_name']])){
 		$$p['html_name'] = GETPOST($p['html_name']);
 		if($$p['html_name']==-1) $$p['html_name'] ="";
