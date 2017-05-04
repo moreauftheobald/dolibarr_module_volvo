@@ -40,7 +40,7 @@ class Dyntable
 	}
 
 	function draw_tool_bar(){
-		global $conf;
+		global $conf, $user;
 
 		print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 		print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
@@ -71,10 +71,10 @@ class Dyntable
 
 				include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
-				$result=dol_set_user_param($db, $conf, $user, $tabparam);
+				$result=dol_set_user_param($this->db, $conf, $user, $tabparam);
 			}
 
-			$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
+			$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $this->array_fields, $varpage);
 
 			print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
 			print $selectfields;
