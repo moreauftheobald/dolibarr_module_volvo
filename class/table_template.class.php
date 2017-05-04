@@ -263,7 +263,7 @@ class Dyntable
 
 	function data_array(){
 		dol_include_once($this->include);
-		$object = new $this->object;
+		$object = new $this->object.'(' . $db .')';
 
 	}
 }
