@@ -264,8 +264,9 @@ class Dyntable
 	function data_array(){
 		if($this->mode=='object_methode'){
 			dol_include_once($this->include);
+			$methode = $this->method;
 			$object = new $this->object($this->db);
-			$object->$this->methode;
+			$object->$methode;
 		}
 	}
 }
