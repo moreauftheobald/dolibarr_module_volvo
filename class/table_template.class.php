@@ -362,20 +362,6 @@ $form = new Form($db);
 $formother = new FormOther($db);
 
 $limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
-$varpage=$list_config['context'];
-if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
-{
-	$tabparam=array();
-
-	if (GETPOST("selectedfields")) $tabparam["MAIN_SELECTEDFIELDS_".$varpage]=GETPOST("selectedfields");
-	else $tabparam["MAIN_SELECTEDFIELDS_".$varpage]='';
-
-	include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
-
-	$result=dol_set_user_param($db, $conf, $user, $tabparam);
-}
-
-$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
 
 if(GETPOST("button_export_x")){
 	$handler = fopen("php://output", "w");
@@ -434,15 +420,6 @@ if(GETPOST("button_export_x")){
 
 	exit;
 }
-
-
-
-
-
-
-//var_dump($group);
-
-
 
 
 ?>
