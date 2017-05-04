@@ -34,7 +34,7 @@ class Dyntable
 
 	}
 
-	static function multiSelectArrayWithCheckbox($htmlname)
+	function multiSelectArrayWithCheckbox()
 	{
 		global $conf,$user;
 
@@ -166,7 +166,7 @@ class Dyntable
 				$result=dol_set_user_param($this->db, $conf, $user, $tabparam);
 			}
 
-			$selectfields = $this->multiSelectArrayWithCheckbox('selectedfields', $this->array_fields, $varpage);
+			$selectfields = $this->multiSelectArrayWithCheckbox();
 
 			print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
 			print $selectfields;
