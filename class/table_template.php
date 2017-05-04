@@ -120,8 +120,34 @@ if($list_config['tools_active']==1){
 			print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
 			switch($p['type']){
 				case 'select_user':
+					if($p['see_all']!=1){
+						$p['value'] = $user->id;
+						$disabled = 1;
+					}
+					if(!empty($p['limit_to_group'])){
+						$user_included=array();
+						$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup IN(" . $p['limit_to_group'] . ") ";
+						$resqlusers  = $db->query($sqlusers);
+						if($resqlusers){
+							while ($users = $db->fetch_object($resqlusers)){
+								$user_included[] = $users->fk_user;
+							}
+						}
+					}
+
+					if(!empty($p['exclude_group'])){
+						$user_excluded=array();
+						$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup IN(" . $p['limit_to_group'] . ") ";
+						$resqlusers  = $db->query($sqlusers);
+						if($resqlusers){
+							while ($users = $db->fetch_object($resqlusers)){
+								$user_excluded[] = $users->fk_user;
+							}
+						}
+					}
+
 					print '&nbsp; &nbsp;' . $p['title'];
-					print $form->select_dolusers($p['value'],$p['html_name'],$p['use_empty'],$p['excluded'],$p['disabled'],$p['included']);
+					print $form->select_dolusers($p['value'],$p['html_name'],$p['use_empty'],$user_excluded,$disabled,$user_included);
 					break;
 				case 'select_year':
 					print '&nbsp; &nbsp;' . $p['title'];

@@ -31,6 +31,152 @@ $title = 'Suivis d\'activité VN volvo';
 if (! $user->rights->volvo->port)
 	accessforbidden();
 
+$arrayfields=array(
+	'comm'=>array(
+		'label'=>'Commercial',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field' => 'comm',
+		'align'=>'center'
+	),
+	'dossier'=>array(
+		'label'=>'Dossier',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=> 'com.ref',
+		'align'=>'center'
+	),
+	'om'=>array(
+		'label'=>'N° O.M.',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'ef.numom',
+		'align'=>'center'
+	),
+	'client'=>array(
+		'label'=>'Client',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'socnom',
+		'align'=>'center'
+	),
+	'dt_cmd'=>array(
+		'label'=>'Date de Commande',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'cf.date_commande',
+		'align'=>'center'
+	),
+	'dt_liv'=>array(
+		'label'=>'Date de livraison',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field' => 'com.date_livraison',
+		'align'=>'center'
+	),
+	'dt_liv_usi'=>array(
+		'label'=>'Date de sortie d\'usine',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'dt_sortie',
+		'align'=>'center'
+	),
+	'vin'=>array(
+		'label'=>'N° de Chassis',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'ef.vin',
+		'align'=>'center'
+	),
+	'mois'=>array(
+		'label'=>'Mois',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'dt_sortie',
+		'align'=>'center'
+	),
+	'genre'=>array(
+		'label'=>'genre',
+		'checked'=>1,
+		'sub_title'=>0,
+		'align'=>'center'
+	),
+	'type'=>array(
+		'label'=>'type',
+		'checked'=>1,
+		'sub_title'=>0,
+		'align'=>'center'
+	),
+	'sil'=>array(
+		'label'=>'silouhette',
+		'checked'=>1,
+		'sub_title'=>0,
+		'align'=>'center'
+	),
+	'pv'=>array(
+		'label'=>'Prix de vente',
+		'checked'=>1,
+		'sub_title'=>0,
+		'field'=>'com.total_ht',
+		'unit' => '€',
+		'align'=>'center'
+	),
+);
+
+$periodarray= array(
+	1 => 'Janvier',
+	2 => 'Fevrier',
+	3 => 'Mars',
+	4 => 'Avril',
+	5=> 'Mai',
+	6=> 'Juin',
+	7 => 'Juillet',
+	8 => 'Aout',
+	9 => 'Septembre',
+	10 => 'Octobre',
+	11 => 'Novembre',
+	12 => 'Décembre',
+	13=>'1er Trimestre',
+	14=> '2eme Trimestre',
+	15=>'3eme Trimestre',
+	16=>'4eme Trimestre',
+	17=>'1er Semestre',
+	18=>'2eme Semestre'
+);
+
+
+$extra_tools=array(
+	1 => array(
+		'type' => 'select_year',
+		'title' => 'Année: ',
+		'value' => $year,
+		'html_name' => 'year',
+		'use_empty' => 0,
+		'min_year' => 5,
+		'max_year' => 0
+	),
+	2 => array(
+		'type' => 'select_user',
+		'title' => 'Commercial: ',
+		'value' => $search_commercial,
+		'html_name' => 'search_commercial',
+		'use_empty' => 1,
+		'see_all' => $user->rights->volvo->stat_all,
+		'limit_to_group' => '1',
+
+	),
+	3 => array(
+		'type' => 'select_array',
+		'title' => 'Periode: ',
+		'value' => $search_periode,
+		'html_name' => 'search_periode',
+		'use_empty' => 1,
+		'array' => $periodarray,
+		'value' => $search_periode,
+	)
+);
+
+
 // Search criteria
 $search_commercial = GETPOST("search_commercial", 'int');
 $search_periode = GETPOST("search_periode");
@@ -150,152 +296,12 @@ if ($resql != - 1) {
 
 
 
-$arrayfields=array(
-		'comm'=>array(
-				'label'=>'Commercial',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field' => 'comm',
-				'align'=>'center'
-		),
-		'dossier'=>array(
-				'label'=>'Dossier',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=> 'com.ref',
-				'align'=>'center'
-		),
-		'om'=>array(
-				'label'=>'N° O.M.',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'ef.numom',
-				'align'=>'center'
-		),
-		'client'=>array(
-				'label'=>'Client',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'socnom',
-				'align'=>'center'
-		),
-		'dt_cmd'=>array(
-				'label'=>'Date de Commande',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'cf.date_commande',
-				'align'=>'center'
-		),
-		'dt_liv'=>array(
-				'label'=>'Date de livraison',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field' => 'com.date_livraison',
-				'align'=>'center'
-		),
-		'dt_liv_usi'=>array(
-				'label'=>'Date de sortie d\'usine',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'dt_sortie',
-				'align'=>'center'
-		),
-		'vin'=>array(
-				'label'=>'N° de Chassis',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'ef.vin',
-				'align'=>'center'
-		),
-		'mois'=>array(
-				'label'=>'Mois',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'dt_sortie',
-				'align'=>'center'
-		),
-		'genre'=>array(
-				'label'=>'genre',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'type'=>array(
-				'label'=>'type',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'sil'=>array(
-				'label'=>'silouhette',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'pv'=>array(
-				'label'=>'Prix de vente',
-				'checked'=>1,
-				'sub_title'=>0,
-				'field'=>'com.total_ht',
-				'unit' => '€',
-				'align'=>'center'
-		),
-
-);
-
-$periodarray= array(
-		1 => 'Janvier',
-		2 => 'Fevrier',
-		3 => 'Mars',
-		4 => 'Avril',
-		5=> 'Mai',
-		6=> 'Juin',
-		7 => 'Juillet',
-		8 => 'Aout',
-		9 => 'Septembre',
-		10 => 'Octobre',
-		11 => 'Novembre',
-		12 => 'Décembre',
-		13=>'1er Trimestre',
-		14=> '2eme Trimestre',
-		15=>'3eme Trimestre',
-		16=>'4eme Trimestre',
-		17=>'1er Semestre',
-		18=>'2eme Semestre'
-
-);
 
 
-$extra_tools=array(
-		1 => array(
-				'type' => 'select_year',
-				'title' => 'Année: ',
-				'value' => $year,
-				'html_name' => 'year',
-				'use_empty' => 0,
-				'min_year' => 5,
-				'max_year' => 0
-		),
-		2 => array(
-				'type' => 'select_user',
-				'title' => 'Commercial: ',
-				'value' => $search_commercial,
-				'html_name' => 'search_commercial',
-				'use_empty' => 1,
-				'disabled' => $search_commercial_disabled,
-				'excluded' => array(),
-				'included' => $user_included
-		),
-		3 => array(
-				'type' => 'select_array',
-				'title' => 'Periode: ',
-				'value' => $search_periode,
-				'html_name' => 'search_periode',
-				'use_empty' => 1,
-				'array' => $periodarray,
-				'value' => $search_periode,
-		)
-);
+
+
+
+
 
 $tools=array(
 		'search_button' => 1,
