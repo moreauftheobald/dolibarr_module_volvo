@@ -232,11 +232,11 @@ $table->filter['PORT'] = 1;
 
 $table->header();
 
-$table->draw_tool_bar();
+//$table->draw_tool_bar();
 
-$table->draw_table_head();
+//$table->draw_table_head();
 
-
+$table->end_table();
 
 
 
