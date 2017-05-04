@@ -226,7 +226,9 @@ $table->search_button = 1;
 $table->remove_filter_button = 1;
 $table->export_button = 1;
 $table->select_fields_button = 1;
-
+$table->mode = 'object_methode';
+$table->include = '/volvo/class/lead.extend.class.php';
+$table->method = 'fetchAllfolow';
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
@@ -235,6 +237,8 @@ $table->header();
 $table->draw_tool_bar();
 
 $table->draw_table_head();
+
+$table->data_array();
 
 $table->end_table();
 

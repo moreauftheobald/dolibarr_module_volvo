@@ -27,6 +27,11 @@ class Dyntable
 	public $export_name;
 	public $context;
 	public $sub_title = array();
+	public $method;
+	public $include;
+	public $object;
+	public $mode;
+
 
 	function __construct($db)
 	{
@@ -254,6 +259,12 @@ class Dyntable
 		// footer
 		llxFooter();
 		$this->db->close();
+	}
+
+	function data_array(){
+		dol_include_once($this->include);
+		$object = new $this->object;
+
 	}
 }
 
