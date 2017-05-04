@@ -41,6 +41,7 @@ class Dyntable
 
 	function draw_tool_bar(){
 		global $conf, $user;
+		$form = new Form($this->db);
 
 		print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 		print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
