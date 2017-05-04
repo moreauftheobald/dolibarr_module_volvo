@@ -33,16 +33,16 @@ class Dyntable
 	public $mode;
 	public $result;
 	public $limit;
-	public $param0;
-	public $param1;
-	public $param2;
-	public $param3;
-	public $param4;
-	public $param5;
-	public $param6;
-	public $param7;
-	public $param8;
-	public $param9;
+	public $param0='none';
+	public $param1='none';
+	public $param2='none';
+	public $param3='none';
+	public $param4='none';
+	public $param5='none';
+	public $param6='none';
+	public $param7='none';
+	public $param8='none';
+	public $param9='none';
 
 
 	function __construct($db)
