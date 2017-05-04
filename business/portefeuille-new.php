@@ -230,7 +230,7 @@ $table->mode = 'object_methode';
 $table->include = '/volvo/class/lead.extend.class.php';
 $table->object = 'Leadext';
 $table->result = 'business';
-$table->method = 'fetchAllfolow($this->sortorder, $this->sortfield, $conf->liste_limit, $this->offset, $this->filter)';
+$table->method = 'fetchAllfolow()';
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
