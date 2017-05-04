@@ -61,6 +61,21 @@ class Dyntable
 		}
 		print '</th>';
 		if($this->select_fields_button==1){
+			$varpage=$this->context;
+			if (GETPOST('formfilteraction') == 'listafterchangingselectedfields')
+			{
+				$tabparam=array();
+
+				if (GETPOST("selectedfields")) $tabparam["MAIN_SELECTEDFIELDS_".$varpage]=GETPOST("selectedfields");
+				else $tabparam["MAIN_SELECTEDFIELDS_".$varpage]='';
+
+				include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
+
+				$result=dol_set_user_param($db, $conf, $user, $tabparam);
+			}
+
+			$selectfields = $form->multiSelectArrayWithCheckbox('selectedfields', $list_config['array_fields'], $varpage);
+
 			print '<th class="liste_titre" align="center" style="white-space:nowrap; width:40px;">';
 			print $selectfields;
 			print '</th>';
