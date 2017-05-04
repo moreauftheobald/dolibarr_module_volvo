@@ -270,7 +270,7 @@ class Dyntable
 			$result = $this->result;
 			$object = new $this->object($this->db);
 			//$object->$methode('','','','',$$param);
-			$this->test($$param);
+			$this->test($this->$param);
 			//var_dump($object->$result);
 		}
 	}
