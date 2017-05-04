@@ -178,17 +178,6 @@ $extra_tools=array(
 		'filter' => 'MONTH_IN'
 	)
 );
-foreach ($extra_tools as $key => $p){
-	if(!empty($_POST[$p['html_name']])){
-		$$p['html_name'] = GETPOST($p['html_name']);
-		if($$p['html_name']==-1) $$p['html_name'] ="";
-		$extra_tools[$key]['value'] = $$p['html_name'];
-		$filter[$p['filter']] = $$p['html_name'];
-		$option .= '&' . $p['html_name'] . '=' . $$p['html_name'];
-	}
-}
-
-// Search criteria
 
 $sortorder = GETPOST('sortorder', 'alpha');
 $sortfield = GETPOST('sortfield', 'alpha');
@@ -203,6 +192,20 @@ if (empty($sortfield))
 
 $filter = array();
 $filter['PORT'] = 1;
+
+foreach ($extra_tools as $key => $p){
+	if(!empty($_POST[$p['html_name']])){
+		$$p['html_name'] = GETPOST($p['html_name']);
+		if($$p['html_name']==-1) $$p['html_name'] ="";
+		$extra_tools[$key]['value'] = $$p['html_name'];
+		$filter[$p['filter']] = $$p['html_name'];
+		$option .= '&' . $p['html_name'] . '=' . $$p['html_name'];
+	}
+}
+
+// Search criteria
+
+
 
 // Do we click on purge search criteria ?
 if (GETPOST("button_removefilter_x")) {
