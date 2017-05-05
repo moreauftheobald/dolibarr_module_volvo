@@ -740,13 +740,14 @@ function stat_sell($year, $commercial,$monthlist,$mode='GROUP'){
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
-	foreach ($month as $m){
+	foreach ($month as $m => $val){
 		$array1 = $arrayresult1[$m];
 		$array2 = $arrayresult2[$m];
 		$array3 = $arrayresult3[$m];
 		$array4 = $arrayresult4[$m];
 		$array5 = $arrayresult5[$m];
 		$array  = array_merge($array1,$array2,$array3,$array4,$array5);
+		$result[$m]['mois'] = $val;
 		$result[$m] = $array;
 	}
 
