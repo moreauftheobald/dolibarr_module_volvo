@@ -373,8 +373,10 @@ class Dyntable
 			}else{
 				$p->value = $p->default;
 				$this->extra_tools[$key] = $p;
-				$this->filter[$p->filter] = $p->default;
-				$this->option .= '&' . $name . '=' . $p->default;
+				if(!empty($p->default)){
+					$this->filter[$p->filter] = $p->default;
+					$this->option .= '&' . $name . '=' . $p->default;
+				}
 			}
 		}
 		if(GETPOST("button_export_x")){
