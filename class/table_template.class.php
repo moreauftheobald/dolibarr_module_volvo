@@ -355,6 +355,7 @@ class Dyntable
 
 
 	function export(){
+		$selectfields = $this->multiSelectArrayWithCheckbox();
 		$this->limit = 0;
 		$this->data_array();
 		$handler = fopen("php://output", "w");
