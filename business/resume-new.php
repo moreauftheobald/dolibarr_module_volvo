@@ -308,7 +308,7 @@ $table->data_array();
 
 $table->header();
 
-var_dump($table->filter);
+var_dump($table->extra_tools);
 
 $table->draw_tool_bar();
 
