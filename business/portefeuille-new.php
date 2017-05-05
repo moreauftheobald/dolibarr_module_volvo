@@ -171,6 +171,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
 $field->alias = 'pv';
+$field->unit = '€';
 $field->post_traitement = array('price', 0);
 $table->arrayfields[$field->name] = $field;
 
