@@ -446,6 +446,7 @@ class Dyntable_tools
 					$this->value = $this->default;
 				}
 
+				$disabled = 0;
 				if($this->see_all!=1){
 					$this->value = $user->id;
 					$disabled = 1;
