@@ -302,7 +302,6 @@ class Dyntable
 				$this->array_display[] = $line_array;
 			}
 
-			var_dump($this->array_display);
 		}
 	}
 
