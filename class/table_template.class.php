@@ -200,7 +200,6 @@ class Dyntable
 
 			foreach ($this->extra_tools as $key => $p){
 				print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
-				print 'ok';
 					$p->draw_tool;
 				print '</th>';
 			}
@@ -350,9 +349,11 @@ class Dyntable_tools
 	}
 
 	function draw_tool(){
-	global $user;
+		print 'ok';
+		global $user;
 		switch($this->type){
 			case 'select_user':
+				print 'ok';
 				if($this->value == -1) $this->value="";
 
 				if($this->see_all!=1){
