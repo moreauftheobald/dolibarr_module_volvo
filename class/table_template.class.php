@@ -258,6 +258,7 @@ class Dyntable
 	}
 
 	function data_array(){
+		global $bc;
 		if($this->mode=='object_methode'){
 			dol_include_once($this->include);
 			$methode = $this->method;
