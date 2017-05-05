@@ -319,6 +319,8 @@ $table->data_array();
 
 $table->header();
 
+var_dump($table->array_display);
+
 $table->draw_tool_bar();
 
 $table->draw_table_head();
