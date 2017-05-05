@@ -441,6 +441,9 @@ class Dyntable_tools
 			case 'select_user':
 				$form = new Form($this->db);
 				if($this->value == -1) $this->value="";
+				if(empty($this->value) && !empty($this->default)){
+					$this->value = $this->default;
+				}
 
 				if($this->see_all!=1){
 					$this->value = $user->id;
@@ -486,6 +489,9 @@ class Dyntable_tools
 			case 'select_array':
 				$form = new Form($this->db);
 				if($this->value == -1) $this->value="";
+				if(empty($this->value) && !empty($this->default)){
+					$this->value = $this->default;
+				}
 				print '&nbsp; &nbsp;' . $this->title;
 				print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
 			}
