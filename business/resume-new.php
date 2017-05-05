@@ -308,7 +308,7 @@ $table->data_array();
 
 $table->header();
 
-var_dump($_POST);
+var_dump(isset($_POST['year']));
 
 $table->draw_tool_bar();
 
