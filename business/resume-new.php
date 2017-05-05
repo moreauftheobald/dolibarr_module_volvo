@@ -326,10 +326,12 @@ $table->draw_table_head();
 
 $table->draw_data_table();
 
-$table->end_table();
-
 $arrayresult1 = stat_sell(2017, '','');
 var_dump($arrayresult1);
+
+$table->end_table();
+
+
 
 
 
