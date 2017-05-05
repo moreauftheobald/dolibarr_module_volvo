@@ -123,7 +123,7 @@ $field->sub_title = 0;
 $field->field = 'ef.vin';
 $field->align = 'center';
 $field->alias = 'vin';
-$field->post_traitement = array('substr', '-7','0');
+$field->post_traitement = array('substr', '-7');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
