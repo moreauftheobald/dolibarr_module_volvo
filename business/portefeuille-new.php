@@ -55,6 +55,8 @@ $table->param1 = 'sortfield';
 $table->param2 = 'limit';
 $table->param3 = 'offset';
 $table->param4 = 'filter';
+$table->param5 = 'filter_mode';
+$table->filter_mode = 'AND';
 
 
 $field= new Dyntable_fields($db);
