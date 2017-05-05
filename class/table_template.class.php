@@ -335,13 +335,15 @@ class Dyntable
 			$this->sortfield = $this->default_sortfield;
 
 		foreach ($this->extra_tools as $key => $p){
-			if(!empty($_POST[$p->html_name])){
-				${$p->html_name} = GETPOST($p->html_name);
-				if(${$p->html_name}==-1) ${$p->html_name} ="";
+			$name = $p->html_name;
+			if(!empty($_POST[$name])){
+				$val = GETPOST($name);
+				if($val==-1) $val ="";
+				$p->$name = $val;
 				$this->extra_tools[$key] = $p;
-				if(!empty(${$p->html_name})){
-					$this->filter[$p->filter] = ${$p->html_name};
-					$this->option .= '&' . $p->html_name . '=' . ${$p->html_name};
+				if(!empty($val)){
+					$this->filter[$p->filter] = $val;
+					$this->option .= '&' . $name . '=' . $val;
 				}
 			}
 		}
