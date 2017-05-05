@@ -718,3 +718,31 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 	}
 
 }
+function stat_sell($year, $commercial,$monthlist,$mode='GROUP'){
+	$month = array(
+			1=>'Janvier',
+			2=>'Fevrier',
+			3=>'Mars',
+			4=>'Avril',
+			5=>'Mai',
+			6=>'Juin',
+			7=>'Juillet',
+			8=>'Aout',
+			9=>'Septembre',
+			10=>'Octobre',
+			11=>'Novembre',
+			12=>'Décembre'
+	);
+
+
+	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
+	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
+	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
+	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
+	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
+
+	return $arrayresult1;
+
+
+
+}
