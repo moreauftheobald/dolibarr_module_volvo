@@ -211,7 +211,7 @@ $tool->html_name = 'search_commercial';
 $tool->filter = 'search_commercial';
 $tool->use_empty = 1;
 $tool->see_all = $user->rights->volvo->stat_all;
-//$tool->default = $user->id;
+$tool->default = $user->id;
 $tool->limit_to_group = '1';
 $tools['2'] = $tool;
 
