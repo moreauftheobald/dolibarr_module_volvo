@@ -339,7 +339,7 @@ class Dyntable
 			if(!empty($_POST[$name])){
 				$val = GETPOST($name);
 				if($val==-1) $val ="";
-				$p->$name = $val;
+				$p->value = $val;
 				$this->extra_tools[$key] = $p;
 				if(!empty($val)){
 					$this->filter[$p->filter] = $val;
