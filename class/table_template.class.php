@@ -340,8 +340,8 @@ class Dyntable
 				if(${$p->html_name}==-1) ${$p->html_name} ="";
 				$this->extra_tools[$key] = $p;
 				if(!empty(${$p->html_name})){
-					$filter[$p->filter] = ${$p->html_name};
-					$option .= '&' . $p->html_name . '=' . ${$p->html_name};
+					$this->filter[$p->filter] = ${$p->html_name};
+					$this->option .= '&' . $p->html_name . '=' . ${$p->html_name};
 				}
 			}
 		}

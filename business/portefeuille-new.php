@@ -37,6 +37,25 @@ if (! $user->rights->volvo->port)
 $table = new Dyntable($db);
 
 $table->title = 'Suivis d\'activité VN volvo';
+$table->default_sortfield = 'dt_sortie';
+$table->export_name = 'portefeuille';
+$table->context = 'portefeuille';
+$table->search_button = 1;
+$table->remove_filter_button = 1;
+$table->export_button = 1;
+$table->select_fields_button = 1;
+$table->mode = 'object_methode';
+$table->include = '/volvo/class/lead.extend.class.php';
+$table->object = 'Leadext';
+$table->result = 'business';
+$table->limit = $conf->liste_limit;
+$table->method = 'fetchAllfolow';
+$table->param0 = 'sortorder';
+$table->param1 = 'sortfield';
+$table->param2 = 'limit';
+$table->param3 = 'offset';
+$table->param4 = 'filter';
+
 
 $field= new Dyntable_fields($db);
 $field->name='comm';
@@ -233,27 +252,11 @@ $tool->filter = 'MONTH_IN';
 $tools['3'] = $tool;
 
 $table->extra_tools =$tools;
-$table->default_sortfield = 'dt_sortie';
 
-$table->export_name = 'portefeuille';
-$table->context = 'portefeuille';
-$table->search_button = 1;
-$table->remove_filter_button = 1;
-$table->export_button = 1;
-$table->select_fields_button = 1;
-$table->mode = 'object_methode';
-$table->include = '/volvo/class/lead.extend.class.php';
-$table->object = 'Leadext';
-$table->result = 'business';
-$table->limit = $conf->liste_limit;
-$table->method = 'fetchAllfolow';
-$table->param0 = 'sortorder';
-$table->param1 = 'sortfield';
-$table->param2 = 'limit';
-$table->param3 = 'offset';
-$table->param4 = 'filter';
 $table->filter = array();
 $table->filter['PORT'] = 1;
+$table->post();
+
 
 $table->data_array();
 
