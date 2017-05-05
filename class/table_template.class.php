@@ -352,7 +352,7 @@ class Dyntable_tools
 		global $user;
 		switch($this->type){
 			case 'select_user':
-				print 'ok';
+				$form = new Form($this->db);
 				if($this->value == -1) $this->value="";
 
 				if($this->see_all!=1){
@@ -386,6 +386,7 @@ class Dyntable_tools
 				break;
 
 			case 'select_year':
+				$formother = new FormOther($this->db);
 				if($this->value == -1) $this->value="";
 
 				if(empty($this->value) && !empty($this->default)){
@@ -396,10 +397,11 @@ class Dyntable_tools
 				break;
 
 			case 'select_array':
-						if($this->value == -1) $this->value="";
-						print '&nbsp; &nbsp;' . $this->title;
-						print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
-				}
+				$form = new Form($this->db);
+				if($this->value == -1) $this->value="";
+				print '&nbsp; &nbsp;' . $this->title;
+				print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
+			}
 	}
 
 
