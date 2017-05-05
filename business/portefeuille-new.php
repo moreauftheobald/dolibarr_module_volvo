@@ -201,7 +201,6 @@ $tools =array();
 $tool = new Dyntable_tools($db);
 $tool->type = 'select_year';
 $tool->title = 'Année: ';
-$tool->value = $year;
 $tool->html_name = 'year';
 $tool->use_empty = 0;
 $tool->min_year = 5;
@@ -213,7 +212,6 @@ $tools['1'] = $tool;
 $tool = new Dyntable_tools($db);
 $tool->type = 'select_user';
 $tool->title = 'Commercial: ';
-$tool->value = $search_commercial;
 $tool->html_name = 'search_commercial';
 $tool->use_empty = 1;
 $tool->see_all = $user->rights->volvo->stat_all;
@@ -234,18 +232,17 @@ $periodarray= array(
 	10 => 'Octobre',
 	11 => 'Novembre',
 	12 => 'Décembre',
-	13=>'1er Trimestre',
-	14=> '2eme Trimestre',
-	15=>'3eme Trimestre',
-	16=>'4eme Trimestre',
-	17=>'1er Semestre',
-	18=>'2eme Semestre'
+	'1,2,3'=>'1er Trimestre',
+	'4,5,6'=> '2eme Trimestre',
+	'7,8,9'=>'3eme Trimestre',
+	'10,11,12'=>'4eme Trimestre',
+	'1,2,3,4,5,6'=>'1er Semestre',
+	'7,8,9,10,11,12'=>'2eme Semestre'
 );
 
 $tool = new Dyntable_tools($db);
 $tool->type = 'select_array';
 $tool->title = 'Periode: ';
-$tool->value = $search_periode;
 $tool->html_name = 'search_periode';
 $tool->use_empty = 1;
 $tool->array = $periodarray;
@@ -258,9 +255,7 @@ $table->extra_tools =$tools;
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
-var_dump($table->extra_tools);
 $table->post();
-var_dump($table->extra_tools);
 
 $table->data_array();
 

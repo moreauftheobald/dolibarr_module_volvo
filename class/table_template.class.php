@@ -448,6 +448,7 @@ class Dyntable_fields
 	public $align;
 	public $alias;
 	public $post_traitement = array();
+	public $search = array();
 
 	function __construct($db)
 	{
