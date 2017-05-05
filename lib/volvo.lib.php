@@ -718,7 +718,11 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 	}
 
 }
-function stat_sell($year, $commercial,$monthlist,$mode='GROUP'){
+function stat_sell($filter=array()){
+	$year = $filter['year'];
+	$monthlist = $filter['monthlist'];
+	$search_commercial = $filter['search_commercial'];
+
 	$month = array(
 			1=>'Janvier',
 			2=>'Fevrier',
