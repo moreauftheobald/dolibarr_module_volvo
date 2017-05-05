@@ -115,26 +115,26 @@ $array_display=array();
 foreach ($arrayperiode as $m) {
 	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
 	$var = ! $var;
-	$total_fact+=$arrayresult1['nb_fact'][$m];
-	$total_portfeuille+=$arrayresult5['nb_port'][$m];
-	$total_caht+=$arrayresult1['catotalht'][$m];
-	$total_tracteur+=$arrayresult1['nbtracteur'][$m];
-	$total_porteur+=$arrayresult1['nbporteur'][$m];
-	$total_vcm+=$arrayresult2['vcm'][$m];
-	$total_dfol+=$arrayresult2['dfol'][$m];
-	$total_dded+=$arrayresult2['dded'][$m];
-	$total_vfs+=$arrayresult2['vfs'][$m];
-	$total_lixbail+=$arrayresult2['lixbail'][$m];
-	$total_cavolvo+=$arrayresult3['cavolvo'][$m];
-	$total_margetheo+=$arrayresult4['margetheo'][$m];
-	$total_margereal+=$arrayresult4['margereal'][$m];
+	$total_fact+=$arrayresult1[$m]['nb_fact'];
+	$total_portfeuille+=$arrayresult5[$m]['nb_port'];
+	$total_caht+=$arrayresult1[$m]['catotalht'];
+	$total_tracteur+=$arrayresult1[$m]['nbtracteur'];
+	$total_porteur+=$arrayresult1[$m]['nbporteur'];
+	$total_vcm+=$arrayresult2[$m]['vcm'];
+	$total_dfol+=$arrayresult2[$m]['dfol'];
+	$total_dded+=$arrayresult2[$m]['dded'];
+	$total_vfs+=$arrayresult2[$m]['vfs'];
+	$total_lixbail+=$arrayresult2[$m]['lixbail'];
+	$total_cavolvo+=$arrayresult3[$m]['cavolvo'];
+	$total_margetheo+=$arrayresult4[$m]['margetheo'];
+	$total_margereal+=$arrayresult4[$m]['margereal'];
 
-	if(!empty($arrayresult1['nb_fact'][$m])){
-		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
-		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
-		$m_moy = price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2));
-		$m_moy_r = price(round($arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m],2));
-		$m_moy_e = price(round(($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m],2));
+	if(!empty($arrayresult1[$m]['nb_fact'])){
+		$tracteur_percent = round(($arrayresult1[$m]['nbtracteur'] /($arrayresult1[$m]['nb_fact']))*100,2);
+		$porteur_percent = round(($arrayresult1[$m]['nbporteur'] /($arrayresult1[$m]['nb_fact']))*100,2);
+		$m_moy = price(round($arrayresult4[$m]['margetheo']/$arrayresult1[$m]['nb_fact'],2));
+		$m_moy_r = price(round($arrayresult4[$m]['margereal']/$arrayresult1[$m]['nb_fact'],2));
+		$m_moy_e = price(round(($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'])/$arrayresult1[$m]['nb_fact'],2));
 	}else{
 		$tracteur_percent = '';
 		$porteur_percent = '';
@@ -148,24 +148,24 @@ foreach ($arrayperiode as $m) {
 			'class' => $bc[$var],
 			'class_td' => '',
 			'mois' => $link,
-			'nb_facture' => $arrayresult1['nb_fact'][$m],
-			'nb_portfeuille' => $arrayresult5['nb_port'][$m],
-			'ca_total' => ($arrayresult1['catotalht'][$m]==0?"":price($arrayresult1['catotalht'][$m])),
-			'ca_volvo'=> ($arrayresult3['cavolvo'][$m]==0?"":price($arrayresult3['cavolvo'][$m])),
-			'nb_trt'=> $arrayresult1['nbtracteur'][$m],
-			'nb_port'=> $arrayresult1['nbporteur'][$m],
+			'nb_facture' => $arrayresult1[$m]['nb_fact'],
+			'nb_portfeuille' => $arrayresult5[$m]['nb_port'],
+			'ca_total' => ($arrayresult1[$m]['catotalht']==0?"":price($arrayresult1[$m]['catotalht'])),
+			'ca_volvo'=> ($arrayresult3[$m]['cavolvo']==0?"":price($arrayresult3[$m]['cavolvo'])),
+			'nb_trt'=> $arrayresult1[$m]['nbtracteur'],
+			'nb_port'=> $arrayresult1[$m]['nbporteur'],
 			'precent_trt'=> $tracteur_percent,
 			'percent_prt'=> $porteur_percent,
-			'vcm'=> $arrayresult2['vcm'][$m],
-			'dfol'=> $arrayresult2['dfol'][$m],
-			'dded'=> $arrayresult2['dded'][$m],
-			'vfs'=> $arrayresult2['vfs'][$m],
-			'lixbail'=> $arrayresult2['lixbail'][$m],
-			'm_tot'=> ($arrayresult4['margetheo'][$m]==0?"":price($arrayresult4['margetheo'][$m])),
+			'vcm'=> $arrayresult2[$m]['vcm'],
+			'dfol'=> $arrayresult2[$m]['dfol'],
+			'dded'=> $arrayresult2[$m]['dded'],
+			'vfs'=> $arrayresult2[$m]['vfs'],
+			'lixbail'=> $arrayresult2[$m]['lixbail'],
+			'm_tot'=> ($arrayresult4[$m]['margetheo']==0?"":price($arrayresult4[$m]['margetheo'])),
 			'm_moy'=> $m_moy,
-			'm_tot_r'=> ($arrayresult4['margereal'][$m]==0?"":price($arrayresult4['margereal'][$m])),
+			'm_tot_r'=> ($arrayresult4[$m]['margereal']==0?"":price($arrayresult4[$m]['margereal'])),
 			'm_moy_r'=> $m_moy_r,
-			'm_tot_e'=> (($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])==0?"":price(round($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m],2))),
+			'm_tot_e'=> (($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'])==0?"":price(round($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'][$m],2))),
 			'm_moy_e'=> $m_moy_e
 	);
 }
