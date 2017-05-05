@@ -276,6 +276,7 @@ $tool->html_name = 'search_commercial';
 $tool->filter = 'search_commercial';
 $tool->use_empty = 1;
 $tool->see_all = $user->rights->volvo->stat_all;
+$tool->default = $user->id;
 $tool->limit_to_group = '1';
 $tools['2'] = $tool;
 
@@ -300,21 +301,6 @@ $tools['3'] = $tool;
 $table->extra_tools =$tools;
 
 $table->sub_title = array(1=>'Soft Offers');
-
-$month = array(
-		1=>'Janvier',
-		2=>'Fevrier',
-		3=>'Mars',
-		4=>'Avril',
-		5=>'Mai',
-		6=>'Juin',
-		7=>'Juillet',
-		8=>'Aout',
-		9=>'Septembre',
-		10=>'Octobre',
-		11=>'Novembre',
-		12=>'Décembre'
-);
 
 $table->post();
 
