@@ -305,11 +305,16 @@ class Dyntable
 			$this->num = $object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
 					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
 
+			$var = true;
+
 			foreach ($object->$result as $line){
+				$var = !$var;
 				$line_array = array();
+				$line_array['class'] = $bc[$var];
+				$line_array['class_td'] = '';
 				foreach ($this->arrayfields as $f){
 					$champs = $f->alias;
-					$line_array[$f->name] = $line->$champs;
+					$line_array[$f->name] = $f->traitement($line->$champs,$line);
 				}
 				$this->array_display[] = $line_array;
 			}
@@ -412,10 +417,40 @@ class Dyntable_fields
 	public $unit;
 	public $align;
 	public $alias;
+	public $post_traitement = array();
 
 	function __construct($db)
 	{
 		$this->db = $db;
+	}
+
+	function traitement($value,$line){
+		switch ($this->post_traitement[0]){
+			case 'date':
+				$ret = dol_print_date($value,$this->post_traitement[1]);
+				break;
+			case 'num':
+				$ret = roud($value,$this->post_traitement[1]) . ' ' . $this->unit;
+				break;
+
+			case 'substr':
+				$ret = substr($value, $this->post_traitement[1],$this->post_traitement[2]) . ' ' . $this->unit;
+				break;
+
+			case 'price':
+				$ret = price(round($value,$this->post_traitement[1])). ' ' . $this->unit;
+				break;
+
+			case 'link':
+				$id = $this->post_traitement[3];
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line->$id.'">' . $value . ' ' . $this->unit . '</a>';
+				break;
+
+			default:
+				$ret = $value . ' ' . $this->unit;
+		}
+
+		return $ret;
 
 	}
 }

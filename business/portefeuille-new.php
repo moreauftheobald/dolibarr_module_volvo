@@ -46,6 +46,7 @@ $field->sub_title = 0;
 $field->field = 'comm';
 $field->align = 'center';
 $field->alias = 'comm';
+$field->post_traitement = array('link', '/user/card.php','?id=','commercial');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -56,6 +57,7 @@ $field->sub_title = 0;
 $field->field = 'com.ref';
 $field->align = 'center';
 $field->alias = 'commande';
+$field->post_traitement = array('link', '/volvo/commande/card.php','?id=','com');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -66,6 +68,7 @@ $field->sub_title = 0;
 $field->field = 'ef.numom';
 $field->align = 'center';
 $field->alias = 'numom';
+$field->post_traitement = array('none');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -76,6 +79,7 @@ $field->sub_title = 0;
 $field->field = 'socnom';
 $field->align = 'center';
 $field->alias = 'socnom';
+$field->post_traitement = array('link', '/societe/soc.php','?socid=','societe');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -86,6 +90,7 @@ $field->sub_title = 0;
 $field->field = 'cf.date_commande';
 $field->align = 'center';
 $field->alias = 'dt_env_usi';
+$field->post_traitement = array('date', 'day');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -96,6 +101,7 @@ $field->sub_title = 0;
 $field->field = 'com.date_livraison';
 $field->align = 'center';
 $field->alias = 'dt_liv_dem_cli';
+$field->post_traitement = array('date', 'day');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -106,6 +112,7 @@ $field->sub_title = 0;
 $field->field = 'dt_sortie';
 $field->align = 'center';
 $field->alias = 'dt_sortie';
+$field->post_traitement = array('date', 'day');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -116,6 +123,7 @@ $field->sub_title = 0;
 $field->field = 'ef.vin';
 $field->align = 'center';
 $field->alias = 'vin';
+$field->post_traitement = array('substr', '-7','');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -126,6 +134,7 @@ $field->sub_title = 0;
 $field->field = 'dt_sortie';
 $field->align = 'center';
 $field->alias = 'dt_sortie';
+$field->post_traitement = array('date', '%m');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -162,6 +171,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
 $field->alias = 'pv';
+$field->post_traitement = array('price', 0);
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
