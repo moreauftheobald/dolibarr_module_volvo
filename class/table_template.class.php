@@ -348,7 +348,6 @@ class Dyntable_tools
 	}
 
 	function draw_tool(){
-		print 'ok';
 		global $user;
 		switch($this->type){
 			case 'select_user':
