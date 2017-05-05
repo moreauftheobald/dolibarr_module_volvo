@@ -371,11 +371,11 @@ class Dyntable
 					$this->option .= '&' . $name . '=' . $val;
 				}
 			}else{
-				$p->value = $p->default;
+				if(isset($p->see_all) && $p->see_all ==0) $p->value = $p->default;
 				$this->extra_tools[$key] = $p;
-				if(!empty($p->default)){
-					$this->filter[$p->filter] = $p->default;
-					$this->option .= '&' . $name . '=' . $p->default;
+				if(!empty($p->value)){
+					$this->filter[$p->filter] = $p->value;
+					$this->option .= '&' . $name . '=' . $p->value;
 				}
 			}
 		}
