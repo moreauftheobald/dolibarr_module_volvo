@@ -33,8 +33,8 @@ $table = new Dyntable($db);
 
 $table->title = 'Suivis du protefeuille de commande VN volvo';
 $table->default_sortfield = '';
-$table->export_name = 'suivi_activité_new';
-$table->context = 'suivi_business';
+$table->export_name = 'portefeuille_new';
+$table->context = 'portefeuille';
 $table->search_button = 1;
 $table->remove_filter_button = 1;
 $table->export_button = 1;
