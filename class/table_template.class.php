@@ -430,24 +430,24 @@ class Dyntable_fields
 				$ret = dol_print_date($value,$this->post_traitement[1]);
 				break;
 			case 'num':
-				$ret = roud($value,$this->post_traitement[1]) . ' ' . $this->unit;
+				$ret = roud($value,$this->post_traitement[1]) . (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'substr':
-				$ret = substr($value, $this->post_traitement[1],$this->post_traitement[2]) . ' ' . $this->unit;
+				$ret = substr($value, $this->post_traitement[1],$this->post_traitement[2]) . (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'price':
-				$ret = price(round($value,$this->post_traitement[1])). ' ' . $this->unit;
+				$ret = price(round($value,$this->post_traitement[1])). (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'link':
 				$id = $this->post_traitement[3];
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line->$id.'">' . $value . ' ' . $this->unit . '</a>';
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line->$id.'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			default:
-				$ret = $value . ' ' . $this->unit;
+				$ret = $value . (isset($this->unit)?' ' . $this->unit:'');
 		}
 
 		return $ret;
