@@ -43,9 +43,8 @@ $table->mode = 'function_methode';
 $table->include = '/volvo/lib/volvo.lib.php';
 $table->function = 'stat_sell';
 $table->limit = 0;
-$table->param0 = 'year';
-$table->param1 = 'search_commercial';
-$table->param2 = 'monthlist';
+$table->param0 = 'filter';
+
 
 $field= new Dyntable_fields($db);
 $field->name='mois';
