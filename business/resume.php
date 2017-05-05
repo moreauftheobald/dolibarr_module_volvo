@@ -129,7 +129,7 @@ foreach ($arrayperiode as $m) {
 	$total_margetheo+=$arrayresult4['margetheo'][$m];
 	$total_margereal+=$arrayresult4['margereal'][$m];
 
-	if(!empty($arrayresult1[$m]['nb_fact'])){
+	if(!empty($arrayresult1['nb_fact'][$m])){
 		$tracteur_percent = round(($arrayresult1['nbtracteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
 		$porteur_percent = round(($arrayresult1['nbporteur'][$m] /($arrayresult1['nb_fact'][$m]))*100,2);
 		$m_moy = price(round($arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m],2));
