@@ -757,7 +757,7 @@ function stat_sell($filter=array()){
 		if(!empty($arrayresult5[$m])) $array5 = $arrayresult5[$m];
 		$array  = array_merge($array1,$array2,$array3,$array4,$array5);
 		$array['mois'] = $val;
-		$result[$m] = $array;
+		$result[$val] = $array;
 	}
 
 	return $result;
