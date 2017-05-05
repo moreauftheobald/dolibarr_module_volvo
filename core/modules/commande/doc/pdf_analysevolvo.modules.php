@@ -37,7 +37,6 @@ require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
 require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
-require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/reprise.class.php';
 
 /**
@@ -473,7 +472,6 @@ class pdf_analysevolvo extends ModelePDFContract
 
 					}else{
 
-						$categ = new Categorie($this->db);
 						$listcateg = $this->containing($line->fk_product);
 
 						if(in_array($conf->global->VOLVO_INTERNE, $listcateg)){
