@@ -23,105 +23,201 @@ if (! $res)
 	die("Include of main fails");
 
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
+require_once DOL_DOCUMENT_ROOT . '/volvo/class/table_template.class.php';
+
 $object = new Leadext($db);
 
-$title = 'Suivis d\'activité VN volvo';
+
 
 // Security check
 if (! $user->rights->volvo->port)
 	accessforbidden();
 
-$arrayfields=array(
-	'comm'=>array(
-		'label'=>'Commercial',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field' => 'comm',
-		'align'=>'center'
-	),
-	'dossier'=>array(
-		'label'=>'Dossier',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=> 'com.ref',
-		'align'=>'center'
-	),
-	'om'=>array(
-		'label'=>'N° O.M.',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'ef.numom',
-		'align'=>'center'
-	),
-	'client'=>array(
-		'label'=>'Client',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'socnom',
-		'align'=>'center'
-	),
-	'dt_cmd'=>array(
-		'label'=>'Date de Commande',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'cf.date_commande',
-		'align'=>'center'
-	),
-	'dt_liv'=>array(
-		'label'=>'Date de livraison',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field' => 'com.date_livraison',
-		'align'=>'center'
-	),
-	'dt_liv_usi'=>array(
-		'label'=>'Date de sortie d\'usine',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'dt_sortie',
-		'align'=>'center'
-	),
-	'vin'=>array(
-		'label'=>'N° de Chassis',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'ef.vin',
-		'align'=>'center'
-	),
-	'mois'=>array(
-		'label'=>'Mois',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'dt_sortie',
-		'align'=>'center'
-	),
-	'genre'=>array(
-		'label'=>'genre',
-		'checked'=>1,
-		'sub_title'=>0,
-		'align'=>'center'
-	),
-	'type'=>array(
-		'label'=>'type',
-		'checked'=>1,
-		'sub_title'=>0,
-		'align'=>'center'
-	),
-	'sil'=>array(
-		'label'=>'silouhette',
-		'checked'=>1,
-		'sub_title'=>0,
-		'align'=>'center'
-	),
-	'pv'=>array(
-		'label'=>'Prix de vente',
-		'checked'=>1,
-		'sub_title'=>0,
-		'field'=>'com.total_ht',
-		'unit' => '€',
-		'align'=>'center'
-	),
-);
+
+$table = new Dyntable($db);
+
+$table->title = 'Suivis d\'activité VN volvo';
+$table->default_sortfield = 'dt_sortie';
+$table->export_name = 'portefeuille';
+$table->context = 'portefeuille';
+$table->search_button = 1;
+$table->remove_filter_button = 1;
+$table->export_button = 1;
+$table->select_fields_button = 1;
+$table->mode = 'object_methode';
+$table->include = '/volvo/class/lead.extend.class.php';
+$table->object = 'Leadext';
+$table->result = 'business';
+$table->limit = $conf->liste_limit;
+$table->method = 'fetchAllfolow';
+$table->param0 = 'sortorder';
+$table->param1 = 'sortfield';
+$table->param2 = 'limit';
+$table->param3 = 'offset';
+$table->param4 = 'filter';
+$table->param5 = 'filter_mode';
+$table->filter_mode = 'AND';
+
+
+$field= new Dyntable_fields($db);
+$field->name='comm';
+$field->label = 'Commercial';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'comm';
+$field->align = 'center';
+$field->alias = 'comm';
+$field->post_traitement = array('link', '/user/card.php','?id=','commercial');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dossier';
+$field->label = 'Dossier';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'com.ref';
+$field->align = 'center';
+$field->alias = 'commande';
+$field->post_traitement = array('link', '/volvo/commande/card.php','?id=','com');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='om';
+$field->label = 'N° O.M.';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'ef.numom';
+$field->align = 'center';
+$field->alias = 'numom';
+$field->post_traitement = array('none');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='client';
+$field->label = 'Client';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'socnom';
+$field->align = 'center';
+$field->alias = 'socnom';
+$field->post_traitement = array('link', '/societe/soc.php','?socid=','societe');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dt_cmd';
+$field->label = 'Date de Commande';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'cf.date_commande';
+$field->align = 'center';
+$field->alias = 'dt_env_usi';
+$field->post_traitement = array('date', 'day');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dt_liv';
+$field->label = 'Date de livraison';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'com.date_livraison';
+$field->align = 'center';
+$field->alias = 'dt_liv_dem_cli';
+$field->post_traitement = array('date', 'day');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dt_liv_usi';
+$field->label = 'Date de sortie d\'usine';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'dt_sortie';
+$field->align = 'center';
+$field->alias = 'dt_sortie';
+$field->post_traitement = array('date', 'day');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='vin';
+$field->label = 'N° de Chassis';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'ef.vin';
+$field->align = 'center';
+$field->alias = 'vin';
+$field->post_traitement = array('substr', -7,2000);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='mois';
+$field->label = 'Mois';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'dt_sortie';
+$field->align = 'center';
+$field->alias = 'dt_sortie';
+$field->post_traitement = array('date', '%m');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='genre';
+$field->label = 'genre';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->alias = 'genre';
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='type';
+$field->label = 'type';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->alias = 'gamme';
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='sil';
+$field->label = 'sil';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->alias = 'silouhette';
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='pv';
+$field->label = 'Prix de vente';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->alias = 'pv';
+$field->unit = '€';
+$field->post_traitement = array('price', 0);
+$table->arrayfields[$field->name] = $field;
+
+$tools =array();
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_year';
+$tool->title = 'Année: ';
+$tool->html_name = 'year';
+$tool->use_empty = 0;
+$tool->min_year = 5;
+$tool->max_year = 0;
+$tool->default = dol_print_date(dol_now(),'%Y');
+$tool->filter = 'YEAR_IN';
+$tools['1'] = $tool;
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_user';
+$tool->title = 'Commercial: ';
+$tool->html_name = 'search_commercial';
+$tool->use_empty = 1;
+$tool->see_all = $user->rights->volvo->stat_all;
+$tool->limit_to_group = '1';
+$tool->filter = 'lead.fk_user_resp';
+$tools['2'] = $tool;
 
 $periodarray= array(
 	1 => 'Janvier',
@@ -136,173 +232,43 @@ $periodarray= array(
 	10 => 'Octobre',
 	11 => 'Novembre',
 	12 => 'Décembre',
-	13=>'1er Trimestre',
-	14=> '2eme Trimestre',
-	15=>'3eme Trimestre',
-	16=>'4eme Trimestre',
-	17=>'1er Semestre',
-	18=>'2eme Semestre'
+	'1,2,3'=>'1er Trimestre',
+	'4,5,6'=> '2eme Trimestre',
+	'7,8,9'=>'3eme Trimestre',
+	'10,11,12'=>'4eme Trimestre',
+	'1,2,3,4,5,6'=>'1er Semestre',
+	'7,8,9,10,11,12'=>'2eme Semestre'
 );
 
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_array';
+$tool->title = 'Periode: ';
+$tool->html_name = 'search_periode';
+$tool->use_empty = 1;
+$tool->array = $periodarray;
+$tool->value = $search_periode;
+$tool->filter = 'MONTH_IN';
+$tools['3'] = $tool;
 
-$extra_tools=array(
-	1 => array(
-		'type' => 'select_year',
-		'title' => 'Année: ',
-		'value' => $year,
-		'html_name' => 'year',
-		'use_empty' => 0,
-		'min_year' => 5,
-		'max_year' => 0,
-		'default' => dol_print_date(dol_now(),'%Y'),
-		'filter' => 'YEAR_IN'
-	),
-	2 => array(
-		'type' => 'select_user',
-		'title' => 'Commercial: ',
-		'value' => $search_commercial,
-		'html_name' => 'search_commercial',
-		'use_empty' => 1,
-		'see_all' => $user->rights->volvo->stat_all,
-		'limit_to_group' => '1',
-		'filter' => 'lead.fk_user_resp'
-	),
-	3 => array(
-		'type' => 'select_array',
-		'title' => 'Periode: ',
-		'value' => $search_periode,
-		'html_name' => 'search_periode',
-		'use_empty' => 1,
-		'array' => $periodarray,
-		'value' => $search_periode,
-		'filter' => 'MONTH_IN'
-	)
-);
+$table->extra_tools =$tools;
 
-$sortorder = GETPOST('sortorder', 'alpha');
-$sortfield = GETPOST('sortfield', 'alpha');
-$page = GETPOST('page', 'int');
+$table->filter = array();
+$table->filter['PORT'] = 1;
 
-$offset = ($conf->liste_limit+1) * $page;
+$table->post();
 
-if (empty($sortorder))
-	$sortorder = "ASC";
-if (empty($sortfield))
-	$sortfield = "dt_sortie";
+$table->data_array();
 
-$filter = array();
-$filter['PORT'] = 1;
+$table->header();
 
-foreach ($extra_tools as $key => $p){
-	if(!empty($_POST[$p['html_name']])){
-		$$p['html_name'] = GETPOST($p['html_name']);
-		if($$p['html_name']==-1) $$p['html_name'] ="";
-		$extra_tools[$key]['value'] = $$p['html_name'];
-		if(!empty($$p['html_name'])){
-			$filter[$p['filter']] = $$p['html_name'];
-			$option .= '&' . $p['html_name'] . '=' . $$p['html_name'];
-		}
-	}
-}
+$table->draw_tool_bar();
 
-// Search criteria
+$table->draw_table_head();
 
+$table->draw_data_table();
 
+$table->end_table();
 
-// Do we click on purge search criteria ?
-if (GETPOST("button_removefilter_x")) {
- 	$search_commercial = '';
- 	$search_periode = '';
- 	$year = dol_print_date(dol_now(),'%Y');
-}
-
-$var = true;
-
-if(!empty($search_periode)){
-	switch($search_periode){
-		case 13:
-			$monthlist = '1,2,3';
-			break;
-		case 14:
-			$monthlist = '4,5,6';
-			break;
-		case 15:
-			$monthlist = '7,8,9';
-			break;
-		case 16:
-			$monthlist = '10,11,12';
-			break;
-		case 17:
-			$monthlist = '1,2,3,4,5,6';
-			break;
-		case 18:
-			$monthlist = '7,8,9,10,11,12';
-			break;
-		default:
-			$monthlist = $search_periode;
-	}
-}
-
-
-$nbtotalofrecords = 0;
-$array_display=array();
-
-$nbtotalofrecords = $object->fetchAllfolow('', '', 0, 0, $filter);
-$nbtotalofrecords = count($object->business);
-
-$resql = $object->fetchAllfolow($sortorder, $sortfield, $conf->liste_limit, $offset, $filter);
-
-if ($resql != - 1) {
-	$num = $resql;
-	$var = true;
-
-	foreach ($object->business as $line) {
-		$array_display[]=array(
-				'class' => $bc[$var],
-				'class_td' => '',
-				'comm' => $line->comm,
-				'dossier' => $line->commande,
-				'om' => $line->numom,
-				'client' => $line->socnom,
-				'dt_cmd' => dol_print_date($line->dt_env_usi,'day'),
-				'dt_liv' => dol_print_date($line->dt_liv_dem_cli,'day'),
-				'dt_liv_usi' => dol_print_date($line->dt_sortie,'day'),
-				'vin' => substr($line->vin, -7),
-				'mois' => dol_print_date($line->dt_sortie,'%m'),
-				'genre' => $line->genre,
-				'type' => $line->gamme,
-				'sil' => $line->silouhette,
-				'pv' => price($line->pv)
-		);
-	}
-}
-
-
-$tools=array(
-		'search_button' => 1,
-		'remove_filter_button' => 1,
-		'export_button' => 1,
-		'select_fields_button' => 1,
-		'extra _tools' => $extra_tools
-);
-
-$list_config=array(
-		'title' =>	 'Suivis d\'activité VN volvo',
-		'sortfield' => $sortfield,
-		'sortorder' => $sortorder,
-		'page' => $page,
-		'num' => $num,
-		'nbtotalofrecords' => $nbtotalofrecords,
-		'option' => $option,
-		'tools_active' =>1,
-		'tools' => $tools,
-		'array_fields' => $arrayfields,
-		'array_data' => $array_display,
-		'export_name' => 'portefeuille',
-		'context' => 'portefeuille',
-);
-
-dol_include_once('/volvo/class/table_template.php');
 
 
 
