@@ -257,6 +257,7 @@ $table->filter = array();
 $table->filter['PORT'] = 1;
 $table->post();
 
+var_dump($table);
 
 $table->data_array();
 
