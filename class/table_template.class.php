@@ -351,6 +351,13 @@ class Dyntable
 		if(GETPOST("button_export_x")){
 			$this->export();
 		}
+
+		if (GETPOST("button_removefilter_x")) {
+			foreach ($this->extra_tools as $key => $p){
+				$p->value = $p->default;
+				$this->extra_tools[$key] = $p;
+			}
+		}
 	}
 
 
