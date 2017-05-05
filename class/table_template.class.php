@@ -348,9 +348,34 @@ class Dyntable
 				}
 			}
 		}
-
+		if(GETPOST("button_export_x")){
+			$this->export();
+		}
 	}
 
+
+	function export(){
+		$this->limit = 0;
+		$this->data_array();
+		$handler = fopen("php://output", "w");
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment;filename=' . $this->export_name . '.csv');
+		fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+
+		$ligne=array();
+		foreach ($this->arrayfields as $f){
+			if($f->checked ==1) $ligne[]=$f->label;
+		}
+		fputcsv($handler, $ligne, ';', '"');
+		foreach ($this->array_display as $disp){
+			$ligne=array();
+			foreach ($this->arrayfields as $f){
+				if($f->checked == 1) $ligne[] = $disp[$f->name];
+			}
+			fputcsv($handler, $ligne, ';', '"');
+		}
+
+	}
 }
 
 

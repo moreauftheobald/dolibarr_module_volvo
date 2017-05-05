@@ -31,10 +31,10 @@ if (! $user->rights->volvo->port)
 
 $table = new Dyntable($db);
 
-$table->title = 'Suivis d\'activité VN volvo';
-$table->default_sortfield = 'dt_sortie';
-$table->export_name = 'portefeuille';
-$table->context = 'portefeuille';
+$table->title = 'Suivis du protefeuille de commande VN volvo';
+$table->default_sortfield = '';
+$table->export_name = 'suivi_activité_new';
+$table->context = 'suivi_business';
 $table->search_button = 1;
 $table->remove_filter_button = 1;
 $table->export_button = 1;
