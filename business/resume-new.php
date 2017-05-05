@@ -308,7 +308,9 @@ $table->data_array();
 
 $table->header();
 
-var_dump($table->filter);
+foreach ($table->extra_tools as $key => $p){
+	print $p->html_name;
+}
 
 $table->draw_tool_bar();
 
