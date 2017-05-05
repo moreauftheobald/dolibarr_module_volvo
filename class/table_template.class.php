@@ -305,7 +305,7 @@ class Dyntable
 			$this->num = $object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
 					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
 
-			foreach ($this->result as $line){
+			foreach ($object->$result as $line){
 				$line_array = array();
 				foreach ($this->arrayfields as $f){
 					$champs = $f->alias;
