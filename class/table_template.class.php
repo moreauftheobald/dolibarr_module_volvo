@@ -430,7 +430,7 @@ class Dyntable_fields
 				$ret = dol_print_date($value,$this->post_traitement[1]);
 				break;
 			case 'num':
-				$ret = roud($value,$this->post_traitement[1]) . (isset($this->unit)?' ' . $this->unit:'');
+				$ret = round($value,$this->post_traitement[1]) . (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'substr':
