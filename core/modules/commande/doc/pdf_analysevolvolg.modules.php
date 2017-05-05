@@ -379,8 +379,6 @@ class pdf_analysevolvolg extends ModelePDFContract
 					$extrafieldsline = new ExtraFields($this->db);
 					$extralabelsline = $extrafieldsline->fetch_name_optionals_label($line->table_element, true);
 					$line->fetch_optionals($line->id, $extralabelsline);
-					$categ = new Categorie($this->db);
-
 
 					if($line->fk_product == $conf->global->VOLVO_FORFAIT_LIV){
 						$pdf->SetFont('','', $default_font_size);
@@ -475,8 +473,7 @@ class pdf_analysevolvolg extends ModelePDFContract
 
 					}else{
 
-						$categ = new Categorie($this->db);
-						$listcateg = $categ->containing($line->fk_product, 'product','id');
+						$listcateg = $this->containing($line->fk_product);
 
 						if(in_array($conf->global->VOLVO_INTERNE, $listcateg)){
 
@@ -815,6 +812,36 @@ class pdf_analysevolvolg extends ModelePDFContract
 		}
 		$this->error=$langs->trans("ErrorUnknown");
 		return 0;   // Erreur par defaut
+	}
+
+
+	function containing($id)
+	{
+		$cats = array();
+
+		$sql = "SELECT ct.fk_categorie, c.label, c.rowid, c.fk_parent";
+		$sql .= " FROM " . MAIN_DB_PREFIX . "categorie_product as ct, " . MAIN_DB_PREFIX . "categorie as c";
+		$sql .= " WHERE ct.fk_categorie = c.rowid AND ct.fk_product = " . (int) $id . " AND c.type =0 ";
+		$sql .= " AND c.entity IN (" . getEntity( 'category', 1 ) . ")";
+
+		$res = $this->db->query($sql);
+		if ($res)
+		{
+			while ($obj = $this->db->fetch_object($res))
+			{
+				$cats[] = $obj->rowid;
+				if(!empty($obj->fk_parent)){
+					$cats[] = $obj->fk_parent;
+				}
+			}
+
+			return $cats;
+		}
+		else
+		{
+			dol_print_error($this->db);
+			return -1;
+		}
 	}
 }
 
