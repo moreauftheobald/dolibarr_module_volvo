@@ -361,10 +361,8 @@ class Dyntable
 		foreach ($this->extra_tools as $key => $p){
 			$name = $p->html_name;
 			$post = GETPOST($name);
-			var_dump($post);
-			exit;
-			if(!isset($_POST[$name])){
-				$val = GETPOST($name);
+			if(!empty($post)){
+				$val = $post;
 				if($val==-1) $val ="";
 				$p->value = $val;
 				$this->extra_tools[$key] = $p;
