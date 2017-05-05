@@ -241,7 +241,6 @@ $tool->title = 'Periode: ';
 $tool->html_name = 'search_periode';
 $tool->use_empty = 1;
 $tool->array = $periodarray;
-$tool->value = $search_periode;
 $tool->filter = 'MONTH_IN';
 $tools['3'] = $tool;
 
