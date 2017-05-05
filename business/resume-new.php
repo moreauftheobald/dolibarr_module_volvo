@@ -322,7 +322,7 @@ $table->data_array();
 
 $table->header();
 
-var_dump($table->array_display);
+var_dump($table->filter);
 
 $table->draw_tool_bar();
 
