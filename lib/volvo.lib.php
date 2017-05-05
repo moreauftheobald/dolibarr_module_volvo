@@ -485,10 +485,10 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
 			if($mode=='GROUP'){
-				$result[$obj->Mois]['nb_fact'] = $obj->nb_facture;
-				$result[$obj->Mois]['catotalht'] = $obj->catotalht;
-				$result[$obj->Mois]['nbporteur'] = $obj->nbporteur;
-				$result[$obj->Mois]['nbtracteur'] = $obj->nbtracteur;
+				$result['nb_fact'][$obj->Mois] = $obj->nb_facture;
+				$result['catotalht'][$obj->Mois] = $obj->catotalht;
+				$result['nbporteur'][$obj->Mois] = $obj->nbporteur;
+				$result['nbtracteur'][$obj->Mois] = $obj->nbtracteur;
 			}elseif($mode=='BY_REF'){
 				$result[$obj->ref]['id'] = $obj->id;
 				$result[$obj->ref]['nb_fact'] = $obj->nb_facture;
@@ -547,11 +547,11 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
 			if($mode=='GROUP'){
-				$result[$obj->Mois]['vcm'] = $obj->vcm;
-				$result[$obj->Mois]['dfol'] = $obj->dfol;
-				$result[$obj->Mois]['dded'] = $obj->dded;
-				$result[$obj->Mois]['lixbail'] = $obj->lixbail;
-				$result[$obj->Mois]['vfs'] = $obj->vfs;
+				$result['vcm'][$obj->Mois] = $obj->vcm;
+				$result['dfol'][$obj->Mois] = $obj->dfol;
+				$result['dded'][$obj->Mois] = $obj->dded;
+				$result['lixbail'][$obj->Mois] = $obj->lixbail;
+				$result['vfs'][$obj->Mois] = $obj->vfs;
 			}elseif($mode=='BY_REF'){
 				$result[$obj->ref]['vcm'] = $obj->vcm;
 				$result[$obj->ref]['dfol'] = $obj->dfol;
@@ -606,7 +606,7 @@ function stat_sell3($year, $commercial,$monthlist,$mode='GROUP'){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
 			if(!in_array($obj->ref, $soltrs) && $mode=='GROUP'){
-				$result[$obj->Mois]['cavolvo']+= $obj->total_ht;
+				$result['cavolvo'][$obj->Mois]+= $obj->total_ht;
 			}Elseif(!in_array($obj->ref, $soltrs) && $mode=='BY_REF'){
 				$result[$obj->ref_aff]['cavolvo']+= $obj->total_ht;
 			}
@@ -650,9 +650,9 @@ function stat_sell4($year, $commercial,$monthlist,$mode='GROUP'){
 		while($obj = $db->fetch_object($resql)){
 			if($mode=='GROUP'){
 				$cmd->getCostPriceReal($obj->cmdid,'real');
-				$result[$obj->Mois]['margereal']+= ($obj->total_ht-$cmd->total_real_paht);
+				$result['margereal'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
 				$cmd->getCostPriceReal($obj->cmdid,'theo');
-				$result[$obj->Mois]['margetheo']+= ($obj->total_ht-$cmd->total_real_paht);
+				$result['margetheo'][$obj->Mois]+= ($obj->total_ht-$cmd->total_real_paht);
 			}elseif($mode=='BY_REF'){
 				$cmd->getCostPriceReal($obj->cmdid,'real');
 				$result[$obj->ref]['margereal']+= ($obj->total_ht-$cmd->total_real_paht);
@@ -707,7 +707,7 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 		$result =array();
 		while($obj = $db->fetch_object($resql)){
 			if($mode=='GROUP'){
-				$result[$obj->Mois]['nb_port'] = $obj->nb_port;
+				$result['nb_port'][$obj->Mois] = $obj->nb_port;
 			}elseif($mode=='BY_REF'){
 				$result[$obj->ref]['id'] = $obj->id;
 			}
@@ -723,7 +723,7 @@ function stat_sell($filter=array()){
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
 
-	$month = array(
+	$month =array('mois' => array(
 			1=>'Janvier',
 			2=>'Fevrier',
 			3=>'Mars',
@@ -736,7 +736,7 @@ function stat_sell($filter=array()){
 			10=>'Octobre',
 			11=>'Novembre',
 			12=>'Décembre'
-	);
+	));
 	$result = array();
 
 	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
@@ -744,21 +744,9 @@ function stat_sell($filter=array()){
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
-	foreach ($month as $m => $val){
-		$array1 = array();
-		$array2 = array();
-		$array3 = array();
-		$array4 = array();
-		$array5 = array();
-		if(!empty($arrayresult1[$m])) $array1 = $arrayresult1[$m];
-		if(!empty($arrayresult2[$m])) $array2 = $arrayresult2[$m];
-		if(!empty($arrayresult3[$m])) $array3 = $arrayresult3[$m];
-		if(!empty($arrayresult4[$m])) $array4 = $arrayresult4[$m];
-		if(!empty($arrayresult5[$m])) $array5 = $arrayresult5[$m];
-		$array  = array_merge($array1,$array2,$array3,$array4,$array5);
-		$array['mois'] = $val;
-		$result[$val] = $array;
-	}
+	$result  = array_merge($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4,$arrayresult5,$month);
+
+
 
 	return $result;
 
