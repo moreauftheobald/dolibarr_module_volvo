@@ -370,7 +370,7 @@ class Dyntable
 		foreach ($this->array_display as $disp){
 			$ligne=array();
 			foreach ($this->arrayfields as $f){
-				if($f->checked == 1) $ligne[] = $disp[$f->name];
+				if($f->checked == 1) $ligne[] = strip_tags($disp[$f->name]);
 			}
 			fputcsv($handler, $ligne, ';', '"');
 		}
