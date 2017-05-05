@@ -22,12 +22,7 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
 require_once DOL_DOCUMENT_ROOT . '/volvo/class/table_template.class.php';
-
-$object = new Leadext($db);
-
-
 
 // Security check
 if (! $user->rights->volvo->port)
