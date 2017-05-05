@@ -233,16 +233,7 @@ $tool->filter = 'MONTH_IN';
 $tools['3'] = $tool;
 
 $table->extra_tools =$tools;
-$table->sortorder = GETPOST('sortorder', 'alpha');
-$table->sortfield = GETPOST('sortfield', 'alpha');
-$table->page = GETPOST('page', 'int');
-
-$table->offset = ($conf->liste_limit+1) * $page;
-
-if (empty($table->sortorder))
-	$table->sortorder = "ASC";
-if (empty($sortfield))
-	$table->sortfield = "dt_sortie";
+$table->default_sortfield = 'dt_sortie';
 
 $table->export_name = 'portefeuille';
 $table->context = 'portefeuille';

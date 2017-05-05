@@ -43,6 +43,7 @@ class Dyntable
 	public $param7='none';
 	public $param8='none';
 	public $param9='none';
+	public $default_sortfield;
 
 
 	function __construct($db)
@@ -319,6 +320,32 @@ class Dyntable
 			}
 			print '</tr>';
 		}
+	}
+
+	function post(){
+		$this->sortorder = GETPOST('sortorder', 'alpha');
+		$this->sortfield = GETPOST('sortfield', 'alpha');
+		$this->page = GETPOST('page', 'int');
+
+		$this->offset = ($conf->liste_limit+1) * $this->page;
+
+		if (empty($this->sortorder))
+			$this->sortorder = "ASC";
+		if (empty($this->sortfield))
+			$this->sortfield = $this->default_sortfield;
+
+		foreach ($this->extra_tools as $key => $p){
+			if(!empty($_POST[$p->html_name])){
+				${$p->html_name} = GETPOST($p->html_name);
+				if(${$p->html_name}==-1) ${$p->html_name} ="";
+				{$this->extra_tools[$key]}->value = ${$p->html_name};
+				if(!empty(${$p->html_name})){
+					$filter[$p->filter] = ${$p->html_name};
+					$option .= '&' . $p->html_name . '=' . ${$p->html_name};
+				}
+			}
+		}
+
 	}
 
 }
