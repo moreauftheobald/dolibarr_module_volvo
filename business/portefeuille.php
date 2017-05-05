@@ -215,6 +215,7 @@ $tool->default = $user->id;
 $tool->filter = 'lead.fk_user_resp';
 $tools['2'] = $tool;
 
+
 $periodarray= array(
 	1 => 'Janvier',
 	2 => 'Fevrier',
