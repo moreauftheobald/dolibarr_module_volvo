@@ -354,7 +354,7 @@ class Dyntable
 			foreach ($this->extra_tools as $key => $p){
 				$p->value = $p->default;
 				$this->extra_tools[$key] = $p;
-				//unset($_POST[$p->html_name]);
+				unset($_POST[$p->html_name]);
 			}
 		}
 
