@@ -369,13 +369,6 @@ class Dyntable
 					$this->filter[$p->filter] = $val;
 					$this->option .= '&' . $name . '=' . $val;
 				}
-			}else{
-				$p->value = $p->default;
-				$this->extra_tools[$key] = $p;
-				if(!empty($p->defaultl)){
-					$this->filter[$p->filter] = $p->defaultl;
-					$this->option .= '&' . $name . '=' . $p->defaultl;
-				}
 			}
 		}
 		if(GETPOST("button_export_x")){
