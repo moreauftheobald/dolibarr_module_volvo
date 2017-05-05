@@ -45,6 +45,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'comm';
 $field->align = 'center';
+$field->alias = 'comm';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -54,6 +55,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'com.ref';
 $field->align = 'center';
+$field->alias = 'commande';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -63,6 +65,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'ef.numom';
 $field->align = 'center';
+$field->alias = 'numom';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -72,6 +75,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'socnom';
 $field->align = 'center';
+$field->alias = 'socnom';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -81,6 +85,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'cf.date_commande';
 $field->align = 'center';
+$field->alias = 'dt_env_usi';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -90,6 +95,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'com.date_livraison';
 $field->align = 'center';
+$field->alias = 'dt_liv_dem_cli';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -99,6 +105,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'dt_sortie';
 $field->align = 'center';
+$field->alias = 'dt_sortie';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -108,6 +115,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'ef.vin';
 $field->align = 'center';
+$field->alias = 'vin';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -117,6 +125,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'dt_sortie';
 $field->align = 'center';
+$field->alias = 'dt_sortie';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -125,6 +134,7 @@ $field->label = 'genre';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
+$field->alias = 'genre';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -133,6 +143,7 @@ $field->label = 'type';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
+$field->alias = 'gamme';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -141,6 +152,7 @@ $field->label = 'sil';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
+$field->alias = 'silouhette';
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -149,6 +161,7 @@ $field->label = 'Prix de vente';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
+$field->alias = 'pv';
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
@@ -240,13 +253,13 @@ $table->param4 = 'filter';
 $table->filter = array();
 $table->filter['PORT'] = 1;
 
+$table->data_array();
+
 $table->header();
 
 $table->draw_tool_bar();
 
 $table->draw_table_head();
-
-$table->data_array();
 
 $table->end_table();
 

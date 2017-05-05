@@ -291,12 +291,33 @@ class Dyntable
 			$object = new $this->object($this->db);
 			$object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
 					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
-			var_dump($object->$result);
+			if(isset($this->limit)){
+				$limit=$this->limit;
+				$this->limit=0;
+			}
+			$this->nbtotalofrecords = $object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
+					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
+			if(isset($limit)){
+				$this->limit = $limit;
+			}else{
+				$this->limit = $conf->liste_limit;
+			}
+			$this->num = $object->$methode($this->$param0,$this->$param1,$this->$param2,$this->$param3,$this->$param4,$this->$param5,
+					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
+
+			foreach ($this->result as $line){
+				$line_array = array();
+				foreach ($this->arrayfields as $f){
+					$champs = $f->alias;
+					$line_array[$f->name] = $line->$champs;
+				}
+				$this->array_display[] = $line_array;
+			}
+
+			var_dump($this->array_display);
 		}
 	}
-	function test($param){
-		var_dump($param);
-	}
+
 }
 
 
@@ -390,6 +411,7 @@ class Dyntable_fields
 	public $field;
 	public $unit;
 	public $align;
+	public $alias;
 
 	function __construct($db)
 	{
