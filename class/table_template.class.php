@@ -248,23 +248,6 @@ class Dyntable
 
 	}
 
-	function draw_data(){
-
-		foreach ($this->array_data as $l){
-			print '<tr ' . $l['class'] . '>';
-			$td_class = $l['class_td'];
-			foreach ($l as $key => $val){
-				if($this->array_fields[$key]->checked==1){
-					print '<td ' . $td_class . ' align="' . $this->array_fields[$key]->align . '" style="white-space:nowrap;">';
-					if(!empty($val)) print $val .' ' . $this->array_fields[$key]->unit;
-					print '</td>';
-				}
-			}
-			print '</tr>';
-		}
-
-	}
-
 	function end_table(){
 		print '</table>';
 
@@ -320,6 +303,22 @@ class Dyntable
 			}
 
 			var_dump($this->array_display);
+		}
+	}
+
+	function draw_data_table(){
+		foreach ($this->array_display as $l){
+			print '<tr ' . $l['class'] . '>';
+			$td_class = $l['class_td'];
+			foreach ($l as $key => $val){
+				$field = $this->arrayfields[$key];
+				if($field->checked ==1){
+					print '<td ' . $td_class . ' align="' . $field->align . '" style="white-space:nowrap;">';
+					if(!empty($val)) print $val;
+					print '</td>';
+				}
+			}
+			print '</tr>';
 		}
 	}
 

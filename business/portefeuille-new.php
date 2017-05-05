@@ -272,6 +272,8 @@ $table->draw_tool_bar();
 
 $table->draw_table_head();
 
+$table->draw_data_table();
+
 $table->end_table();
 
 
