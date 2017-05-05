@@ -374,7 +374,7 @@ class Dyntable
 			}
 			fputcsv($handler, $ligne, ';', '"');
 		}
-
+		exit;
 	}
 }
 
@@ -511,71 +511,5 @@ class Dyntable_fields
 
 	}
 }
-
-
-
-$form = new Form($db);
-$formother = new FormOther($db);
-
-$limit = GETPOST("limit")?GETPOST("limit","int"):$conf->liste_limit;
-
-if(GETPOST("button_export_x")){
-	$handler = fopen("php://output", "w");
-	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment;filename=' . $list_config['export_name'] . '.csv');
-	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
-
-	$commercial = new user($db);
-	if(!empty($search_commercial)){
-		$commercial->fetch($search_commercial);
-		$com = $commercial->firstname . ' ' . $commercial->lastname;
-	}
-
-	if(!empty($search_periode)){
-		if($search_periode == 1){
-			$periode = '1er Trimestre';
-		}elseif($search_periode==2){
-			$periode = '2eme Trimestre';
-		}elseif($search_periode==3){
-			$periode = '3eme Trimestre';
-		}elseif($search_periode==4){
-			$periode = '4eme Trimestre';
-		}elseif($search_periode==5){
-			$periode = '1er Semestre';
-		}elseif($search_periode==6){
-			$periode = '2eme Semestre';
-		}
-	}
-
-	$h=array(
-			'Année:',
-			$year,
-			'',
-			'commercial:',
-			$com,
-			'',
-			'Periode:',
-			$periode
-	);
-	fputcsv($handler, $h, ';', '"');
-
-	$h=array();
-
-	foreach ($list_config['array_fields'] as $f){
-		if($f['checked']==1) $h[] = $f['label'];
-	}
-	fputcsv($handler, $h, ';', '"');
-
-	foreach ($list_config['array_data'] as $d) {
-		$ligne=array();
-		foreach ($d as $key=>$val){
-			if($list_config['array_fields'][$key]['checked']==1) $ligne[] = strip_tags($val);
-		}
-		fputcsv($handler, $ligne, ';', '"');
-	}
-
-	exit;
-}
-
 
 ?>
