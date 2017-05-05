@@ -474,7 +474,7 @@ class pdf_analysevolvo extends ModelePDFContract
 					}else{
 
 						$categ = new Categorie($this->db);
-						$listcateg = $categ->containing($line->fk_product, 'product','id');
+						$listcateg = $this->containing($line->fk_product);
 
 						if(in_array($conf->global->VOLVO_INTERNE, $listcateg)){
 
