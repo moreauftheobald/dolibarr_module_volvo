@@ -257,9 +257,10 @@ $table->extra_tools =$tools;
 
 $table->filter = array();
 $table->filter['PORT'] = 1;
-$table->post();
 
-//var_dump($table);
+var_dump($table->extra_tools);
+$table->post();
+var_dump($table->extra_tools);
 
 $table->data_array();
 
