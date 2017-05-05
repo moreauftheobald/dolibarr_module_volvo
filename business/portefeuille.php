@@ -247,10 +247,11 @@ $tools['3'] = $tool;
 
 $table->extra_tools =$tools;
 
-$table->filter = array();
+$table->post();
+
 $table->filter['PORT'] = 1;
 
-$table->post();
+
 
 $table->data_array();
 
