@@ -304,6 +304,21 @@ class Dyntable
 				$this->array_display[] = $line_array;
 			}
 
+		}elseif ($this->mode=='function_methode'){
+			$param0 = $this->param0;
+			$param1 = $this->param1;
+			$param2 = $this->param2;
+			$param3 = $this->param3;
+			$param4 = $this->param4;
+			$param5 = $this->param5;
+			$param6 = $this->param6;
+			$param7 = $this->param7;
+			$param8 = $this->param8;
+			$param9 = $this->param9;
+			$reflect = new ReflectionFunction($this->function);
+			$this->array_display = $reflect->invoke($this->$param0,$this->$param1,$this->$param2,$this->$param3,
+					$this->$param4,$this->$param5,$this->$param6,$this->$param7,$this->$param8,$this->$param9);
+
 		}
 	}
 
