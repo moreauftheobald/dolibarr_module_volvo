@@ -379,8 +379,6 @@ class pdf_analysevolvo extends ModelePDFContract
 					$extrafieldsline = new ExtraFields($this->db);
 					$extralabelsline = $extrafieldsline->fetch_name_optionals_label($line->table_element, true);
 					$line->fetch_optionals($line->id, $extralabelsline);
-					$categ = new Categorie($this->db);
-
 
 					if($line->fk_product == $conf->global->VOLVO_FORFAIT_LIV){
 						$pdf->SetFont('','', $default_font_size);
