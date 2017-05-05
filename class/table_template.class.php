@@ -430,7 +430,7 @@ class Dyntable_fields
 				$ret = dol_print_date($value,$this->post_traitement[1]);
 				break;
 			case 'num':
-				$ret = price(round($value,$this->post_traitement[1])) . (isset($this->unit)?' ' . $this->unit:'');
+				$ret = round($value,$this->post_traitement[1]) . (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'substr':
@@ -438,7 +438,7 @@ class Dyntable_fields
 				break;
 
 			case 'price':
-				$ret = price(round($value,0)). (isset($this->unit)?' ' . $this->unit:'');
+				$ret = price($value,'','',0,-1,$this->post_traitement[1]). (isset($this->unit)?' ' . $this->unit:'');
 				break;
 
 			case 'link':
