@@ -197,8 +197,9 @@ class Dyntable
 		}
 
 		if(is_array($this->extra_tools)){
-			print 'ok';
+
 			foreach ($this->extra_tools as $key => $p){
+				print 'ok';
 				print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
 					$p->draw_tool;
 				print '</th>';
