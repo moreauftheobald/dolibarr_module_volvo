@@ -297,6 +297,7 @@ class Dyntable
 				$line_array = array();
 				$line_array['class'] = $bc[$var];
 				$line_array['class_td'] = '';
+				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
 					$champs = $f->alias;
 					$line_array[$f->name] = $line->$champs;
@@ -326,6 +327,7 @@ class Dyntable
 		foreach ($this->array_display as $l){
 			print '<tr ' . $l['class'] . '>';
 			$td_class = $l['class_td'];
+			$l['option'] = $this->option;
 			foreach ($this->arrayfields as $key => $val){
 				if($val->checked ==1){
 					print '<td ' . $td_class . ' align="' . $field->align . '" style="white-space:nowrap;">';
@@ -545,6 +547,10 @@ class Dyntable_fields
 			case 'link':
 				$id = $this->post_traitement[3];
 				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line->$id.'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+				break;
+
+			case 'link_to':
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$line['option'].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			default:
