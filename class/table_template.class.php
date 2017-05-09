@@ -584,7 +584,9 @@ class Dyntable_fields
 		$formule = $this->formule;
 		foreach ($arrayfields as $f){
 			$replace = '#' . $f->alias . '#';
-			$formule = str_replace($replace, $line[$f->alias], $formule);
+			$value = $line[$f->alias];
+			if(empty($value)) $value = "0";
+			$formule = str_replace($replace, $value, $formule);
 		}
 		if(!empty($formule)) $res = eval("return " . $formule . ";");
 		if($res != FALSE || !empty($res)){
