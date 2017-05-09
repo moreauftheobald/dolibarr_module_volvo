@@ -380,7 +380,7 @@ class Dyntable
 			foreach ($this->arrayfields as $key => $val){
 				if($val->checked ==1){
 					print '<td ' . $td_class . ' align="' . $val->align . '" style="white-space:nowrap;">';
-					if(!empty($l[$val->name])) print $val->traitement($l[$val->name],$l);
+					if(!empty($l[$val->name])) print $val->traitement($l[$val->name],$l,$this->option);
 					print '</td>';
 				}
 			}
@@ -584,7 +584,7 @@ class Dyntable_fields
 		$this->db = $db;
 	}
 
-	function traitement($value,$line){
+	function traitement($value,$line,$option){
 		switch ($this->post_traitement[0]){
 			case 'date':
 				$ret = dol_print_date($value,$this->post_traitement[1]);
@@ -608,7 +608,7 @@ class Dyntable_fields
 
 			case 'link_to':
 				$id = $this->post_traitement[3];
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id]. (isset($option)? $option:'') . '">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			default:
