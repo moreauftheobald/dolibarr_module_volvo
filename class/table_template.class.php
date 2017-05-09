@@ -589,11 +589,9 @@ class Dyntable_fields
 			$formule = str_replace($replace, $value, $formule);
 		}
 		error_reporting(0);
-		try{
-			$res = eval("return " . $formule . ";");
-		}catch(Exeption $e){
-			$res ='erreur';
-		}
+
+		$res = eval("return " . $formule . ";");
+
 		return $res;
 
 	}
