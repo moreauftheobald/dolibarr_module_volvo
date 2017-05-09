@@ -603,11 +603,12 @@ class Dyntable_fields
 
 			case 'link':
 				$id = $this->post_traitement[3];
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line->$id.'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			case 'link_to':
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].'?test=1'.$line['option'].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+				$id = $this->post_traitement[3];
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			default:
