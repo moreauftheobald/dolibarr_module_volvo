@@ -329,7 +329,7 @@ class Dyntable
 				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
 					if($f->type = 'calc'){
-						$line_array[$f->name] = $f->calcularray($line, $this);
+						$line_array[$f->name] = $f->calcularray($line, $this->arrayfields);
 					}else{
 						$line_array[$f->name] = $line[$f->alias];
 					}
@@ -580,8 +580,8 @@ class Dyntable_fields
 
 	}
 
-	function calcularray($line,$table){
-		foreach ($table->arrayfields as $f){
+	function calcularray($line,$arrayfields){
+		foreach ($arrayfields as $f){
 			$replace = '#' . $f->alias . '#';
 			$this->formule = str_replace($replace, $line[$f->alias], $this->formule);
 		}
