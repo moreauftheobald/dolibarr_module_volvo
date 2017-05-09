@@ -366,6 +366,7 @@ class Dyntable
 					$line_array['class'] =  'class="liste_titre"';
 					$line_array['class_td'] = ' class="liste_titre"';
 					$line_array['option'] = $this->option;
+					$line_array['total'] = 1;
 				}
 				$this->array_display[] = $line_array;
 			}
@@ -604,14 +605,22 @@ class Dyntable_fields
 				break;
 
 			case 'link':
-				$id = $this->post_traitement[3];
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
-				break;
+				if($line['total'] == 1){
+					$ret = $value . (isset($this->unit)?' ' . $this->unit:'');
+				}else{
+					$id = $this->post_traitement[3];
+					$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+					break;
+				}
 
 			case 'link_to':
-				$id = $this->post_traitement[3];
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id]. (isset($option)? $option:'') . '">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
-				break;
+				if($line['total'] == 1){
+					$ret = $value . (isset($this->unit)?' ' . $this->unit:'');
+				}else{
+					$id = $this->post_traitement[3];
+					$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$this->post_traitement[2].$line[$id]. (isset($option)? $option:'') . '">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+					break;
+				}
 
 			default:
 				$ret = $value . (isset($this->unit)?' ' . $this->unit:'');
