@@ -337,7 +337,7 @@ class Dyntable
 						$line_array[$f->name] = $f->calcularray($line, $this->arrayfields);
 						if(!empty($this->total_line)){
 							if($f->total == 'value'){
-								$line_array_total[$f->alias]+=line_array[$f->name];
+								$line_array_total[$f->alias]+=$line_array[$f->name];
 							}
 						}
 					}else{
