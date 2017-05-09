@@ -191,6 +191,16 @@ $field->unit = '€';
 $field->post_traitement = array('price', 0);
 $table->arrayfields[$field->name] = $field;
 
+$field= new Dyntable_fields($db);
+$field->name='commercial';
+$field->label = 'id_commercial';
+$field->checked = 1;
+$field->enabled = false;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->alias = 'commercial';
+$table->arrayfields[$field->name] = $field;
+
 $tools =array();
 
 $tool = new Dyntable_tools($db);
