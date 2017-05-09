@@ -351,6 +351,9 @@ class Dyntable
 				}
 				$this->array_display[] = $line_array;
 			}
+			var_dump($line_array_total);
+			exit;
+
 			if(!empty($this->total_line) && !empty($line_array_total)){
 				foreach ($this->arrayfields as $f){
 					if($f->total == 'value'){
