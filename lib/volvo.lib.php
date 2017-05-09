@@ -725,18 +725,18 @@ function stat_sell($filter=array()){
 	$search_commercial = $filter['search_commercial'];
 
 	$month =array(
-			1=>Array('mois'=>'Janvier'),
-			2=>Array('mois'=>'Fevrier'),
-			3=>Array('mois'=>'Mars'),
-			4=>Array('mois'=>'Avril'),
-			5=>Array('mois'=>'Mai'),
-			6=>Array('mois'=>'Juin'),
-			7=>Array('mois'=>'Juillet'),
-			8=>Array('mois'=>'Aout'),
-			9=>Array('mois'=>'Septembre'),
-			10=>Array('mois'=>'Octobre'),
-			11=>Array('mois'=>'Novembre'),
-			12=>Array('mois'=>'Décembre')
+			1=>Array('mois'=>'Janvier','moisn'=>1),
+			2=>Array('mois'=>'Fevrier','moisn'=>2),
+			3=>Array('mois'=>'Mars','moisn'=>3),
+			4=>Array('mois'=>'Avril','moisn'=>4),
+			5=>Array('mois'=>'Mai','moisn'=>5),
+			6=>Array('mois'=>'Juin','moisn'=>6),
+			7=>Array('mois'=>'Juillet','moisn'=>7),
+			8=>Array('mois'=>'Aout','moisn'=>8),
+			9=>Array('mois'=>'Septembre','moisn'=>9),
+			10=>Array('mois'=>'Octobre','moisn'=>10),
+			11=>Array('mois'=>'Novembre','moisn'=>11),
+			12=>Array('mois'=>'Décembre','moisn'=>12)
 	);
 	$result = array();
 

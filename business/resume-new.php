@@ -280,6 +280,15 @@ $field->align = 'center';
 $field->post_traitement = array('price', '2');
 $table->arrayfields[$field->name] = $field;
 
+$field= new Dyntable_fields($db);
+$field->name='moisn';
+$field->label = 'Mois(num.)';
+$field->alias = 'moisn';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$table->arrayfields[$field->name] = $field;
+
 $tools =array();
 
 $tool = new Dyntable_tools($db);
