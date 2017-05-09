@@ -490,6 +490,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->Mois]['nbporteur'] = $obj->nbporteur;
 				$result[$obj->Mois]['nbtracteur'] = $obj->nbtracteur;
 			}elseif($mode=='BY_REF'){
+				$result[$obj->ref]['ref'] = $obj->ref;
 				$result[$obj->ref]['id'] = $obj->id;
 				$result[$obj->ref]['nb_fact'] = $obj->nb_facture;
 				$result[$obj->ref]['catotalht'] = $obj->catotalht;
@@ -748,7 +749,22 @@ function stat_sell($filter=array()){
 	$array = array_replace_recursive($month,$arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4,$arrayresult5);
 
 	return $array;
+}
 
 
+function stat_sell_ref($filter=array()){
+	global $bc;
+	$year = $filter['year'];
+	$monthlist = $filter['monthlist'];
+	$search_commercial = $filter['search_commercial'];
 
+	$result = array();
+
+	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
+	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
+	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
+	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
+	$array = array_replace_recursive($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4);
+
+	return $array;
 }
