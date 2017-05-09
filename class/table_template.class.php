@@ -581,7 +581,7 @@ class Dyntable_fields
 	}
 
 	function calcularray($line,$table){
-		foreach ($table-->arrayfields as $f){
+		foreach ($table->arrayfields as $f){
 			$replace = '#' . $f->alias . '#';
 			$this->formule = str_replace($replace, $line[$f->alias], $this->formule);
 		}
