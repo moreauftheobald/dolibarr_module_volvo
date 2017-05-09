@@ -581,11 +581,12 @@ class Dyntable_fields
 	}
 
 	function calcularray($line,$arrayfields){
+		$formule = $this->formule;
 		foreach ($arrayfields as $f){
 			$replace = '#' . $f->alias . '#';
-			$this->formule = str_replace($replace, $line[$f->alias], $this->formule);
+			$formule = str_replace($replace, $line[$f->alias], $formule);
 		}
-		$res = eval("return " . $this->formule . ";");
+		$res = eval("return " . $formule . ";");
 		if($res != FALSE){
 			return $res;
 		}else{
