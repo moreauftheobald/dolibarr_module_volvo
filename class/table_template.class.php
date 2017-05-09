@@ -590,7 +590,7 @@ class Dyntable_fields
 		}
 		try{
 			$res = eval("return " . $formule . ";");
-		}catch(Exeption $e){
+		}finally{
 			$res ='erreur';
 		}
 		return $res;
