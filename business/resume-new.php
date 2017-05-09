@@ -286,7 +286,7 @@ $table->data_array();
 
 $table->header();
 
-var_dump(array_sum($table->array_display));
+var_dump($table->array_display);
 
 $table->draw_tool_bar();
 
