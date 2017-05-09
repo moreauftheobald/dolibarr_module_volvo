@@ -329,7 +329,7 @@ class Dyntable
 				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
 					if($f->type = 'calc'){
-						$line_array[$f->name] = $f->calcul($line, $this);
+						$line_array[$f->name] = $f->calcularray($line, $this);
 					}else{
 						$line_array[$f->name] = $line[$f->alias];
 					}
