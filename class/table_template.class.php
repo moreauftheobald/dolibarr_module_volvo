@@ -581,17 +581,17 @@ class Dyntable_fields
 	}
 
 	function calcularray($line,$arrayfields){
-// 		$formule = $this->formule;
-// 		foreach ($arrayfields as $f){
-// 			$replace = '#' . $f->alias . '#';
-// 			$value = $line[$f->alias];
-// 			if(empty($value)) $value = "0";
-// 			$formule = str_replace($replace, $value, $formule);
-// 		}
-// 		error_reporting(0);
+		$formule = $this->formule;
+		foreach ($arrayfields as $f){
+			$replace = '#' . $f->alias . '#';
+			$value = $line[$f->alias];
+			if(empty($value)) $value = "0";
+			$formule = str_replace($replace, $value, $formule);
+		}
+		error_reporting(0);
 
-// 		$res = eval("return " . $formule . ";");
-		$res = 1;
+		$res = eval("return " . $formule . ";");
+
 		return $res;
 
 	}
