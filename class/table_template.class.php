@@ -557,7 +557,7 @@ class Dyntable_tools
 				break;
 
 			case 'button':
-				print '<div class="inline-block divButAction"><a class="butAction" href="' . DOL_URL_ROOT . $this->link  . '">' . $this->title . '</a></div>';
+				print '<a class="butAction" href="' . DOL_URL_ROOT . $this->link  . '">' . $this->title . '</a>';
 		}
 	}
 }
