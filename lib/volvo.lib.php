@@ -723,7 +723,7 @@ function stat_sell($filter=array()){
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
 
-	$month =array('mois' => array(
+	$month =array(
 			1=>'Janvier',
 			2=>'Fevrier',
 			3=>'Mars',
@@ -736,7 +736,7 @@ function stat_sell($filter=array()){
 			10=>'Octobre',
 			11=>'Novembre',
 			12=>'Décembre'
-	));
+	);
 	$result = array();
 
 	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
@@ -771,7 +771,7 @@ function stat_sell($filter=array()){
 		$result[$m] = $line;
 	}
 
-	return $arrayresult1;
+	return $result;
 
 
 
