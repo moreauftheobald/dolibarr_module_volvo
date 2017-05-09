@@ -299,7 +299,7 @@ class Dyntable
 				$line_array['class_td'] = '';
 				foreach ($this->arrayfields as $f){
 					$champs = $f->alias;
-					$line_array[$f->name] = $f->traitement($line->$champs,$line);
+					$line_array[$f->name] = $line->$champs;
 				}
 				$this->array_display[] = $line_array;
 			}
