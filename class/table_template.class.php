@@ -550,9 +550,16 @@ class Dyntable_tools
 				}
 				print '&nbsp; &nbsp;' . $this->title;
 				print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
+				break;
 
 			case 'hidden':
-				print '<input type="hidden" name="' . $this->html_name . '" id="' . $this->html_name . '" value="' . $this->value . '">';;
+				print '<input type="hidden" name="' . $this->html_name . '" id="' . $this->html_name . '" value="' . $this->value . '">';
+				break;
+
+			case 'button':
+				print '<div class="tabsAction">';
+				print '<div class="inline-block divButAction"><a class="butAction" href="' . $this->link  . '">' . $this->title . '</a></div>';
+				print '</div>';
 			}
 	}
 

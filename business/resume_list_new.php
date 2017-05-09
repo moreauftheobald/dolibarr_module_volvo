@@ -196,6 +196,12 @@ $table->arrayfields[$field->name] = $field;
 $tools =array();
 
 $tool = new Dyntable_tools($db);
+$tool->type = 'button';
+$tool->title = 'Retour au suvi d\'activité ';
+$tool->link = '/volvo/business/resume-new.php?ret=1';
+$tools['0'] = $tool;
+
+$tool = new Dyntable_tools($db);
 $tool->type = 'hidden';
 $tool->html_name = 'year';
 $tool->filter = 'year';
