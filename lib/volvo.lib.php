@@ -752,7 +752,7 @@ function stat_sell($filter=array()){
 		$line['ca_total'] = $arrayresult1['catotalht'][$m];
 		$line['ca_volvo'] = $arrayresult3['cavolvo'][$m];
 		$line['nb_trt'] = $arrayresult1['nbtracteur'][$m];
-		$result[$m]['nb_port'] = $arrayresult1['nbporteur'][$m];
+		$line['nb_port'] = $arrayresult1['nbporteur'][$m];
 		if($arrayresult1['nb_fact'][$m]>0){
 			$line['precent_trt'] = ($arrayresult1['nbtracteur'][$m]/$arrayresult1['nb_fact'][$m])*100;
 			$line['precent_prt'] = ($arrayresult1['nbporteur'][$m]/$arrayresult1['nb_fact'][$m])*100;
