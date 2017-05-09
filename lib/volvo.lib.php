@@ -456,6 +456,8 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	if($mode=='BY_REF'){
 		$sql.="c.ref as ref, ";
 		$sql.="c.rowid as id, ";
+		$sql.="soc.name as socname, ";
+		$sql.="soc.rowid as socid, ";
 	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "COUNT(DISTINCT c.rowid) as nb_facture, ";
@@ -466,6 +468,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "societe as soc on soc.rowid = l.fk_soc ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields lef on lef.fk_object = l.rowid ";
 	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
 	if(!empty($monthlist)){
@@ -491,6 +494,8 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->Mois]['nbtracteur'] = $obj->nbtracteur;
 			}elseif($mode=='BY_REF'){
 				$result[$obj->ref]['ref'] = $obj->ref;
+				$result[$obj->ref]['socname'] = $obj->socname;
+				$result[$obj->ref]['socid'] = $obj->socid;
 				$result[$obj->ref]['id'] = $obj->id;
 				$result[$obj->ref]['nb_fact'] = $obj->nb_facture;
 				$result[$obj->ref]['catotalht'] = $obj->catotalht;
