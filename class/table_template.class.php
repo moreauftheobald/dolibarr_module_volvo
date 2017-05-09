@@ -326,9 +326,8 @@ class Dyntable
 		foreach ($this->array_display as $l){
 			print '<tr ' . $l['class'] . '>';
 			$td_class = $l['class_td'];
-			foreach ($l as $key => $val){
-				$field = $this->arrayfields[$key];
-				if($field->checked ==1){
+			foreach ($this->arrayfields as $key => $val){
+				if($val->checked ==1){
 					print '<td ' . $td_class . ' align="' . $field->align . '" style="white-space:nowrap;">';
 					if(!empty($val)) print $val;
 					print '</td>';
