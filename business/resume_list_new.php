@@ -193,6 +193,8 @@ $field->align = 'center';
 $field->post_traitement = array('price', '2');
 $table->arrayfields[$field->name] = $field;
 
+$tools =array();
+
 $tool = new Dyntable_tools($db);
 $tool->type = 'hidden';
 $tool->html_name = 'year';
@@ -213,8 +215,6 @@ $tool->type = 'hidden';
 $tool->html_name = 'search_periode';
 $tool->filter = 'search_periode';
 $tools['3'] = $tool;
-
-$tools =array();
 
 $table->extra_tools =$tools;
 
