@@ -720,7 +720,6 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 
 }
 function stat_sell($filter=array()){
-	global $bc;
 	$year = $filter['year'];
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
@@ -753,7 +752,6 @@ function stat_sell($filter=array()){
 
 
 function stat_sell_ref($filter=array()){
-	global $bc;
 	$year = $filter['year'];
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
