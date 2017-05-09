@@ -329,7 +329,7 @@ class Dyntable
 			foreach ($this->arrayfields as $key => $val){
 				if($val->checked ==1){
 					print '<td ' . $td_class . ' align="' . $field->align . '" style="white-space:nowrap;">';
-					if(!empty($this->array_display[$val->name])) print $this->array_display[$val->name];
+					if(!empty($l[$val->name])) print $l[$val->name];
 					print '</td>';
 				}
 			}
