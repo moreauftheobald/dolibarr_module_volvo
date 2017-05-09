@@ -601,7 +601,7 @@ class Dyntable_fields
 				break;
 
 			case 'link_to':
-				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].$line['option'].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
+				$ret = '<a href="' . DOL_URL_ROOT.$this->post_traitement[1].'?test=1'.$line['option'].'">' . $value . (isset($this->unit)?' ' . $this->unit:'') . '</a>';
 				break;
 
 			default:
