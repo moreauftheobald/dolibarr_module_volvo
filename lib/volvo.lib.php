@@ -830,7 +830,7 @@ function stat_sell($filter=array()){
 	$line['m_tot_r'] = $totmgr;
 	$line['m_tot_e'] = $totmgr-$totmgt;
 	$result['total'] = $line;
-	return $array;
+	return $arrayresult1;
 
 
 
