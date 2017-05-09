@@ -22,382 +22,333 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
-
-$title = 'Suivis d\'activité VN volvo';
-
-// Security check
 if (! $user->rights->volvo->activite)
 	accessforbidden();
 
-// Search criteria
-$search_commercial = GETPOST("search_commercial", 'int');
-$search_periode = GETPOST("search_periode");
-$year = GETPOST('year');
+require_once DOL_DOCUMENT_ROOT . '/volvo/class/table_template.class.php';
 
+$table = new Dyntable($db);
 
-// Do we click on purge search criteria ?
-if (GETPOST("button_removefilter_x")) {
- 	$search_commercial = '';
- 	$search_periode = '';
- 	$year = dol_print_date(dol_now(),'%Y');
-}
+$table->title = 'Suivis d\'activité VN volvo';
+$table->default_sortfield = 'dt_sortie';
+$table->export_name = 'suivi_activité_new';
+$table->context = 'suivi_activite';
+$table->search_button = 1;
+$table->remove_filter_button = 1;
+$table->export_button = 1;
+$table->select_fields_button = 1;
+$table->mode = 'function_methode';
+$table->include = '/volvo/lib/volvo.lib.php';
+$table->function = 'stat_sell';
+$table->limit = 0;
+$table->param0 = 'filter';
+$table->total_line = 'Total';
 
-$search_commercial_disabled = 0;
-if (empty($user->rights->volvo->stat_all)){
-	$search_commercial = $user->id;
-	$search_commercial_disabled = 1;
-}
+$field= new Dyntable_fields($db);
+$field->name='mois';
+$field->label = 'Mois';
+$field->alias = 'mois';
+$field->checked = 1;
+$field->total = 'name';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('link_to', '/volvo/business/resume_list.php','?month=','moisn');
+$table->arrayfields[$field->name] = $field;
 
-$user_included=array();
-$sqlusers = "SELECT fk_user FROM " . MAIN_DB_PREFIX . "usergroup_user WHERE fk_usergroup = 1";
-$resqlusers  = $db->query($sqlusers);
-if($resqlusers){
-	while ($users = $db->fetch_object($resqlusers)){
-		$user_included[] = $users->fk_user;
-	}
-}
+$field= new Dyntable_fields($db);
+$field->name='nb_facture';
+$field->label = 'Nb Factures';
+$field->alias = 'nb_fact';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num',0);
+$table->arrayfields[$field->name] = $field;
 
-if(empty($year)) $year = dol_print_date(dol_now(),'%Y');
+$field= new Dyntable_fields($db);
+$field->name='nb_portfeuille';
+$field->label = 'Nb portefeuille';
+$field->alias = 'nb_port';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num',0);
+$table->arrayfields[$field->name] = $field;
 
-$var = true;
-$month = array(
-		1=>'Janvier',
-		2=>'Fevrier',
-		3=>'Mars',
-		4=>'Avril',
-		5=>'Mai',
-		6=>'Juin',
-		7=>'Juillet',
-		8=>'Aout',
-		9=>'Septembre',
-		10=>'Octobre',
-		11=>'Novembre',
-		12=>'Décembre'
+$field= new Dyntable_fields($db);
+$field->name='ca_total';
+$field->label = 'C.A. Total HT';
+$field->alias = 'catotalht';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', 0);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='ca_volvo';
+$field->label = 'C.A. Fac. Volvo';
+$field->alias = 'cavolvo';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='nb_trt';
+$field->label = 'Nb Tracteurs';
+$field->alias = 'nbtracteur';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='nb_port';
+$field->label = 'Nb Porteurs';
+$field->alias = 'nbporteur';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='precent_trt';
+$field->label = '% Tracteurs';
+$field->type = 'calc';
+$field->formule = '(#nbtracteur#/#nb_fact#)*100';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '%';
+$field->align = 'center';
+$field->post_traitement = array('num', 2);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='percent_prt';
+$field->label = '% Porteurs';
+$field->formule = '(#nbporteur#/#nb_fact#)*100';
+$field->type = 'calc';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '%';
+$field->align = 'center';
+$field->post_traitement = array('num', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='vcm';
+$field->label = 'VCM';
+$field->alias = 'vcm';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dfol';
+$field->label = 'DFOL';
+$field->alias = 'dfol';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='dded';
+$field->label = 'DDED';
+$field->alias = 'dded';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='vfs';
+$field->label = 'VFS';
+$field->alias = 'vfs';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='lixbail';
+$field->label = 'Lixbail';
+$field->alias = 'lixbail';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_tot';
+$field->label = 'Marge totale';
+$field->alias = 'margetheo';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_moy';
+$field->label = 'Marge moyenne';
+$field->type = 'calc';
+$field->formule = '(#margetheo#/#nb_fact#)';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_tot_r';
+$field->label = 'Marge Totale Réélle';
+$field->alias = 'margereal';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_moy_r';
+$field->label = 'Marge Moyenne Réélle';
+$field->type = 'calc';
+$field->formule = '(#margereal#/#nb_fact#)';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_tot_e';
+$field->label = 'Marge totale - Ecart';
+$field->type = 'calc';
+$field->formule = '(#margereal#-#margetheo#)';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='m_moy_e';
+$field->label = 'Marge Moyenne - Ecart';
+$field->type = 'calc';
+$field->formule = '(#margereal#-#margetheo#)/#nb_fact#';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='moisn';
+$field->enabled = false;
+$field->alias = 'moisn';
+$table->arrayfields[$field->name] = $field;
+
+$tools =array();
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_year';
+$tool->title = 'Année: ';
+$tool->html_name = 'year';
+$tool->filter = 'year';
+$tool->use_empty = 0;
+$tool->min_year = 5;
+$tool->max_year = 0;
+$tool->default = dol_print_date(dol_now(),'%Y');
+$tools['1'] = $tool;
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_user';
+$tool->title = 'Commercial: ';
+$tool->html_name = 'search_commercial';
+$tool->filter = 'search_commercial';
+$tool->use_empty = 1;
+$tool->see_all = $user->rights->volvo->stat_all;
+$tool->default = $user->id;
+$tool->limit_to_group = '1';
+$tools['2'] = $tool;
+
+$periodarray= array(
+		'1,2,3'=>'1er Trimestre',
+		'4,5,6'=> '2eme Trimestre',
+		'7,8,9'=>'3eme Trimestre',
+		'10,11,12'=>'4eme Trimestre',
+		'1,2,3,4,5,6'=>'1er Semestre',
+		'7,8,9,10,11,12'=>'2eme Semestre'
 );
 
-if(!empty($search_periode)){
-	switch($search_periode){
-		case 1:
-			$monthlist = '1,2,3';
-			break;
-		case 2:
-			$monthlist = '4,5,6';
-			break;
-		case 3:
-			$monthlist = '7,8,9';
-			break;
-		case 4:
-			$monthlist = '10,11,12';
-			break;
-		case 5:
-			$monthlist = '1,2,3,4,5,6';
-			break;
-		case 6:
-			$monthlist = '7,8,9,10,11,12';
-			break;
-	}
-}
-if(!empty($monthlist)){
-	$arrayperiode = explode(',',$monthlist);
-}else{
-	$arrayperiode=array(1,2,3,4,5,6,7,8,9,10,11,12);
-}
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_array';
+$tool->title = 'Periode: ';
+$tool->html_name = 'search_periode';
+$tool->filter = 'search_periode';
+$tool->use_empty = 1;
+$tool->array = $periodarray;
+$tools['3'] = $tool;
 
-$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
-$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
-$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
-$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
-$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
+$table->extra_tools =$tools;
 
-$array_display=array();
+$table->sub_title = array(1=>'Soft Offers');
 
-foreach ($arrayperiode as $m) {
-	$link='<a href="resume_list.php' . '?year=' . $year . '&search_commercial=' .$search_commercial.'&search_month=' . $m .'">' . $month[$m] . '</a>';
-	$var = ! $var;
-	$total_fact+=$arrayresult1[$m]['nb_fact'];
-	$total_portfeuille+=$arrayresult5[$m]['nb_port'];
-	$total_caht+=$arrayresult1[$m]['catotalht'];
-	$total_tracteur+=$arrayresult1[$m]['nbtracteur'];
-	$total_porteur+=$arrayresult1[$m]['nbporteur'];
-	$total_vcm+=$arrayresult2[$m]['vcm'];
-	$total_dfol+=$arrayresult2[$m]['dfol'];
-	$total_dded+=$arrayresult2[$m]['dded'];
-	$total_vfs+=$arrayresult2[$m]['vfs'];
-	$total_lixbail+=$arrayresult2[$m]['lixbail'];
-	$total_cavolvo+=$arrayresult3[$m]['cavolvo'];
-	$total_margetheo+=$arrayresult4[$m]['margetheo'];
-	$total_margereal+=$arrayresult4[$m]['margereal'];
+$table->post();
 
-	if(!empty($arrayresult1[$m]['nb_fact'])){
-		$tracteur_percent = round(($arrayresult1[$m]['nbtracteur'] /($arrayresult1[$m]['nb_fact']))*100,2);
-		$porteur_percent = round(($arrayresult1[$m]['nbporteur'] /($arrayresult1[$m]['nb_fact']))*100,2);
-		$m_moy = price(round($arrayresult4[$m]['margetheo']/$arrayresult1[$m]['nb_fact'],2));
-		$m_moy_r = price(round($arrayresult4[$m]['margereal']/$arrayresult1[$m]['nb_fact'],2));
-		$m_moy_e = price(round(($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'])/$arrayresult1[$m]['nb_fact'],2));
-	}else{
-		$tracteur_percent = '';
-		$porteur_percent = '';
-		$m_moy = '';
-		$m_moy_r = '';
-		$m_moy_e = '';
-	}
+$table->data_array();
+
+$table->header();
+
+$table->draw_tool_bar();
+
+$table->draw_table_head();
+
+$table->draw_data_table();
+
+$table->end_table();
 
 
-	$array_display[$m]=array(
-			'class' => $bc[$var],
-			'class_td' => '',
-			'mois' => $link,
-			'nb_facture' => $arrayresult1[$m]['nb_fact'],
-			'nb_portfeuille' => $arrayresult5[$m]['nb_port'],
-			'ca_total' => ($arrayresult1[$m]['catotalht']==0?"":price($arrayresult1[$m]['catotalht'])),
-			'ca_volvo'=> ($arrayresult3[$m]['cavolvo']==0?"":price($arrayresult3[$m]['cavolvo'])),
-			'nb_trt'=> $arrayresult1[$m]['nbtracteur'],
-			'nb_port'=> $arrayresult1[$m]['nbporteur'],
-			'precent_trt'=> $tracteur_percent,
-			'percent_prt'=> $porteur_percent,
-			'vcm'=> $arrayresult2[$m]['vcm'],
-			'dfol'=> $arrayresult2[$m]['dfol'],
-			'dded'=> $arrayresult2[$m]['dded'],
-			'vfs'=> $arrayresult2[$m]['vfs'],
-			'lixbail'=> $arrayresult2[$m]['lixbail'],
-			'm_tot'=> ($arrayresult4[$m]['margetheo']==0?"":price($arrayresult4[$m]['margetheo'])),
-			'm_moy'=> $m_moy,
-			'm_tot_r'=> ($arrayresult4[$m]['margereal']==0?"":price($arrayresult4[$m]['margereal'])),
-			'm_moy_r'=> $m_moy_r,
-			'm_tot_e'=> (($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'])==0?"":price(round($arrayresult4[$m]['margereal']-$arrayresult4[$m]['margetheo'],2))),
-			'm_moy_e'=> $m_moy_e
-	);
-}
-if(!empty($total_fact)){
-	$tracteur_percent = round(($total_tracteur /($total_fact))*100,2);
-	$porteur_percent = round(($total_porteur /($total_fact))*100,2);
-	$m_moy = price(round($total_margetheo/$total_fact,2));
-	$m_moy_r = price(round($total_margereal/$total_fact,2));
-	$m_moy_e = price(round(($total_margereal-$total_margetheo)/$total_fact,2));
-}else{
-	$tracteur_percent = '';
-	$porteur_percent = '';
-	$m_moy = '';
-	$m_moy_r = '';
-	$m_moy_e = '';
-}
 
 
-$array_display[13]=array(
-		'class' => ' class="liste_titre"',
-		'class_td' => ' class="liste_titre"',
-		'mois' => 'Total',
-		'nb_facture' => price($total_fact),
-		'nb_portfeuille' => price($total_portfeuille),
-		'ca_total' => price($total_caht),
-		'ca_volvo'=> price($total_cavolvo),
-		'nb_trt'=> $total_tracteur,
-		'nb_port'=> $total_porteur,
-		'precent_trt'=> $tracteur_percent,
-		'percent_prt'=> $porteur_percent,
-		'vcm'=> $total_vcm,
-		'dfol'=> $total_dfol,
-		'dded'=> $total_dded,
-		'vfs'=> $total_vfs,
-		'lixbail'=> $total_lixbail,
-		'm_tot'=> price($total_margetheo),
-		'm_moy'=> $m_moy,
-		'm_tot_r'=> price($total_margereal),
-		'm_moy_r'=> $m_moy_r,
-		'm_tot_e'=> price(round($total_margereal-$total_margetheo,2)),
-		'm_moy_e'=> $m_moy_e
-);
-
-$arrayfields=array(
-		'mois'=>array(
-				'label'=>'Mois',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'nb_facture'=>array(
-				'label'=>'Nb Factures',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'nb_portfeuille'=>array(
-				'label'=>'Nb portefeuille',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'ca_total'=>array(
-				'label'=>'C.A. Total HT',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'ca_volvo'=>array(
-				'label'=>'C.A. Fac. Volvo',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'nb_trt'=>array(
-				'label'=>'Nb Tracteurs',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'nb_port'=>array(
-				'label'=>'Nb Porteurs',
-				'checked'=>1,
-				'sub_title'=>0,
-				'align'=>'center'
-		),
-		'precent_trt'=>array(
-				'label'=>'% Tracteurs',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'%',
-				'align'=>'center'
-		),
-		'percent_prt'=>array(
-				'label'=>'% Porteurs',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'%',
-				'align'=>'center'
-		),
-		'vcm'=>array(
-				'label'=>'VCM',
-				'checked'=>1,
-				'sub_title'=>1,
-				'align'=>'center'
-		),
-		'dfol'=>array(
-				'label'=>'DFOL',
-				'checked'=>1,
-				'sub_title'=>1,
-				'align'=>'center'
-		),
-		'dded'=>array(
-				'label'=>'DDED',
-				'checked'=>1,
-				'sub_title'=>1,
-				'align'=>'center'
-		),
-		'vfs'=>array(
-				'label'=>'VFS',
-				'checked'=>1,
-				'sub_title'=>1
-		),
-		'lixbail'=>array(
-				'label'=>'Lixbail',
-				'checked'=>1,
-				'sub_title'=>1,
-				'align'=>'center'
-		),
-		'm_tot'=>array(
-				'label'=>'Marge totale',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'm_moy'=>array(
-				'label'=>'Marge moyenne',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'm_tot_r'=>array(
-				'label'=>'Marge Totale Réélle',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'm_moy_r'=>array(
-				'label'=>'Marge Moyenne Réélle',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'm_tot_e'=>array(
-				'label'=>'Marge totale - Ecart',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-		'm_moy_e'=>array(
-				'label'=>'Marge Moyenne - Ecart',
-				'checked'=>1,
-				'sub_title'=>0,
-				'unit'=>'€',
-				'align'=>'center'
-		),
-);
-
-$extra_tools=array(
-		1 => array(
-				'type' => 'select_year',
-				'title' => 'Année: ',
-				'value' => $year,
-				'html_name' => 'year',
-				'use_empty' => 0,
-				'min_year' => 5,
-				'max_year' => 0
-		),
-		2 => array(
-				'type' => 'select_user',
-				'title' => 'Commercial: ',
-				'value' => $search_commercial,
-				'html_name' => 'search_commercial',
-				'use_empty' => 1,
-				'disabled' => $search_commercial_disabled,
-				'excluded' => array(),
-				'included' => $user_included
-		),
-		3 => array(
-				'type' => 'select_array',
-				'title' => 'Periode: ',
-				'value' => $search_periode,
-				'html_name' => 'search_periode',
-				'use_empty' => 1,
-				'array' => array(1=>'1er Trimestre', 2=> '2eme Trimestre', 3=>'3eme Trimestre', 4=>'4eme Trimestre', 5=>'1er Semestre',6=>'2eme Semestre'),
-				'value' => $search_periode,
-		)
-);
-
-$tools=array(
-		'search_button' => 1,
-		'remove_filter_button' => 1,
-		'export_button' => 1,
-		'select_fields_button' => 1,
-		'extra _tools' => $extra_tools
-);
-$subtitle = array(
-		1=>'Soft Offers'
-);
-
-$list_config=array(
-		'title' =>	 'Suivis d\'activité VN volvo',
-		'sortfield' => GETPOST("sortfield",'alpha'),
-		'sortorder' => GETPOST("sortorder",'alpha'),
-		'page' => GETPOST("page",'int'),
-		'tools_active' =>1,
-		'tools' => $tools,
-		'array_fields' => $arrayfields,
-		'sub_title' => $subtitle,
-		'array_data' => $array_display,
-		'export_name' => 'suivi_activité_new',
-		'context' => 'suivi_business',
-);
-
-dol_include_once('/volvo/class/table_template.php');
 
 
 

@@ -22,233 +22,249 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.formother.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
-require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT . '/volvo/lib/volvo.lib.php';
-
-$title = 'Suivis d\'activité VN volvo - détail';
-
-// Security check
 if (! $user->rights->volvo->activite)
 	accessforbidden();
 
-// Search criteria
-$search_commercial = GETPOST("search_commercial", 'int');
-$search_month = GETPOST("search_month");
-$year = GETPOST('year');
+require_once DOL_DOCUMENT_ROOT . '/volvo/class/table_template.class.php';
 
-$form = new Form($db);
-$formother = new FormOther($db);
+$table = new Dyntable($db);
 
-$month = array(
-		1=>'Janvier',
-		2=>'Fevrier',
-		3=>'Mars',
-		4=>'Avril',
-		5=>'Mai',
-		6=>'Juin',
-		7=>'Juillet',
-		8=>'Aout',
-		9=>'Septembre',
-		10=>'Octobre',
-		11=>'Novembre',
-		12=>'Décembre'
-);
+$table->title = 'Suivis d\'activité VN volvo - detail';
+$table->default_sortfield = 'dt_sortie';
+$table->export_name = 'suivi_activité-detail_new';
+$table->context = 'suivi_activite_detail';
+$table->search_button = '';
+$table->remove_filter_button = '';
+$table->export_button = 1;
+$table->select_fields_button = 1;
+$table->mode = 'function_methode';
+$table->include = '/volvo/lib/volvo.lib.php';
+$table->function = 'stat_sell_ref';
+$table->limit = 0;
+$table->param0 = 'filter';
+$table->total_line = 'Total';
 
+$field= new Dyntable_fields($db);
+$field->name='dossier';
+$field->label = 'Dossier';
+$field->alias = 'ref';
+$field->checked = 1;
+$field->total = 'name';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('link', '/commande/card.php','?id=','id');
+$table->arrayfields[$field->name] = $field;
 
-$monthlist=$search_month;
+$field= new Dyntable_fields($db);
+$field->name='socname';
+$field->label = 'Société';
+$field->alias = 'socname';
+$field->checked = 1;
+$field->total = 'none';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('link', '/societe/soc.php','?socid=','socid');
+$table->arrayfields[$field->name] = $field;
 
-$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
-$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
+$field= new Dyntable_fields($db);
+$field->name='ca_total';
+$field->label = 'C.A. Total HT';
+$field->alias = 'catotalht';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', 0);
+$table->arrayfields[$field->name] = $field;
 
-if(GETPOST("button_export_x")){
-	$handler = fopen("php://output", "w");
-	header('Content-Type: text/csv');
-	header('Content-Disposition: attachment;filename=suivi_activite_detail.csv');
-	fputs($handler, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+$field= new Dyntable_fields($db);
+$field->name='ca_volvo';
+$field->label = 'C.A. Fac. Volvo';
+$field->alias = 'cavolvo';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
 
-	$commercial = new user($db);
-	if(!empty($search_commercial)){
-		$commercial->fetch($search_commercial);
-		$com = $commercial->firstname . ' ' . $commercial->lastname;
-	}
+$field= new Dyntable_fields($db);
+$field->name='nb_trt';
+$field->label = 'Nb Tracteurs';
+$field->alias = 'nbtracteur';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
 
-	$h=array(
-			'Année:',
-			$year,
-			'',
-			'commercial:',
-			$com,
-			'',
-			'Mois:',
-			$month[$monthlist]
-	);
-	fputcsv($handler, $h, ';', '"');
+$field= new Dyntable_fields($db);
+$field->name='nb_port';
+$field->label = 'Nb Porteurs';
+$field->alias = 'nbporteur';
+$field->total = 'value';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
 
-	$h = array(
-			'Dossier',
-			'C.A. Total HT',
-			'C.A. Fac. Volvo',
-			'VCM',
-			'DFOL',
-			'DDED',
-			'VFS',
-			'Lixbail',
-			'Marge',
-			'Marge réélle',
-			'Marge réélle - Ecart'
-	);
-	fputcsv($handler, $h, ';', '"');
+$field= new Dyntable_fields($db);
+$field->name='vcm';
+$field->label = 'VCM';
+$field->alias = 'vcm';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
 
-	foreach ($arrayresult1 as $key => $values) {
-		$ligne=array();
-		$ligne[]= $key;
+$field= new Dyntable_fields($db);
+$field->name='dfol';
+$field->label = 'DFOL';
+$field->alias = 'dfol';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
 
-		if(!empty($arrayresult1[$key]['catotalht'])){
-			$ligne[]= price($values['catotalht']) .' €';
-		}else{
-			$ligne[]= '';
-		}
+$field= new Dyntable_fields($db);
+$field->name='dded';
+$field->label = 'DDED';
+$field->alias = 'dded';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
 
-		if(!empty($arrayresult3[$key]['cavolvo'])){
-			$ligne[]= price($arrayresult3[$key]['cavolvo']) .' €';
-		}else{
-			$ligne[]= '';
-		}
+$field= new Dyntable_fields($db);
+$field->name='vfs';
+$field->label = 'VFS';
+$field->alias = 'vfs';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
 
-		$ligne[]= $arrayresult2[$key]['vcm'];
-		$ligne[]= $arrayresult2[$key]['dfol'];
-		$ligne[]= $arrayresult2[$key]['dded'];
-		$ligne[]= $arrayresult2[$key]['vfs'];
-		$ligne[]= $arrayresult2[$key]['lixbail'];
+$field= new Dyntable_fields($db);
+$field->name='lixbail';
+$field->label = 'Lixbail';
+$field->alias = 'lixbail';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', 0);
+$table->arrayfields[$field->name] = $field;
 
-		if(!empty($arrayresult4[$key]['margetheo'])){
-			$ligne[]= price($arrayresult4[$key]['margetheo']) .' €';
-		}else{
-			$ligne[]= '';
-		}
+$field= new Dyntable_fields($db);
+$field->name='m_tot';
+$field->label = 'Marge totale';
+$field->alias = 'margetheo';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
 
-		if(!empty($arrayresult4[$key]['margereal'])){
-			$ligne[]= price($arrayresult4[$key]['margereal']) .' €';
-		}else{
-			$ligne[]= '';
-		}
+$field= new Dyntable_fields($db);
+$field->name='m_tot_r';
+$field->label = 'Marge Totale Réélle';
+$field->alias = 'margereal';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
 
-		if(!empty($arrayresult4[$key]['margetheo']) && !empty($arrayresult4[$key]['margereal'])){
-			$ligne[]= price($arrayresult4[$key]['margereal']-$arrayresult4[$key]['margetheo']) .' €';
-		}else{
-			$ligne[]= '';
-		}
+$field= new Dyntable_fields($db);
+$field->name='m_moy_e';
+$field->label = 'Marge - Ecart';
+$field->type = 'calc';
+$field->formule = '(#margereal#-#margetheo#)';
+$field->checked = 1;
+$field->total = 'calc';
+$field->sub_title = 0;
+$field->unit = '€';
+$field->align = 'center';
+$field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
 
-		fputcsv($handler, $ligne, ';', '"');
-	}
-	exit;
-}
+$field= new Dyntable_fields($db);
+$field->name='id';
+$field->enabled = false;
+$field->alias = 'id';
+$table->arrayfields[$field->name] = $field;
 
+$field= new Dyntable_fields($db);
+$field->name='socid';
+$field->enabled = false;
+$field->alias = 'socid';
+$table->arrayfields[$field->name] = $field;
 
-llxHeader('', $title);
+$tools =array();
 
-// Count total nb of records
-$nbtotalofrecords = 0;
+$tool = new Dyntable_tools($db);
+$tool->type = 'button';
+$tool->title = 'Retour au suvi d\'activité ';
+$tool->link = '/volvo/business/resume.php?ret=1';
+$tools['0'] = $tool;
 
-print_barre_liste($title, $page, $_SERVER['PHP_SELF'], $option, $sortfield, $sortorder, '', $num, $nbtotalofrecords);
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'year';
+$tool->filter = 'year';
+$tool->default = dol_print_date(dol_now(),'%Y');
+$tools['1'] = $tool;
 
-print '<div class="inline-block divButAction"><a class="butAction" href="resume.php?search_commercial=' . $search_commercial . '&year=' . $year . '">Retour tableau mensuel</a>&nbsp;<a class="butAction" href="resume_list.php?search_commercial=' . $search_commercial . '&year=' . $year . '&button_export_x=1"><img src="' . DOL_URL_ROOT . '/theme/common/mime/xls.png"></div>';
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'search_commercial';
+$tool->filter = 'search_commercial';
+$tool->see_all = $user->rights->volvo->stat_all;
+$tool->default = $user->id;
+$tools['2'] = $tool;
 
-print '<table class="noborder" width="100%">';
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" rowspan="2" align="center">Dossier</th>';
-print '<th class="liste_titre" rowspan="2" align="center">C.A.</br>Total HT</th>';
-print '<th class="liste_titre" rowspan="2" align="center">C.A. Fac.</br>Volvo</th>';
-print '<th class="liste_titre" colspan="5" align="center">Soft Offers</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</th>';
-print '<th class="liste_titre" rowspan="2" align="center">Marge réélle</br>Ecart</th>';
-print "</tr>";
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" align="center">VCM</th>';
-print '<th class="liste_titre" align="center">DFOL</th>';
-print '<th class="liste_titre" align="center">DDED</th>';
-print '<th class="liste_titre" align="center">VFS</th>';
-print '<th class="liste_titre" align="center">Lixbail</th>';
-print "</tr>";
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'search_periode';
+$tool->filter = 'search_periode';
+$tools['3'] = $tool;
 
-$var = true;
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'month';
+$tool->filter = 'month';
+$tools['4'] = $tool;
 
-foreach ($arrayresult1 as $key => $values) {
- 	$var = ! $var;
- 	$link = '<a href="../../commande/card.php?id=' . $values['id'] . '">' . $key . '</a>';
- 	$total_caht+=$values['catotalht'];
-	$total_vcm+=$arrayresult2[$key]['vcm'];
-	$total_dfol+=$arrayresult2[$key]['dfol'];
-	$total_dded+=$arrayresult2[$key]['dded'];
-	$total_vfs+=$arrayresult2[$key]['vfs'];
-	$total_lixbail+=$arrayresult2[$key]['lixbail'];
-	$total_cavolvo+=$arrayresult3[$key]['cavolvo'];
-	$total_margetheo+=$arrayresult4[$key]['margetheo'];
-	$total_margereal+=$arrayresult4[$key]['margereal'];
+$table->extra_tools =$tools;
 
- 	print '<tr ' . $bc[$var] . '>';
-	print '<td align="center">' . $link . '</td>';
-	if(!empty($arrayresult1[$key]['catotalht'])){
-		print '<td align="center">'. price($values['catotalht']) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
-	if(!empty($arrayresult3[$key]['cavolvo'])){
-		print '<td align="center">'. price($arrayresult3[$key]['cavolvo']) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
-	print '<td align="center">' . $arrayresult2[$key]['vcm'] . '</td>';
-	print '<td align="center">' . $arrayresult2[$key]['dfol'] . '</td>';
-	print '<td align="center">' . $arrayresult2[$key]['dded'] . '</td>';
-	print '<td align="center">' . $arrayresult2[$key]['vfs'] . '</td>';
-	print '<td align="center">' . $arrayresult2[$key]['lixbail'] . '</td>';
-	if(!empty($arrayresult4[$key]['margetheo'])){
-		print '<td align="center">'. price($arrayresult4[$key]['margetheo']) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
-	if(!empty($arrayresult4[$key]['margereal'])){
-		print '<td align="center">'. price($arrayresult4[$key]['margereal']) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
-	if(!empty($arrayresult4[$key]['margetheo']) && !empty($arrayresult4[$key]['margereal'])){
-		print '<td align="center">'. price($arrayresult4[$key]['margereal']-$arrayresult4[$key]['margetheo']) .' €</td>';
-	}else{
-		print '<td align="center"></td>';
-	}
+$table->sub_title = array(1=>'Soft Offers');
 
-	print "</tr>\n";
+$table->post();
 
-}
+$table->data_array();
 
-print '<tr class="liste_titre">';
-print '<th class="liste_titre" align="center">Total</th>';
-print '<th class="liste_titre" align="center">'. price($total_caht) .' €</th>';
-print '<th class="liste_titre" align="center">'. price($total_cavolvo) .' €</th>';
-print '<th class="liste_titre" align="center">' . $total_vcm . '</th>';
-print '<th class="liste_titre" align="center">' . $total_dfol . '</th>';
-print '<th class="liste_titre" align="center">' . $total_dded . '</th>';
-print '<th class="liste_titre" align="center">' . $total_vfs . '</th>';
-print '<th class="liste_titre" align="center">' . $total_lixbail . '</th>';
-print '<th class="liste_titre" align="center">' . price($total_margetheo) . ' €</th>';
-print '<th class="liste_titre" align="center">' . price($total_margereal) . '</th>';
-print '<th class="liste_titre" align="center">' . price($total_margereal-$total_margetheo) . '</th>';
+$table->header();
 
-print "</tr>\n";
+$table->draw_tool_bar();
 
+$table->draw_table_head();
 
-print "</table>";
+$table->draw_data_table();
 
-
-
-
-
-llxFooter();
-$db->close();
+$table->end_table();
