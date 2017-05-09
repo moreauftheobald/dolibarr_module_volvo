@@ -745,7 +745,7 @@ function stat_sell($filter=array()){
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
-	$array = array_merge($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4,$arrayresult5);
+	$array = array_merge_recursive($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4,$arrayresult5);
 
 	$var =true;
 	$totfact = 0;
