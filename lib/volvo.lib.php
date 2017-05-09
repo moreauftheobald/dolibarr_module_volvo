@@ -755,7 +755,9 @@ function stat_sell_ref($filter=array()){
 	$year = $filter['year'];
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
-
+	$test= GETPOST('year');
+	var_dump($test);
+	exit;
 	$result = array();
 
 	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
