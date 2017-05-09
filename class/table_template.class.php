@@ -200,7 +200,7 @@ class Dyntable
 		if(is_array($this->extra_tools)){
 			foreach ($this->extra_tools as $key => $p){
 				print '<th class="liste_titre" align="left" style="white-space:nowrap; width:1%;">';
-					$p->draw_tool();
+					$p->draw_tool($this->option);
 				print '</th>';
 			}
 		}
@@ -490,7 +490,7 @@ class Dyntable_tools
 
 	}
 
-	function draw_tool(){
+	function draw_tool($option=''){
 		global $user;
 		switch($this->type){
 			case 'select_user':
@@ -557,7 +557,7 @@ class Dyntable_tools
 				break;
 
 			case 'button':
-				print '<a class="butAction" href="' . DOL_URL_ROOT . $this->link  . '">' . $this->title . '</a>';
+				print '<a class="butAction" href="' . DOL_URL_ROOT . $this->link  . $option . '">' . $this->title . '</a>';
 		}
 	}
 }

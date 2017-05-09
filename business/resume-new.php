@@ -282,12 +282,8 @@ $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
 $field->name='moisn';
-$field->label = 'Mois(num.)';
 $field->enabled = false;
 $field->alias = 'moisn';
-$field->checked = 1;
-$field->sub_title = 0;
-$field->align = 'center';
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
