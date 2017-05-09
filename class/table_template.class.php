@@ -550,6 +550,9 @@ class Dyntable_tools
 				}
 				print '&nbsp; &nbsp;' . $this->title;
 				print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
+
+			case 'hidden':
+				print '<input type="hidden" name="' . $this->html_name . '" id="' . $this->html_name . '" value="' . $this->value . '">';;
 			}
 	}
 

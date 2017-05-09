@@ -193,6 +193,27 @@ $field->align = 'center';
 $field->post_traitement = array('price', '2');
 $table->arrayfields[$field->name] = $field;
 
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'year';
+$tool->filter = 'year';
+$tool->default = dol_print_date(dol_now(),'%Y');
+$tools['1'] = $tool;
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'search_commercial';
+$tool->filter = 'search_commercial';
+$tool->see_all = $user->rights->volvo->stat_all;
+$tool->default = $user->id;
+$tools['2'] = $tool;
+
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'search_periode';
+$tool->filter = 'search_periode';
+$tools['3'] = $tool;
+
 $tools =array();
 
 $table->extra_tools =$tools;
