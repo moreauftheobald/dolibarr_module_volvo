@@ -56,6 +56,16 @@ $field->post_traitement = array('link', '/commande/card.php','?id=','id');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='socname';
+$field->label = 'Société';
+$field->alias = 'socname';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('link', '/societe/soc.php','?socid=','socid');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
 $field->name='ca_total';
 $field->label = 'C.A. Total HT';
 $field->alias = 'catotalht';
@@ -197,6 +207,12 @@ $field= new Dyntable_fields($db);
 $field->name='id';
 $field->enabled = false;
 $field->alias = 'id';
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='socid';
+$field->enabled = false;
+$field->alias = 'socid';
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
