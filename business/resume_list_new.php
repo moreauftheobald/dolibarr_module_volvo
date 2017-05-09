@@ -222,6 +222,12 @@ $tool->html_name = 'search_periode';
 $tool->filter = 'search_periode';
 $tools['3'] = $tool;
 
+$tool = new Dyntable_tools($db);
+$tool->type = 'hidden';
+$tool->html_name = 'month';
+$tool->filter = 'month';
+$tools['4'] = $tool;
+
 $table->extra_tools =$tools;
 
 $table->sub_title = array(1=>'Soft Offers');
