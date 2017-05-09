@@ -306,6 +306,7 @@ class Dyntable
 			}
 
 		}elseif ($this->mode=='function_methode'){
+			dol_include_once($this->include);
 			$param0 = $this->param0;
 			$param1 = $this->param1;
 			$param2 = $this->param2;
