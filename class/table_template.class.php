@@ -592,7 +592,7 @@ class Dyntable_fields
 		error_reporting(0);
 
 		$res = eval("return " . $formule . ";");
-		if($res == FALSE) $res = 'erreur';
+		if($res == FALSE) $res = 1000;
 		error_reporting($error_level);
 		return $res;
 
