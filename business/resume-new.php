@@ -306,8 +306,6 @@ $table->post();
 
 $table->data_array();
 
-var_dump($table->array_display);
-
 $table->header();
 
 $table->draw_tool_bar();
