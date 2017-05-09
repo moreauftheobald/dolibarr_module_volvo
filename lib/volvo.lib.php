@@ -815,7 +815,7 @@ function stat_sell($filter=array()){
 	if($totfact>0){
 		$line['precent_trt'] = ($tottrt/$totfact)*100;
 		$line['precent_prt'] = ($totprt/$totfact)*100;
-		$line['m_moy'] = $totmgt/$totfact[$m];
+		$line['m_moy'] = $totmgt/$totfact;
 		$line['m_moy_r'] = $totmgr/$totfact;
 		$line['m_moy_e'] = ($totmgr-$totmgt)/$totfact;
 	}
