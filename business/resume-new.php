@@ -52,7 +52,7 @@ $field->checked = 1;
 $field->total = 'name';
 $field->sub_title = 0;
 $field->align = 'center';
-$field->post_traitement = array('link_to', '/volvo/business/resume_list_new.php');
+$field->post_traitement = array('link_to', '/volvo/business/resume_list_new.php','?month=','moisn');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -283,6 +283,7 @@ $table->arrayfields[$field->name] = $field;
 $field= new Dyntable_fields($db);
 $field->name='moisn';
 $field->label = 'Mois(num.)';
+$field->enabled = false;
 $field->alias = 'moisn';
 $field->checked = 1;
 $field->sub_title = 0;
