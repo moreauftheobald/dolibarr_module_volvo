@@ -456,7 +456,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	if($mode=='BY_REF'){
 		$sql.="c.ref as ref, ";
 		$sql.="c.rowid as id, ";
-		$sql.="soc.name as socname, ";
+		$sql.="soc.nom as socname, ";
 		$sql.="soc.rowid as socid, ";
 	}
 	$sql.= "MONTH(event.datep) as Mois, ";
@@ -505,7 +505,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 		}
 		return $result;
 	}else{
-		return $sql;
+		return -1;
 	}
 
 }
@@ -768,10 +768,6 @@ function stat_sell_ref($filter=array()){
 	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
-
-	var_dump($arrayresult1);
-	exit;
-
 	$array = array_replace_recursive($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4);
 
 	return $array;
