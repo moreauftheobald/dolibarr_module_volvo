@@ -120,6 +120,7 @@ $field= new Dyntable_fields($db);
 $field->name='precent_trt';
 $field->label = '% Tracteurs';
 $field->type = 'calc';
+$field->formule = '(#nbporteur#/#nb_fact#)*100';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->unit = '%';

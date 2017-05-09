@@ -328,7 +328,11 @@ class Dyntable
 				$line_array['class_td'] = '';
 				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
-					$line_array[$f->name] = $line[$f->alias];
+					if($f->type = 'calc'){
+						$line_array[$f->name] = $f->calcul($line, $this);
+					}else{
+						$line_array[$f->name] = $line[$f->alias];
+					}
 				}
 				$this->array_display[] = $line_array;
 			}
@@ -535,6 +539,7 @@ class Dyntable_fields
 	public $post_traitement = array();
 	public $search = array();
 	public $type;
+	public $formule;
 
 	function __construct($db)
 	{
@@ -572,6 +577,20 @@ class Dyntable_fields
 		}
 
 		return $ret;
+
+	}
+
+	function calcularray($line,$table){
+		foreach ($table-->arrayfields as $f){
+			$replace = '#' . $f->alias . '#';
+			$this->formule = str_replace($replace, $line[$f->alias], $this->formule);
+		}
+		$res = eval("return " . $this->formule . ";");
+		if($res != FALSE){
+			return $res;
+		}else{
+			return 'Erreur';
+		}
 
 	}
 }
