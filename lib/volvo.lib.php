@@ -739,14 +739,37 @@ function stat_sell($filter=array()){
 	));
 	$result = array();
 
+
+
 	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
 	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
-	$result  = array_merge($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4,$arrayresult5,$month);
-
-
+	foreach($month as  $m => $mois){
+		$result[$m]['mois'] = $mois;
+		$result[$m]['nb_facture'] = $arrayresult1['nb_fact'][$m];
+		$result[$m]['nb_portfeuille'] = $arrayresult5['nb_port'][$m];
+		$result[$m]['ca_total'] = $arrayresult1['catotalht'][$m];
+		$result[$m]['ca_volvo'] = $arrayresult3['cavolvo'][$m];
+		$result[$m]['nb_trt'] = $arrayresult1['nbtracteur'][$m];
+		$result[$m]['nb_port'] = $arrayresult1['nbporteur'][$m];
+		if($arrayresult1['nb_fact'][$m]>0){
+			$result[$m]['precent_trt'] = ($arrayresult1['nbtracteur'][$m]/$arrayresult1['nb_fact'][$m])*100;
+			$result[$m]['precent_prt'] = ($arrayresult1['nbporteur'][$m]/$arrayresult1['nb_fact'][$m])*100;
+			$result[$m]['m_moy'] = $arrayresult4['margetheo'][$m]/$arrayresult1['nb_fact'][$m];
+			$result[$m]['m_moy_r'] = $arrayresult4['margereal'][$m]/$arrayresult1['nb_fact'][$m];
+			$result[$m]['m_moy_e'] = ($arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m])/$arrayresult1['nb_fact'][$m];
+		}
+		$result[$m]['vcm'] = $arrayresult2['vcm'][$m];
+		$result[$m]['dfol'] = $arrayresult2['dfol'][$m];
+		$result[$m]['dded'] = $arrayresult2['dded'][$m];
+		$result[$m]['lixbail'] = $arrayresult2['lixbail'][$m];
+		$result[$m]['vfs'] = $arrayresult2['vfs'][$m];
+		$result[$m]['m_tot'] = $arrayresult4['margetheo'][$m];
+		$result[$m]['m_tot_r'] = $arrayresult4['margereal'][$m];
+		$result[$m]['m_tot_e'] = $arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m];
+	}
 
 	return $result;
 
