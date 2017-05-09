@@ -228,11 +228,7 @@ $table->sub_title = array(1=>'Soft Offers');
 
 $table->post();
 
-var_dump($table->filter);
-
 $table->data_array();
-
-
 
 $table->header();
 
