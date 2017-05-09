@@ -763,7 +763,6 @@ function stat_sell_ref($filter=array()){
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist,'BY_REF');
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist,'BY_REF');
 	$array = array_replace_recursive($arrayresult1,$arrayresult2,$arrayresult3,$arrayresult4);
-	var_dump($year);
-	exit;
+
 	return $array;
 }
