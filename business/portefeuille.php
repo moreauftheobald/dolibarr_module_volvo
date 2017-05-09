@@ -203,6 +203,12 @@ $field->enabled = false;
 $field->alias = 'com';
 $table->arrayfields[$field->name] = $field;
 
+$field= new Dyntable_fields($db);
+$field->name='societe';
+$field->enabled = false;
+$field->alias = 'societe';
+$table->arrayfields[$field->name] = $field;
+
 $tools =array();
 
 $tool = new Dyntable_tools($db);
