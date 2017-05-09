@@ -47,7 +47,7 @@ $table->total_line = 'Total';
 $field= new Dyntable_fields($db);
 $field->name='dossier';
 $field->label = 'Dossier';
-$field->alias = 'id';
+$field->alias = 'ref';
 $field->checked = 1;
 $field->total = 'name';
 $field->sub_title = 0;
@@ -191,6 +191,12 @@ $field->sub_title = 0;
 $field->unit = '€';
 $field->align = 'center';
 $field->post_traitement = array('price', '2');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='id';
+$field->enabled = false;
+$field->alias = 'id';
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
