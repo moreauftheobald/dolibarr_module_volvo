@@ -318,8 +318,20 @@ class Dyntable
 			$param8 = $this->param8;
 			$param9 = $this->param9;
 			$reflect = new ReflectionFunction($this->function);
-			$this->array_display = $reflect->invoke($this->$param0,$this->$param1,$this->$param2,$this->$param3,
+			$result = $reflect->invoke($this->$param0,$this->$param1,$this->$param2,$this->$param3,
 					$this->$param4,$this->$param5,$this->$param6,$this->$param7,$this->$param8,$this->$param9);
+
+			foreach ($result as $line){
+				$var = !$var;
+				$line_array = array();
+				$line_array['class'] = $bc[$var];
+				$line_array['class_td'] = '';
+				$line_array['option'] = $this->option;
+				foreach ($this->arrayfields as $f){
+					$line_array[$f->name] = $line[$f->alias];
+				}
+				$this->array_display[] = $line_array;
+			}
 
 		}
 	}
@@ -522,6 +534,7 @@ class Dyntable_fields
 	public $alias;
 	public $post_traitement = array();
 	public $search = array();
+	public $type;
 
 	function __construct($db)
 	{
