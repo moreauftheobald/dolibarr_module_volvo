@@ -771,7 +771,7 @@ function stat_sell($filter=array()){
 		$result[$m] = $line;
 	}
 
-	return $result;
+	return $arrayresult1;
 
 
 
