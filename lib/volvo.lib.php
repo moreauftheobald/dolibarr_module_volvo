@@ -725,18 +725,18 @@ function stat_sell($filter=array()){
 	$search_commercial = $filter['search_commercial'];
 
 	$month =array(
-			1=>'Janvier',
-			2=>'Fevrier',
-			3=>'Mars',
-			4=>'Avril',
-			5=>'Mai',
-			6=>'Juin',
-			7=>'Juillet',
-			8=>'Aout',
-			9=>'Septembre',
-			10=>'Octobre',
-			11=>'Novembre',
-			12=>'Décembre'
+			1=>Array('mois'=>'Janvier'),
+			2=>Array('mois'=>'Fevrier'),
+			3=>Array('mois'=>'Mars'),
+			4=>Array('mois'=>'Avril'),
+			5=>Array('mois'=>'Mai'),
+			6=>Array('mois'=>'Juin'),
+			7=>Array('mois'=>'Juillet'),
+			8=>Array('mois'=>'Aout'),
+			9=>Array('mois'=>'Septembre'),
+			10=>Array('mois'=>'Octobre'),
+			11=>Array('mois'=>'Novembre'),
+			12=>Array('mois'=>'Décembre')
 	);
 	$result = array();
 
