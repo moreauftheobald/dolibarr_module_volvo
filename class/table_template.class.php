@@ -588,11 +588,12 @@ class Dyntable_fields
 			if(empty($value)) $value = "0";
 			$formule = str_replace($replace, $value, $formule);
 		}
+		$error_level = error_reporting();
 		error_reporting(0);
 
 		$res = eval("return " . $formule . ";");
 		if($res == FALSE) $res = 'erreur';
-		error_reporting(E_ALL);
+		error_reporting($error_level);
 		return $res;
 
 	}
