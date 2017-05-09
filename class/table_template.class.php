@@ -586,8 +586,8 @@ class Dyntable_fields
 			$replace = '#' . $f->alias . '#';
 			$formule = str_replace($replace, $line[$f->alias], $formule);
 		}
-		$res = eval("return " . $formule . ";");
-		if($res != FALSE){
+		if(!empty($formule)) $res = eval("return " . $formule . ";");
+		if($res != FALSE || !empty($res)){
 			return $res;
 		}else{
 			return 'Erreur';
