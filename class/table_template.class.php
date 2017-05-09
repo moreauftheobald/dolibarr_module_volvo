@@ -588,12 +588,12 @@ class Dyntable_fields
 			if(empty($value)) $value = "0";
 			$formule = str_replace($replace, $value, $formule);
 		}
-		if(!empty($formule)) $res = eval("return " . $formule . ";");
-		if($res != FALSE || !empty($res)){
-			return $res;
-		}else{
-			return 'Erreur';
+		try{
+			$res = eval("return " . $formule . ";");
+		}catch(Exeption $e){
+			$res ='erreur';
 		}
+		return $res;
 
 	}
 }
