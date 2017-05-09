@@ -351,8 +351,6 @@ class Dyntable
 				}
 				$this->array_display[] = $line_array;
 			}
-			var_dump($line_array_total);
-			exit;
 
 			if(!empty($this->total_line) && !empty($line_array_total)){
 				foreach ($this->arrayfields as $f){
@@ -367,6 +365,7 @@ class Dyntable
 					$line_array['class_td'] = ' class="liste_titre"';
 					$line_array['option'] = $this->option;
 				}
+				$this->array_display[] = $line_array;
 			}
 
 
