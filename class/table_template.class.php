@@ -360,6 +360,8 @@ class Dyntable
 						$line_array[$f->name] = $this->total_line;
 					}elseif($f->total =='calc'){
 						$line_array[$f->name] = $f->calcularray($line_array_total, $this->arrayfields);
+					}elseif($f->total =='none'){
+						$line_array[$f->name] = '';
 					}
 					$line_array['class'] =  'class="liste_titre"';
 					$line_array['class_td'] = ' class="liste_titre"';
