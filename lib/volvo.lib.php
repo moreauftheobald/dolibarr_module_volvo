@@ -719,6 +719,7 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 
 }
 function stat_sell($filter=array()){
+	global $bc;
 	$year = $filter['year'];
 	$monthlist = $filter['monthlist'];
 	$search_commercial = $filter['search_commercial'];
@@ -744,8 +745,11 @@ function stat_sell($filter=array()){
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
+	$var =true;
 	foreach($month as  $m => $mois){
 		$line=array();
+		$line['class'] = $bc[$var];
+		$line['class_td'] = '';
 		$line['mois'] = $mois;
 		$line['nb_facture'] = $arrayresult1['nb_fact'][$m];
 		$line['nb_portfeuille'] = $arrayresult5['nb_port'][$m];
@@ -769,6 +773,7 @@ function stat_sell($filter=array()){
 		$line['m_tot_r'] = $arrayresult4['margereal'][$m];
 		$line['m_tot_e'] = $arrayresult4['margereal'][$m]-$arrayresult4['margetheo'][$m];
 		$result[$m] = $line;
+		$var = !$var;
 	}
 
 	return $result;
