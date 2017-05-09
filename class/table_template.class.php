@@ -291,6 +291,7 @@ class Dyntable
 					$this->$param6,$this->$param7,$this->$param8,$this->$param9);
 
 			$var = true;
+			$line_array_total = array();
 
 			foreach ($object->$result as $line){
 				$var = !$var;
@@ -301,6 +302,8 @@ class Dyntable
 				foreach ($this->arrayfields as $f){
 					$champs = $f->alias;
 					$line_array[$f->name] = $line->$champs;
+
+
 				}
 				$this->array_display[] = $line_array;
 			}
@@ -321,6 +324,8 @@ class Dyntable
 			$result = $reflect->invoke($this->$param0,$this->$param1,$this->$param2,$this->$param3,
 					$this->$param4,$this->$param5,$this->$param6,$this->$param7,$this->$param8,$this->$param9);
 
+			$var =true;
+			$line_array_total = array();
 			foreach ($result as $line){
 				$var = !$var;
 				$line_array = array();
@@ -330,12 +335,37 @@ class Dyntable
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
 						$line_array[$f->name] = $f->calcularray($line, $this->arrayfields);
+						if(!empty($this->total_line)){
+							if($f->total == 'value'){
+								$line_array_total[$f->alias]+=$line->$champs;
+							}
+						}
 					}else{
 						$line_array[$f->name] = $line[$f->alias];
+						if(!empty($this->total_line)){
+							if($f->total == 'value'){
+								$line_array_total[$f->alias]+=$line->$champs;
+							}
+						}
 					}
 				}
 				$this->array_display[] = $line_array;
 			}
+			if(!empty($this->total_line) && !empty($line_array_total)){
+				foreach ($this->arrayfields as $f){
+					if($f->total == 'value'){
+						$line_array[$f->name] = $line_array_total[$f->alias];
+					}elseif($f->total == 'name'){
+						$line_array[$f->name] = $this->total_line;
+					}elseif($f->total =='calc'){
+						$line_array[$f->name] = $f->calcularray($line_array_total, $this->arrayfields);
+					}
+					$line_array['class'] =  'class="liste_titre"';
+					$line_array['class_td'] = ' class="liste_titre"';
+					$line_array['option'] = $this->option;
+				}
+			}
+
 
 		}
 	}
