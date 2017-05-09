@@ -740,8 +740,8 @@ function stat_sell($filter=array()){
 	);
 	$result = array();
 
-	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist);
-	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist);
+	$arrayresult1 = stat_sell1($year, $search_commercial,$monthlist,'BY_REF');
+	$arrayresult2 = stat_sell2($year, $search_commercial,$monthlist,'BY_REF');
 	$arrayresult3 = stat_sell3($year, $search_commercial,$monthlist);
 	$arrayresult4 = stat_sell4($year, $search_commercial,$monthlist);
 	$arrayresult5 = stat_sell5($year, $search_commercial,$monthlist);
