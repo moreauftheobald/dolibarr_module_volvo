@@ -208,7 +208,7 @@ class Dyntable
 		print '<th class="liste_titre"></th>';
 		print "</tr>";
 		print '</table>';
-		print '</form>';
+
 
 	}
 
@@ -392,6 +392,7 @@ class Dyntable
 	}
 
 	function draw_data_table(){
+		print '</form>';
 		foreach ($this->array_display as $l){
 			print '<tr ' . $l['class'] . '>';
 			$td_class = $l['class_td'];
@@ -502,6 +503,7 @@ class Dyntable_tools
 	public $limit_to_group;
 	public $exclude_group;
 	public $array;
+	public $size;
 
 	function __construct($db)
 	{
@@ -596,6 +598,12 @@ class Dyntable_tools
 				}
 				print '<input type="checkbox" name="' . $this->html_name . '" value="1"' . $sel . '> ';
 				break;
+
+			case 'text':
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title . ': ';
+				}
+				print '<input type="text" class="flat" name="' . $this->html_name . '" value="' . $this->value . '" size="' . $this->size . '">'
 		}
 	}
 }
