@@ -439,7 +439,7 @@ class Dyntable
 					$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
 					$p->value = array($val1,$val2);
 					$this->extra_tools[$key] = $p;
-					$this->filter[$p->filter] = $val1 . ' AND ' . $val2;
+					$this->filter[$p->filter] ="'" . $this->db->idate($val1) . "' AND '" . $this->db->idate($val2) ."'";
 					$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 				}
 
@@ -482,7 +482,7 @@ class Dyntable
 							$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
 							$p->value = array($val1,$val2);
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
-							$this->filter[$p->filter] = $val1 . ' AND ' . $val2;
+							$this->filter[$p->filter] ="'" . $this->db->idate($val1) . "' AND '" . $this->db->idate($val2) ."'";
 							$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 						}
 
