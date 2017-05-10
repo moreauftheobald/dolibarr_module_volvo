@@ -444,15 +444,15 @@ class Dyntable
 				}
 
 			}elseif($p->type == 'text_between'){
-				$name1 = $p->html_name .'min_';
-				$name2 = $p->html_name .'max_';
+				$name1 = $p->html_name .'min';
+				$name2 = $p->html_name .'max';
 				$post1 = GETPOST($name1);
 				$post2 = GETPOST($name2);
 				if(!empty($post1) && !empty($post2)){
 					$p->value = array($post1,$post2);
 					$this->extra_tools[$key] = $p;
 					$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
-					$this->option = '&' .$p->html_name .'min=' . $post1 . '&' . $p->html_name.'max='.$post2;
+					$this->option = '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
 				}
 			}else{
 				$name = $p->html_name;
@@ -498,15 +498,15 @@ class Dyntable
 						}
 
 					}elseif($p->type == 'text_between'){
-						$name1 = $p->html_name .'min_';
-						$name2 = $p->html_name .'max_';
+						$name1 = $p->html_name .'min';
+						$name2 = $p->html_name .'max';
 						$post1 = GETPOST($name1);
 						$post2 = GETPOST($name2);
 						if(!empty($post1) && !empty($post2)){
 							$p->value = array($post1,$post2);
 							$this->extra_tools[$key] = $p;
 							$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
-							$this->option = '&' .$p->html_name .'min=' . $post1 . '&' . $p->html_name.'max='.$post2;
+							$this->option = '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
 						}
 					}else{
 						$name = $p->html_name;
