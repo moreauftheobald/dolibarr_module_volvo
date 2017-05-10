@@ -212,7 +212,7 @@ $tool->see_all =1;
 $tools['1'] = $tool;
 
 $table->extra_tools =$tools;
-$table->sub_title = array(1=>'Références',2=>'Commande Usine',3=>'Commande Client',4=>'Délais et retards');
+//$table->sub_title = array(1=>'Références',2=>'Commande Usine',3=>'Commande Client',4=>'Délais et retards');
 
 $table->post();
 
