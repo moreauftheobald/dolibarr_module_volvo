@@ -441,6 +441,14 @@ class Dyntable
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							unset($_POST[$p->html_name . 'min']);
 							unset($_POST[$p->html_name . 'max']);
+							unset($_POST[$p->html_name . 'min_']);
+							unset($_POST[$p->html_name . 'max_']);
+							unset($_POST[$p->html_name . 'min_day']);
+							unset($_POST[$p->html_name . 'max_day']);
+							unset($_POST[$p->html_name . 'min_month']);
+							unset($_POST[$p->html_name . 'max_month']);
+							unset($_POST[$p->html_name . 'min_year']);
+							unset($_POST[$p->html_name . 'max_year']);
 						}else{
 							$p->value = $p->default;
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
