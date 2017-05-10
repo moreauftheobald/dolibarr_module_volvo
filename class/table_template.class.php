@@ -434,7 +434,7 @@ class Dyntable
 				$name2 = $p->html_name .'max_';
 				$post1 = GETPOST($name1);
 				$post2 = GETPOST($name2);
-				if(!empty($post1) && !empty($post2)){
+				if(strlen($post1)>0 && strlen($post2)>0){
 					$val1 = dol_mktime(0, 0, 0, GETPOST($name1.'month'), GETPOST($name1.'day'), GETPOST($name1.'year'));
 					$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
 					$p->value = array($val1,$val2);
@@ -448,7 +448,7 @@ class Dyntable
 				$name2 = $p->html_name .'max';
 				$post1 = GETPOST($name1);
 				$post2 = GETPOST($name2);
-				if(isset($post1) || isset($post2)){
+				if(strlen($post1)>0 || strlen($post2)>0){
 					if(empty($post1)) $post1 = '0';
 					if(empty($post2)) $post2 = '0';
 					$p->value = array($post1,$post2);
@@ -490,7 +490,7 @@ class Dyntable
 						$name2 = $p->html_name .'max_';
 						$post1 = GETPOST($name1);
 						$post2 = GETPOST($name2);
-						if(isset($post1) && isset($post2)){
+						if(strlen($post1)>0 && strlen($post2)>0){
 							$val1 = dol_mktime(0, 0, 0, GETPOST($name1.'month'), GETPOST($name1.'day'), GETPOST($name1.'year'));
 							$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
 							$p->value = array($val1,$val2);
