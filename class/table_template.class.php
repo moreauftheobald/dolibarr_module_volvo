@@ -422,9 +422,32 @@ class Dyntable
 
 		if (GETPOST("button_removefilter_x")) {
 			foreach ($this->extra_tools as $key => $p){
-				$p->value = $p->default;
-				$this->extra_tools[$key] = $p;
-				unset($_POST[$p->html_name]);
+				if(strpos($p->type, 'between')>0){
+					$p->value = $p->default;
+					$this->extra_tools[$key] = $p;
+					unset($_POST[$p->html_name . 'min']);
+					unset($_POST[$p->html_name . 'max']);
+				}else{
+					$p->value = $p->default;
+					$this->extra_tools[$key] = $p;
+					unset($_POST[$p->html_name]);
+				}
+			}
+			if($this->filter_line ==1){
+				foreach ($this->arrayfields as $key => $f){
+					foreach ($f->filter as $keyfilter => $p){
+						if(strpos($p->type, 'between')>0){
+							$p->value = $p->default;
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
+							unset($_POST[$p->html_name . 'min']);
+							unset($_POST[$p->html_name . 'max']);
+						}else{
+							$p->value = $p->default;
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
+							unset($_POST[$p->html_name]);
+						}
+					}
+				}
 			}
 		}
 
