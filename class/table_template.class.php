@@ -250,7 +250,7 @@ class Dyntable
 			print '<tr class="liste_titre" style="height:22px;">';
 			foreach ($this->arrayfields as $f){
 				if($f->checked == 1){
-					print '<td class="liste_titre">';
+					print '<td class="liste_titre" align="' . $f->align . '">';
 					if(is_array($f->filter)){
 						foreach ($f->filter as $c){
 							$c->draw_tool($this->option);
