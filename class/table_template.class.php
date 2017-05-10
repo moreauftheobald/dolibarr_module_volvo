@@ -637,12 +637,13 @@ class Dyntable_tools
 				print '<input type="text" class="flat" name="' . $this->html_name . '" value="' . $this->value . '" size="' . $this->size . '">';
 				break;
 
-			case 'date':
+			case 'date_between':
 				$form = new Form($this->db);
 				if(!empty($this->title)){
 					print '&nbsp; &nbsp;' . $this->title . ': ';
 				}
-				print $form->select_date($this->value, $this->html_name,0,0,1,'',1,$this->add_now,1,0,'','','');
+				print $form->select_date($this->value[0], $this->html_name. 'min_',0,0,1,'',1,$this->add_now,1,0,'','','');
+				print $form->select_date($this->value[1], $this->html_name. 'max_',0,0,1,'',1,$this->add_now,1,0,'','','');
 				break;
 		}
 	}
