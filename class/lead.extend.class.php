@@ -629,6 +629,7 @@ class Leadext extends Lead
 				$line = new Leadext($this->db);
 				$line->societe = $obj->societe;
 				$line->lead = $obj->leadid;
+				$line->leadref = $obj->lead;
 				$line->com = $obj->comid;
 				$line->fournid = $obj->fournid;
 				$line->numom = $obj->numom;

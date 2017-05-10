@@ -28,7 +28,6 @@ require_once DOL_DOCUMENT_ROOT . '/volvo/class/table_template.class.php';
 if (! $user->rights->volvo->delai_cash)
 	accessforbidden();
 
-$sortorder = GETPOST('sortorder', 'alpha');
 $table = new Dyntable($db);
 
 $table->title = 'Suivis du délai cash';
@@ -52,7 +51,6 @@ $table->param3 = 'offset';
 $table->param4 = 'filter';
 $table->param5 = 'filter_mode';
 $table->filter_mode = 'AND';
-$table->total_line = 'Total';
 $table->filter_line = 1;
 
 $field= new Dyntable_fields($db);
