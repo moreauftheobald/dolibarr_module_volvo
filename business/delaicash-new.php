@@ -247,6 +247,15 @@ $field->field = 'event3.datep';
 $field->align = 'center';
 $field->alias = 'dt_fac';
 $field->post_traitement = array('date', 'day');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'date_between';
+$tool->title = '';
+$tool->html_name = 'search_date_fac_';
+$tool->filter = 'event3.datep';
+$tool->add_now = 1;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
