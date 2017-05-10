@@ -167,6 +167,14 @@ $field->field = 'ef.vin';
 $field->align = 'center';
 $field->alias = 'vin';
 $field->post_traitement = array('substr', -7,2000);
+$tool = new Dyntable_tools($db);
+$tool->type = 'text';
+$tool->title = '';
+$tool->html_name = 'search_vin';
+$tool->filter = 'ef.vin';
+$tool->size = 5;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
