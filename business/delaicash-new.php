@@ -423,6 +423,8 @@ $table->extra_tools =$tools;
 
 $table->post();
 
+var_dump($table->filter);
+
 $table->data_array();
 
 $table->header();
