@@ -443,6 +443,17 @@ class Dyntable
 					$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 				}
 
+			}elseif($p->type == 'text_between'){
+				$name1 = $p->html_name .'min_';
+				$name2 = $p->html_name .'max_';
+				$post1 = GETPOST($name1);
+				$post2 = GETPOST($name2);
+				if(!empty($post1) && !empty($post2)){
+					$p->value = array($post1,$post2);
+					$this->extra_tools[$key] = $p;
+					$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
+					$this->option = '&' .$p->html_name .'min=' . $post1 . '&' . $p->html_name.'max='.$post2;
+				}
 			}else{
 				$name = $p->html_name;
 				$post = GETPOST($name);
@@ -486,6 +497,17 @@ class Dyntable
 							$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 						}
 
+					}elseif($p->type == 'text_between'){
+						$name1 = $p->html_name .'min_';
+						$name2 = $p->html_name .'max_';
+						$post1 = GETPOST($name1);
+						$post2 = GETPOST($name2);
+						if(!empty($post1) && !empty($post2)){
+							$p->value = array($post1,$post2);
+							$this->extra_tools[$key] = $p;
+							$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
+							$this->option = '&' .$p->html_name .'min=' . $post1 . '&' . $p->html_name.'max='.$post2;
+						}
 					}else{
 						$name = $p->html_name;
 						$post = GETPOST($name);
@@ -676,6 +698,14 @@ class Dyntable_tools
 				}
 				print $form->select_date($this->value[0], $this->html_name. 'min_',0,0,1,'',1,$this->add_now,1,0,'','','');
 				print $form->select_date($this->value[1], $this->html_name. 'max_',0,0,1,'',1,$this->add_now,1,0,'','','');
+				break;
+
+			case 'text_between':
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title . ': ';
+				}
+				print '<input type="text" class="flat" name="' . $this->html_name.'min' . '" value="' . $this->value[0] . '" size="' . $this->size . '">';
+				print '<input type="text" class="flat" name="' . $this->html_name.'max' . '" value="' . $this->value[1] . '" size="' . $this->size . '">';
 				break;
 		}
 	}

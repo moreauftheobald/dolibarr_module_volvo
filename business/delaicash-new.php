@@ -287,6 +287,15 @@ $field->field = 'payterm.nbjour';
 $field->align = 'center';
 $field->alias = 'cond_reg';
 $field->post_traitement = array('num', 0);
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'text_between';
+$tool->title = '';
+$tool->html_name = 'search_cond_';
+$tool->filter = 'payterm.nbjour';
+$tool->size = 2;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
