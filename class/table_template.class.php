@@ -429,54 +429,86 @@ class Dyntable
 		}
 
 		foreach ($this->extra_tools as $key => $p){
-			$name = $p->html_name;
-			$post = GETPOST($name);
-			if(!empty($post)){
-				$val = $post;
-				if($val==-1) $val ="";
-				$p->value = $val;
-				$this->extra_tools[$key] = $p;
-				if(!empty($val)){
-					$this->filter[$p->filter] = $val;
-					$this->option .= '&' . $name . '=' . $val;
+			if($p->type='date_between'){
+				$name1 = $p->html_name .'min_';
+				$name2 = $p->html_name .'max_';
+				$post1 = GETPOST($name1);
+				$post2 = GETPOST($name2);
+				if(!empty($post1) && !empty($post2)){
+					$val1 = dol_mktime(0, 0, 0, GETPOST($name1.'month'), GETPOST($name1.'day'), GETPOST($name1.'year'));
+					$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
+					$p->value = array($val1,$vagal2);
+					$this->extra_tools[$key] = $p;
+					$this->filter[$p->filter] = $val1 . ' AND ' . $val2;
+					$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 				}
+
 			}else{
-				if($p->see_all==1){
-					$p->value ='';
-				}else {
-					$p->value = $p->default;
-				}
-				$this->extra_tools[$key] = $p;
-				if(!empty($p->value)){
-					$this->filter[$p->filter] = $p->value;
-					$this->option .= '&' . $name . '=' . $p->value;
+				$name = $p->html_name;
+				$post = GETPOST($name);
+				if(!empty($post)){
+					$val = $post;
+					if($val==-1) $val ="";
+					$p->value = $val;
+					$this->extra_tools[$key] = $p;
+					if(!empty($val)){
+						$this->filter[$p->filter] = $val;
+						$this->option .= '&' . $name . '=' . $val;
+					}
+				}else{
+					if($p->see_all==1){
+						$p->value ='';
+					}else {
+						$p->value = $p->default;
+					}
+					$this->extra_tools[$key] = $p;
+					if(!empty($p->value)){
+						$this->filter[$p->filter] = $p->value;
+						$this->option .= '&' . $name . '=' . $p->value;
+					}
 				}
 			}
 		}
 		if($this->filter_line ==1){
 			foreach ($this->arrayfields as $key => $f){
 				foreach ($f->filter as $keyfilter => $p){
-					$name = $p->html_name;
-					$post = GETPOST($name);
-					if(!empty($post)){
-						$val = $post;
-						if($val==-1) $val ="";
-						$p->value = $val;
-						$this->arrayfields[$key]->filter[$keyfilter] = $p;
-						if(!empty($val)){
-							$this->filter[$p->filter] = $val;
-							$this->option .= '&' . $name . '=' . $val;
+					if($p->type='date_between'){
+						$name1 = $p->html_name .'min_';
+						$name2 = $p->html_name .'max_';
+						$post1 = GETPOST($name1);
+						$post2 = GETPOST($name2);
+						if(!empty($post1) && !empty($post2)){
+							$val1 = dol_mktime(0, 0, 0, GETPOST($name1.'month'), GETPOST($name1.'day'), GETPOST($name1.'year'));
+							$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
+							$p->value = array($val1,$vagal2);
+							$this->extra_tools[$key] = $p;
+							$this->filter[$p->filter] = $val1 . ' AND ' . $val2;
+							$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 						}
+
 					}else{
-						if($p->see_all==1){
-							$p->value ='';
-						}else {
-							$p->value = $p->default;
-						}
-						$this->arrayfields[$key]->filter[$keyfilter] = $p;
-						if(!empty($p->value)){
-							$this->filter[$p->filter] = $p->value;
-							$this->option .= '&' . $name . '=' . $p->value;
+						$name = $p->html_name;
+						$post = GETPOST($name);
+						if(!empty($post)){
+							$val = $post;
+							if($val==-1) $val ="";
+							$p->value = $val;
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
+							if(!empty($val)){
+								$this->filter[$p->filter] = $val;
+								$this->option .= '&' . $name . '=' . $val;
+							}
+						}else{
+							if($p->see_all==1){
+								$p->value ='';
+							}else {
+								$p->value = $p->default;
+							}
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
+							if(!empty($p->value)){
+								$this->filter[$p->filter] = $p->value;
+								$this->option .= '&' . $name . '=' . $p->value;
+							}
 						}
 					}
 				}
