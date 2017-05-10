@@ -83,7 +83,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'com.ref';
 $field->align = 'center';
-$field->alias = 'commande';
+$field->alias = 'comref';
 $field->post_traitement = array('link', '/volvo/commande/card.php','?id=','com');
 $table->arrayfields[$field->name] = $field;
 
