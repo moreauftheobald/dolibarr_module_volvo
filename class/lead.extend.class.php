@@ -733,7 +733,7 @@ class Leadext extends Lead
 					$sqlwhere[] = $key . ' BETWEEN ' . $value;
 				}elseif(($key== 'lead.fk_user_resp')||($key== 'com.rowid')) {
 					$sqlwhere[] = $key . ' = ' . $value;
-				}elseif(($key=='cond_reg')||($key=='delai_cash')||($key=='comm_cash')||($key=='diff_cash')) {
+				}elseif(($key=='cond_reg')||($key=='delai_cash')||($key=='comm_cash')||($key=='diff_cash')||($key=='cond_reg_num')) {
 					$sqlwhere[] = $key . ' BETWEEN ' . $value;
 				}elseif(($key== 'search_run')) {
 					$sqlwhere[] = '(event5.datep IS NULL OR event3.datep IS NULL OR event4.datep IS NULL)';
