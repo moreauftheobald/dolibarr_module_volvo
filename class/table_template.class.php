@@ -561,6 +561,16 @@ class Dyntable_tools
 
 			case 'button':
 				print '<a class="butAction" href="' . DOL_URL_ROOT . $this->link  . $option . '">' . $this->title . '</a>';
+				break;
+
+			case 'check':
+				if($this->value == 1){
+					$sel = ' checked';
+				}else{
+					$sel = '';
+				}
+				print $this->title . '<input type="checkbox" name="' . $this->html_name . '" value="1"' . $sel . '> ';
+				break;
 		}
 	}
 }

@@ -702,6 +702,7 @@ class Leadext extends Lead
 		$sql .= " event4.datep AS dt_liv,";
 		$sql .= " event3.datep AS dt_fac,";
 		$sql .= " event5.datep AS dt_pay,";
+		$sql .= " CONCAT(u.firstname, ' ',u.lastname) AS comm,";
 		$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
 		$sql .= " lead.fk_user_resp AS commercial,";
 		$sql .= " payterm.libelle AS cond_reg,";
@@ -771,6 +772,7 @@ class Leadext extends Lead
 				$line->numom = $obj->numom;
 				$line->vin = $obj->vin;
 				$line->immat = $obj->immat;
+				$line->comm = $obj->comm;
 				$line->dt_blockupdate = $this->db->jdate($obj->dt_blockupdate);
 				$line->dt_recep = $this->db->jdate($obj->dt_recep);
 				$line->dt_fac = $this->db->jdate($obj->dt_fac);
