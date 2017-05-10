@@ -154,17 +154,16 @@ class Dyntable
 	function header(){
 		llxHeader('', $this->title);
 		print_barre_liste($this->title, $this->page, $_SERVER['PHP_SELF'], $this->option, $this->sortfield, $this->sortorder, '', $this->num, $this->nbtotalofrecords);
-	}
-
-	function draw_tool_bar(){
-		global $conf, $user;
-		$form = new Form($this->db);
-
 		print '<form method="post" action="' . $_SERVER['PHP_SELF'] . '" name="search_form">' . "\n";
 		print '<input type="hidden" name="token" value="'.$_SESSION['newtoken'].'">';
 		print '<input type="hidden" name="formfilteraction" id="formfilteraction" value="list">';
 		print '<input type="hidden" name="sortfield" value="'.$this->sortfield.'">';
 		print '<input type="hidden" name="sortorder" value="'. $this->sortorder.'">';
+	}
+
+	function draw_tool_bar(){
+		global $conf, $user;
+		$form = new Form($this->db);
 		print '<table class="noborder" width="100%">';
 		print '<tr class="liste_titre" style="height:22px;">';
 		print '<th class="liste_titre" align="center" style="white-space:nowrap; width:90px;">';
@@ -267,6 +266,7 @@ class Dyntable
 
 	function end_table(){
 		print '</table>';
+		print '</form>';
 
 		// footer
 		llxFooter();
@@ -392,7 +392,7 @@ class Dyntable
 	}
 
 	function draw_data_table(){
-		print '</form>';
+
 		foreach ($this->array_display as $l){
 			print '<tr ' . $l['class'] . '>';
 			$td_class = $l['class_td'];
