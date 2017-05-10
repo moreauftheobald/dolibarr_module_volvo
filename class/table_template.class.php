@@ -642,7 +642,7 @@ class Dyntable_tools
 				if(!empty($this->title)){
 					print '&nbsp; &nbsp;' . $this->title . ': ';
 				}
-				print $form->select_date($this->value, $this->html_name,0,0,1,'',$this->add_now,0,1,0,'','','');
+				print $form->select_date($this->value, $this->html_name,0,0,1,'',1,$this->add_now,1,0,'','','');
 				break;
 		}
 	}
