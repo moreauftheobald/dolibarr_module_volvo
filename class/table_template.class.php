@@ -546,7 +546,9 @@ class Dyntable_tools
 						}
 					}
 				}
-				print '&nbsp; &nbsp;' . $this->title;
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title;
+				}
 				print $form->select_dolusers($this->value,$this->html_name,$this->use_empty,$user_excluded,$disabled,$user_included);
 				break;
 
@@ -557,7 +559,9 @@ class Dyntable_tools
 				if(empty($this->value) && !empty($this->default)){
 					$this->value = $this->default;
 				}
-				print '&nbsp; &nbsp;' . $this->title;
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title;
+				}
 				$formother->select_year($this->value,$this->html_name,$this->use_empty,$this->min_year,$this->max_year);
 				break;
 
@@ -567,7 +571,9 @@ class Dyntable_tools
 				if(empty($this->value) && !empty($this->default)){
 					$this->value = $this->default;
 				}
-				print '&nbsp; &nbsp;' . $this->title;
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title;
+				}
 				print $form->selectarray($this->html_name, $this->array,$this->value,$this->use_empty);
 				break;
 
@@ -585,7 +591,10 @@ class Dyntable_tools
 				}else{
 					$sel = '';
 				}
-				print $this->title . '<input type="checkbox" name="' . $this->html_name . '" value="1"' . $sel . '> ';
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title . '&nbsp;';
+				}
+				print '<input type="checkbox" name="' . $this->html_name . '" value="1"' . $sel . '> ';
 				break;
 		}
 	}
