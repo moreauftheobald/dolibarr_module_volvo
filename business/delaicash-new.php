@@ -127,6 +127,15 @@ $field->field = 'lead.ref';
 $field->align = 'center';
 $field->alias = 'leadref';
 $field->post_traitement = array('link', '/custom/lead/lead/card.php','?id=','lead');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'text';
+$tool->title = '';
+$tool->html_name = 'search_lead';
+$tool->filter = 'lead.ref';
+$tool->size = 4;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
