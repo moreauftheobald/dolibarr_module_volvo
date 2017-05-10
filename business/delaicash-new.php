@@ -95,7 +95,7 @@ $field->sub_title = 0;
 $field->field = 'lead.ref';
 $field->align = 'center';
 $field->alias = 'leadref';
-$field->post_traitement = array('link', '/lead/lead/card.php','?id=','lead');
+$field->post_traitement = array('link', '/custom/lead/lead/card.php','?id=','lead');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
