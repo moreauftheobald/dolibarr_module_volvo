@@ -417,13 +417,12 @@ $tool->title = 'Selection uniquement sur les affaires en cours ? ';
 $tool->html_name = 'search_run';
 $tool->filter = 'search_run';
 $tool->default = 1;
+$tool->see_all =1;
 $tools['1'] = $tool;
 
 $table->extra_tools =$tools;
 
 $table->post();
-
-var_dump($table->filter);
 
 $table->data_array();
 
