@@ -53,6 +53,7 @@ $table->param4 = 'filter';
 $table->param5 = 'filter_mode';
 $table->filter_mode = 'AND';
 $table->total_line = 'Total';
+$table->filter_line = 1;
 
 $field= new Dyntable_fields($db);
 $field->name='comm';
@@ -63,6 +64,18 @@ $field->field = 'comm';
 $field->align = 'center';
 $field->alias = 'comm';
 $field->post_traitement = array('link', '/user/card.php','?id=','commercial');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_user';
+$tool->title = 'Commercial: ';
+$tool->html_name = 'search_commercial';
+$tool->filter = 'search_commercial';
+$tool->use_empty = 1;
+$tool->see_all = $user->rights->volvo->stat_all;
+$tool->default = $user->id;
+$tool->limit_to_group = '1';
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
@@ -263,7 +276,6 @@ $field->alias = 'societe';
 $table->arrayfields[$field->name] = $field;
 
 $tools =array();
-
 $tool = new Dyntable_tools($db);
 $tool->type = 'check';
 $tool->title = 'Selection uniquement sur les affaires en cours ? ';

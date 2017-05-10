@@ -44,6 +44,7 @@ class Dyntable
 	public $param8='none';
 	public $param9='none';
 	public $default_sortfield;
+	public $filter_line;
 
 
 	function __construct($db)
@@ -242,6 +243,21 @@ class Dyntable
 			foreach ($this->arrayfields as $f){
 				if($f->checked == 1){
 					print_liste_field_titre($f->label,$_SERVER["PHP_SELF"],$f->field,'',$this->option,'align="' . $f->align .'"',$this->sortfield,$this->sortorder);
+				}
+			}
+			print "</tr>";
+		}
+		if($this->filter_line == 1){
+			print '<tr class="liste_titre" style="height:22px;">';
+			foreach ($this->arrayfields as $f){
+				if($f->checked == 1){
+					print '<td class="liste_titre">';
+					if(is_array($f->filter)){
+						foreach ($f->filter as $c){
+							$c->draw_tool($this->option);
+						}
+					}
+					print '</td>';
 				}
 			}
 			print "</tr>";
@@ -591,6 +607,7 @@ class Dyntable_fields
 	public $search = array();
 	public $type;
 	public $formule;
+	public $filter = array();
 
 	function __construct($db)
 	{
