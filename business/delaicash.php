@@ -320,6 +320,7 @@ $field= new Dyntable_fields($db);
 $field->name='delai_cash';
 $field->label = 'Délai Cash';
 $field->checked = 1;
+$field->unit = 'Jour(s)';
 $field->sub_title = 0;
 $field->field = 'delai_cash';
 $field->align = 'center';
