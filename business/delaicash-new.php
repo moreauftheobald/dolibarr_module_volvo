@@ -196,7 +196,6 @@ $tool->filter = 'ef.immat';
 $tool->size = 5;
 $tools['1'] = $tool;
 $field->filter = $tools;
-$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
