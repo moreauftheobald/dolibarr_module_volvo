@@ -351,6 +351,9 @@ $table->extra_tools =$tools;
 
 $table->post();
 
+var_dump($table->filter);
+var_dump($table->option);
+
 $table->data_array();
 
 $table->header();
