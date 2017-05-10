@@ -440,7 +440,7 @@ class Dyntable
 					$p->value = array($val1,$val2);
 					$this->extra_tools[$key] = $p;
 					$this->filter[$p->filter] ="'" . $this->db->idate($val1) . "' AND '" . $this->db->idate($val2) ."'";
-					$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
+					$this->option.= '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 				}
 
 			}elseif($p->type == 'text_between'){
@@ -452,7 +452,7 @@ class Dyntable
 					$p->value = array($post1,$post2);
 					$this->extra_tools[$key] = $p;
 					$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
-					$this->option = '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
+					$this->option.= '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
 				}
 			}else{
 				$name = $p->html_name;
@@ -494,7 +494,7 @@ class Dyntable
 							$p->value = array($val1,$val2);
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							$this->filter[$p->filter] ="'" . $this->db->idate($val1) . "' AND '" . $this->db->idate($val2) ."'";
-							$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
+							$this->option.= '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 						}
 
 					}elseif($p->type == 'text_between'){
@@ -506,7 +506,7 @@ class Dyntable
 							$p->value = array($post1,$post2);
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
-							$this->option = '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
+							$this->option.= '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
 						}
 					}else{
 						$name = $p->html_name;
