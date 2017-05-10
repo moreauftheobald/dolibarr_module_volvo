@@ -448,7 +448,9 @@ class Dyntable
 				$name2 = $p->html_name .'max';
 				$post1 = GETPOST($name1);
 				$post2 = GETPOST($name2);
-				if(!empty($post1) && !empty($post2)){
+				if(isset($post1) || isset($post2)){
+					if(empty($post1)) $post1 = '0';
+					if(empty($post2)) $post2 = '0';
 					$p->value = array($post1,$post2);
 					$this->extra_tools[$key] = $p;
 					$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
@@ -502,7 +504,9 @@ class Dyntable
 						$name2 = $p->html_name .'max';
 						$post1 = GETPOST($name1);
 						$post2 = GETPOST($name2);
-						if(!empty($post1) && !empty($post2)){
+						if(!empty($post1) || !empty($post2)){
+							if(empty($post1)) $post1 = '0';
+							if(empty($post2)) $post2 = '0';
 							$p->value = array($post1,$post2);
 							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
