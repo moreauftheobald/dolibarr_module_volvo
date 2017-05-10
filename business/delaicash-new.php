@@ -107,6 +107,15 @@ $field->field = 'com.ref';
 $field->align = 'center';
 $field->alias = 'comref';
 $field->post_traitement = array('link', '/volvo/commande/card.php','?id=','com');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'text';
+$tool->title = '';
+$tool->html_name = 'search_ana';
+$tool->filter = 'com.ref';
+$tool->size = 3;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
