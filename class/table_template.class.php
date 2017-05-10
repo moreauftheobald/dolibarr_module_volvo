@@ -504,7 +504,7 @@ class Dyntable
 						$post2 = GETPOST($name2);
 						if(!empty($post1) && !empty($post2)){
 							$p->value = array($post1,$post2);
-							$this->extra_tools[$key] = $p;
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							$this->filter[$p->filter] ="'" . $post1 . "' AND '" . $post2 ."'";
 							$this->option = '&' .$name1 .'=' . $post1 . '&' . $name2.'='.$post2;
 						}
