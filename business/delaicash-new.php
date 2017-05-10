@@ -87,6 +87,15 @@ $field->field = 'ef.numom';
 $field->align = 'center';
 $field->alias = 'numom';
 $field->post_traitement = array('link', '/fourn/commande/card.php','?id=','fournid');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'text';
+$tool->title = '';
+$tool->html_name = 'search_numom';
+$tool->filter = 'ef.numom';
+$tool->size = 10;
+$tools['1'] = $tool;
+$field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
