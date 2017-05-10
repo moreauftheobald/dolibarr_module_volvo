@@ -429,7 +429,7 @@ class Dyntable
 		}
 
 		foreach ($this->extra_tools as $key => $p){
-			if($p->type='date_between'){
+			if($p->type=='date_between'){
 				$name1 = $p->html_name .'min_';
 				$name2 = $p->html_name .'max_';
 				$post1 = GETPOST($name1);
@@ -472,7 +472,7 @@ class Dyntable
 		if($this->filter_line ==1){
 			foreach ($this->arrayfields as $key => $f){
 				foreach ($f->filter as $keyfilter => $p){
-					if($p->type='date_between'){
+					if($p->type=='date_between'){
 						$name1 = $p->html_name .'min_';
 						$name2 = $p->html_name .'max_';
 						$post1 = GETPOST($name1);
