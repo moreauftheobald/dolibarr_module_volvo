@@ -67,7 +67,7 @@ $field->post_traitement = array('link', '/user/card.php','?id=','commercial');
 $tools=array();
 $tool = new Dyntable_tools($db);
 $tool->type = 'select_user';
-$tool->title = 'Commercial: ';
+$tool->title = '';
 $tool->html_name = 'search_commercial';
 $tool->filter = 'search_commercial';
 $tool->use_empty = 1;
