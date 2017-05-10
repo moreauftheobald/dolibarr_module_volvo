@@ -351,9 +351,6 @@ $table->extra_tools =$tools;
 
 $table->post();
 
-var_dump($table->arrayfields['dt_block_modif']->filter[1]->value);
-
-
 $table->data_array();
 
 $table->header();
