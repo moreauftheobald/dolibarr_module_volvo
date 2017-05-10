@@ -534,6 +534,7 @@ class Dyntable_tools
 	public $exclude_group;
 	public $array;
 	public $size;
+	public $add_now;
 
 	function __construct($db)
 	{
@@ -634,6 +635,15 @@ class Dyntable_tools
 					print '&nbsp; &nbsp;' . $this->title . ': ';
 				}
 				print '<input type="text" class="flat" name="' . $this->html_name . '" value="' . $this->value . '" size="' . $this->size . '">';
+				break;
+
+			case 'date':
+				$form = new Form($this->db);
+				if(!empty($this->title)){
+					print '&nbsp; &nbsp;' . $this->title . ': ';
+				}
+				print $form->select_date($this->value, $this->html_name,0,0,1,'',$this->add_now,0,1,0,'','','');
+				break;
 		}
 	}
 }
