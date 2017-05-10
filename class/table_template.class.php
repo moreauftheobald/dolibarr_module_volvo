@@ -603,7 +603,7 @@ class Dyntable_tools
 				if(!empty($this->title)){
 					print '&nbsp; &nbsp;' . $this->title . ': ';
 				}
-				print '<input type="text" class="flat" name="' . $this->html_name . '" value="' . $this->value . '" size="' . $this->size . '">'
+				print '<input type="text" class="flat" name="' . $this->html_name . '" value="' . $this->value . '" size="' . $this->size . '">';
 		}
 	}
 }
