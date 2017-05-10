@@ -481,7 +481,7 @@ class Dyntable
 							$val1 = dol_mktime(0, 0, 0, GETPOST($name1.'month'), GETPOST($name1.'day'), GETPOST($name1.'year'));
 							$val2 = dol_mktime(0, 0, 0, GETPOST($name2.'month'), GETPOST($name2.'day'), GETPOST($name2.'year'));
 							$p->value = array($val1,$vagal2);
-							$this->extra_tools[$key] = $p;
+							$this->arrayfields[$key]->filter[$keyfilter] = $p;
 							$this->filter[$p->filter] = $val1 . ' AND ' . $val2;
 							$this->option = '&' .$p->html_name .'min=' . $val1 . '&' . $p->html_name.'max='.$val2;
 						}
