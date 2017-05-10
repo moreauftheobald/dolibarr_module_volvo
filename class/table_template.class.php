@@ -453,6 +453,36 @@ class Dyntable
 				}
 			}
 		}
+		if($this->filter_line ==1){
+			foreach ($this->arrayfields as $key => $f){
+				foreach ($f->filter as $keyfilter => $p){
+					$name = $p->html_name;
+					$post = GETPOST($name);
+					if(!empty($post)){
+						$val = $post;
+						if($val==-1) $val ="";
+						$p->value = $val;
+						$this->arrayfields[$key]->filter[$keyfilter] = $p;
+						if(!empty($val)){
+							$this->filter[$p->filter] = $val;
+							$this->option .= '&' . $name . '=' . $val;
+						}
+					}else{
+						if($p->see_all==1){
+							$p->value ='';
+						}else {
+							$p->value = $p->default;
+						}
+						$this->arrayfields[$key]->filter[$keyfilter] = $p;
+						if(!empty($p->value)){
+							$this->filter[$p->filter] = $p->value;
+							$this->option .= '&' . $name . '=' . $p->value;
+						}
+					}
+				}
+			}
+		}
+
 		if(GETPOST("button_export_x")){
 			$this->export();
 		}
