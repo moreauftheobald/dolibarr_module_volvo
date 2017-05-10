@@ -61,7 +61,7 @@ $field->label = 'Commercial';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'comm';
-$field->align = 'center';
+$field->align = 'left';
 $field->alias = 'comm';
 $field->post_traitement = array('link', '/user/card.php','?id=','commercial');
 $tools=array();
