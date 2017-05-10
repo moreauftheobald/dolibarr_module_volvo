@@ -755,7 +755,7 @@ class Leadext extends Lead
 			$sql .= ' ' . $this->db->plimit($limit + 1, $offset);
 		}
 		print $sql;
-		exit;
+		//exit;
 
 		$this->business = array();
 
