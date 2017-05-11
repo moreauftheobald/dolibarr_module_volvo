@@ -395,11 +395,11 @@ class Dyntable
 					$group.= $f->field . ', ';
 				}
 			}
-			$select = substr($select, -2) .' ';
+			$select = substr($select,0, -2) .' ';
 			if(strlen($group)>0){
-				$group = 'GROUP BY '. substr($group,-2) .' ';
+				$group = 'GROUP BY '. substr($group,0,-2) .' ';
 			}
-			$this->sql = $select . $this->sql_from . $this->sql_where . $group;
+			$this->sql = $select . 'FROM ' . $this->sql_from . 'WHERE ' . $this->sql_where . $group;
 		}
 
 	}
