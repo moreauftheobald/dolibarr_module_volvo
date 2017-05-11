@@ -200,7 +200,9 @@ $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 
-$table->sql_filter_action = array('comm' =>"#KEY# LIKE '%#VALUE#'");
+$table->sql_filter_action = array(	'comm' =>"#KEY# LIKE '%#VALUE#'",
+									'c.ref'=>"#KEY# LIKE '%#VALUE#'",
+);
 
 /*
  * Action
@@ -220,7 +222,8 @@ if($action=='confirm_set_date'){
  */
 $table->post();
 
-$table->filter['comm'] = 'MOREAU';
+$table->filter['s.nom'] = 'HEID';
+$table->filter['c.ref'] = '16';
 
 $table->data_array();
 
