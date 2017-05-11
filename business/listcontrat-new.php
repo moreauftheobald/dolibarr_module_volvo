@@ -192,9 +192,6 @@ $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 
-$table->sql_groupby = "GROUP BY c.rowid, c.ref, c.datec, c.date_contrat, c.statut, c.ref_customer, c.ref_supplier, s.nom, s.rowid";
-
-
 /*
  * Action
  */
@@ -215,7 +212,7 @@ $table->post();
 
 $table->data_array();
 
-print $table->sql;
+
 
 $table->header();
 
@@ -227,6 +224,8 @@ if ($action == 'set_date') {
 			'label'=> "date de l'action"
 	)), '', 1);
 }
+
+print $table->sql;
 
 if(!empty($formconfirm)) print $formconfirm;
 
