@@ -155,7 +155,7 @@ $field->name='comm';
 $field->label = 'Commercial';
 $field->checked = 1;
 $field->sub_title = 0;
-$field->field = 'comm';
+$field->field = "CONCAT(u.firstname,'',u.lastname)";
 $field->align = 'left';
 $field->alias = 'comm';
 $field->post_traitement = array('link', '/user/card.php','?id=','commercial');
@@ -194,7 +194,7 @@ $table->sql_from.= MAIN_DB_PREFIX . "contrat AS c ";
 $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "societe AS s ON s.rowid = c.fk_soc ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "user AS u ON u.rowid = c.fk_commercial_suivi ";
 $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "contratdet AS cd ON c.rowid = cd.fk_contrat ";
-$table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON c.rowid = ef.fk_object ";
+$table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON c.rowid = ef.fk_object";
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 
