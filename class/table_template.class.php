@@ -386,9 +386,22 @@ class Dyntable
 				}
 				$this->array_display[] = $line_array;
 			}
-
-
+		}elseif ($this->mode=='sql_methode'){
+			$select = 'SELECT ';
+			$group = '';
+			foreach ($this->arrayfields as $f){
+				$select.=$f->field . ', ';
+				if($f->group =1){
+					$group.= $f->field . ', ';
+				}
+			}
+			$select = substr($select, -2) .' ';
+			if(strlen($group)>0){
+				$group = 'GROUP BY '. substr($group,-2) .' ';
+			}
+			$this->sql = $select . $this->from . $this->where . $group;
 		}
+
 	}
 
 	function draw_data_table(){
