@@ -390,7 +390,7 @@ class Dyntable
 			$select = 'SELECT ';
 			$group = '';
 			foreach ($this->arrayfields as $f){
-				$select.=$f->field . ', ';
+				$select.=$f->field . ' AS ' .$f->alias . ', ';
 				if($f->group ==1){
 					$group.= $f->field . ', ';
 				}
