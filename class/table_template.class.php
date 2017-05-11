@@ -387,19 +387,25 @@ class Dyntable
 				$this->array_display[] = $line_array;
 			}
 		}elseif ($this->mode=='sql_methode'){
-			$select = 'SELECT ';
-			$group = '';
+			$this->sql_select = '';
+			$this->sql_group = '';
 			foreach ($this->arrayfields as $f){
-				$select.=$f->field . ' AS ' .$f->alias . ', ';
+				$this->sql_select.=$f->field . ' AS ' .$f->alias . ', ';
 				if($f->group ==1){
-					$group.= $f->field . ', ';
+					$this->sql_group.= $f->field . ', ';
 				}
 			}
-			$select = substr($select,0, -2);
-			if(strlen($group)>0){
-				$group = ' GROUP BY '. substr($group,0,-2);
+			$this->sql_select = substr($this->sql_select,0, -2);
+			if(strlen($this->group)>0){
+				$this->sql_group = substr($this->sql_group,0,-2);
 			}
-			$this->sql = $select . ' FROM ' . $this->sql_from . ' WHERE ' . $this->sql_where . $group;
+			$this->sql = 'SELECT ' . $this->sql_select;
+			$this->sql.= ' FROM ' . $this->sql_from;
+			$this->sql.= (empty($this->sql_where)?'':' WHERE ' . $this->sql_where);
+			$this->sql.= (empty($this->sql_group)?'':' GROUP BY ' . $this->sql_group);
+			$this->sql.= (empty($this->sql_having)?'':' HAVING ' . $this->sql_having);
+			$this->sql.= $this->db->order($this->sortfield,$this->sortorder);
+			if($this->limit > 0) $this->sql.= $this->db->plimit($this->limit+1, $this->offset);
 		}
 
 	}
