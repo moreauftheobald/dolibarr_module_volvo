@@ -399,6 +399,27 @@ class Dyntable
 			if(strlen($this->sql_group)>0){
 				$this->sql_group = substr($this->sql_group,0,-2);
 			}
+			if(count($this->filter)>0){
+				if($this->filter_clause == 'WHERE'){
+					foreach ($this->filter as $key =>$value){
+						if(!empty($this->sql_where)){
+							$this->sql_where.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . value . "' ";
+						}else{
+							$this->sql_where.= ' ' . $key . " LIKE '%" . value . "%' ";
+						}
+					}
+				}elseif($this->filter_clause == 'HAVING'){
+					foreach ($this->filter as $key =>$value){
+						if(!empty($this->sql_having)){
+							$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . value . "' ";
+						}else{
+							$this->sql_having.= ' ' . $key . " LIKE '%" . value . "%' ";
+						}
+					}
+				}
+			}
+
+
 			$this->sql = 'SELECT ' . $this->sql_select;
 			$this->sql.= ' FROM ' . $this->sql_from;
 			$this->sql.= (empty($this->sql_where)?'':' WHERE ' . $this->sql_where);
