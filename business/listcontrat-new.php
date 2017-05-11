@@ -200,6 +200,8 @@ $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 
+$table->sql_filter_action = array('comm' =>"#KEY# LIKE '%#VALUE#'");
+
 /*
  * Action
  */

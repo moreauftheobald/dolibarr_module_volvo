@@ -400,20 +400,23 @@ class Dyntable
 				$this->sql_group = substr($this->sql_group,0,-2);
 			}
 			if(count($this->filter)>0){
-				if($this->filter_clause == 'WHERE'){
-					foreach ($this->filter as $key =>$value){
-						if(!empty($this->sql_where)){
-							$this->sql_where.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
-						}else{
-							$this->sql_where.= ' ' . $key . " LIKE '%" . $value . "%' ";
-						}
-					}
-				}elseif($this->filter_clause == 'HAVING'){
-					foreach ($this->filter as $key =>$value){
-						if(!empty($this->sql_having)){
-							$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
-						}else{
-							$this->sql_having.= ' ' . $key . " LIKE '%" . $value . "%' ";
+				foreach ($this->filter as $key => $value){
+					if(array_key_exists($key, $this->sql_filter_action)){
+						$clause = $this->sql_filter_action[$key];
+						$clause = str_replace('#KEY#', $key, $clause);
+						$clause = str_replace('#VALUE#', $value, $clause);
+						if($this->filter_clause == 'WHERE'){
+							if(!empty($this->sql_where)){
+								$this->sql_where.= ' ' .  $this->filter_mode . $clause;
+							}else{
+								$this->sql_where.= $clause;
+							}
+						}elseif($this->filter_clause == 'HAVING'){
+							if(!empty($this->sql_having)){
+								$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
+							}else{
+								$this->sql_having.= ' ' . $key . " LIKE '%" . $value . "%' ";
+							}
 						}
 					}
 				}
