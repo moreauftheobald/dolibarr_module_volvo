@@ -336,9 +336,6 @@ if($action=='confirm_set_date'){
  */
 $table->post();
 
-$table->filter['s.nom'] = 'HEID';
-$table->filter['c.ref_supplier'] = '80';
-
 $table->data_array();
 
 
