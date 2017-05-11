@@ -403,7 +403,7 @@ class Dyntable
 				if($this->filter_clause == 'WHERE'){
 					foreach ($this->filter as $key =>$value){
 						if(!empty($this->sql_where)){
-							$this->sql_where.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . value . "' ";
+							$this->sql_where.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
 						}else{
 							$this->sql_where.= ' ' . $key . " LIKE '%" . value . "%' ";
 						}
@@ -411,7 +411,7 @@ class Dyntable
 				}elseif($this->filter_clause == 'HAVING'){
 					foreach ($this->filter as $key =>$value){
 						if(!empty($this->sql_having)){
-							$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . value . "' ";
+							$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
 						}else{
 							$this->sql_having.= ' ' . $key . " LIKE '%" . value . "%' ";
 						}
