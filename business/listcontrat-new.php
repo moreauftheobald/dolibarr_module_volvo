@@ -338,8 +338,6 @@ $table->post();
 
 $table->data_array();
 
-
-
 $table->header();
 
 if ($action == 'set_date') {
