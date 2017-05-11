@@ -176,10 +176,39 @@ $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='etat';
+$field->label = 'État';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = "IF(ef.dt_env_cli IS NULL,'En attente envoi Client',IF(dt_ret_cli IS NULL,'chez le Client',IF(dt_sig_the IS NULL,'En cours de signature Théobald',IF(dt_env_vtf IS NULL,'En attente envoi VTF',IF(dt_enr IS NULL,'En cours d\'enregistrment VTF',CONCAT('Enregistré',IF(dt_ret_vtf IS NULL, ' En attente retour VTF',IF(dt_trait IS NULL,' recu a traiter',''))))))))";
+$field->align = 'center';
+$field->alias = 'statut';
+$field->post_traitement = array('none');
+$tools=array();
+$tool = new Dyntable_tools($db);
+$tool->type = 'select_array';
+$tool->array = array(1=>'En attente envoi Client',2=>'chez le Client',3=>'En cours de signature Théobald',4=>'En attente envoi VTF',5=>'En cours d\'enregistrment VTF',6=>'Enregistré En attente retour VTF',7=>'Enregistré recu a traiter',8=>'Enregistré');
+$tool->title = '';
+$tool->html_name = 'search_statut';
+$tool->filter = 'statut';
+$tool->use_empty = 1;
+$tools['1'] = $tool;
+$field->filter = $tools;
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
 $field->name='cid';
 $field->enabled = false;
 $field->alias = 'cid';
 $field->field = 'c.rowid';
+$field->group =1;
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
+$field->name='fk_statut';
+$field->enabled = false;
+$field->alias = 'fk_statut';
+$field->field = 'IF(ef.dt_env_cli IS NULL,1,IF(dt_ret_cli IS NULL,2,IF(dt_sig_the IS NULL,3,IF(dt_env_vtf IS NULL,4,IF(dt_enr IS NULL,5,IF(dt_ret_vtf IS NULL, 6,IF(dt_trait IS NULL,7,8))))))) ';
 $field->group =1;
 $table->arrayfields[$field->name] = $field;
 
@@ -200,7 +229,7 @@ $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 $table->sql_filter_action = array();
-$table->sql_filter_action[] = array('keys'=>array('s.nom','c.ref_supplier'), 'action' =>"#KEY# LIKE '%#VALUE#'");
+$table->sql_filter_action[] = array('keys'=>array('s.nom','c.ref_supplier'), 'action' =>"#KEY# LIKE '%#VALUE#%'");
 $table->sql_filter_action[] = array('keys'=>array('c.rowid','s.rowid'), 'action' =>"#KEY# = #VALUE#");
 
 
