@@ -391,7 +391,7 @@ class Dyntable
 			$group = '';
 			foreach ($this->arrayfields as $f){
 				$select.=$f->field . ', ';
-				if($f->group =1){
+				if($f->group ==1){
 					$group.= $f->field . ', ';
 				}
 			}
