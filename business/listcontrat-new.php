@@ -354,8 +354,6 @@ if ($action == 'set_date') {
 	)), '', 1);
 }
 
-print $table->sql;
-
 if(!empty($formconfirm)) print $formconfirm;
 
 $table->draw_tool_bar();

@@ -436,7 +436,28 @@ class Dyntable
 			$this->sql.= (empty($this->sql_group)?'':' GROUP BY ' . $this->sql_group);
 			$this->sql.= (empty($this->sql_having)?'':' HAVING ' . $this->sql_having);
 			$this->sql.= $this->db->order($this->sortfield,$this->sortorder);
+			$this->nbtotalofrecords =0;
+			$res = $this->db->query($this->sql);
+			if($res) $this->nbtotalofrecords = $this->db->num_rows($res);
 			if($this->limit > 0) $this->sql.= $this->db->plimit($this->limit+1, $this->offset);
+
+			$this->num = 0;
+			$resql = $this->db->query($this->sql);
+			if($resql){
+				$num = $this->db->num_rows($resql);
+				while($obj = $this->db->fetch_object($resql)){
+					$line=array();
+					foreach ($this->arrayfields as $f){
+						if($f->checked == 1){
+							$champs = $f->alias;
+							$line[$f->name] = $obj->$champs;
+						}
+					}
+					$this->array_display[] = $line;
+				}
+			}
+
+
 		}
 
 	}
