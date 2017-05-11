@@ -199,10 +199,10 @@ $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "contratdet AS cd ON c.rowid
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON c.rowid = ef.fk_object";
 
 $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
+$table->sql_filter_action[]= array();
+$table->sql_filter_action[] = array('keys'=>array('s.nom','c.ref_supplier'), 'action' =>"#KEY# LIKE '%#VALUE#'");
+$table->sql_filter_action[] = array('keys'=>array('c.rowid','s.rowid'), 'action' =>"#KEY# = #VALUE#");
 
-$table->sql_filter_action = array(	'comm' =>"#KEY# LIKE '%#VALUE#'",
-									'c.ref'=>"#KEY# LIKE '%#VALUE#'",
-);
 
 /*
  * Action
@@ -223,7 +223,7 @@ if($action=='confirm_set_date'){
 $table->post();
 
 $table->filter['s.nom'] = 'HEID';
-$table->filter['c.ref'] = '16';
+$table->filter['c.ref_supplier'] = '80';
 
 $table->data_array();
 
