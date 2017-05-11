@@ -399,7 +399,7 @@ class Dyntable
 			if(strlen($group)>0){
 				$group = 'GROUP BY '. substr($group,-2) .' ';
 			}
-			$this->sql = $select . $this->from . $this->where . $group;
+			$this->sql = $select . $this->sql_from . $this->sql_where . $group;
 		}
 
 	}
