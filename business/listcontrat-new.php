@@ -263,10 +263,10 @@ $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
 $field->name='nb_closed';
-$field->label = img_picto('En service, expiré', 'statut6');
+$field->label = img_picto('Fermé', 'statut6');
 $field->checked = 1;
 $field->sub_title = 0;
-$field->field = 'SUM('.$db->ifsql("cd.statut=5",1,0).')nb_closed';
+$field->field = 'SUM('.$db->ifsql("cd.statut=5",1,0).')';
 $field->align = 'center';
 $field->alias = 'nb_closed';
 $field->post_traitement = array('none');
