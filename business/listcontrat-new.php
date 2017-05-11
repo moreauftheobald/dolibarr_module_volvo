@@ -65,6 +65,8 @@ $table->export_button = 1;
 $table->select_fields_button = 1;
 $table->mode = 'sql_methode';
 $table->limit = $conf->liste_limit;
+$table->filter_clause = 'HAVING';
+$table->filter_mode = 'AND';
 
 $field= new Dyntable_fields($db);
 $field->name='ref';
@@ -215,6 +217,8 @@ if($action=='confirm_set_date'){
  * View
  */
 $table->post();
+
+$table->filter['comm'] = 'MOREAU';
 
 $table->data_array();
 
