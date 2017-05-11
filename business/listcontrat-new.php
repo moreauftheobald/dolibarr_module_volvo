@@ -216,7 +216,7 @@ $field= new Dyntable_fields($db);
 $field->name='action';
 $field->enabled = false;
 $field->alias = 'action';
-$field->field = "IF(ef.dt_env_cli IS NULL,'dt_env_cli',IF(dt_ret_cli IS NULL,'dt_ret_cli',IF(dt_sig_the IS NULL,'dt_sig_the',IF(dt_env_vtf IS NULL,'dt_env_vtf',IF(dt_enr IS NULL,'dt_enr',IF(dt_ret_vtfIS NULL,'dt_ret_vtf',IF(dt_trait IS NULL,'dt_trait','none')))))) ";
+$field->field = "IF(ef.dt_env_cli IS NULL,'dt_env_cli',IF(dt_ret_cli IS NULL,'dt_ret_cli',IF(dt_sig_the IS NULL,'dt_sig_the',IF(dt_env_vtf IS NULL,'dt_env_vtf',IF(dt_enr IS NULL,'dt_enr',IF(dt_ret_vtf IS NULL,'dt_ret_vtf',IF(dt_trait IS NULL,'dt_trait','none')))))) ";
 $field->group =1;
 $table->arrayfields[$field->name] = $field;
 
