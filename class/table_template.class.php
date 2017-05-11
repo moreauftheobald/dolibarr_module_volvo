@@ -396,7 +396,7 @@ class Dyntable
 				}
 			}
 			$this->sql_select = substr($this->sql_select,0, -2);
-			if(strlen($this->group)>0){
+			if(strlen($this->sql_group)>0){
 				$this->sql_group = substr($this->sql_group,0,-2);
 			}
 			$this->sql = 'SELECT ' . $this->sql_select;
