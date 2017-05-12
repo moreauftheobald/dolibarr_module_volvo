@@ -364,8 +364,10 @@ $table->data_array();
 $table->header();
 
 if ($action == 'set_date' && $element != 'none') {
+	$option = '?id=' . $id . '&element=' . $element . '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
+	$option.= '&offset=' . $table->offset . '&page=' . $table->page . $option;
 	$form = new Form($db);
-	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $table->option, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
+	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . $option, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
 			'type' => 'date',
 			'name' => 'date_action',
 			'label'=> "date de l'action"
