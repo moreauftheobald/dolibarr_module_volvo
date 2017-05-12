@@ -967,8 +967,8 @@ class Dyntable_fields
 				$value = $line_array[$f->name];
 				if(empty($value)) $value = "";
 				$href = str_replace($replace, $value, $href);
-				$href = $href.$option;
 			}
+			$href = $href.$option;
 			$res = '<a href="' . $href . '">' . $this->img . '</a>';
 		}else{
 			$res = 'toto';
