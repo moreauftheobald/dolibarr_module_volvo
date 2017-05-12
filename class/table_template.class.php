@@ -219,7 +219,7 @@ class Dyntable
 		}
 
 		print '<table class="noborder" width="100%">';
-		if(is_array($this->sub_title)){
+		if(count($this->sub_title)>0){
 			print '<tr class="liste_titre" style="height:22px;">';
 			foreach ($this->arrayfields as $f){
 				if($f->sub_title>0 && $f->checked == 1 && $groupdone[$f->sub_title]==0){
