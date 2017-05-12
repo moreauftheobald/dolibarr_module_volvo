@@ -339,7 +339,7 @@ $table->post();
 $table->data_array();
 
 $table->header();
-var_dump($table->array_display);
+var_dump($table->sql);
 
 if ($action == 'set_date') {
 	$form = new Form($db);
