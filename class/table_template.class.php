@@ -226,7 +226,7 @@ class Dyntable
 					print '<th class="liste_titre" colspan="' . $group[$f->sub_title] . '" align="center">' . $this->sub_title[$f->sub_title] . '</th>';
 					$groupdone[$f->sub_title] = 1;
 				}elseif($f->sub_title==0 && $f->checked == 1){
-					print_liste_field_titre($f->label,$_SERVER["PHP_SELF"],$f->field,'',$this->option,'rowspan="2" align="' . $f->align .'"',$this->sortfield,$this->sortorder);
+					print_liste_field_titre($f->label,$_SERVER["PHP_SELF"],$f->field,'',$this->option,'rowspan="2" align="' . $f->align .'"' . $f->other_attribute ,$this->sortfield,$this->sortorder);
 				}
 			}
 			print "</tr>";
@@ -473,7 +473,7 @@ class Dyntable
 			$l['option'] = $this->option;
 			foreach ($this->arrayfields as $key => $val){
 				if($val->checked ==1){
-					print '<td ' . $td_class . ' align="' . $val->align . '" style="white-space:nowrap;" ' .  ' ' . $this->other_attribute . '>';
+					print '<td ' . $td_class . ' align="' . $val->align . '" style="white-space:nowrap;">';
 					if(!empty($l[$val->name])) print $val->traitement($l[$val->name],$l,$this->option);
 					print '</td>';
 				}
