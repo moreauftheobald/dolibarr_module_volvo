@@ -968,7 +968,7 @@ class Dyntable_fields
 			$href = $href.$option;
 			$res = '<a href="' . $href . '">' . $this->img . '</a>';
 		}else{
-			$res = 'toto';
+			$res = '';
 		}
 		return $res;
 
