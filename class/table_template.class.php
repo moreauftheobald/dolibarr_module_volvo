@@ -963,6 +963,8 @@ class Dyntable_fields
 				if(empty($value)) $value = "";
 				$href = str_replace($replace, $value, $href);
 			}
+			$option = '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
+			$option.= '&offset=' . $table->offset . '&page=' . $table->page . $option;
 			$href = $href.$option;
 			$res = '<a href="' . $href . '">' . $this->img . '</a>';
 		}else{
