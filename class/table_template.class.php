@@ -387,9 +387,11 @@ class Dyntable
 			$this->sql_select = '';
 			$this->sql_group = '';
 			foreach ($this->arrayfields as $f){
-				$this->sql_select.=$f->field . ' AS ' .$f->alias . ', ';
-				if($f->group ==1){
-					$this->sql_group.= $f->field . ', ';
+				if(!empty($f->field) && !empty($f->alias)){
+					$this->sql_select.=$f->field . ' AS ' .$f->alias . ', ';
+					if($f->group ==1){
+						$this->sql_group.= $f->field . ', ';
+					}
 				}
 			}
 			$this->sql_select = substr($this->sql_select,0, -2);
