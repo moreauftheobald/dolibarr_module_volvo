@@ -473,7 +473,7 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'button'){
-						$line_array[$f->name] = $f->button($f,$this->option,$line_array, $this->arrayfields);
+						$line_array[$f->name] = $f->button($this->option,$line_array, $this->arrayfields);
 					}
 				}
 
@@ -942,8 +942,8 @@ class Dyntable_fields
 
 	}
 
-	function button($f,$option,$line_array,$arrayfields){
-		if($f->right){
+	function button($option,$line_array,$arrayfields){
+		if($this->right){
 			$href = $this->href;
 			foreach ($arrayfields as $f){
 				$replace = '#' . $f->name . '#';
@@ -952,7 +952,7 @@ class Dyntable_fields
 				$href = str_replace($replace, $value, $href);
 				$href = $href.$option;
 			}
-			$res = '<a href="' . $href . '">' . $f->img . '</a>';
+			$res = '<a href="' . $href . '">' . $this->img . '</a>';
 		}else{
 			$res = 'toto';
 		}
