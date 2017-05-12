@@ -453,6 +453,7 @@ class Dyntable
 				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
 					if(empty($f->type)){
+						$champs = $f->alias;
 						$line_array[$f->name] = $obj->$champs;;
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
@@ -462,6 +463,7 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
+						$champs = $f->alias;
 						$line_array[$f->name] = $f->calculobject($obj, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
