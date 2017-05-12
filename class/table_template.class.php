@@ -943,14 +943,14 @@ class Dyntable_fields
 	}
 
 	function button($line_array,$arrayfields){
-// 		$href = $this->href;
-// 		foreach ($arrayfields as $f){
-// 			$replace = '#' . $f->name . '#';
-// 			$value = $line_array[$f->name];
-// 			if(empty($value)) $value = "";
-// 			$formule = str_replace($replace, $value, $href);
-// 		}
-// 		$res = '<a href="' . $href . '">' . 'ok' . '</a>';
+		$href = $this->href;
+		foreach ($arrayfields as $f){
+			$replace = '#' . $f->name . '#';
+			$value = $line_array[$f->name];
+			if(empty($value)) $value = "";
+			$formule = str_replace($replace, $value, $href);
+		}
+		$res = '<a href="' . $href . '">' . 'ok' . '</a>';
 		return $res;
 
 	}
