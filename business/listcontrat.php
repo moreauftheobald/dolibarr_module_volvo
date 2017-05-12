@@ -365,7 +365,7 @@ $table->header();
 
 if ($action == 'set_date' && $element != 'none') {
 	$form = new Form($db);
-	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $param, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
+	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $table->option, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
 			'type' => 'date',
 			'name' => 'date_action',
 			'label'=> "date de l'action"
