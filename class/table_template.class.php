@@ -485,7 +485,7 @@ class Dyntable
 		$this->sortfield = GETPOST('sortfield', 'alpha');
 		$this->page = GETPOST('page', 'int');
 
-		$this->offset = ($conf->liste_limit+1) * $this->page;
+		$this->offset = ($this->limit+1) * $this->page;
 
 		if (empty($this->sortorder))
 			$this->sortorder = "ASC";
