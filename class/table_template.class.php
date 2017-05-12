@@ -953,6 +953,8 @@ class Dyntable_fields
 				$href = $href.$option;
 			}
 			$res = '<a href="' . $href . '">' . $f->img . '</a>';
+		}else{
+			$res = 'toto';
 		}
 		return $res;
 
