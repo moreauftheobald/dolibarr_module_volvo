@@ -231,11 +231,13 @@ $table->arrayfields[$field->name] = $field;
 $field= new Dyntable_fields($db);
 $field->name='Action Button';
 $field->label = '';
+$field->type = 'button';
 $field->checked = 1;
 $field->sub_title = 0;
-$field->field = 'SUM('.$db->ifsql("cd.statut=0",1,0).')';
 $field->align = 'center';
-$field->alias = 'nb_initial';
+$field->href = $_SERVER['PHP_SELF'] . '?id=#cid#&action=set_date&element=#action#';
+$field->img = img_picto('Statut Suivant', 'calendar');
+$field->right = $user->rights->contrat->creer;
 $field->post_traitement = array('none');
 $table->arrayfields[$field->name] = $field;
 

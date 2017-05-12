@@ -325,8 +325,7 @@ class Dyntable
 				}
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
-						$champs = $f->alias;
-						$line_array[$f->name] = $f->calculobject($line_array, $this->arrayfields);
+						$line_array[$f->name] = $f->calcul($line_array, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
@@ -373,7 +372,7 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
-						$line_array[$f->name] = $f->calcularray($line_array, $this->arrayfields);
+						$line_array[$f->name] = $f->calcul($line_array, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
@@ -463,11 +462,16 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
-						$champs = $f->alias;
-						$line_array[$f->name] = $f->calculobject($obj, $this->arrayfields);
+						$line_array[$f->name] = $f->calcul($line_array, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
+					}
+				}
+
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'button'){
+						$line_array[$f->name] = $f->button($line_array, $this->arrayfields);
 					}
 				}
 
@@ -918,11 +922,11 @@ class Dyntable_fields
 
 	}
 
-	function calcularray($line,$arrayfields){
+	function calcul($line_array,$arrayfields){
 		$formule = $this->formule;
 		foreach ($arrayfields as $f){
 			$replace = '#' . $f->name . '#';
-			$value = $line[$f->name];
+			$value = $line_array[$f->name];
 			if(empty($value)) $value = "0";
 			$formule = str_replace($replace, $value, $formule);
 		}
@@ -936,21 +940,15 @@ class Dyntable_fields
 
 	}
 
-	function calculobject($line,$arrayfields){
-		$formule = $this->formule;
+	function button($line_array,$arrayfields){
+		$href = $this->href;
 		foreach ($arrayfields as $f){
-			$champs = $f->name;
 			$replace = '#' . $f->name . '#';
-			$value = $line->$champs;
-			if(empty($value)) $value = "0";
-			$formule = str_replace($replace, $value, $formule);
+			$value = $line_array[$f->name];
+			if(empty($value)) $value = "";
+			$formule = str_replace($replace, $value, $href);
 		}
-		$error_level = error_reporting();
-		error_reporting(0);
-
-		$res = eval("return " . $formule . ";");
-		if($res == FALSE) $res = '';
-		error_reporting($error_level);
+		$res = '<a href="' . $href . '">' . 'ok' . '</a>';
 		return $res;
 
 	}
