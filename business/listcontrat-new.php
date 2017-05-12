@@ -350,6 +350,8 @@ $table->data_array();
 
 $table->header();
 
+var_dump($this->sql);
+
 if ($action == 'set_date') {
 	$form = new Form($db);
 	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $param, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
