@@ -480,7 +480,7 @@ class Dyntable
 	}
 
 	function post(){
-		global $conf;
+
 		$this->sortorder = GETPOST('sortorder', 'alpha');
 		$this->sortfield = GETPOST('sortfield', 'alpha');
 		$this->page = GETPOST('page', 'int');
