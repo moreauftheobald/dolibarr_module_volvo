@@ -485,8 +485,8 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'button'){
-						$option = $this->option . '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
-						$option.= '&offset=' . $table->offset . '&page=' . $table->page;
+						$option = $this->option . '&sortfield=' . $this->sortfield . '&sortorder=' . $this->sortorder;
+						$option.= '&offset=' . $this->offset . '&page=' . $this->page;
 						$line_array[$f->name] = $f->button($option,$line_array, $this->arrayfields);
 					}
 				}
@@ -965,8 +965,6 @@ class Dyntable_fields
 				if(empty($value)) $value = "";
 				$href = str_replace($replace, $value, $href);
 			}
-			$option = '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
-			$option.= '&offset=' . $table->offset . '&page=' . $table->page . $option;
 			$href = $href.$option;
 			$res = '<a href="' . $href . '">' . $this->img . '</a>';
 		}else{
