@@ -332,6 +332,12 @@ class Dyntable
 					}
 				}
 
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'button'){
+						$line_array[$f->name] = $f->button($this->option,$line_array, $this->arrayfields);
+					}
+				}
+
 				$this->array_display[] = $line_array;
 
 			}
@@ -376,6 +382,12 @@ class Dyntable
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
+					}
+				}
+
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'button'){
+						$line_array[$f->name] = $f->button($this->option,$line_array, $this->arrayfields);
 					}
 				}
 
