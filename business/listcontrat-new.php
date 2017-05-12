@@ -305,6 +305,14 @@ $field->field = 's.rowid';
 $field->group =1;
 $table->arrayfields[$field->name] = $field;
 
+$field= new Dyntable_fields($db);
+$field->name='commercial';
+$field->enabled = false;
+$field->alias = 'commercial';
+$field->field = 'u.rowid';
+$field->group =1;
+$table->arrayfields[$field->name] = $field;
+
 
 $table->sql_from.= MAIN_DB_PREFIX . "contrat AS c ";
 $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "societe AS s ON s.rowid = c.fk_soc ";
