@@ -324,6 +324,8 @@ $table->sql_where = 'c.entity IN ('.getEntity('contract', 1).')';
 $table->sql_filter_action = array();
 $table->sql_filter_action[] = array('keys'=>array('s.nom','c.ref_supplier','c.ref_customer','c.ref'), 'action' =>"#KEY# LIKE '%#VALUE#%'");
 $table->sql_filter_action[] = array('keys'=>array('c.rowid','s.rowid','u.rowid'), 'action' =>"#KEY# = #VALUE#");
+$table->sql_filter_action[] = array('keys'=>array('MONTH_IN'), 'action' =>"date_format(ef.dt_enr, '%m') = '#VALUE#'");
+$table->sql_filter_action[] = array('keys'=>array('YEAR_IN'), 'action' =>"date_format(ef.dt_enr, '%y') = '#VALUE#'");
 
 
 /*
