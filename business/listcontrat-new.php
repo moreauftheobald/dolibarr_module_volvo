@@ -70,7 +70,7 @@ $table->filter_mode = 'AND';
 $table->filter_line = 1;
 
 $field= new Dyntable_fields($db);
-$field->name='Action Button';
+$field->name='button';
 $field->label = '';
 $field->type = 'button';
 $field->checked = 1;
