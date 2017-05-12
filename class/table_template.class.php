@@ -367,7 +367,7 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
-						$line_array[$f->name] = $f->cacularray($line_array, $this->arrayfields);
+						$line_array[$f->name] = $f->calcularray($line_array, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
 							$line_array_total[$f->alias]+=$line_array[$f->name];
 						}
