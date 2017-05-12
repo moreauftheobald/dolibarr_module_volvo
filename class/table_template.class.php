@@ -546,10 +546,10 @@ class Dyntable
 		if (empty($this->sortfield))
 			$this->sortfield = $this->default_sortfield;
 
-		if(!empty($this->sortorder)) $this->option = '&sortorder='.$this->sortorder;
-		if(!empty($this->sortfield)) $this->option = '&sortfield='.$this->sortfield;
-		if(!empty($this->page)) $this->option = '&page='.$this->page;
-		if(!empty($this->offset)) $this->option = '&offset='.$this->offset;
+		$this->option = '&sortorder='.$this->sortorder;
+		$this->option = '&sortfield='.$this->sortfield;
+		$this->option = '&page='.$this->page;
+		$this->option = '&offset='.$this->offset;
 
 		if (GETPOST("button_removefilter_x")) {
 			foreach ($this->extra_tools as $key => $p){
