@@ -501,7 +501,7 @@ class Dyntable
 				}elseif($f->total == 'name'){
 					$line_array[$f->name] = $this->total_line;
 				}elseif($f->total =='calc'){
-					$line_array[$f->name] = $f->calcularray($line_array_total, $this->arrayfields);
+					$line_array[$f->name] = $f->calcul($line_array_total, $this->arrayfields);
 				}elseif($f->total =='none'){
 					$line_array[$f->name] = '';
 				}
