@@ -445,8 +445,13 @@ class Dyntable
 			$resql = $this->db->query($this->sql);
 			if($resql){
 				$this->num = $this->db->num_rows($resql);
+				$var= true;
 				while($obj = $this->db->fetch_object($resql)){
 					$line=array();
+					$var = !$var;
+					$line_array['class'] = $bc[$var];
+					$line_array['class_td'] = '';
+					$line_array['option'] = $this->option;
 					foreach ($this->arrayfields as $f){
 						if($f->checked == 1){
 							$champs = $f->alias;
