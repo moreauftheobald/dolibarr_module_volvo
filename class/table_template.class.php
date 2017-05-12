@@ -400,11 +400,11 @@ class Dyntable
 				$this->sql_group = substr($this->sql_group,0,-2);
 			}
 			if(count($this->filter)>0){
-				$action_array= array();
+				$this->action_array= array();
 				foreach ($this->sql_filter_action as $action){
 					$temp =array();
 					$temp = array_fill_keys($action['keys'], $action['value']);
-					$this->action_array = array_merge($action_array,$temp);
+					$this->action_array = array_merge($this->action_array,$temp);
 				}
 
 				foreach ($this->filter as $key => $value){
