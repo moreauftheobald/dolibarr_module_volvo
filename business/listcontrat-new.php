@@ -268,6 +268,7 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'SUM('.$db->ifsql("cd.statut=5",1,0).')';
 $field->align = 'center';
+$field->other_attribute = 'width="16"';
 $field->alias = 'nb_closed';
 $field->post_traitement = array('none');
 $table->arrayfields[$field->name] = $field;

@@ -473,7 +473,7 @@ class Dyntable
 			$l['option'] = $this->option;
 			foreach ($this->arrayfields as $key => $val){
 				if($val->checked ==1){
-					print '<td ' . $td_class . ' align="' . $val->align . '" style="white-space:nowrap;">';
+					print '<td ' . $td_class . ' align="' . $val->align . '" style="white-space:nowrap;" ' .  ' ' . $this->other_attribute . '>';
 					if(!empty($l[$val->name])) print $val->traitement($l[$val->name],$l,$this->option);
 					print '</td>';
 				}
