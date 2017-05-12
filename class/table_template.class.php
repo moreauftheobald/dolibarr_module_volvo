@@ -420,9 +420,9 @@ class Dyntable
 							}
 						}elseif($this->filter_clause == 'HAVING'){
 							if(!empty($this->sql_having)){
-								$this->sql_having.= ' ' .  $this->filter_mode . ' ' . $key . " LIKE '%" . $value . "' ";
+								$this->sql_having.= ' ' .  $this->filter_mode . $clause;";
 							}else{
-								$this->sql_having.= ' ' . $key . " LIKE '%" . $value . "%' ";
+								$this->sql_having.= $clause;
 							}
 						}
 					}
