@@ -190,13 +190,26 @@ $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='button';
+$field->label = '';
+$field->type = 'button';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->align = 'center';
+$field->href = $_SERVER['PHP_SELF'] . '?id=#cid#&action=set_date&element=#action#';
+$field->img = img_picto('Statut Suivant', 'calendar');
+$field->right = $user->rights->contrat->creer;
+$field->post_traitement = array('none');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
 $field->name='etat';
 $field->label = 'État';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->group =1;
 $field->field = "IF(ef.dt_env_cli IS NULL,'En attente envoi Client',IF(dt_ret_cli IS NULL,'chez le Client',IF(dt_sig_the IS NULL,'En cours de signature Théobald',IF(dt_env_vtf IS NULL,'En attente envoi VTF',IF(dt_enr IS NULL,'En cours d\'enregistrment VTF',CONCAT('Enregistré',IF(dt_ret_vtf IS NULL, ' En attente retour VTF',IF(dt_trait IS NULL,' recu a traiter',''))))))))";
-$field->align = 'center';
+$field->align = 'left';
 $field->alias = 'statut';
 $field->post_traitement = array('none');
 $tools=array();
