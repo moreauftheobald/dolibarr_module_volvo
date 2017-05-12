@@ -444,7 +444,7 @@ class Dyntable
 			$this->num = 0;
 			$resql = $this->db->query($this->sql);
 			if($resql){
-				$num = $this->db->num_rows($resql);
+				$this->num = $this->db->num_rows($resql);
 				while($obj = $this->db->fetch_object($resql)){
 					$line=array();
 					foreach ($this->arrayfields as $f){
