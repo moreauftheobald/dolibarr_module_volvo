@@ -72,7 +72,7 @@ $table->filter_line = 1;
 $field= new Dyntable_fields($db);
 $field->name='button';
 $field->label = '';
-$field->type = 'test';
+$field->type = 'button';
 $field->checked = 1;
 $field->sub_title = 0;
 $field->align = 'center';
@@ -362,8 +362,6 @@ $table->post();
 $table->data_array();
 
 $table->header();
-
-var_dump($table->sql);
 
 if ($action == 'set_date') {
 	$form = new Form($db);
