@@ -324,7 +324,7 @@ class Dyntable
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
 						$champs = $f->alias;
-						$line_array[$f->name] = $f->calculline($line_array, $this->arrayfields);
+						$line_array[$f->name] = $f->calculobject($line_array, $this->arrayfields);
 					}
 				}
 
@@ -360,7 +360,7 @@ class Dyntable
 					if(empty($f->type)){
 						$line_array[$f->name] = $line[$f->alias];
 						if(!empty($this->total_line) && $f->total == 'value'){
-							$line_array_total[$f->alias]+=$line_array[$f->name];
+							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
 					}
 				}
@@ -369,7 +369,7 @@ class Dyntable
 					if($f->type == 'calc'){
 						$line_array[$f->name] = $f->calcularray($line_array, $this->arrayfields);
 						if(!empty($this->total_line) && $f->total == 'value'){
-							$line_array_total[$f->alias]+=$line_array[$f->name];
+							$line_array_total[$f->name]+=$line_array[$f->name];
 						}
 					}
 				}
@@ -380,7 +380,7 @@ class Dyntable
 			if(!empty($this->total_line) && !empty($line_array_total)){
 				foreach ($this->arrayfields as $f){
 					if($f->total == 'value'){
-						$line_array[$f->name] = $line_array_total[$f->alias];
+						$line_array[$f->name] = $line_array_total[$f->name];
 					}elseif($f->total == 'name'){
 						$line_array[$f->name] = $this->total_line;
 					}elseif($f->total =='calc'){
