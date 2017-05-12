@@ -420,7 +420,7 @@ class Dyntable
 							}
 						}elseif($this->filter_clause == 'HAVING'){
 							if(!empty($this->sql_having)){
-								$this->sql_having.= ' ' .  $this->filter_mode . $clause;";
+								$this->sql_having.= ' ' .  $this->filter_mode . $clause;
 							}else{
 								$this->sql_having.= $clause;
 							}
