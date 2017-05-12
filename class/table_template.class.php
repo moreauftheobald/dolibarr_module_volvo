@@ -308,7 +308,6 @@ class Dyntable
 
 			$var = true;
 			$line_array_total = array();
-
 			foreach ($object->$result as $line){
 				$var = !$var;
 				$line_array = array();
@@ -319,16 +318,23 @@ class Dyntable
 					if(empty($f->type)){
 						$champs = $f->alias;
 						$line_array[$f->name] = $line->$champs;
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->name]+=$line_array[$f->name];
+						}
 					}
 				}
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'calc'){
 						$champs = $f->alias;
 						$line_array[$f->name] = $f->calculobject($line_array, $this->arrayfields);
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->name]+=$line_array[$f->name];
+						}
 					}
 				}
 
 				$this->array_display[] = $line_array;
+
 			}
 
 		}elseif ($this->mode=='function_methode'){
@@ -377,24 +383,7 @@ class Dyntable
 				$this->array_display[] = $line_array;
 			}
 
-			if(!empty($this->total_line) && !empty($line_array_total)){
-				foreach ($this->arrayfields as $f){
-					if($f->total == 'value'){
-						$line_array[$f->name] = $line_array_total[$f->name];
-					}elseif($f->total == 'name'){
-						$line_array[$f->name] = $this->total_line;
-					}elseif($f->total =='calc'){
-						$line_array[$f->name] = $f->calcularray($line_array_total, $this->arrayfields);
-					}elseif($f->total =='none'){
-						$line_array[$f->name] = '';
-					}
-					$line_array['class'] =  'class="liste_titre"';
-					$line_array['class_td'] = ' class="liste_titre"';
-					$line_array['option'] = $this->option;
-					$line_array['total'] = 1;
-				}
-				$this->array_display[] = $line_array;
-			}
+
 		}elseif ($this->mode=='sql_methode'){
 			$this->sql_select = '';
 			$this->sql_group = '';
@@ -454,23 +443,56 @@ class Dyntable
 			$resql = $this->db->query($this->sql);
 			if($resql){
 				$this->num = $this->db->num_rows($resql);
-				$var= true;
+				$var =true;
+				$line_array_total = array();
 				while($obj = $this->db->fetch_object($resql)){
-					$var = !$var;
+				$var = !$var;
 				$line_array = array();
 				$line_array['class'] = $bc[$var];
 				$line_array['class_td'] = '';
 				$line_array['option'] = $this->option;
-					foreach ($this->arrayfields as $f){
-						$champs = $f->alias;
-						$line_array[$f->name] = $obj->$champs;
+				foreach ($this->arrayfields as $f){
+					if(empty($f->type)){
+						$line_array[$f->name] = $obj->$champs;;
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->name]+=$line_array[$f->name];
+						}
 					}
-					$this->array_display[] = $line_array;
+				}
+
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'calc'){
+						$line_array[$f->name] = $f->calculobject($obj, $this->arrayfields);
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->name]+=$line_array[$f->name];
+						}
+					}
+				}
+
+				$this->array_display[] = $line_array;
 				}
 			}
-
-
 		}
+
+		if(!empty($this->total_line) && !empty($line_array_total)){
+			foreach ($this->arrayfields as $f){
+				if($f->total == 'value'){
+					$line_array[$f->name] = $line_array_total[$f->name];
+				}elseif($f->total == 'name'){
+					$line_array[$f->name] = $this->total_line;
+				}elseif($f->total =='calc'){
+					$line_array[$f->name] = $f->calcularray($line_array_total, $this->arrayfields);
+				}elseif($f->total =='none'){
+					$line_array[$f->name] = '';
+				}
+				$line_array['class'] =  'class="liste_titre"';
+				$line_array['class_td'] = ' class="liste_titre"';
+				$line_array['option'] = $this->option;
+				$line_array['total'] = 1;
+			}
+			$this->array_display[] = $line_array;
+		}
+
 
 	}
 
