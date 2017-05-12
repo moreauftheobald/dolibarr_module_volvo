@@ -347,7 +347,7 @@ $table->sql_filter_action[] = array('keys'=>array('YEAR_IN'), 'action' =>"date_f
 
 
 
-if($action=='confirm_set_date'){
+if($action=='confirm_set_date' && $element !='none'){
 	$contrat = New Contrat($db);
 	$contrat->fetch($id);
 	$contrat->array_options['options_' . $element]=dol_mktime(0, 0, 0, GETPOST('date_actionmonth'), GETPOST('date_actionday'), GETPOST('date_actionyear'));
@@ -363,7 +363,7 @@ $table->data_array();
 
 $table->header();
 
-if ($action == 'set_date') {
+if ($action == 'set_date' && $element != 'none') {
 	$form = new Form($db);
 	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id='. $id . '&element=' . $element . $param, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
 			'type' => 'date',
