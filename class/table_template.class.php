@@ -404,12 +404,12 @@ class Dyntable
 				foreach ($this->sql_filter_action as $action){
 					$temp =array();
 					$temp = array_fill_keys($action['keys'], $action['value']);
-					$action_array = array_merge($action_array,$temp);
+					$this->action_array = array_merge($action_array,$temp);
 				}
 
 				foreach ($this->filter as $key => $value){
-					if(array_key_exists($key, $action_array)){
-						$clause = $action_array[$key];
+					if(array_key_exists($key, $this->action_array)){
+						$clause = $this->action_array[$key];
 						$clause = str_replace('#KEY#', $key, $clause);
 						$clause = str_replace('#VALUE#', $value, $clause);
 						if($this->filter_clause == 'WHERE'){
