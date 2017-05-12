@@ -69,6 +69,19 @@ $table->filter_clause = 'HAVING';
 $table->filter_mode = 'AND';
 $table->filter_line = 1;
 
+// $field= new Dyntable_fields($db);
+// $field->name='Action Button';
+// $field->label = '';
+// $field->type = 'button';
+// $field->checked = 1;
+// $field->sub_title = 0;
+// $field->align = 'center';
+// $field->href = $_SERVER['PHP_SELF'] . '?id=#cid#&action=set_date&element=#action#';
+// $field->img = img_picto('Statut Suivant', 'calendar');
+// $field->right = $user->rights->contrat->creer;
+// $field->post_traitement = array('none');
+// $table->arrayfields[$field->name] = $field;
+
 $field= new Dyntable_fields($db);
 $field->name='ref';
 $field->label = 'N° de Contrat';
@@ -227,21 +240,6 @@ $tool->max_year = 0;
 $tools['2'] = $tool;
 $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
-
-$field= new Dyntable_fields($db);
-$field->name='Action Button';
-$field->label = '';
-$field->type = 'button';
-$field->checked = 1;
-$field->sub_title = 0;
-$field->align = 'center';
-$field->href = $_SERVER['PHP_SELF'] . '?id=#cid#&action=set_date&element=#action#';
-$field->img = img_picto('Statut Suivant', 'calendar');
-$field->right = $user->rights->contrat->creer;
-$field->post_traitement = array('none');
-$table->arrayfields[$field->name] = $field;
-
-//img_picto('Statut Suivant', 'calendar')
 
 $field= new Dyntable_fields($db);
 $field->name='nb_initial';
