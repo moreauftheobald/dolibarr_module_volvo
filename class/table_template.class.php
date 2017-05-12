@@ -453,10 +453,8 @@ class Dyntable
 				$line_array['class_td'] = '';
 				$line_array['option'] = $this->option;
 					foreach ($this->arrayfields as $f){
-						if($f->checked == 1){
-							$champs = $f->alias;
-							$line_array[$f->name] = $obj->$champs;
-						}
+						$champs = $f->alias;
+						$line_array[$f->name] = $obj->$champs;
 					}
 					$this->array_display[] = $line_array;
 				}
