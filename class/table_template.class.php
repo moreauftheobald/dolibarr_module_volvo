@@ -469,11 +469,11 @@ class Dyntable
 					}
 				}
 
-				foreach ($this->arrayfields as $f){
-					if($f->type == 'button'){
-						$line_array[$f->name] = $f->button($line_array, $this->arrayfields);
-					}
-				}
+// 				foreach ($this->arrayfields as $f){
+// 					if($f->type == 'button'){
+// 						$line_array[$f->name] = $f->button($line_array, $this->arrayfields);
+// 					}
+// 				}
 
 				$this->array_display[] = $line_array;
 				}
