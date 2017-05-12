@@ -485,7 +485,9 @@ class Dyntable
 
 				foreach ($this->arrayfields as $f){
 					if($f->type == 'button'){
-						$line_array[$f->name] = $f->button($this->option,$line_array, $this->arrayfields);
+						$option = $this->option . '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
+						$option.= '&offset=' . $table->offset . '&page=' . $table->page;
+						$line_array[$f->name] = $f->button($option,$line_array, $this->arrayfields);
 					}
 				}
 
