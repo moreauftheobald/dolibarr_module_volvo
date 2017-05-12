@@ -403,7 +403,7 @@ class Dyntable
 				$this->action_array= array();
 				foreach ($this->sql_filter_action as $action){
 					$temp =array();
-					$temp = array_fill_keys($action['keys'], $action['value']);
+					$temp = array_fill_keys($action['keys'], $action['action']);
 					$this->action_array = array_merge($this->action_array,$temp);
 				}
 
