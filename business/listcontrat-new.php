@@ -229,6 +229,19 @@ $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='Action Button';
+$field->label = '';
+$field->checked = 1;
+$field->sub_title = 0;
+$field->field = 'SUM('.$db->ifsql("cd.statut=0",1,0).')';
+$field->align = 'center';
+$field->alias = 'nb_initial';
+$field->post_traitement = array('none');
+$table->arrayfields[$field->name] = $field;
+
+//img_picto('Statut Suivant', 'calendar')
+
+$field= new Dyntable_fields($db);
 $field->name='nb_initial';
 $field->label = img_picto('Inactif', 'statut1');
 $field->checked = 1;
@@ -268,7 +281,6 @@ $field->checked = 1;
 $field->sub_title = 0;
 $field->field = 'SUM('.$db->ifsql("cd.statut=5",1,0).')';
 $field->align = 'center';
-$field->other_attribute = 'width="25px"';
 $field->alias = 'nb_closed';
 $field->post_traitement = array('none');
 $table->arrayfields[$field->name] = $field;

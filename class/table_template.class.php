@@ -316,11 +316,18 @@ class Dyntable
 				$line_array['class_td'] = '';
 				$line_array['option'] = $this->option;
 				foreach ($this->arrayfields as $f){
-					$champs = $f->alias;
-					$line_array[$f->name] = $line->$champs;
-
-
+					if(empty($f->type)){
+						$champs = $f->alias;
+						$line_array[$f->name] = $line->$champs;
+					}
 				}
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'calc'){
+						$champs = $f->alias;
+						$line_array[$f->name] = $f->calculline($line_array, $this->arrayfields);
+					}
+				}
+
 				$this->array_display[] = $line_array;
 			}
 
@@ -348,23 +355,25 @@ class Dyntable
 				$line_array['class'] = $bc[$var];
 				$line_array['class_td'] = '';
 				$line_array['option'] = $this->option;
+
 				foreach ($this->arrayfields as $f){
-					if($f->type == 'calc'){
-						$line_array[$f->name] = $f->calcularray($line, $this->arrayfields);
-						if(!empty($this->total_line)){
-							if($f->total == 'value'){
-								$line_array_total[$f->alias]+=$line_array[$f->name];
-							}
-						}
-					}else{
+					if(empty($f->type)){
 						$line_array[$f->name] = $line[$f->alias];
-						if(!empty($this->total_line)){
-							if($f->total == 'value'){
-								$line_array_total[$f->alias]+=$line_array[$f->name];
-							}
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->alias]+=$line_array[$f->name];
 						}
 					}
 				}
+
+				foreach ($this->arrayfields as $f){
+					if($f->type == 'calc'){
+						$line_array[$f->name] = $f->cacularray($line_array, $this->arrayfields);
+						if(!empty($this->total_line) && $f->total == 'value'){
+							$line_array_total[$f->alias]+=$line_array[$f->name];
+						}
+					}
+				}
+
 				$this->array_display[] = $line_array;
 			}
 
@@ -888,8 +897,27 @@ class Dyntable_fields
 	function calcularray($line,$arrayfields){
 		$formule = $this->formule;
 		foreach ($arrayfields as $f){
-			$replace = '#' . $f->alias . '#';
-			$value = $line[$f->alias];
+			$replace = '#' . $f->name . '#';
+			$value = $line[$f->name];
+			if(empty($value)) $value = "0";
+			$formule = str_replace($replace, $value, $formule);
+		}
+		$error_level = error_reporting();
+		error_reporting(0);
+
+		$res = eval("return " . $formule . ";");
+		if($res == FALSE) $res = '';
+		error_reporting($error_level);
+		return $res;
+
+	}
+
+	function calculobject($line,$arrayfields){
+		$formule = $this->formule;
+		foreach ($arrayfields as $f){
+			$champs = $f->name;
+			$replace = '#' . $f->name . '#';
+			$value = $line->$champs;
 			if(empty($value)) $value = "0";
 			$formule = str_replace($replace, $value, $formule);
 		}
