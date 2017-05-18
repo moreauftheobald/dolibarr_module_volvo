@@ -365,7 +365,7 @@ $table->header();
 
 if ($action == 'set_date' && $element != 'none') {
 	$option = '?id=' . $id . '&element=' . $element . '&sortfield=' . $table->sortfield . '&sortorder=' . $table->sortorder;
-	$option.= '&offset=' . $table->offset . '&page=' . $table->page . $option;
+	$option.= '&offset=' . $table->offset . '&page=' . $table->page . $table->option;
 	$form = new Form($db);
 	$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . $option, "Valider et passer a l'étape suivante", '', 'confirm_set_date', array(array(
 			'type' => 'date',
