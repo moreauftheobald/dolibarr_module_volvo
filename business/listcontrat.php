@@ -378,6 +378,8 @@ if(!empty($formconfirm)) print $formconfirm;
 
 $table->draw_tool_bar();
 
+print $table->sql;
+
 $table->draw_table_head();
 
 $table->draw_data_table();
