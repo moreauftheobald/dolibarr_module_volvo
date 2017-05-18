@@ -376,6 +376,8 @@ if ($action == 'set_date' && $element != 'none') {
 
 if(!empty($formconfirm)) print $formconfirm;
 
+print $table->sql;
+
 $table->draw_tool_bar();
 
 $table->draw_table_head();
