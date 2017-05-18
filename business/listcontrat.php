@@ -329,7 +329,7 @@ $table->arrayfields[$field->name] = $field;
 
 $table->sql_from.= MAIN_DB_PREFIX . "contrat AS c ";
 $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "societe AS s ON s.rowid = c.fk_soc ";
-$table->sql_from.= "LEFT JOIN llx_element_contact AS elmc on elmc.element_id = c.rowid AND elmc.fk_c_type_contact = 11 ";
+$table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_contact AS elmc on elmc.element_id = c.rowid AND elmc.fk_c_type_contact = 11 ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "user AS u ON u.rowid = elmc.fk_socpeople ";
 $table->sql_from.= "INNER JOIN " . MAIN_DB_PREFIX . "contratdet AS cd ON c.rowid = cd.fk_contrat ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contrat_extrafields AS ef ON c.rowid = ef.fk_object";
