@@ -66,7 +66,7 @@ $table->select_fields_button = 1;
 $table->mode = 'sql_methode';
 $table->limit = $conf->liste_limit;
 $table->filter_clause = 'HAVING';
-$table->filter_mode = 'AND';
+$table->filter_mode = 'AND ';
 $table->filter_line = 1;
 
 $field= new Dyntable_fields($db);
