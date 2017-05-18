@@ -205,7 +205,7 @@ $tool->type = 'select_array';
 $tool->array = array(1=>'En attente envoi Client',2=>'chez le Client',3=>'En cours de signature Théobald',4=>'En attente envoi VTF',5=>'En cours d\'enregistrment VTF',6=>'Enregistré En attente retour VTF',7=>'Enregistré recu a traiter',8=>'Enregistré');
 $tool->title = '';
 $tool->html_name = 'search_statut';
-$tool->filter = 'statut';
+$tool->filter = 'fk_statut';
 $tool->use_empty = 1;
 $tools['1'] = $tool;
 $field->filter = $tools;
