@@ -996,7 +996,7 @@ class CommandeVolvo extends Commande
 					$res = $this->db->fetch_object($resql);
 					return $res->delai_cash;
 				}else{
-					return null;
+					return $sql;
 				}
 
 			}
