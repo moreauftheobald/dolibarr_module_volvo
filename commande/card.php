@@ -2306,7 +2306,7 @@ if ($action == 'create' && $user->rights->commande->creer)
 			}else{
 				$idsoc = $object->socid;
 			}
-			$soc = new societe();
+			$soc = new societe($db);
 			$soc->fetch($idsoc);
 			$topic .=' - client:' . $soc->name;
 			if(!empty($object->array_options['options_vin'])){
