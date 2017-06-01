@@ -983,7 +983,7 @@ class CommandeVolvo extends Commande
 				$sql .= " c.rowid AS comid,";
 				$sql .= " event6.datep AS dt_recep,";
 				$sql .= " event5.datep AS dt_pay,";
-				$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
+				$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash";
 				$sql .= " FROM " . MAIN_DB_PREFIX . "commande as c ";
 				$sql .= " LEFT JOIN llx_element_element as el ON el.fk_source = c.rowid AND sourcetype = 'commande' AND targettype = 'order_supplier'";
 				$sql .= " LEFT JOIN llx_commande_fournisseur as cf on cf.rowid = el.fk_target";
@@ -996,7 +996,7 @@ class CommandeVolvo extends Commande
 					$res = $this->db->fetch_object($resql);
 					return $res->delai_cash;
 				}else{
-					return $sql;
+					return null;
 				}
 
 			}
