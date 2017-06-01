@@ -2310,7 +2310,7 @@ if ($action == 'create' && $user->rights->commande->creer)
 			$soc->fetch($idsoc);
 			$topic .=' - client:' . $soc->name;
 			if(!empty($object->array_options['options_vin'])){
-				$topic .=' - Chassis:' . substr($object->array_options['options_vin'], 0,-7);
+				$topic .=' - Chassis:' . substr($object->array_options['options_vin'], -7);
 			}
 			if(!empty($object->array_options['options_immat'])){
 				$topic .=' - Immat:' . $object->array_options['options_immat'];
