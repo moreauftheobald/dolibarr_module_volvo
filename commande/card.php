@@ -1994,7 +1994,9 @@ if ($action == 'create' && $user->rights->commande->creer)
 
         // Total HT
 		print '<tr style="height:25px"><td>' . $langs->trans('AmountHT') . ': ';
-		print price($object->total_ht, 1, '', 1, - 1, - 1, $conf->currency) . '</td><td></td>';
+		print price($object->total_ht, 1, '', 1, - 1, - 1, $conf->currency) . '</td>';
+
+		print '<td>Délai Cash: ' . $object->get_cash() . ' Jour(s)</td>';
 		print '</tr>';
 
 		print '</table>';

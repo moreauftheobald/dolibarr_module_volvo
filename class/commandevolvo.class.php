@@ -978,4 +978,27 @@ class CommandeVolvo extends Commande
 			}
 
 
+			public function get_cash(){
+				$sql = "SELECT";
+				$sql .= " c.rowid AS comid,";
+				$sql .= " event6.datep AS dt_recep,";
+				$sql .= " event5.datep AS dt_pay,";
+				$sql .= " DATEDIFF(IFNULL(event5.datep,CURDATE()),event6.datep) AS delai_cash,";
+				$sql .= " FROM " . MAIN_DB_PREFIX . "commande as c ";
+				$sql .= " LEFT JOIN llx_element_element as el ON el.fk_source = c.rowid AND sourcetype = 'commande' AND targettype = 'order_supplier'";
+				$sql .= " LEFT JOIN llx_commande_fournisseur as cf on cf.rowid = el.fk_target";
+				$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event5 on event5.fk_element = c.rowid AND event5.elementtype = 'order ' AND event5.label LIKE '%Payée%'";
+				$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm as event6 on event6.fk_element = cf.rowid AND event6.elementtype = 'order_supplier' AND event6.label LIKE '%reçue%'";
+				$sql .= " WHERE c.rowid = " . $this->id . " AND cf.fk_soc = 32553";
+
+				$resql = $this->db->query($sql);
+				if($resql){
+					$res = $this->db->fetch_object($resql);
+					return $res->delai_cash;
+				}else{
+					return null;
+				}
+
+			}
+
 }
