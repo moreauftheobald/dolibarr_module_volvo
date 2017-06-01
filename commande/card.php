@@ -2300,11 +2300,30 @@ if ($action == 'create' && $user->rights->commande->creer)
 			$formmail->withto = GETPOST('sendto') ? GETPOST('sendto') : $liste;
 			$formmail->withtocc = $liste;
 			$formmail->withtoccc = $conf->global->MAIN_EMAIL_USECCC;
-			if (empty($object->ref_client)) {
-				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__');
-			} else if (! empty($object->ref_client)) {
-				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__ (__REFCLIENT__)');
+			$topic = 'Commande ' . $object->ref;
+			if(!empty($object->array_options['options_ctm'])){
+				$idsoc = $object->array_options['options_ctm'];
+			}else{
+				$idsoc = $object->socid;
 			}
+			$soc = new societe();
+			$soc->fetch($idsoc);
+			$topic .=' - client:' . $soc->name;
+			if(!empty($object->array_options['options_vin'])){
+				$topic .=' - Chassis:' . substr($object->array_options['options_vin'], 0,-7);
+			}
+			if(!empty($object->array_options['options_immat'])){
+				$topic .=' - Immat:' . $object->array_options['options_immat'];
+			}
+
+
+			$formmail->withtopic = $topic;
+
+//if (empty($object->ref_client)) {
+// 				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__');
+// 			} else if (! empty($object->ref_client)) {
+// 				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__ (__REFCLIENT__)');
+// 			}
 			$formmail->withfile = 2;
 			$formmail->withbody = 1;
 			$formmail->withdeliveryreceipt = 1;
