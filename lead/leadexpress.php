@@ -638,7 +638,7 @@ elseif ($action == 'edit') {
 		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorder.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande</a></div>';
 		}
 		if ($object->fk_c_status == 6 && $user->admin){
-			print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorderfromfdd.php?leadid='.$object->id,1) . '" class="butAction">Passer une commande en important une FDD</a></div>';
+			print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/orders/createorderfromfdd.php?leadid='.$object->id . '&step=1',1) . '" class="butAction">Passer une commande en important une FDD</a></div>';
 		}
 		print '<div class="inline-block divButAction"><a href="' . dol_buildpath('/volvo/event/createcalendar.php?leadid='.$object->id,1) . '" class="butAction">Ettablir le calendrier</a></div>';
 	}
