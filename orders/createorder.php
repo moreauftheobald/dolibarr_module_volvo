@@ -5,38 +5,21 @@ if (! $res)
 if (! $res)
 	die("Include of main fails");
 
-dol_include_once('/commande/class/commande.class.php');
-dol_include_once('/user/class/user.class.php');
-dol_include_once('/product/class/product.class.php');
-dol_include_once('/core/class/html.form.class.php');
-dol_include_once('/core/lib/files.lib.php');
-dol_include_once('/volvo/class/volvoimportfdd.class.php');
-dol_include_once('/volvo/class/html.formvolvo.class.php');
+require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
+require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
+require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/html.form.class.php';
 
 dol_include_once('/volvo/class/html.formvolvo.class.php');
 dol_include_once('/volvo/class/lead.extend.class.php');
 
 $form = new Form($db);
-$html_volvo = new FormVolvo($db);
+$formvolvo = new FormVolvo($db);
 
 $langs->load('orders');
-$langs->load("exports");
-$langs->load("errors");
-$langs->load('volvo@volvo');
 
 $leadid = GETPOST('leadid', 'int');
 $action = GETPOST('action', 'alpha');
-$datatoimport = GETPOST('datatoimport');
-$step = GETPOST('step', 'int');
-$action = GETPOST('action', 'alpha');
-$todo = GETPOST('todo', 'alpha');
-$confirm = GETPOST('confirm', 'alpha');
-$urlfile = GETPOST('urlfile');
-$filetoimport = GETPOST('filetoimport');
-
-$importobject = new VolvoImportfdd($db);
-
-$dir = $conf->volvo->dir_output . '/import/fdd';
 
 if ($action == 'creatorder') {
 
@@ -70,225 +53,194 @@ if ($action == 'creatorder') {
 
 }
 
-if ($step == 2 && $action == 'sendit') {
+$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
 
-	if (GETPOST('sendit') && ! empty($conf->global->MAIN_UPLOAD_DOC)) {
-		$nowyearmonth = dol_print_date(dol_now(), '%Y%m%d%H%M%S');
+$resql = $db->query($sql0);
+$obligatoire = array();
+if ($resql) {
+	while ( $obj = $db->fetch_object($resql) ) {
+		$obligatoire[] = $obj->rowid;
+	}
+} else {
+	setEventMessage($db->lasterror, 'errors');
+}
 
-		$fullpath = $dir . "/" . $nowyearmonth . '-' . $_FILES['userfile']['name'];
-		if (dol_move_uploaded_file($_FILES['userfile']['tmp_name'], $fullpath, 1) > 0) {
-			dol_syslog("File " . $fullpath . " was added for import", LOG_DEBUG);
+$sql1 = "SELECT c.rowid, c.label ";
+$sql1.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql1.= "WHERE fk_parent = ". $conf->global->VOLVO_INTERNE;
+$sql1.= " ORDER BY c.label";
+$resql = $db->query($sql1);
+$interne = array();
+if ($resql) {
+	while ( $obj = $db->fetch_object($resql) ) {
+		$sql10 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql10.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql10.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql10.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql10.= "WHERE p.tosell = 1 ";
+		$sql10.= "GROUP BY p.rowid ";
+		$sql10.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql10.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql10);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$interne[$obj->label] = $list;
 		} else {
-			$langs->load("errors");
-			setEventMessage($langs->trans("Missingfile"), 'errors');
-			setEventMessage($langs->trans("ErrorFailedToSaveFile"), 'errors');
+			setEventMessage($db->lasterror, 'errors');
 		}
 	}
+} else {
+	setEventMessage($db->lasterror, 'errors');
 }
 
-// Delete file
-if ($action == 'confirm_deletefile' && $confirm == 'yes') {
-	$langs->load("other");
-	$file = $dir . '/' . $urlfile; // Do not use urldecode here ($_GET and $_REQUEST are already decoded by PHP).
-	$ret = dol_delete_file($file);
-	if ($ret)
-		setEventMessage($langs->trans("FileWasRemoved", $urlfile));
-		else
-			setEventMessage($langs->trans("ErrorFailToDeleteFile", $urlfile), 'errors');
-			Header('Location: ' . $_SERVER["PHP_SELF"] . '?step=1');
-			exit();
-}
+$sql2 = "SELECT c.rowid, c.label ";
+$sql2.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql2.= "WHERE fk_parent = ". $conf->global->VOLVO_EXTERNE;
+$sql2.= " ORDER BY c.label";
+$resql = $db->query($sql2);
+$externe = array();
+if ($resql) {
+	while ( $obj = $db->fetch_object($resql) ) {
+		$sql20 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql20.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql20.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql20.= "WHERE p.tosell = 1 ";
+		$sql20.= "GROUP BY p.rowid ";
+		$sql20.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql20.= "ORDER BY p.label";
 
-if ($step == 3 && $action == 'choosetabs') {
-
-	$error = 0;
-
-	$tab_to_treat = GETPOST('tab_to_treat', 'alpha');
-
-	$importobject->initFile($dir . '/' . $filetoimport, 'om');
-
-	$result = $importobject->loadFile();
-	if ($result < 0) {
-		setEventMessages(null, $importobject->errors, 'errors');
-		$error ++;
-	}
-
-	if (empty($error)) {
-		$result = $importobject->setActivWorksheet($tab_to_treat);
-		if ($result < O) {
-			setEventMessages(null, $importobject->errors, 'errors');
-			$error ++;
+		$resql2 = $db->query($sql20);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$externe[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
 		}
 	}
-	if (empty($error)) {
-		$result = $importobject->loadData();
-		if ($result < O) {
-			setEventMessages(null, $importobject->errors, 'errors');
-			$error ++;
-		}
-	}
-
-	if (empty($error)) {
-		$step = '4';
-		$action = 'viewtempdata';
-	} else {
-		$action = 'choosetabs';
-	}
+} else {
+	setEventMessage($db->lasterror, 'errors');
 }
 
+$sql3 = "SELECT c.rowid, c.label ";
+$sql3.= "FROM " . MAIN_DB_PREFIX . "categorie AS c ";
+$sql3.= "WHERE fk_parent = ". $conf->global->VOLVO_DIVERS;
+$sql3.= " ORDER BY c.label";
+$resql = $db->query($sql3);
+$divers = array();
+if ($resql) {
+	while ( $obj = $db->fetch_object($resql) ) {
+		$sql30 = "SELECT DISTINCT p.rowid, p.label, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $obj->rowid .",1,0)) AS CATEG, ";
+		$sql30.= "MAX(IF(c.fk_categorie=" . $conf->global->VOLVO_OBLIGATOIRE .",1,0)) AS CATEG_EXC ";
+		$sql30.= "FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+		$sql30.= "WHERE p.tosell = 1 ";
+		$sql30.= "GROUP BY p.rowid ";
+		$sql30.= "HAVING CATEG = 1 AND CATEG_EXC !=1 ";
+		$sql30.= "ORDER BY p.label";
+
+		$resql2 = $db->query($sql30);
+		if ($resql2) {
+			$list=array();
+			while ( $obj2 = $db->fetch_object($resql2) ) {
+				$list[$obj2->rowid] = $obj2->label;
+			}
+			$divers[$obj->label] = $list;
+		} else {
+			setEventMessage($db->lasterror, 'errors');
+		}
+	}
+} else {
+	setEventMessage($db->lasterror, 'errors');
+}
+
+$internesection='';
+foreach ($interne as $key=>$array){
+	$internesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$internesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$internesection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$internesection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$internesection.= '</div>';
+	$internesection.= '<div id="' . $key . '" style="display:none;">';
+	$internesection.= $formvolvo->select_withcheckbox("interne" ,$array);
+	$internesection.= '</div>';
+
+}
+
+$externesection='';
+foreach ($externe as $key=>$array){
+	$externesection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$externesection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$externesection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$externesection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$externesection.= '</div>';
+	$externesection.= '<div id="' . $key . '" style="display:none;">';
+	$externesection.= $formvolvo->select_withcheckbox("externe" ,$array);
+	$externesection.= '</div>';
+
+}
+
+$diversection='';
+foreach ($divers as $key=>$array){
+	$diversection.= '<div class="cal_event cal_event_busy" align="left" id="fixe_'. $key . '" style="background:#223458; ';
+	$diversection.= 'background: -webkit-gradient(linear, left top, left bottom, from(#223458), to(#5174bc)); ';
+	$diversection.= 'border-radius:6px; margin-bottom: 3px;">';
+	$diversection.= '<a href="" onclick="javascript:visibilite(\'' . $key . '\'); return false;" >'. img_edit_add('+','') . '<h style="font-size: large; color: white;"><b>' . $key . ' </b></h></a>';
+	$diversection.= '</div>';
+	$diversection.= '<div id="' . $key . '" style="display:none;">';
+	$diversection.= $formvolvo->select_withcheckbox("divers",$array);
+	$diversection.= '</div>';
+}
 
 top_htmlhead('', '');
 $var = ! $var;
 
-if ($step == 1 || $step == 2) {
+print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
+print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+print '<input type="hidden" name="leadid" value="' . $leadid . '">';
+print '<input type="hidden" name="action" value="creatorder">';
+print '<input type="hidden" name="obligatoire" value="' . htmlspecialchars(json_encode($obligatoire)) . '">';
 
-	/*
-	 * Confirm delete file
-	 */
-	if ($action == 'delete') {
-		$ret = $form->form_confirm($_SERVER["PHP_SELF"] . '?urlfile=' . urlencode(GETPOST('urlfile')) . $param, $langs->trans('DeleteFile'), $langs->trans('ConfirmDeleteFile'), 'confirm_deletefile', '', 0, 1);
-	}
+print '<table class="border" width="100%">';
+print '<tr class="liste_titre">';
+print '<th align="center" colspan="3">' . "Transformation d'une affaire en commande</th>";
+print '</tr>';
+print '<tr ' . $bc[$var] . '>';
+print '<td colspan="3">';
+print '<table width="100%" class="nobordernopadding">';
+print '<tr ' . $bc[$var] . '>';
+print '<td align="center">' . $langs->trans('Prix de vente du véhicule') . ': <input type="text" name="prixvente" size="7" value=""/> €</td>';
+print '<td align="center">' . $langs->trans('commission Dealer sur fiche de décision') . ': <input type="text" name="commission" size="7" value=""/> €</td>';
+print '<td align="center">' . $langs->trans('Date de livraison souhaitée') . ': ' . $form->select_date('', 'datelivprev_', 0, 0, 1, '', 1, 1, 1, 0, '', '', '') . '</td>';
+print '</tr>';
+print '</table>';
+print '</td>';
+print '</tr>';
+print '<tr class="liste_titre">';
+print '<th align="center" width="33%">' . $langs->trans('Travaux internes') . '</th>';
+print '<th align="center" width="33%">' . $langs->trans('Travaux externes') . '</th>';
+print '<th align="center" width="33%">' . $langs->trans('Travaux divers') . '</th>';
+print '</tr>';
+print '<tr >';
+print '<td align="left" valign="top">' . $internesection . '</td>';
+print '<td align="left" valign="top">' . $externesection . '</td>';
+print '<td align="left" valign="top">' . $diversection . '</td>';
+print '</tr>';
 
-	print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" enctype="multipart/form-data" METHOD="POST">';
-	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
-	print '<input type="hidden" name="max_file_size" value="' . $conf->maxfilesize . '">';
-	print '<input type="hidden" value="2" name="step">';
-	print '<input type="hidden" value="sendit" name="action">';
-	print '<table class="noborder" width="100%" cellspacing="0" cellpadding="4">';
+print '</table>';
+print '<div class="tabsAction">';
+print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
+print '</div>';
+print '</form>';
 
-	$filetoimport = '';
-	$var = true;
-
-	print '<tr><td colspan="6">' . $langs->trans("ChooseFileToImport", img_picto('', 'filenew')) . '</td></tr>';
-	print '<tr><td colspan="6">' . $langs->trans("VolvoSampleFile") . ': <a href="sample/immat.xlsx">' . img_picto('', 'file') . '</a></td></tr>';
-
-	print '<tr class="liste_titre"><td colspan="6">' . $langs->trans("FileWithDataToImport") . '</td></tr>';
-
-	// Input file name box
-	$var = false;
-	print '<tr ' . $bc[$var] . '><td colspan="6">';
-	print '<input type="file"   name="userfile" size="20" maxlength="80"> &nbsp; &nbsp; ';
-	print '<input type="submit" class="button" value="' . $langs->trans("AddFile") . '" name="sendit">';
-
-	print "</tr>\n";
-
-	// Search available imports
-	$filearray = dol_dir_list($dir, 'files', 0, '', '', 'name', SORT_DESC);
-	if (count($filearray) > 0) {
-		// Search available files to import
-		$i = 0;
-		foreach ( $filearray as $key => $val ) {
-			$file = $val['name'];
-
-			// readdir return value in ISO and we want UTF8 in memory
-			if (! utf8_check($file))
-				$file = utf8_encode($file);
-
-				if (preg_match('/^\./', $file))
-					continue;
-
-					$modulepart = 'volvo';
-					$urlsource = $_SERVER["PHP_SELF"] . '?step=' . $step . $param . '&filetoimport=' . urlencode($filetoimport);
-					$relativepath = $file;
-					$var = ! $var;
-					print '<tr ' . $bc[$var] . '>';
-					print '<td width="16">' . img_mime($file) . '</td>';
-					print '<td>';
-					print '<a href="' . DOL_URL_ROOT . '/document.php?modulepart=' . $modulepart . '&file=' . urlencode('import/immat/' . $relativepath) . $param . '" target="_blank">';
-					print $file;
-					print '</a>';
-					print '</td>';
-					// Affiche taille fichier
-					print '<td align="right">' . dol_print_size(dol_filesize($dir . '/' . $file)) . '</td>';
-					// Affiche date fichier
-					print '<td align="right">' . dol_print_date(dol_filemtime($dir . '/' . $file), 'dayhour') . '</td>';
-					// Del button
-					print '<td align="right">';
-					if ($user->admin) {
-						print '<a href="' . $_SERVER['PHP_SELF'] . '?action=delete&step=2' . $param . '&urlfile=' . urlencode($relativepath);
-						print '">' . img_delete() . '</a>';
-					}
-					print '</td>';
-					// Action button
-					print '<td align="right">';
-					print '<a href="' . $_SERVER['PHP_SELF'] . '?step=3' . $param . '&filetoimport=' . urlencode($relativepath) . '">' . img_picto($langs->trans("NewImport"), 'filenew') . '</a>';
-					print '</td>';
-					print '</tr>';
-		}
-	}
-
-	print '</table></form>';
-}
-
-if ($step == 3) {
-
-	print_fiche_titre($langs->trans("InformationOnSourceFile") . ' : ' . $filetoimport);
-
-	print '<b>' . $langs->trans("VolvoChooseExcelTabs") . '</b>';
-
-	print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" METHOD="POST">';
-	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
-	print '<input type="hidden" value="3" name="step">';
-	print '<input type="hidden" value="' . $filetoimport . '" name="filetoimport">';
-	print '<input type="hidden" value="choosetabs" name="action">';
-	print '<table class="noborder" width="100%" cellspacing="0" cellpadding="4">';
-
-	print '<table width="100%" cellspacing="0" cellpadding="4" class="border">';
-	print '<tr>';
-
-	print '<td class="fieldrequired">' . $langs->trans('VolvoTabsAvailable') . '</td>';
-	print '<td>' . $html_volvo->select_tabs($dir . '/' . $filetoimport, 'tab_to_treat', empty($tab_to_treat) ? 'A1' : $tab_to_treat) . '</td>';
-	print '</tr>';
-
-	print '</table>';
-
-	print '<table witdh="100%"><tr>';
-	print '<td style="text-align:center"><input type="submit" class="button" value="' . $langs->trans("VolvoStartLoadFile") . '" name="sendit"></td>';
-	print '</tr></table>';
-	print '</form>';
-
-}
-
-if ($step == 4) {
-
-	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
-	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
-	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
-	print '<input type="hidden" name="action" value="creatorder">';
-	print '<input type="hidden" name="obligatoire" value="' . htmlspecialchars(json_encode($obligatoire)) . '">';
-
-	print '<table class="border" width="100%">';
-	print '<tr class="liste_titre">';
-	print '<th align="center" colspan="3">' . "Transformation d'une affaire en commande</th>";
-	print '</tr>';
-	print '<tr ' . $bc[$var] . '>';
-	print '<td colspan="3">';
-	print '<table width="100%" class="nobordernopadding">';
-	print '<tr ' . $bc[$var] . '>';
-	print '<td align="center">' . $langs->trans('Prix de vente du véhicule') . ': <input type="text" name="prixvente" size="7" value=""/> €</td>';
-	print '<td align="center">' . $langs->trans('commission Dealer sur fiche de décision') . ': <input type="text" name="commission" size="7" value=""/> €</td>';
-	print '<td align="center">' . $langs->trans('Date de livraison souhaitée') . ': ' . $form->select_date('', 'datelivprev_', 0, 0, 1, '', 1, 1, 1, 0, '', '', '') . '</td>';
-	print '</tr>';
-	print '</table>';
-	print '</td>';
-	print '</tr>';
-	print '<tr class="liste_titre">';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux internes') . '</th>';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux externes') . '</th>';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux divers') . '</th>';
-	print '</tr>';
-	print '<tr >';
-	print '<td align="left" valign="top">' . $internesection . '</td>';
-	print '<td align="left" valign="top">' . $externesection . '</td>';
-	print '<td align="left" valign="top">' . $diversection . '</td>';
-	print '</tr>';
-
-	print '</table>';
-	print '<div class="tabsAction">';
-	print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
-	print '</div>';
-	print '</form>';
-}
 
 ?>
 <script type="text/javascript" language="javascript">
