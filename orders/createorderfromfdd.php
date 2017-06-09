@@ -370,15 +370,16 @@ if ($step == 5){
 	print '<input type="hidden" value="6" name="step">';
 	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
 	print '<table class="border" width="100%">';
-	print '<tr class="liste_titre">';
-	print '<td class="liste_titre" colspan="5"> Travaux Interne </td>';
-	print '</tr>';
+
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre">Article</td>';
 	print '<td class="liste_titre">Désignation FDD</td>';
 	print '<td class="liste_titre">Prix de vente</td>';
 	print '<td class="liste_titre">Prix d\'achat</td>';
 	print '<td class="liste_titre">Commentaire</td>';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=6;$i++){
 		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
@@ -390,6 +391,53 @@ if ($step == 5){
 			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
 			print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value="' . price($targetInfoArray['interne' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="com_interne_' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
+			print '</tr>';
+		}
+	}
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '</tr>';
+	print '</tr>';
+	for ($i =1; $i<=3;$i++){
+		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
+			print '<tr>';
+			print '<td>';
+			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
+			print '</td>';
+			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
+			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
+			print '<td><input type="text" name="pa_externe_' . $i . '" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="com_externe_' . $i . '" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
+			print '</tr>';
+		}
+	}
+	for ($i =7; $i<=8;$i++){
+		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
+			print '<tr>';
+			print '<td>';
+			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
+			print '</td>';
+			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
+			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
+			print '<td><input type="text" name="pa_externe_' . $i . '" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="com_externe_' . $i . '" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
+			print '</tr>';
+		}
+	}
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '</tr>';
+	print '</tr>';
+	for ($i =1; $i<=8;$i++){
+		if(!empty($targetInfoArray['local' .$i . '_label']['value']) && !empty($targetInfoArray['local' .$i]['value'])){
+			print '<tr>';
+			print '<td>';
+			$form->select_produits(0,"local_". $i,'','','',1,2,'',0,array(),'');
+			print '</td>';
+			print '<td>' . $targetInfoArray['local' .$i . '_label']['value'] . '</td>';
+			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €</td>';
+			print '<td><input type="text" name="pa_local_' . $i . '" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="com_local_' . $i . '" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
