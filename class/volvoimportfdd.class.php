@@ -407,8 +407,8 @@ class VolvoImportfdd extends VolvoImport
 		);
 
 		$this->targetInfoArray['VCM_label'] = array(
-				'cell' => 'Combo!R75',
-				'type' => 'val',
+				'cell' => 'Combo!R77',
+				'type' => 'calc',
 				'oblig' => false,
 		);
 
@@ -437,6 +437,8 @@ class VolvoImportfdd extends VolvoImport
 	 */
 	public function loadData() {
 		$error = 0;
+
+		$this->objWorksheet->getCell('Conbo!R77')->setValue('=RECHERCHEV(R75+1;P6:S42;3;FAUX)');
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 
