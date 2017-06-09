@@ -407,7 +407,7 @@ class VolvoImportfdd extends VolvoImport
 		);
 
 		$this->targetInfoArray['VCM_label'] = array(
-				'cell' => 'Combo!R77',
+				'cell' => 'Combo!R75',
 				'type' => 'calcr',
 				'oblig' => false,
 		);
@@ -438,7 +438,7 @@ class VolvoImportfdd extends VolvoImport
 	public function loadData() {
 		$error = 0;
 
-		$this->objWorksheet->getCell('Combo!R77')->setValue('=VLOOKUP(R75+1;P6:S42;3;FALSE)');
+		$soltrs = $this->objWorksheet->rangeToArray('Combo!R7:R16','',false,false,false);
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 
@@ -448,7 +448,7 @@ class VolvoImportfdd extends VolvoImport
 			}elseif($info['type'] == 'val'){
 				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getValue();
 			}elseif($info['type'] == 'calcr'){
-				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getCalculatedValue();
+				$this->targetInfoArray[$key]['value']= $soltrs[$this->objWorksheet->getCell($info['cell'])->getValue()];
 			}
 		}
 
