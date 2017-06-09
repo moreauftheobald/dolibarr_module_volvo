@@ -115,13 +115,13 @@ if ($step == 3 && $action == 'choosetabs') {
 			$error ++;
 		}
 	}
-	if (empty($error)) {
-		$result = $importobject->checkTabAndCell($tab_to_treat, $startcell);
-		if ($result < O) {
-			setEventMessages(null, $importobject->errors, 'errors');
-			$error ++;
-		}
-	}
+// 	if (empty($error)) {
+// 		$result = $importobject->checkTabAndCell($tab_to_treat, $startcell);
+// 		if ($result < O) {
+// 			setEventMessages(null, $importobject->errors, 'errors');
+// 			$error ++;
+// 		}
+// 	}
 
 	if (empty($error)) {
 		$result = $importobject->loadData();
