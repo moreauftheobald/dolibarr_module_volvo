@@ -60,231 +60,277 @@ class VolvoImportfdd extends VolvoImport
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'M11',
+				'type' => 'val',
 				'info' => 'cdb'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'M21',
+				'type' => 'val',
 				'info' => 'vss'
 		);
 
 		$this->targetInfoArray[] = array(
-				'cell' => 'Combo!E85',
+				'cell' => 'B32',
+				'type' => 'calc',
 				'info' => 'modele'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G56',
+				'type' => 'calc',
 				'info' => 'price'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G58',
+				'type' => 'calc',
 				'info' => 'VNC'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G60',
+				'type' => 'calc',
 				'info' => 'comission'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G71',
+				'type' => 'calc',
 				'info' => 'flotte'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G72',
+				'type' => 'calc',
 				'info' => 'VNAC'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N33',
+				'type' => 'val',
 				'info' => 'interne1'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N34',
+				'type' => 'val',
 				'info' => 'interne2'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N35',
+				'type' => 'val',
 				'info' => 'interne3'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N36',
+				'type' => 'val',
 				'info' => 'interne4'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N37',
+				'type' => 'val',
 				'info' => 'interne5'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N38',
+				'type' => 'val',
 				'info' => 'interne6'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I33',
+				'type' => 'val',
 				'info' => 'interne1_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I34',
+				'type' => 'val',
 				'info' => 'interne2_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I35',
+				'type' => 'val',
 				'info' => 'interne3_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I36',
+				'type' => 'val',
 				'info' => 'interne4_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I37',
+				'type' => 'val',
 				'info' => 'interne5_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I38',
+				'type' => 'val',
 				'info' => 'interne6_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N41',
+				'type' => 'val',
 				'info' => 'carrosserie1'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N42',
+				'type' => 'val',
 				'info' => 'carrosserie2'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I41',
+				'type' => 'val',
 				'info' => 'carrosserie1_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I42',
+				'type' => 'val',
 				'info' => 'carrosserie2_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N44',
+				'type' => 'val',
 				'info' => 'externe1'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N45',
+				'type' => 'val',
 				'info' => 'externe2'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N46',
+				'type' => 'val',
 				'info' => 'externe3'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I44',
+				'type' => 'val',
 				'info' => 'externe1_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I45',
+				'type' => 'val',
 				'info' => 'externe2_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I46',
+				'type' => 'val',
 				'info' => 'externe3_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N48',
+				'type' => 'val',
 				'info' => 'local1'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N49',
+				'type' => 'val',
 				'info' => 'local2'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N50',
+				'type' => 'val',
 				'info' => 'local3'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N51',
+				'type' => 'val',
 				'info' => 'local4'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N52',
+				'type' => 'val',
 				'info' => 'local5'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N53',
+				'type' => 'val',
 				'info' => 'local6'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N54',
+				'type' => 'val',
 				'info' => 'local7'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'N55',
+				'type' => 'val',
 				'info' => 'local8'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I48',
+				'type' => 'val',
 				'info' => 'local1_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I49',
+				'type' => 'val',
 				'info' => 'local2_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I50',
+				'type' => 'val',
 				'info' => 'local3_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I51',
+				'type' => 'val',
 				'info' => 'local4_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I52',
+				'type' => 'val',
 				'info' => 'local5_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I53',
+				'type' => 'val',
 				'info' => 'local6_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I54',
+				'type' => 'val',
 				'info' => 'local7_label'
 		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'I55',
+				'type' => 'val',
 				'info' => 'local8_label'
 		);
 	}
@@ -300,7 +346,11 @@ class VolvoImportfdd extends VolvoImport
 		$arrayresult = array();
 		$this->objWorksheet->setTitle('feuil1',true);
 		foreach ($this->targetInfoArray as $info){
-			$arrayresult[]= $this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue();
+			if($info['type'] == 'calc'){
+				$arrayresult[$info['info']]= $this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue();
+			}elseif($info['type'] == 'val'){
+				$arrayresult[$info['info']]= $this->objWorksheet->getCell($info['cell'])->getValue();
+			}
 		}
 
 		var_dump($arrayresult);
