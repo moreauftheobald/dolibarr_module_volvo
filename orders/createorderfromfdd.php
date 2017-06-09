@@ -19,6 +19,8 @@ dol_include_once('/volvo/class/lead.extend.class.php');
 $form = new Form($db);
 $html_volvo = new FormVolvo($db);
 
+ini_set('memory_limit', '-1');
+
 $langs->load('orders');
 $langs->load("exports");
 $langs->load("errors");
