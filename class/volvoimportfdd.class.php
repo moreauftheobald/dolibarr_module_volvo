@@ -300,7 +300,7 @@ class VolvoImportfdd extends VolvoImport
 		$arrayresult = array();
 		$this->objWorksheet->setTitle('feuil1',true);
 		foreach ($this->targetInfoArray as $info){
-			$arrayresult[]= $this->objWorksheet->getCell('Combo!E85')->getFormattedValue();
+			$arrayresult[]= $this->objWorksheet->getCell('B31')->getFormattedValue();
 		}
 
 		var_dump($arrayresult);
