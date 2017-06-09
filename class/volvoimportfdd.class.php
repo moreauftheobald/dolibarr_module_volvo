@@ -77,8 +77,8 @@ class VolvoImportfdd extends VolvoImport
 		);
 
 		$this->targetInfoArray['modele'] = array(
-				'cell' => 'B32',
-				'type' => 'calc',
+				'cell' => 'Combo!R75',
+				'type' => 'val',
 				'oblig' => true,
 		);
 
@@ -438,7 +438,7 @@ class VolvoImportfdd extends VolvoImport
 	public function loadData() {
 		$error = 0;
 
-		$soltrs = $this->objWorksheet->rangeToArray('Combo!R7:R16','',false,false,false);
+		$this->objWorksheet->getCell('A1')->setCellValue("=25");
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 
@@ -448,7 +448,7 @@ class VolvoImportfdd extends VolvoImport
 			}elseif($info['type'] == 'val'){
 				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getValue();
 			}elseif($info['type'] == 'calcr'){
-				$this->targetInfoArray[$key]['value']= $soltrs[$this->objWorksheet->getCell($info['cell'])->getValue()];
+				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['A1'])->getValue();
 			}
 		}
 
