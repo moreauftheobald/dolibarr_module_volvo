@@ -408,7 +408,7 @@ class VolvoImportfdd extends VolvoImport
 
 		$this->targetInfoArray['VCM_label'] = array(
 				'cell' => 'Combo!R77',
-				'type' => 'calc',
+				'type' => 'calcr',
 				'oblig' => false,
 		);
 
@@ -447,6 +447,8 @@ class VolvoImportfdd extends VolvoImport
 				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue();
 			}elseif($info['type'] == 'val'){
 				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getValue();
+			}elseif($info['type'] == 'calcr'){
+				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getCalculatedValue();
 			}
 		}
 
