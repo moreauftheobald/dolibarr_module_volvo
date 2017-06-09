@@ -40,7 +40,7 @@ $importobject = new VolvoImportfdd($db);
 
 $dir = $conf->volvo->dir_output . '/import/fdd';
 
-if ($step == 6) {
+if ($step == 7) {
 
 	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
@@ -368,22 +368,24 @@ if ($step == 5){
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
 	print '<input type="hidden" value="6" name="step">';
-	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
+	print '<input type="hidden" name="targetInfoArray" value="' . htmlspecialchars(json_encode($targetInfoArray)) . '">';
 	print '<table class="border" width="100%">';
 
 	print '<tr class="liste_titre">';
+	print '<td class="liste_titre">Ne pas traiter</td>';
 	print '<td class="liste_titre">Article</td>';
 	print '<td class="liste_titre">Désignation FDD</td>';
 	print '<td class="liste_titre">Prix de vente</td>';
 	print '<td class="liste_titre">Prix d\'achat</td>';
 	print '<td class="liste_titre">Commentaire</td>';
 	print '<tr class="liste_titre">';
-	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '<td class="liste_titre" colspan="6" align="center"> Travaux Interne </td>';
 	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=6;$i++){
 		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
 			print '<tr>';
+			print '<td><input class="flat" type="checkbox" align="left" name="npt_interne' . $i . '"/>' ;
 			print '<td>';
 			$form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
@@ -395,12 +397,13 @@ if ($step == 5){
 		}
 	}
 	print '<tr class="liste_titre">';
-	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '<td class="liste_titre" colspan="6" align="center"> Travaux Externe </td>';
 	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=3;$i++){
 		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
 			print '<tr>';
+			print '<td><input class="flat" type="checkbox" align="left" name="npt_externe' . $i . '"/>' ;
 			print '<td>';
 			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
@@ -414,6 +417,7 @@ if ($step == 5){
 	for ($i =7; $i<=8;$i++){
 		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
 			print '<tr>';
+			print '<td><input class="flat" type="checkbox" align="left" name="npt_externe' . $i . '"/>' ;
 			print '<td>';
 			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
@@ -425,12 +429,13 @@ if ($step == 5){
 		}
 	}
 	print '<tr class="liste_titre">';
-	print '<td class="liste_titre" colspan="5" align="center"> Travaux Interne </td>';
+	print '<td class="liste_titre" colspan="6" align="center"> Couts Locaux </td>';
 	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=8;$i++){
 		if(!empty($targetInfoArray['local' .$i . '_label']['value']) && !empty($targetInfoArray['local' .$i]['value'])){
 			print '<tr>';
+			print '<td><input class="flat" type="checkbox" align="left" name="npt_local' . $i . '"/>' ;
 			print '<td>';
 			$form->select_produits(0,"local_". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
