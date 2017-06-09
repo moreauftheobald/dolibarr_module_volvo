@@ -411,6 +411,24 @@ class VolvoImportfdd extends VolvoImport
 				'type' => 'calc',
 				'oblig' => false,
 		);
+
+		$this->targetInfoArray['rachat'] = array(
+				'cell' => 'J67',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['offre'] = array(
+				'cell' => 'L67',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['surres'] = array(
+				'cell' => 'N67',
+				'type' => 'calc',
+				'oblig' => false,
+		);
 	}
 
 	/**
