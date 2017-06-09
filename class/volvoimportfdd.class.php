@@ -68,10 +68,10 @@ class VolvoImportfdd extends VolvoImport
 				'info' => 'vss'
 		);
 
-// 		$this->targetInfoArray[] = array(
-// 				'cell' => 'B32',
-// 				'info' => 'modele'
-// 		);
+		$this->targetInfoArray[] = array(
+				'cell' => 'Combo!E85',
+				'info' => 'modele'
+		);
 
 		$this->targetInfoArray[] = array(
 				'cell' => 'G56',
