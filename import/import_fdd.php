@@ -47,7 +47,7 @@ $offset = $limit * $page;
 
 $importobject = new VolvoImportom($db);
 
-$dir = $conf->volvo->dir_output . '/import/immat';
+$dir = $conf->volvo->dir_output . '/import/fdd';
 
 if($todo == 'set_numon'){
 	foreach ( $_POST as $key => $data ) {
