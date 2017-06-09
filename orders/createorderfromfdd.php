@@ -251,39 +251,30 @@ if ($step == 3) {
 
 if ($step == 4) {
 
+	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
+
+	$resql = $db->query($sql0);
+	$obligatoire = array();
+	if ($resql) {
+		while ( $obj = $db->fetch_object($resql) ) {
+			$obligatoire[] = $obj->rowid;
+		}
+	} else {
+		setEventMessage($db->lasterror, 'errors');
+	}
+
 	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
-	print '<input type="hidden" name="action" value="creatorder">';
+	print '<input type="hidden" value="5" name="step">';
+	print '<input type="hidden" value="' . $filetoimport . '" name="filetoimport">';
+	print '<input type="hidden" value="checkdata" name="action">';
+	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
 	print '<input type="hidden" name="obligatoire" value="' . htmlspecialchars(json_encode($obligatoire)) . '">';
 
-	print '<table class="border" width="100%">';
-	print '<tr class="liste_titre">';
-	print '<th align="center" colspan="3">' . "Transformation d'une affaire en commande</th>";
-	print '</tr>';
-	print '<tr ' . $bc[$var] . '>';
-	print '<td colspan="3">';
-	print '<table width="100%" class="nobordernopadding">';
-	print '<tr ' . $bc[$var] . '>';
-	print '<td align="center">' . $langs->trans('Prix de vente du véhicule') . ': <input type="text" name="prixvente" size="7" value=""/> €</td>';
-	print '<td align="center">' . $langs->trans('commission Dealer sur fiche de décision') . ': <input type="text" name="commission" size="7" value=""/> €</td>';
-	print '<td align="center">' . $langs->trans('Date de livraison souhaitée') . ': ' . $form->select_date('', 'datelivprev_', 0, 0, 1, '', 1, 1, 1, 0, '', '', '') . '</td>';
-	print '</tr>';
-	print '</table>';
-	print '</td>';
-	print '</tr>';
-	print '<tr class="liste_titre">';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux internes') . '</th>';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux externes') . '</th>';
-	print '<th align="center" width="33%">' . $langs->trans('Travaux divers') . '</th>';
-	print '</tr>';
-	print '<tr >';
-	print '<td align="left" valign="top">' . $internesection . '</td>';
-	print '<td align="left" valign="top">' . $externesection . '</td>';
-	print '<td align="left" valign="top">' . $diversection . '</td>';
-	print '</tr>';
+	var_dump($importobject->targetInfoArray);
 
-	print '</table>';
 	print '<div class="tabsAction">';
 	print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
 	print '</div>';
