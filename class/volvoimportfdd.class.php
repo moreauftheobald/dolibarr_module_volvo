@@ -184,25 +184,25 @@ class VolvoImportfdd extends VolvoImport
 				'oblig' => false,
 		);
 
-		$this->targetInfoArray['carrosserie1'] = array(
+		$this->targetInfoArray['externe7'] = array(
 				'cell' => 'N41',
 				'type' => 'val',
 				'oblig' => false,
 		);
 
-		$this->targetInfoArray['carrosserie2'] = array(
+		$this->targetInfoArray['externe8'] = array(
 				'cell' => 'N42',
 				'type' => 'val',
 				'oblig' => false,
 		);
 
-		$this->targetInfoArray['carrosserie1_label'] = array(
+		$this->targetInfoArray['externe7_label'] = array(
 				'cell' => 'I41',
 				'type' => 'val',
 				'oblig' => false,
 		);
 
-		$this->targetInfoArray['carrosserie2_label'] = array(
+		$this->targetInfoArray['externe8_label'] = array(
 				'cell' => 'I42',
 				'type' => 'val',
 				'oblig' => false,

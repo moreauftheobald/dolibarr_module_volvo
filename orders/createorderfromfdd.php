@@ -330,6 +330,9 @@ if ($step == 4) {
 	print '<td>' . $importobject->targetInfoArray['VCM_label']['value'] . '</td>';
 	print '<td>' . $importobject->targetInfoArray['VCM']['value'] . '</td>';
 	print '</tr>';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="6">Surrestimation VO</td>';
+	print '</tr>';
 	print '<tr>';
 	print '<td>Offre VO Volvo</td>';
 	print '<td>' . $importobject->targetInfoArray['rachat']['value'] . '</td>';
@@ -338,6 +341,21 @@ if ($step == 4) {
 	print '<td>surrestimation</td>';
 	print '<td>' . $importobject->targetInfoArray['surres']['value'] . '</td>';
 	print '</tr>';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="2">Travaux Internes</td>';
+	print '<td class="liste_titre" colspan="2">Travaux externes</td>';
+	print '<td class="liste_titre" colspan="2">Couts Locaux</td>';
+	print '</tr>';
+	for ($i =1; $i<=8;$i++){
+		print '<tr>';
+		print '<td>' . $importobject->targetInfoArray['interne' . $i  . '_label']['value'] . '</td>';
+		print '<td>' . $importobject->targetInfoArray['interne' . $i]['value'] . '</td>';
+		print '<td>' . $importobject->targetInfoArray['externe' . $i  . '_label']['value'] . '</td>';
+		print '<td>' . $importobject->targetInfoArray['externe' . $i]['value'] . '</td>';
+		print '<td>' . $importobject->targetInfoArray['local' . $i  . '_label']['value'] . '</td>';
+		print '<td>' . $importobject->targetInfoArray['local' . $i]['value'] . '</td>';
+		print '</tr>';
+	}
 	print '</table>';
 	print '<div class="tabsAction">';
 	print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
