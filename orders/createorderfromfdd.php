@@ -40,7 +40,20 @@ $importobject = new VolvoImportfdd($db);
 
 $dir = $conf->volvo->dir_output . '/import/fdd';
 
-if ($action == 'creatorder') {
+if ($step == 6) {
+
+	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
+	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
+
+	$resql = $db->query($sql0);
+	$obligatoire = array();
+	if ($resql) {
+		while ( $obj = $db->fetch_object($resql) ) {
+			$obligatoire[] = $obj->rowid;
+		}
+	} else {
+		setEventMessage($db->lasterror, 'errors');
+	}
 
 	$lead = new Leadext($db);
 	$lead->fetch($leadid);
@@ -51,7 +64,7 @@ if ($action == 'creatorder') {
 	$lead->interne = GETPOST('interne', 'array');
 	$lead->externe = GETPOST('externe', 'array');
 	$lead->divers = GETPOST('divers', 'array');
-	$lead->obligatoire = json_decode(GETPOST('obligatoire'), true);
+	$lead->obligatoire = $obligatoire;
 	$res = $lead->createcmd();
 	if ($res<0){
 		setEventMessage($lead->errors,'errors');
@@ -253,18 +266,7 @@ if ($step == 3) {
 
 if ($step == 4) {
 
-	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
-	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
 
-	$resql = $db->query($sql0);
-	$obligatoire = array();
-	if ($resql) {
-		while ( $obj = $db->fetch_object($resql) ) {
-			$obligatoire[] = $obj->rowid;
-		}
-	} else {
-		setEventMessage($db->lasterror, 'errors');
-	}
 
 	print_fiche_titre("Revue et validation des données importée");
 
@@ -272,10 +274,7 @@ if ($step == 4) {
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
 	print '<input type="hidden" value="5" name="step">';
-	print '<input type="hidden" value="' . $filetoimport . '" name="filetoimport">';
-	print '<input type="hidden" value="checkdata" name="action">';
-	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
-	print '<input type="hidden" name="obligatoire" value="' . htmlspecialchars(json_encode($obligatoire)) . '">';
+	print '<input type="hidden" name="targetInfoArray" value="' . htmlspecialchars(json_encode($importobject->targetInfoArray)) . '">';
 	print '<table class="border" width="100%">';
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre" colspan="2">Données générale</td>';
@@ -358,7 +357,40 @@ if ($step == 4) {
 	}
 	print '</table>';
 	print '<div class="tabsAction">';
-	print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
+	print '<input type="submit" align="center" class="button" value="Continuer" name="save" id="save"/>';
+	print '</div>';
+	print '</form>';
+}
+if ($step == 5){
+	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
+	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
+	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
+	print '<input type="hidden" value="6" name="step">';
+	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
+	print '<table class="border" width="100%">';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="5"> Travaux Interne </td>';
+	print '</tr>';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre">Article</td>';
+	print '<td class="liste_titre">Désignation FDD</td>';
+	print '<td class="liste_titre">Prix de vente</td>';
+	print '<td class="liste_titre">Prix d\'achat</td>';
+	print '<td class="liste_titre">Commentaire</td>';
+	print '</tr>';
+	for ($i =1; $i<=6;$i++){
+		print '<tr>';
+		print '<td>' . $form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'') . '</td>';
+		print '<td>' . $targetInfoArray['interne' .$i . '_label'] . '</td>';
+		print '<td>' . price($targetInfoArray['interne' .$i]) . ' €</td>';
+		print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value=""/> €</td>';
+		print '<td><input type="text" name="com_interne_' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label'] . '"/></td>';
+		print '</tr>';
+	}
+	print '</table>';
+	print '<div class="tabsAction">';
+	print '<input type="submit" align="center" class="button" value="Créer la commande" name="save" id="save"/>';
 	print '</div>';
 	print '</form>';
 }
