@@ -347,7 +347,7 @@ class VolvoImportfdd extends VolvoImport
 		$this->objWorksheet->setTitle('feuil1',true);
 		foreach ($this->targetInfoArray as $info){
 			if($info['type'] == 'calc'){
-				$arrayresult[$info['info']]= $this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue();
+				$arrayresult[$info['info']]= $this->objWorksheet->getCell($info['cell'])->getCalculatedValue();
 			}elseif($info['type'] == 'val'){
 				$arrayresult[$info['info']]= $this->objWorksheet->getCell($info['cell'])->getValue();
 			}
