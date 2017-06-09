@@ -363,6 +363,7 @@ if ($step == 4) {
 }
 if ($step == 5){
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
+	var_dump($targetInfoArray);
 	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
