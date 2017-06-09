@@ -381,15 +381,17 @@ if ($step == 5){
 	print '<td class="liste_titre">Commentaire</td>';
 	print '</tr>';
 	for ($i =1; $i<=6;$i++){
-		print '<tr>';
-		print '<td>';
-		$form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'');
-		print '</td>';
-		print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
-		print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
-		print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value=""/> €</td>';
-		print '<td><input type="text" name="com_interne_' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
-		print '</tr>';
+		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
+			print '<tr>';
+			print '<td>';
+			$form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'');
+			print '</td>';
+			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
+			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
+			print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value=""/> €</td>';
+			print '<td><input type="text" name="com_interne_' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
+			print '</tr>';
+		}
 	}
 	print '</table>';
 	print '<div class="tabsAction">';
