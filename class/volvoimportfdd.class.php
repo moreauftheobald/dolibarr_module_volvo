@@ -77,7 +77,7 @@ class VolvoImportfdd extends VolvoImport
 		);
 
 		$this->targetInfoArray['modele'] = array(
-				'cell' => 'Combo!R75',
+				'cell' => 'Combo!E85',
 				'type' => 'val',
 				'oblig' => true,
 		);
