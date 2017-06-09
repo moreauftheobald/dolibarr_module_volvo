@@ -381,7 +381,7 @@ if ($step == 5){
 	print '<td class="liste_titre">Commentaire</td>';
 	print '</tr>';
 	for ($i =1; $i<=6;$i++){
-		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
+		if(!empty(trim($targetInfoArray['interne' .$i . '_label']['value'])) && !empty(trim($targetInfoArray['interne' .$i]['value']))){
 			print '<tr>';
 			print '<td>';
 			$form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'');
