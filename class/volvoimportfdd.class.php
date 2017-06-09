@@ -444,11 +444,11 @@ class VolvoImportfdd extends VolvoImport
 
 		foreach ($this->targetInfoArray as $key => $info){
 			if($info['type'] == 'calc'){
-				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue();
+				$this->targetInfoArray[$key]['value']= trim($this->objWorksheet->getCell($info['cell'])->getOldCalculatedValue());
 			}elseif($info['type'] == 'val'){
-				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getValue();
+				$this->targetInfoArray[$key]['value']= trim($this->objWorksheet->getCell($info['cell'])->getValue());
 			}elseif($info['type'] == 'calcr'){
-				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell('A1')->getCalculatedValue();
+				$this->targetInfoArray[$key]['value']= trim($this->objWorksheet->getCell('A1')->getCalculatedValue());
 			}
 		}
 
