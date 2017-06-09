@@ -59,105 +59,234 @@ class VolvoImportom extends VolvoImport
 		$this->db = $db;
 
 		$this->targetInfoArray[] = array(
-				'column' => 'numom',
-				'type' => 'text',
-				'columntrans' => $langs->trans('Numéro d\'OM'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
-				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Numéro de commande',
-				'editable' => 0,
-				'noinsert' => 1,
-				'isnumom' =>1,
-				'ForCustomerStep' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_blockupdate',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de bocage de modification'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
-				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Ultime date de modification',
-				'editable' => 0,
-				'noinsert' => 1
-
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_lim_annul',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date limite d\'annulation'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
-				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Ultime date d\'annulation',
-				'editable' => 0,
-				'noinsert' => 1
-
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'date_livraison',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de livraison demandée'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur',
-				'tabletrans' => $langs->trans('Commande Fournisseur'),
-				'filecolumntitle' => 'CDD',
-				'editable' => 0,
-				'noinsert' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_liv_maj',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de livraison Mise a jour'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
-				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Date de livraison mise à jour',
-				'editable' => 0,
-				'noinsert' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_fact',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de facturation'),
-				'table' => MAIN_DB_PREFIX . 'commande',
-				'tabletrans' => $langs->trans('Commande Client'),
-				'filecolumntitle' => 'Date de facturation (niveau final)',
-				'editable' => 0,
-				'noinsert' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'vin',
-				'type' => 'text',
-				'columntrans' => $langs->trans('VIN'),
-				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
-				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'VIN',
-				'editable' => 0,
-				'noinsert' => 1,
-				'isvin' =>1,
-				'ForCustomerStep' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'cust_name',
-				'type' => 'text',
-				'columntrans' => 'Client',
-				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
-				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Client final',
-				'editable' => 0,
-				'noinsert' => 1,
-				'ForCustomerStep' => 1,
-				'iscustname' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'model',
-				'type' => 'text',
-				'columntrans' => 'Modele',
-				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
-				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Modèle',
-				'editable' => 0,
-				'noinsert' => 1,
-				'ForCustomerStep' => 1
+				'cell' => 'M11',
+				'info' => 'cdb'
 		);
 
+		$this->targetInfoArray[] = array(
+				'cell' => 'M21',
+				'info' => 'vss'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'B32',
+				'info' => 'modele'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'G56',
+				'info' => 'price'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'G58',
+				'info' => 'VNC'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'G60',
+				'info' => 'comission'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'G71',
+				'info' => 'flotte'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'G72',
+				'info' => 'VNAC'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N33',
+				'info' => 'interne1'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N34',
+				'info' => 'interne2'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N35',
+				'info' => 'interne3'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N36',
+				'info' => 'interne4'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N37',
+				'info' => 'interne5'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N38',
+				'info' => 'interne6'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I33',
+				'info' => 'interne1_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I34',
+				'info' => 'interne2_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I35',
+				'info' => 'interne3_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I36',
+				'info' => 'interne4_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I37',
+				'info' => 'interne5_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I38',
+				'info' => 'interne6_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N41',
+				'info' => 'carrosserie1'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N42',
+				'info' => 'carrosserie2'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I41',
+				'info' => 'carrosserie1_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I42',
+				'info' => 'carrosserie2_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N44',
+				'info' => 'externe1'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N45',
+				'info' => 'externe2'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N46',
+				'info' => 'externe3'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I44',
+				'info' => 'externe1_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I45',
+				'info' => 'externe2_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I46',
+				'info' => 'externe3_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N48',
+				'info' => 'local1'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N49',
+				'info' => 'local2'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N50',
+				'info' => 'local3'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N51',
+				'info' => 'local4'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N52',
+				'info' => 'local5'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N53',
+				'info' => 'local6'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N54',
+				'info' => 'local7'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'N55',
+				'info' => 'local8'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I48',
+				'info' => 'local1_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I49',
+				'info' => 'local2_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I50',
+				'info' => 'local3_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I51',
+				'info' => 'local4_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I52',
+				'info' => 'local5_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I53',
+				'info' => 'local6_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I54',
+				'info' => 'local7_label'
+		);
+
+		$this->targetInfoArray[] = array(
+				'cell' => 'I55',
+				'info' => 'local8_label'
+		);
 	}
 
 	/**
@@ -168,148 +297,154 @@ class VolvoImportom extends VolvoImport
 		$error = 0;
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
-
-		// Build header column array
-		try {
-			$rowIterator = $this->objWorksheet->getRowIterator($this->objWorksheet->getCell($this->startcell)->getRow())->current();
-
-			$cellIterator = $rowIterator->getCellIterator($this->objWorksheet->getCell($this->startcell)->getColumn());
-			$cellIterator->setIterateOnlyExistingCells(false);
-
-			foreach ( $cellIterator as $cell ) {
-				$cellValue = trim($cell->getCalculatedValue());
-				if (empty($cellValue)) {
-					$this->maxcol = $prevcol;
-					break;
-				}
-				$this->columnArray[$cell->getColumn()] = array(
-						'name' => dol_trunc($this->volvo_string_nospecial($cellValue), 64, 'right', 'UTF-8', 1),
-						'label' => $cellValue
-				);
-				dol_syslog(get_class($this) . '::' . __METHOD__ . ' Build columnArray=' . var_export($this->columnArray, true), LOG_DEBUG);
-				$prevcol = $cell->getColumn();
-			}
-		} catch ( Exception $e ) {
-			$this->errors[] = $e->getMessage();
-			$error ++;
+		$arrayresult = array();
+		foreach ($this->targetInfoArray as $info){
+			$arrayresult[]= $this->objWorksheet->getCell($info['cell'])->getCalculatedValue();
 		}
 
-		$this->db->begin();
-		if (empty($error)) {
+		var_dump($arrayresult);
 
-			// Delete old temp table
-			$sql = 'DROP TABLE IF EXISTS ' . $this->tempTable;
-			dol_syslog(get_class($this) . '::' . __METHOD__ . ' Delete old temp table', LOG_DEBUG);
-			$resql = $this->db->query($sql);
-			if (! $resql) {
-				$this->errors[] = $this->db->lasterror;
-				$error ++;
-			}
-		}
-		// Build sql temp table
-		if (empty($error)) {
+// 		// Build header column array
+// 		try {
+// 			$rowIterator = $this->objWorksheet->getRowIterator($this->objWorksheet->getCell($this->startcell)->getRow())->current();
 
-			$sql = 'CREATE TABLE ' . $this->tempTable;
-			$sql .= '(';
-			$sql .= 'rowid integer NOT NULL auto_increment PRIMARY KEY,';
-			$sql .= 'fourn_cmd_id varchar(255) DEFAULT NULL,';
-			$sql .= 'cust_cmd_id integer DEFAULT NULL,';
-			$sql .= 'integration_status integer DEFAULT NULL,';
-			$sql .= 'integration_action varchar(20) DEFAULT NULL,';
-			$sql .= 'integration_comment text DEFAULT NULL,';
-			foreach ( $this->columnArray as $data ) {
-				$sql .= $data['name'] . ' text,';
-			}
-			$sql .= 'tms timestamp NOT NULL';
-			$sql .= ')ENGINE=InnoDB;';
+// 			$cellIterator = $rowIterator->getCellIterator($this->objWorksheet->getCell($this->startcell)->getColumn());
+// 			$cellIterator->setIterateOnlyExistingCells(false);
 
-			dol_syslog(get_class($this) . '::' . __METHOD__ . ' Build sql temp table', LOG_DEBUG);
-			$resql = $this->db->query($sql);
-			if (! $resql) {
-				$this->errors[] = $this->db->lasterror;
-				$error ++;
-			}
-		}
+// 			foreach ( $cellIterator as $cell ) {
+// 				$cellValue = trim($cell->getCalculatedValue());
+// 				if (empty($cellValue)) {
+// 					$this->maxcol = $prevcol;
+// 					break;
+// 				}
+// 				$this->columnArray[$cell->getColumn()] = array(
+// 						'name' => dol_trunc($this->volvo_string_nospecial($cellValue), 64, 'right', 'UTF-8', 1),
+// 						'label' => $cellValue
+// 				);
+// 				dol_syslog(get_class($this) . '::' . __METHOD__ . ' Build columnArray=' . var_export($this->columnArray, true), LOG_DEBUG);
+// 				$prevcol = $cell->getColumn();
+// 			}
+// 		} catch ( Exception $e ) {
+// 			$this->errors[] = $e->getMessage();
+// 			$error ++;
+// 		}
 
-		// Build Data array
-		if (empty($error)) {
-			try {
+// 		$this->db->begin();
+// 		if (empty($error)) {
 
-				$rowIterator = $this->objWorksheet->getRowIterator($this->objWorksheet->getCell($this->startcell)->getRow() + 1);
-				foreach ( $rowIterator as $row ) {
-					$cellIterator = $row->getCellIterator($this->objWorksheet->getCell($this->startcell)->getColumn());
-					$cellIterator->setIterateOnlyExistingCells(false);
+// 			// Delete old temp table
+// 			$sql = 'DROP TABLE IF EXISTS ' . $this->tempTable;
+// 			dol_syslog(get_class($this) . '::' . __METHOD__ . ' Delete old temp table', LOG_DEBUG);
+// 			$resql = $this->db->query($sql);
+// 			if (! $resql) {
+// 				$this->errors[] = $this->db->lasterror;
+// 				$error ++;
+// 			}
+// 		}
+// 		// Build sql temp table
+// 		if (empty($error)) {
 
-					foreach ( $cellIterator as $cell ) {
-						if (PHPExcel_Shared_Date::isDateTime($cell)) {
-							$cellValue = $cell->getValue();
-							$dateValue = PHPExcel_Shared_Date::ExcelToPHP($cellValue);
-							$cellValue = date('Ymd', $dateValue);
-						} else {
-							$cellValue = trim($cell->getCalculatedValue());
-						}
-						$this->columnData[$cell->getRow()][$cell->getColumn()] = array(
-								'sqlvalue' => ($cellValue == '' ? 'NULL' : '\'' . $this->db->escape($cellValue) . '\''),
-								'data' => $cellValue
-						);
+// 			$sql = 'CREATE TABLE ' . $this->tempTable;
+// 			$sql .= '(';
+// 			$sql .= 'rowid integer NOT NULL auto_increment PRIMARY KEY,';
+// 			$sql .= 'fourn_cmd_id varchar(255) DEFAULT NULL,';
+// 			$sql .= 'cust_cmd_id integer DEFAULT NULL,';
+// 			$sql .= 'integration_status integer DEFAULT NULL,';
+// 			$sql .= 'integration_action varchar(20) DEFAULT NULL,';
+// 			$sql .= 'integration_comment text DEFAULT NULL,';
+// 			foreach ( $this->columnArray as $data ) {
+// 				$sql .= $data['name'] . ' text,';
+// 			}
+// 			$sql .= 'tms timestamp NOT NULL';
+// 			$sql .= ')ENGINE=InnoDB;';
 
-						if ($cell->getColumn() == $this->maxcol) {
-							break;
-						}
-					}
+// 			dol_syslog(get_class($this) . '::' . __METHOD__ . ' Build sql temp table', LOG_DEBUG);
+// 			$resql = $this->db->query($sql);
+// 			if (! $resql) {
+// 				$this->errors[] = $this->db->lasterror;
+// 				$error ++;
+// 			}
+// 		}
 
-					// insert Data into temp table
-					if (empty($error)) {
+// 		// Build Data array
+// 		if (empty($error)) {
+// 			try {
 
-						$sqlInsert = array();
+// 				$rowIterator = $this->objWorksheet->getRowIterator($this->objWorksheet->getCell($this->startcell)->getRow() + 1);
+// 				foreach ( $rowIterator as $row ) {
+// 					$cellIterator = $row->getCellIterator($this->objWorksheet->getCell($this->startcell)->getColumn());
+// 					$cellIterator->setIterateOnlyExistingCells(false);
 
-						$sql_insertheader = 'INSERT INTO ' . $this->tempTable;
-						$sql_insertheader .= '(';
-						foreach ( $this->columnArray as $data ) {
-							$sql_insertheader .= $data['name'] . ',';
-						}
-						$sql_insertheader .= 'tms';
-						$sql_insertheader .= ')';
+// 					foreach ( $cellIterator as $cell ) {
+// 						if (PHPExcel_Shared_Date::isDateTime($cell)) {
+// 							$cellValue = $cell->getValue();
+// 							$dateValue = PHPExcel_Shared_Date::ExcelToPHP($cellValue);
+// 							$cellValue = date('Ymd', $dateValue);
+// 						} else {
+// 							$cellValue = trim($cell->getCalculatedValue());
+// 						}
+// 						$this->columnData[$cell->getRow()][$cell->getColumn()] = array(
+// 								'sqlvalue' => ($cellValue == '' ? 'NULL' : '\'' . $this->db->escape($cellValue) . '\''),
+// 								'data' => $cellValue
+// 						);
 
-						$i = 0;
-						foreach ( $this->columnData as $rowindex => $datarow ) {
-							$sql = $sql_insertheader . ' VALUES (';
-							foreach ( $datarow as $colinex => $data ) {
-								$sql .= $data['sqlvalue'] . ',';
-							}
-							$sql .= 'NOW())';
+// 						if ($cell->getColumn() == $this->maxcol) {
+// 							break;
+// 						}
+// 					}
 
-							$sqlInsert[] = $sql;
-							$i ++;
-						}
+// 					// insert Data into temp table
+// 					if (empty($error)) {
 
-						foreach ( $sqlInsert as $sql ) {
-							dol_syslog(get_class($this) . '::' . __METHOD__ . ' insert data into temp table', LOG_DEBUG);
-							$resql = $this->db->query($sql);
-							if (! $resql) {
-								$this->errors[] = $this->db->lasterror;
-								$error ++;
-							}
-						}
-					}
+// 						$sqlInsert = array();
 
-					if (empty($error)) {
-						$this->columnData = array();
-					}
-				}
-			} catch ( Exception $e ) {
-				$this->errors[] = $e->getMessage();
-				$error ++;
-			}
-		}
+// 						$sql_insertheader = 'INSERT INTO ' . $this->tempTable;
+// 						$sql_insertheader .= '(';
+// 						foreach ( $this->columnArray as $data ) {
+// 							$sql_insertheader .= $data['name'] . ',';
+// 						}
+// 						$sql_insertheader .= 'tms';
+// 						$sql_insertheader .= ')';
 
-		if (empty($error)) {
-			$this->db->commit();
-			return 1;
-		} else {
-			$this->db->rollback();
-			return - 1 * $error;
-		}
+// 						$i = 0;
+// 						foreach ( $this->columnData as $rowindex => $datarow ) {
+// 							$sql = $sql_insertheader . ' VALUES (';
+// 							foreach ( $datarow as $colinex => $data ) {
+// 								$sql .= $data['sqlvalue'] . ',';
+// 							}
+// 							$sql .= 'NOW())';
+
+// 							$sqlInsert[] = $sql;
+// 							$i ++;
+// 						}
+
+// 						foreach ( $sqlInsert as $sql ) {
+// 							dol_syslog(get_class($this) . '::' . __METHOD__ . ' insert data into temp table', LOG_DEBUG);
+// 							$resql = $this->db->query($sql);
+// 							if (! $resql) {
+// 								$this->errors[] = $this->db->lasterror;
+// 								$error ++;
+// 							}
+// 						}
+// 					}
+
+// 					if (empty($error)) {
+// 						$this->columnData = array();
+// 					}
+// 				}
+// 			} catch ( Exception $e ) {
+// 				$this->errors[] = $e->getMessage();
+// 				$error ++;
+// 			}
+// 		}
+
+// 		if (empty($error)) {
+// 			$this->db->commit();
+// 			return 1;
+// 		} else {
+// 			$this->db->rollback();
+// 			return - 1 * $error;
+// 		}
 	}
 
 	/**
