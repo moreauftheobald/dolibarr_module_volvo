@@ -64,6 +64,12 @@ class VolvoImportfdd extends VolvoImport
 				'oblig' => false,
 		);
 
+		$this->targetInfoArray['client'] = array(
+				'cell' => 'J6',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
 		$this->targetInfoArray['vss'] = array(
 				'cell' => 'M21',
 				'type' => 'val',
@@ -333,6 +339,78 @@ class VolvoImportfdd extends VolvoImport
 				'type' => 'val',
 				'oblig' => false,
 		);
+
+		$this->targetInfoArray['prov1'] = array(
+				'cell' => 'N60',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov2'] = array(
+				'cell' => 'N61',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov3'] = array(
+				'cell' => 'N62',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov4'] = array(
+				'cell' => 'N63',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov5'] = array(
+				'cell' => 'N64',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov1_label'] = array(
+				'cell' => 'I60',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov2_label'] = array(
+				'cell' => 'I61',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov3_label'] = array(
+				'cell' => 'I62',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov4_label'] = array(
+				'cell' => 'I63',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['prov5_label'] = array(
+				'cell' => 'I64',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['VCM'] = array(
+				'cell' => 'N65',
+				'type' => 'val',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['VCM_label'] = array(
+				'cell' => 'Combo!R75',
+				'type' => 'calc',
+				'oblig' => false,
+		);
 	}
 
 	/**
@@ -352,13 +430,13 @@ class VolvoImportfdd extends VolvoImport
 			}
 		}
 
-// 		foreach ($this->targetInfoArray as $key => $info){
-// 			if($info['oblig']== true and empty($info['value'])){
-// 				$this->errors[] = $key . ' must not be empty';
-// 				$error ++;
-// 			}
+		foreach ($this->targetInfoArray as $key => $info){
+			if($info['oblig']== true and empty($info['value'])){
+				$this->errors[] = $key . ' must not be empty';
+				$error ++;
+			}
 
-// 		}
+		}
 
 		if (empty($error)) {
 			return 1;

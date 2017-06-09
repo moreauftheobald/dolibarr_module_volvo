@@ -148,7 +148,7 @@ if ($step == 1 || $step == 2) {
 	if ($action == 'delete') {
 		$ret = $form->form_confirm($_SERVER["PHP_SELF"] . '?urlfile=' . urlencode(GETPOST('urlfile')) . $param, $langs->trans('DeleteFile'), $langs->trans('ConfirmDeleteFile'), 'confirm_deletefile', '', 0, 1);
 	}
-
+	print_fiche_titre('Selection de la FDD a importer');
 	print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" enctype="multipart/form-data" METHOD="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="max_file_size" value="' . $conf->maxfilesize . '">';
@@ -222,7 +222,7 @@ if ($step == 1 || $step == 2) {
 
 if ($step == 3) {
 
-	print_fiche_titre($langs->trans("InformationOnSourceFile") . ' : ' . $filetoimport);
+	print_fiche_titre("Selectiond du modele de FDD et de l'onglet contenant les donnés");
 
 	print '<b>' . $langs->trans("VolvoChooseExcelTabs") . '</b>';
 
@@ -264,6 +264,8 @@ if ($step == 4) {
 		setEventMessage($db->lasterror, 'errors');
 	}
 
+	print_fiche_titre("Revue et validation des données importée");
+
 	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
@@ -272,9 +274,21 @@ if ($step == 4) {
 	print '<input type="hidden" value="checkdata" name="action">';
 	print '<input type="hidden" value="' . dol_htmlentities(json_encode($importobject->columnArray), ENT_COMPAT) . '" name="columnArray">';
 	print '<input type="hidden" name="obligatoire" value="' . htmlspecialchars(json_encode($obligatoire)) . '">';
-
-	var_dump($importobject->targetInfoArray);
-
+	print '<table class="border" width="100%">';
+	print '<tr class="liste_titre">';
+	print '<td class="liste_titre" colspan="2">Données générale</td>';
+	print '<td class="liste_titre" colspan="2">Données financières</td>';
+	print '<td class="liste_titre" colspan="2">Provisions</td>';
+	print '</tr>';
+	print '<tr>';
+	print '<td>Client</td>';
+	print '<td>' . $importobject->targetInfoArray['client']['value'] . '</td>';
+	print '<td>Prix de vente</td>';
+	print '<td>' . $importobject->targetInfoArray['price']['value'] . '</td>';
+	print '<td>' . $importobject->targetInfoArray['prov1_label']['value'] . '</td>';
+	print '<td>' . $importobject->targetInfoArray['prov1']['value'] . '</td>';
+	print '</tr>';
+	print '</table>';
 	print '<div class="tabsAction">';
 	print '<input type="submit" align="center" class="button" value="' . $langs->trans('Save') . '" name="save" id="save"/>';
 	print '</div>';
