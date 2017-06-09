@@ -448,7 +448,7 @@ class VolvoImportfdd extends VolvoImport
 			}elseif($info['type'] == 'val'){
 				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell($info['cell'])->getValue();
 			}elseif($info['type'] == 'calcr'){
-				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell('A1')->getValue();
+				$this->targetInfoArray[$key]['value']= $this->objWorksheet->getCell('A1')->getCalculatedValue();
 			}
 		}
 
