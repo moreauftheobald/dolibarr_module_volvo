@@ -77,7 +77,7 @@ class VolvoImportfdd extends VolvoImport
 		);
 
 		$this->targetInfoArray['price'] = array(
-				'cell' => 'G53',
+				'cell' => 'G56',
 				'type' => 'calc',
 				'oblig' => true,
 		);
