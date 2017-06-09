@@ -2319,11 +2319,6 @@ if ($action == 'create' && $user->rights->commande->creer)
 
 			$formmail->withtopic = $topic;
 
-//if (empty($object->ref_client)) {
-// 				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__');
-// 			} else if (! empty($object->ref_client)) {
-// 				$formmail->withtopic = $outputlangs->trans('SendOrderRef', '__ORDERREF__ (__REFCLIENT__)');
-// 			}
 			$formmail->withfile = 2;
 			$formmail->withbody = 1;
 			$formmail->withdeliveryreceipt = 1;

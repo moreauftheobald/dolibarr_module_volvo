@@ -947,7 +947,7 @@ class modvolvo extends DolibarrModules
 
 		// $r++;
 		// Main menu entries
-$this->menus = array(); // List of menus to add
+		$this->menus = array(); // List of menus to add
 		$r = 0;
 
 		$this->menu[$r] = array(
