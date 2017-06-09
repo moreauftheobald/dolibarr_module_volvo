@@ -438,7 +438,7 @@ class VolvoImportfdd extends VolvoImport
 	public function loadData() {
 		$error = 0;
 
-		$this->objWorksheet->getCell('A1')->setCellValue("=25");
+		$this->objWorksheet->setCellValue('A1','=25');
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 

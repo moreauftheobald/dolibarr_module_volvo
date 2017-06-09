@@ -720,7 +720,7 @@ class PHPExcel_Cell
         }
 
         // Uppercase coordinate
-        //$pRange = strtoupper($pRange);
+        $pRange = strtoupper($pRange);
 
         // Extract range
         if (strpos($pRange, ':') === false) {
