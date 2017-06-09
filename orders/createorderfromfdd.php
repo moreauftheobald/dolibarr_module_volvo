@@ -388,7 +388,7 @@ if ($step == 5){
 			print '</td>';
 			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value=""/> €</td>';
+			print '<td><input type="text" name="pa_interne_' . $i . '" size="7" value="' . price($targetInfoArray['interne' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="com_interne_' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
