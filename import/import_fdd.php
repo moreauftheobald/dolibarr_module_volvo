@@ -22,7 +22,7 @@ if (! $res)
 	die("Include of main fails");
 
 require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
-require_once '../class/volvoimportom.class.php';
+require_once '../class/volvoimportfdd.class.php';
 require_once '../class/html.formvolvo.class.php';
 
 if (! $user->rights->volvo->om)
@@ -45,7 +45,7 @@ $page = GETPOST('page','int');
 if ($page == -1) { $page = 0; }
 $offset = $limit * $page;
 
-$importobject = new VolvoImportom($db);
+$importobject = new VolvoImportfdd($db);
 
 $dir = $conf->volvo->dir_output . '/import/fdd';
 
