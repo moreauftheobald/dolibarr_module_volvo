@@ -27,7 +27,7 @@ require_once 'volvoimport.class.php';
 /**
  * Class to import consogazoil CSV specific files
  */
-class VolvoImportom extends VolvoImport
+class VolvoImportfdd extends VolvoImport
 {
 	public $lines = array();
 	protected $db;
