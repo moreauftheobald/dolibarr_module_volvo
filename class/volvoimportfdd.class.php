@@ -352,13 +352,13 @@ class VolvoImportfdd extends VolvoImport
 			}
 		}
 
-		foreach ($this->targetInfoArray as $key => $info){
-			if($info['oblig']== true and empty($info['value'])){
-				$this->errors[] = $key . ' must not be empty';
-				$error ++;
-			}
+// 		foreach ($this->targetInfoArray as $key => $info){
+// 			if($info['oblig']== true and empty($info['value'])){
+// 				$this->errors[] = $key . ' must not be empty';
+// 				$error ++;
+// 			}
 
-		}
+// 		}
 
 		if (empty($error)) {
 			return 1;
