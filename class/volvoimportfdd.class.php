@@ -438,7 +438,7 @@ class VolvoImportfdd extends VolvoImport
 	public function loadData() {
 		$error = 0;
 
-		$this->objWorksheet->getCell('Combo!R77')->setValue('=RECHERCHEV(R75+1;P6:S42;3;FAUX)');
+		$this->objWorksheet->getCell('Combo!R77')->setValue('=VLOOKUP(R75+1;P6:S42;3;FALSE)');
 
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 
