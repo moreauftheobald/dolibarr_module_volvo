@@ -299,7 +299,7 @@ class VolvoImportfdd extends VolvoImport
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 		$arrayresult = array();
 		foreach ($this->targetInfoArray as $info){
-			$arrayresult[]= $this->objWorksheet->getCell($info['cell'])->getCalculatedValue();
+			$arrayresult[]= $this->objWorksheet->getCell($info['cell'])->getValue();
 		}
 
 		var_dump($arrayresult);
