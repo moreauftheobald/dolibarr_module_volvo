@@ -370,7 +370,20 @@ if ($step == 5){
 	print '<input type="hidden" value="6" name="step">';
 	print '<input type="hidden" name="targetInfoArray" value="' . htmlspecialchars(json_encode($targetInfoArray)) . '">';
 	print '<table class="border" width="100%">';
-
+	print '<tr class="liste_titre">';
+	print '<td colspan="6"> Création de la commande</td>';
+	print '</tr>';
+	print '<tr>';
+	print '<td colspan="6">';
+	print '<table width="100%" class="nobordernopadding">';
+	print '<tr ' . $bc[$var] . '>';
+	print '<td align="center">' . $langs->trans('Date de livraison souhaitée') . ': ' . $form->select_date('', 'datelivprev_', 0, 0, 1, '', 1, 1, 1, 0, '', '', '') . '</td>';
+	print '</tr>';
+	print '</table>';
+	print '</tr>';
+	print '<tr class="liste_titre">';
+	print '<td colspan="6">Liste des Articles trouvés dans la FDD</td>';
+	print '</tr>';
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre">Ne pas traiter</td>';
 	print '<td class="liste_titre">Article</td>';
@@ -380,7 +393,6 @@ if ($step == 5){
 	print '<td class="liste_titre">Commentaire</td>';
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre" colspan="6" align="center"> Travaux Interne </td>';
-	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=6;$i++){
 		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
