@@ -429,6 +429,18 @@ class VolvoImportfdd extends VolvoImport
 				'type' => 'calc',
 				'oblig' => false,
 		);
+
+		$this->targetInfoArray['transport'] = array(
+				'cell' => 'N69',
+				'type' => 'calc',
+				'oblig' => false,
+		);
+
+		$this->targetInfoArray['pneu'] = array(
+				'cell' => 'N70',
+				'type' => 'calc',
+				'oblig' => false,
+		);
 	}
 
 	/**

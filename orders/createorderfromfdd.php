@@ -322,10 +322,10 @@ if ($step == 4) {
 	print '<td>' . $importobject->targetInfoArray['prov5']['value'] . '</td>';
 	print '</tr>';
 	print '<tr>';
-	print '<td></td>';
-	print '<td></td>';
-	print '<td></td>';
-	print '<td></td>';
+	print '<td>Transport</td>';
+	print '<td>' . $importobject->targetInfoArray['transport']['value'] . '</td>';
+	print '<td>Taxe Pneumatiques</td>';
+	print '<td>' . $importobject->targetInfoArray['pneu']['value'] . '</td>';
 	print '<td>' . $importobject->targetInfoArray['VCM_label']['value'] . '</td>';
 	print '<td>' . $importobject->targetInfoArray['VCM']['value'] . '</td>';
 	print '</tr>';
