@@ -55,6 +55,10 @@ if ($step == 7) {
 		setEventMessage($db->lasterror, 'errors');
 	}
 
+
+
+
+
 	$lead = new Leadext($db);
 	$lead->fetch($leadid);
 	$lead->fetch_thirdparty();
@@ -368,6 +372,9 @@ if ($step == 4) {
 	print '</form>';
 }
 if ($step == 5){
+
+	print_fiche_titre("Mise en correspondance des données et Articles Dolibarr");
+
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
 	//var_dump($targetInfoArray);
 	print '<form name="createorder" action="' . $_SERVER["PHP_SELF"] . '" method="POST">';
@@ -470,6 +477,13 @@ if ($step == 5){
 	print '</div>';
 	print '</form>';
 }
+if ($step==6){
+	print_fiche_titre("Résultat");
+
+	var_dump($_POST);
+
+}
+
 
 ?>
 <script type="text/javascript" language="javascript">
