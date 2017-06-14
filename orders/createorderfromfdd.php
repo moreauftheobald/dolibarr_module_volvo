@@ -412,7 +412,7 @@ if ($step == 5){
 			print '<tr>';
 			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $i . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,'interne[' . $i . '][product]','','','',1,2,'',0,array(),'');
+			$form->select_produits(0,'interne_' . $i . '_product','','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
