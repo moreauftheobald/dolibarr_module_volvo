@@ -435,4 +435,28 @@ class FormVolvo
 
 		return $out;
 	}
+
+	public function select_model( $htmlname = '', $selectlabel = ''){
+		$sql = 'SELECT rowid, modele FROM ' .MAIN_DB_PREFIX . 'volvo_modele_fdd WHERE active = 1';
+		$resql = $this->db->query($sql);
+		if($resql){
+			while ($object = $this->db->fetch_object($resql)){
+				$arrayresult[$object->rowid] = $object->modele;
+			}
+		}
+		if(is_array($arrayresult)){
+			$out .= '<select id="' . $htmlname . '" class="flat" name="' . $htmlname . '">';
+			foreach ($arrayresult as $key => $label){
+				if (! empty($selectlabel) && $selectlabel == $key) {
+					$out .= '<option value="' . $key . '" selected="selected">' . $label . '</option>';
+				} else {
+					$out .= '<option value="' . $key . '">' . $label . '</option>';
+				}
+			}
+			$out .= '</select>';
+		}
+		return $out;
+	}
+
+
 }

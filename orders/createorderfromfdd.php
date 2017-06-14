@@ -117,10 +117,11 @@ if ($action == 'confirm_deletefile' && $confirm == 'yes') {
 if ($step == 3 && $action == 'choosetabs') {
 
 	$error = 0;
-
+	$model = GETPOST('model', 'int');
 	$tab_to_treat = GETPOST('tab_to_treat', 'alpha');
 
 	$importobject->initFile($dir . '/' . $filetoimport, 'om');
+	$importobject->model = $model;
 
 	$result = $importobject->loadFile();
 	if ($result < 0) {
@@ -249,10 +250,15 @@ if ($step == 3) {
 	print '<table class="noborder" width="100%" cellspacing="0" cellpadding="4">';
 
 	print '<table width="100%" cellspacing="0" cellpadding="4" class="border">';
-	print '<tr>';
 
+	print '<tr>';
 	print '<td class="fieldrequired">' . $langs->trans('VolvoTabsAvailable') . '</td>';
-	print '<td>' . $html_volvo->select_tabs($dir . '/' . $filetoimport, 'tab_to_treat', empty($tab_to_treat) ? 'A1' : $tab_to_treat) . '</td>';
+	print '<td>' . $html_volvo->select_model('model', empty($tab_to_treat) ? 'A1' : $model) . '</td>';
+	print '</tr>';
+
+	print '<tr>';
+	print '<td class="fieldrequired">' . $langs->trans('VolvoTabsAvailable') . '</td>';
+	print '<td>' . $html_volvo->select_tabs($dir . '/' . $filetoimport, 'tab_to_treat', $tab_to_treat) . '</td>';
 	print '</tr>';
 
 	print '</table>';
@@ -371,7 +377,7 @@ if ($step == 5){
 	print '<input type="hidden" name="targetInfoArray" value="' . htmlspecialchars(json_encode($targetInfoArray)) . '">';
 	print '<table class="border" width="100%">';
 	print '<tr class="liste_titre">';
-	print '<td colspan="6"> Création de la commande</td>';
+	print '<td colspan="6" align="center"> Création de la commande</td>';
 	print '</tr>';
 	print '<tr>';
 	print '<td colspan="6">';
@@ -382,7 +388,7 @@ if ($step == 5){
 	print '</table>';
 	print '</tr>';
 	print '<tr class="liste_titre">';
-	print '<td colspan="6">Liste des Articles trouvés dans la FDD</td>';
+	print '<td colspan="6" align="center">Liste des Articles trouvés dans la FDD</td>';
 	print '</tr>';
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre">Ne pas traiter</td>';

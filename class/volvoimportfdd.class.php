@@ -452,6 +452,20 @@ class VolvoImportfdd extends VolvoImport
 
 		$this->objWorksheet->setCellValue('A1','=VLOOKUP(Combo!R75+1,Combo!P6:R42,3,FALSE))');
 
+		$sql = 'SELECT name, cell, type, oblig FROM ' . MAIN_DB_PREFIX . 'volvo_modele_fdd_det WHERE fk_modele_fdd = ' . $this->model;
+
+		$resql = $this->db->query($sql);
+		if($resql){
+			while($object = $this->db->fetch_object($resql)){
+				$this->targetInfoArray[$object->name] = array(
+						'cell' => $object->cell,
+						'type' => $object->type,
+						'oblig' => $object->oblig
+				);
+			}
+		}
+
+
 		dol_syslog(get_class($this) . '::' . __METHOD__, LOG_DEBUG);
 
 		foreach ($this->targetInfoArray as $key => $info){
