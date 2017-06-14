@@ -410,14 +410,14 @@ if ($step == 5){
 	for ($i =1; $i<=6;$i++){
 		if(!empty($targetInfoArray['interne' .$i . '_label']['value']) && !empty($targetInfoArray['interne' .$i]['value'])){
 			print '<tr>';
-			print '<td><input class="flat" type="checkbox" align="left" name="interne[npt][]"/>' ;
+			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $i . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,"interne_". $i,'','','',1,2,'',0,array(),'');
+			$form->select_produits(0,'interne[' . $i . '][product]','','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="interne[pa][]" size="7" value="' . price($targetInfoArray['interne' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="interne[com][]' . $i . '" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="interne[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['interne' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="interne[' . $i . '][com]" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
