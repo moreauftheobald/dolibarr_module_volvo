@@ -559,15 +559,16 @@ if ($step == 5){
 	print '</tr>';
 	for ($i =1; $i<=8;$i++){
 		if(!empty($targetInfoArray['local' .$i . '_label']['value']) && !empty($targetInfoArray['local' .$i]['value'])){
+			$pos = $i+6;
 			print '<tr>';
-			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $i+6 . '][npt]"/>' ;
+			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $pos . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,"interne_product". $i+6,'','','',1,2,'',0,array(),'');
+			$form->select_produits(0,"interne_product". $pos,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['local' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="interne[' . $i+6 . '][pa]" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="interne[' . $i+6 . '][comm]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="interne[' . $pos . '][pa]" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="interne[' . $pos . '][comm]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
