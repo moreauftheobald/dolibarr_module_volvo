@@ -526,7 +526,6 @@ if ($step == 5){
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre" colspan="6" align="center"> Travaux Externe </td>';
 	print '</tr>';
-	print '</tr>';
 	for ($i =1; $i<=3;$i++){
 		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
 			print '<tr>';
@@ -557,7 +556,6 @@ if ($step == 5){
 	}
 	print '<tr class="liste_titre">';
 	print '<td class="liste_titre" colspan="6" align="center"> Couts Locaux </td>';
-	print '</tr>';
 	print '</tr>';
 	for ($i =1; $i<=8;$i++){
 		if(!empty($targetInfoArray['local' .$i . '_label']['value']) && !empty($targetInfoArray['local' .$i]['value'])){
