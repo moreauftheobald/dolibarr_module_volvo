@@ -579,12 +579,12 @@ if ($step == 5){
 	print '</div>';
 	print '</form>';
 }
-if ($step==6){
-	print_fiche_titre("Résultat");
+// if ($step==6){
+// 	print_fiche_titre("Résultat");
 
-	var_dump($_POST);
+// 	var_dump($_POST);
 
-}
+// }
 
 
 ?>
