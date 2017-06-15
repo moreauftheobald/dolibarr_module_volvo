@@ -62,10 +62,10 @@ if ($step == 6) {
 		setEventMessage($db->lasterror, 'errors');
 	}
 
-	$extrafields = new Extrafields($this->db);
-	$extrafields->fetch_name_optionals_label($this->table_element, true);
-	$user = new user($this->db);
-	$product = new product($this->db);
+	$extrafields = new Extrafields($db);
+	$extrafields->fetch_name_optionals_label($lead->table_element, true);
+	$user = new user($db);
+	$product = new product($db);
 	$lead = new Leadext($db);
 	$lead->fetch($leadid);
 	$lead->fetch_thirdparty();
@@ -116,8 +116,8 @@ if ($step == 6) {
 		$cmd->lines[] = $line;
 	}
 
-	if (count($this->obligatoire) > 0) {
-		foreach ( $this->obligatoire as $art ) {
+	if (count($lead->obligatoire) > 0) {
+		foreach ( $lead->obligatoire as $art ) {
 			$product->fetch($art);
 			$line = New OrderLine($db);
 			$line->subprice = $product->price;
