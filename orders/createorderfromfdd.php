@@ -42,6 +42,13 @@ $dir = $conf->volvo->dir_output . '/import/fdd';
 
 if ($step == 7) {
 
+	global $conf;
+	require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
+	require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
+	require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
+
+	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
+
 	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
 
@@ -55,21 +62,116 @@ if ($step == 7) {
 		setEventMessage($db->lasterror, 'errors');
 	}
 
-
-
-
-
+	$extrafields = new Extrafields($this->db);
+	$extrafields->fetch_name_optionals_label($this->table_element, true);
+	$user = new user($this->db);
+	$product = new product($this->db);
 	$lead = new Leadext($db);
 	$lead->fetch($leadid);
 	$lead->fetch_thirdparty();
-	$lead->prixvente = GETPOST('prixvente','int');
-	$lead->commission = GETPOST('commission', 'int');
-	$lead->datelivprev = dol_mktime(0, 0, 0, GETPOST('datelivprev_month', 'int'), GETPOST('datelivprev_day', 'int'), GETPOST('datelivprev_year', 'int'));
-	$lead->interne = GETPOST('interne', 'array');
-	$lead->externe = GETPOST('externe', 'array');
-	$lead->divers = GETPOST('divers', 'array');
-	$lead->obligatoire = $obligatoire;
-	$res = $lead->createcmd();
+
+	$user->fetch($lead->fk_user_resp);
+
+	$cmd = new Commande($db);
+	$cmd->socid = $lead->thirdparty->id;
+	$cmd->date = dol_now();
+	$cmd->ref_client = $lead->ref_int;
+	$cmd->date_livraison = dol_mktime(0, 0, 0, GETPOST('datelivprev_month', 'int'), GETPOST('datelivprev_day', 'int'), GETPOST('datelivprev_year', 'int'));
+	$cmd->array_options['options_vnac'] = $targetInfoArray['VNC']['value'];
+	$cmd->array_options['options_ctm'] = $lead->array_options['options_ctm'];
+	if(!empty($cmd->array_options['options_ctm'])){
+		dol_include_once('/societe/class/societe.class.php');
+		$socctm = new Societe($db);
+		$socctm->fetch($cmd->array_options['options_ctm']);
+		$cmd->note_public = 'Contremarque: ' . $socctm->name . "\n";
+	}
+	if ($lead->array_options["options_type"] == 1) {
+		$cmd->cond_reglement_id = 11;
+	} elseif ($lead->array_options["options_type"] == 2) {
+		$cmd->cond_reglement_id = 9;
+	} else {
+		$cmd->cond_reglement_id = 10;
+	}
+	$rang =1;
+	$line = New OrderLine($db);
+	$line->subprice = $targetInfoArray['VNAC']['value'];
+	$line->qty = 1;
+	$line->tva_tx = 0;
+	$line->fk_product = 1;
+	$line->pa_ht = $targetInfoArray['VNAC']['value'];
+	$line->rang=$rang;
+	$line->desc = $targetInfoArray['modele']['value'];
+	$rang++;
+	$cmd->lines[] = $line;
+
+	if(!empty($targetInfoArray['flotte']['value'])){
+		$line = New OrderLine($db);
+		$line->subprice = $targetInfoArray['flotte']['value'];
+		$line->qty = 1;
+		$line->tva_tx = 0;
+		$line->fk_product = 136;
+		$line->pa_ht = $targetInfoArray['flotte']['value'];
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+	}
+
+	if (count($this->obligatoire) > 0) {
+		foreach ( $this->obligatoire as $art ) {
+			$product->fetch($art);
+			$line = New OrderLine($db);
+			$line->subprice = $product->price;
+			$line->qty = 1;
+			$line->tva_tx = 0;
+			$line->fk_product = $product->id;
+			$line->pa_ht = $product->cost_price;
+			$line->rang=$rang;
+			$rang++;
+			$cmd->lines[] = $line;
+		}
+	}
+
+
+
+
+
+
+	$line = New OrderLine($db);
+	$line->desc = 'Commission Volvo';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->subprice = $targetInfoArray['commission']['value'];
+	$line->qty = 1;
+	$line->tva_tx = 0;
+	$line->fk_product = $conf->global->VOLVO_COM;
+	$line->pa_ht = 0;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Commission Volvo';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+
+	$res = $cmd->create($user);
+
+	$lead->add_object_linked("commande", $res);
+
+
 	if ($res<0){
 		setEventMessage($lead->errors,'errors');
 	} else {
@@ -412,7 +514,7 @@ if ($step == 5){
 			print '<tr>';
 			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $i . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,'interne_' . $i . '_product','','','',1,2,'',0,array(),'');
+			$form->select_produits(0,'interne_product'.$i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
@@ -428,28 +530,28 @@ if ($step == 5){
 	for ($i =1; $i<=3;$i++){
 		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
 			print '<tr>';
-			print '<td><input class="flat" type="checkbox" align="left" name="npt_externe' . $i . '"/>' ;
+			print '<td><input class="flat" type="checkbox" align="left" name="externe[' . $i . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
+			$form->select_produits(0,"externe_product". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="pa_externe_' . $i . '" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="com_externe_' . $i . '" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="externe[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="externe[' . $i . '][comm]" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
 	for ($i =7; $i<=8;$i++){
 		if(!empty($targetInfoArray['externe' .$i . '_label']['value']) && !empty($targetInfoArray['externe' .$i]['value'])){
 			print '<tr>';
-			print '<td><input class="flat" type="checkbox" align="left" name="npt_externe' . $i . '"/>' ;
+			print '<td><input class="flat" type="checkbox" align="left" name="externe[' . $i . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,"externe_". $i,'','','',1,2,'',0,array(),'');
+			$form->select_produits(0,"externe_product". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="pa_externe_' . $i . '" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="com_externe_' . $i . '" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="externe[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="externe[' . $i . '][com]" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
@@ -460,14 +562,14 @@ if ($step == 5){
 	for ($i =1; $i<=8;$i++){
 		if(!empty($targetInfoArray['local' .$i . '_label']['value']) && !empty($targetInfoArray['local' .$i]['value'])){
 			print '<tr>';
-			print '<td><input class="flat" type="checkbox" align="left" name="npt_local' . $i . '"/>' ;
+			print '<td><input class="flat" type="checkbox" align="left" name="interne[' . $i+6 . '][npt]"/>' ;
 			print '<td>';
-			$form->select_produits(0,"local_". $i,'','','',1,2,'',0,array(),'');
+			$form->select_produits(0,"interne_product". $i+6,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['local' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €</td>';
-			print '<td><input type="text" name="pa_local_' . $i . '" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="com_local_' . $i . '" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="interne[' . $i+6 . '][pa]" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
+			print '<td><input type="text" name="interne[' . $i+6 . '][comm]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
