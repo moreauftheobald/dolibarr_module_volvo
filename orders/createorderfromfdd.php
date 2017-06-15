@@ -40,7 +40,7 @@ $importobject = new VolvoImportfdd($db);
 
 $dir = $conf->volvo->dir_output . '/import/fdd';
 
-if ($step == 7) {
+if ($step == 6) {
 
 	global $conf;
 	require_once DOL_DOCUMENT_ROOT . '/commande/class/commande.class.php';
