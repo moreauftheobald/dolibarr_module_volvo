@@ -48,11 +48,11 @@ if ($step == 6) {
 	require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
-	$interne = GETPOST('interne','array');
-	var_dump($interne);
+// 	$interne = GETPOST('interne','array');
+// 	var_dump($interne);
 	exit;
 	Foreach($interne as $key => $values){
-		if($values['npt'] != 1){
+		if($values['npt'] != 'on'){
 			$values['id'] = GETPOST('interne_product'.$key);
 			$interne[$key] = $values;
 		}else{
