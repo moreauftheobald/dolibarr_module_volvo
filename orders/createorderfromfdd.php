@@ -339,7 +339,7 @@ if ($step == 1 || $step == 2) {
 					print '</td>';
 					// Action button
 					print '<td align="right">';
-					print '<a href="' . $_SERVER['PHP_SELF'] . '?step=3' . $param . '&filetoimport=' . urlencode($relativepath) . '">' . img_picto($langs->trans("NewImport"), 'filenew') . '</a>';
+					print '<a href="' . $_SERVER['PHP_SELF'] . '?step=3' . $param . '&filetoimport=' . urlencode($relativepath) . '&leadid=' . $leadid . '">' . img_picto($langs->trans("NewImport"), 'filenew') . '</a>';
 					print '</td>';
 					print '</tr>';
 		}
