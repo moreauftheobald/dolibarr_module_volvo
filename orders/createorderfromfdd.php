@@ -70,6 +70,8 @@ if ($step == 6) {
 	$lead->fetch($leadid);
 	$lead->fetch_thirdparty();
 
+	var_dump($lead);
+
 	$user->fetch($lead->fk_user_resp);
 
 	$cmd = new Commande($db);
