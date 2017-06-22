@@ -48,6 +48,16 @@ if ($step == 6) {
 	require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
+	$interne = GETPOST('interne','array');
+	Foreach($interne as $key => $values){
+		if($values['npt'] != 1){
+			$values['id'] = GETPOST('interne_product'.$key);
+			$interne[$key] = $values;
+		}else{
+			unset($interne[$key]);
+		}
+	}
+
 
 	$sql0 = "SELECT DISTINCT p.rowid, p.label FROM " . MAIN_DB_PREFIX . "product as p INNER JOIN " . MAIN_DB_PREFIX . "categorie_product as c ON p.rowid = c.fk_product ";
 	$sql0 .= "WHERE c.fk_categorie = " . $conf->global->VOLVO_OBLIGATOIRE . " AND p.tosell = 1";
@@ -169,6 +179,59 @@ if ($step == 6) {
 
 
 
+
+
+	$line = New OrderLine($db);
+	$line->desc = 'Travaux Interne';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+	foreach ($interne as $key => $values){
+		$line = New OrderLine($db);
+		$line->subprice = $values['price'];
+		$line->qty = 1;
+		$line->tva_tx = 0;
+		$line->fk_product = $values['id'];
+		$line->pa_ht = $values['pa'];
+		$line->desc = $values['com'];
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+	}
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Travaux Interne';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Travaux Externe';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Travaux Externe';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
 	if ($targetInfoArray['surres']['value'] > 0){
 		$line = New OrderLine($db);
 		$line->desc = 'Reprise VO';
@@ -201,45 +264,7 @@ if ($step == 6) {
 		$cmd->lines[] = $line;
 	}
 
-	$line = New OrderLine($db);
-	$line->desc = 'Travaux Interne';
-	$line->subprice = 0;
-	$line->qty = 1;
-	$line->product_type = 9;
-	$line->special_code = 104777;
-	$line->rang=$rang;
-	$rang++;
-	$cmd->lines[] = $line;
 
-	$line = New OrderLine($db);
-	$line->desc = 'Sous-Total Travaux Interne';
-	$line->subprice = 0;
-	$line->qty = 99;
-	$line->product_type = 9;
-	$line->special_code = 104777;
-	$line->rang=$rang;
-	$rang++;
-	$cmd->lines[] = $line;
-
-	$line = New OrderLine($db);
-	$line->desc = 'Travaux Externe';
-	$line->subprice = 0;
-	$line->qty = 1;
-	$line->product_type = 9;
-	$line->special_code = 104777;
-	$line->rang=$rang;
-	$rang++;
-	$cmd->lines[] = $line;
-
-	$line = New OrderLine($db);
-	$line->desc = 'Sous-Total Travaux Externe';
-	$line->subprice = 0;
-	$line->qty = 99;
-	$line->product_type = 9;
-	$line->special_code = 104777;
-	$line->rang=$rang;
-	$rang++;
-	$cmd->lines[] = $line;
 
 	$line = New OrderLine($db);
 	$line->desc = 'Divers';
@@ -663,7 +688,7 @@ if ($step == 5){
 			$form->select_produits(0,'interne_product'.$i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['interne' .$i . '_label']['value'] . '</td>';
-			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €</td>';
+			print '<td>' . price($targetInfoArray['interne' .$i]['value']) . ' €   <input type="hidden" name="interne[' . $i . '][price]" value="' . $targetInfoArray['interne' .$i]['value'] . '"></td>';
 			print '<td><input type="text" name="interne[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['interne' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="interne[' . $i . '][com]" size="20" value="' . $targetInfoArray['interne' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
@@ -680,7 +705,7 @@ if ($step == 5){
 			$form->select_produits(0,"externe_product". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
-			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
+			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €   <input type="hidden" name="externe[' . $i . '][price]" value="' . $targetInfoArray['externe' .$i]['value'] . '"></td>';
 			print '<td><input type="text" name="externe[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="externe[' . $i . '][comm]" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
@@ -694,7 +719,7 @@ if ($step == 5){
 			$form->select_produits(0,"externe_product". $i,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['externe' .$i . '_label']['value'] . '</td>';
-			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €</td>';
+			print '<td>' . price($targetInfoArray['externe' .$i]['value']) . ' €   <input type="hidden" name="externe[' . $i . '][price]" value="' . $targetInfoArray['externe' .$i]['value'] . '"></td>';
 			print '<td><input type="text" name="externe[' . $i . '][pa]" size="7" value="' . price($targetInfoArray['externe' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="externe[' . $i . '][com]" size="20" value="' . $targetInfoArray['externe' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
@@ -712,7 +737,7 @@ if ($step == 5){
 			$form->select_produits(0,"interne_product". $pos,'','','',1,2,'',0,array(),'');
 			print '</td>';
 			print '<td>' . $targetInfoArray['local' .$i . '_label']['value'] . '</td>';
-			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €</td>';
+			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €   <input type="hidden" name="interne[' . $pos . '][price]" value="' . $targetInfoArray['local' .$i]['value'] . '"></td>';
 			print '<td><input type="text" name="interne[' . $pos . '][pa]" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
 			print '<td><input type="text" name="interne[' . $pos . '][comm]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
