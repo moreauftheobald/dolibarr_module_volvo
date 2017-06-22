@@ -170,6 +170,7 @@ if ($step == 6) {
 	$res = $cmd->create($user);
 
 	var_dump($res);
+	var_dump($cmd->error);
 
 	$lead->add_object_linked("commande", $res);
 
