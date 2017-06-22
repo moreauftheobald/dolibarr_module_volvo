@@ -254,7 +254,7 @@ if ($step == 6) {
 	if(!empty($targetInfoArray['VCM_label']['value']) || $targetInfoArray['VCM_label'] !='Aucune'){
 
 		$res = $product->fetch('','',$targetInfoArray['VCM_label']);
-		if($res){
+		if($res<0){
 			$line = New OrderLine($db);
 			$line->subprice = $targetInfoArray['VCM']['value'];
 			$line->qty = 1;
