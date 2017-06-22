@@ -49,6 +49,8 @@ if ($step == 6) {
 
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
 	$interne = GETPOST('interne','array');
+	var_dump($interne);
+	exit;
 	Foreach($interne as $key => $values){
 		if($values['npt'] != 1){
 			$values['id'] = GETPOST('interne_product'.$key);
