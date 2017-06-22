@@ -118,15 +118,149 @@ if ($step == 6) {
 		$cmd->lines[] = $line;
 	}
 
+
+
 	if (count($obligatoire) > 0) {
 		foreach ( $obligatoire as $art ) {
 			$product->fetch($art);
+			if($product->ref == 'TPNEU' ){
+				$line = New OrderLine($db);
+				$line->subprice = $targetInfoArray['pneu']['value'];
+				$line->qty = 1;
+				$line->tva_tx = 0;
+				$line->fk_product = $product->id;
+				$line->pa_ht = $targetInfoArray['pneu']['value'];
+				$line->rang=$rang;
+				$rang++;
+				$cmd->lines[] = $line;
+			}elseif($product->ref == 'LIVUSI'){
+				$line = New OrderLine($db);
+				$line->subprice = $targetInfoArray['transport']['value'];
+				$line->qty = 1;
+				$line->tva_tx = 0;
+				$line->fk_product = $product->id;
+				$line->pa_ht = $targetInfoArray['transport']['value'];
+				$line->rang=$rang;
+				$rang++;
+				$cmd->lines[] = $line;
+			}else{
+				$line = New OrderLine($db);
+				$line->subprice = $product->price;
+				$line->qty = 1;
+				$line->tva_tx = 0;
+				$line->fk_product = $product->id;
+				$line->pa_ht = $product->cost_price;
+				$line->rang=$rang;
+				$rang++;
+				$cmd->lines[] = $line;
+			}
+		}
+	}
+
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Véhicule';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+
+
+	if ($targetInfoArray['surres']['value'] > 0){
+		$line = New OrderLine($db);
+		$line->desc = 'Reprise VO';
+		$line->subprice = 0;
+		$line->qty = 1;
+		$line->product_type = 9;
+		$line->special_code = 104777;
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+
+		$line = New OrderLine($db);
+		$line->subprice = $targetInfoArray['surres']['value'];
+		$line->qty = 1;
+		$line->tva_tx = 0;
+		$line->fk_product = $conf->global->VOLVO_SURES;
+		$line->pa_ht = $targetInfoArray['surres']['value'];
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+
+		$line = New OrderLine($db);
+		$line->desc = 'Sous-Total Reprise VO';
+		$line->subprice = 0;
+		$line->qty = 99;
+		$line->product_type = 9;
+		$line->special_code = 104777;
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+	}
+
+	$line = New OrderLine($db);
+	$line->desc = 'Travaux Interne';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Travaux Interne';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Travaux Externe';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Travaux Externe';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	$line = New OrderLine($db);
+	$line->desc = 'Divers';
+	$line->subprice = 0;
+	$line->qty = 1;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
+
+	if(!empty($targetInfoArray['VCM_label']['value']) || $targetInfoArray['VCM_label'] !='Aucune'){
+
+		$res = $product->fetch('','',$targetInfoArray['VCM_label']);
+		if($res){
 			$line = New OrderLine($db);
-			$line->subprice = $product->price;
+			$line->subprice = $targetInfoArray['VCM']['value'];
 			$line->qty = 1;
 			$line->tva_tx = 0;
 			$line->fk_product = $product->id;
-			$line->pa_ht = $product->cost_price;
+			$line->pa_ht = $targetInfoArray['VCM']['value'];
 			$line->rang=$rang;
 			$rang++;
 			$cmd->lines[] = $line;
@@ -134,8 +268,15 @@ if ($step == 6) {
 	}
 
 
-
-
+	$line = New OrderLine($db);
+	$line->desc = 'Sous-Total Divers';
+	$line->subprice = 0;
+	$line->qty = 99;
+	$line->product_type = 9;
+	$line->special_code = 104777;
+	$line->rang=$rang;
+	$rang++;
+	$cmd->lines[] = $line;
 
 
 	$line = New OrderLine($db);
