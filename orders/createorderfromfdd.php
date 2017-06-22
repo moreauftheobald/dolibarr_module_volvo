@@ -149,7 +149,7 @@ if ($step == 6) {
 	$cmd->lines[] = $line;
 
 	$line = New OrderLine($db);
-	$line->subprice = $targetInfoArray['commission']['value'];
+	$line->subprice = $targetInfoArray['comission']['value'];
 	$line->qty = 1;
 	$line->tva_tx = 0;
 	$line->fk_product = $conf->global->VOLVO_COM;
