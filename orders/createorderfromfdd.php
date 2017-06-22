@@ -279,6 +279,7 @@ if ($step == 1 || $step == 2) {
 	print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" enctype="multipart/form-data" METHOD="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" name="max_file_size" value="' . $conf->maxfilesize . '">';
+	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
 	print '<input type="hidden" value="2" name="step">';
 	print '<input type="hidden" value="sendit" name="action">';
 	print '<table class="noborder" width="100%" cellspacing="0" cellpadding="4">';
@@ -356,6 +357,7 @@ if ($step == 3) {
 	print '<form name="userfile" action="' . $_SERVER["PHP_SELF"] . '" METHOD="POST">';
 	print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
 	print '<input type="hidden" value="3" name="step">';
+	print '<input type="hidden" name="leadid" value="' . $leadid . '">';
 	print '<input type="hidden" value="' . $filetoimport . '" name="filetoimport">';
 	print '<input type="hidden" value="choosetabs" name="action">';
 	print '<table class="noborder" width="100%" cellspacing="0" cellpadding="4">';
