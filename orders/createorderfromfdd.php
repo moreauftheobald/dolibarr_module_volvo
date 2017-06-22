@@ -118,8 +118,8 @@ if ($step == 6) {
 		$cmd->lines[] = $line;
 	}
 
-	if (count($lead->obligatoire) > 0) {
-		foreach ( $lead->obligatoire as $art ) {
+	if (count($obligatoire) > 0) {
+		foreach ( $obligatoire as $art ) {
 			$product->fetch($art);
 			$line = New OrderLine($db);
 			$line->subprice = $product->price;
@@ -171,8 +171,6 @@ if ($step == 6) {
 
 	$res = $cmd->create($user);
 
-	var_dump($res);
-	var_dump($cmd->error);
 
 	$lead->add_object_linked("commande", $res);
 
