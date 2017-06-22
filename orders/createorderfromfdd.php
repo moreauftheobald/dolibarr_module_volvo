@@ -49,14 +49,22 @@ if ($step == 6) {
 
 	$targetInfoArray = json_decode(GETPOST('targetInfoArray'), true);
  	$interne = GETPOST('interne','array');
-// 	var_dump($interne);
-//	exit;
 	Foreach($interne as $key => $values){
 		if($values['npt'] != 'on'){
 			$values['id'] = GETPOST('interne_product'.$key);
 			$interne[$key] = $values;
 		}else{
 			unset($interne[$key]);
+		}
+	}
+
+	$externe = GETPOST('interne','array');
+	Foreach($externe as $key => $values){
+		if($values['npt'] != 'on'){
+			$values['id'] = GETPOST('externe_product'.$key);
+			$externe[$key] = $values;
+		}else{
+			unset($externe[$key]);
 		}
 	}
 
@@ -223,7 +231,18 @@ if ($step == 6) {
 	$line->rang=$rang;
 	$rang++;
 	$cmd->lines[] = $line;
-
+	foreach ($externe as $key => $values){
+		$line = New OrderLine($db);
+		$line->subprice = $values['price'];
+		$line->qty = 1;
+		$line->tva_tx = 0;
+		$line->fk_product = $values['id'];
+		$line->pa_ht = $values['pa'];
+		$line->desc = $values['com'];
+		$line->rang=$rang;
+		$rang++;
+		$cmd->lines[] = $line;
+	}
 	$line = New OrderLine($db);
 	$line->desc = 'Sous-Total Travaux Externe';
 	$line->subprice = 0;
@@ -741,7 +760,7 @@ if ($step == 5){
 			print '<td>' . $targetInfoArray['local' .$i . '_label']['value'] . '</td>';
 			print '<td>' . price($targetInfoArray['local' .$i]['value']) . ' €   <input type="hidden" name="interne[' . $pos . '][price]" value="' . $targetInfoArray['local' .$i]['value'] . '"></td>';
 			print '<td><input type="text" name="interne[' . $pos . '][pa]" size="7" value="' . price($targetInfoArray['local' .$i]['value']) . '"/> €</td>';
-			print '<td><input type="text" name="interne[' . $pos . '][comm]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
+			print '<td><input type="text" name="interne[' . $pos . '][com]" size="20" value="' . $targetInfoArray['local' .$i . '_label']['value'] . '"/></td>';
 			print '</tr>';
 		}
 	}
