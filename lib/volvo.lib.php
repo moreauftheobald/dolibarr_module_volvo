@@ -527,6 +527,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "SUM(IF(p.ref IN(" . $soltrs . "),1,0)) as vcm, ";
 	$sql.= "SUM(IF(p.ref LIKE 'DFOL%',1,0)) as dfol, ";
 	$sql.= "SUM(IF(p.ref = 'DDED',1,0)) as dded, ";
+	$sql.= "SUM(IF(p.ref = 'MEM',1,0)) as mem, ";
 	$sql.= "SUM(IF(p.ref = 'FIN_LIX',1,0)) as lixbail, ";
 	$sql.= "SUM(IF(p.ref = 'FIN_VFS',1,0)) as vfs ";
 	$sql.= "FROM " . MAIN_DB_PREFIX . "commande AS c ";
@@ -556,6 +557,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->Mois]['vcm'] = $obj->vcm;
 				$result[$obj->Mois]['dfol'] = $obj->dfol;
 				$result[$obj->Mois]['dded'] = $obj->dded;
+				$result[$obj->Mois]['mem'] = $obj->mem;
 				$result[$obj->Mois]['lixbail'] = $obj->lixbail;
 				$result[$obj->Mois]['vfs'] = $obj->vfs;
 			}elseif($mode=='BY_REF'){
