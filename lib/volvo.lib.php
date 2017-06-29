@@ -564,6 +564,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->ref]['vcm'] = $obj->vcm;
 				$result[$obj->ref]['dfol'] = $obj->dfol;
 				$result[$obj->ref]['dded'] = $obj->dded;
+				$result[$obj->ref]['mem'] = $obj->mem;
 				$result[$obj->ref]['lixbail'] = $obj->lixbail;
 				$result[$obj->ref]['vfs'] = $obj->vfs;
 			}

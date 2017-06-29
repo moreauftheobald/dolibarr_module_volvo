@@ -146,6 +146,17 @@ $field->post_traitement = array('num', '0');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='mem';
+$field->label = 'MEM';
+$field->alias = 'mem';
+$field->checked = 1;
+$field->total = 'value';
+$field->sub_title = 1;
+$field->align = 'center';
+$field->post_traitement = array('num', '0');
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
 $field->name='vfs';
 $field->label = 'VFS';
 $field->alias = 'vfs';
