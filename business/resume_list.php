@@ -56,6 +56,17 @@ $field->post_traitement = array('link', '/commande/card.php','?id=','id');
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
+$field->name='vin';
+$field->label = 'Chassis';
+$field->alias = 'vin';
+$field->checked = 1;
+$field->total = 'none';
+$field->sub_title = 0;
+$field->align = 'center';
+$field->post_traitement = array('substr', -7,2000);
+$table->arrayfields[$field->name] = $field;
+
+$field= new Dyntable_fields($db);
 $field->name='socname';
 $field->label = 'Société';
 $field->alias = 'socname';

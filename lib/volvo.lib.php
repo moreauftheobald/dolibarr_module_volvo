@@ -522,6 +522,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql = "SELECT  ";
 	if($mode=='BY_REF'){
 		$sql.="c.ref as ref, ";
+		$sql.="ef.vin as vin, ";
 	}
 	$sql.= "MONTH(event.datep) as Mois, ";
 	$sql.= "SUM(IF(p.ref IN(" . $soltrs . "),1,0)) as vcm, ";
@@ -535,6 +536,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as ef on c.rowid = ef.fk_object ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
 	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
 	if(!empty($monthlist)){
@@ -562,6 +564,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 				$result[$obj->Mois]['vfs'] = $obj->vfs;
 			}elseif($mode=='BY_REF'){
 				$result[$obj->ref]['vcm'] = $obj->vcm;
+				$result[$obj->ref]['vin'] = $obj->vin;
 				$result[$obj->ref]['dfol'] = $obj->dfol;
 				$result[$obj->ref]['dded'] = $obj->dded;
 				$result[$obj->ref]['mem'] = $obj->mem;
