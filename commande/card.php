@@ -971,6 +971,44 @@ else if ($action == 'updateline' && $user->rights->commande->creer && GETPOST('s
 	}
 }
 
+else if ($action == 'confirm_cancel' && $confirm == 'yes' &&
+		((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->creer))
+				|| (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->order_advance->validate)))
+		)
+{
+	$idwarehouse = GETPOST('idwarehouse');
+
+	$qualified_for_stock_change=0;
+	if (empty($conf->global->STOCK_SUPPORTS_SERVICES))
+	{
+		$qualified_for_stock_change=$object->hasProductsOrServices(2);
+	}
+	else
+	{
+		$qualified_for_stock_change=$object->hasProductsOrServices(1);
+	}
+
+	// Check parameters
+	if (! empty($conf->stock->enabled) && ! empty($conf->global->STOCK_CALCULATE_ON_VALIDATE_ORDER) && $qualified_for_stock_change)
+	{
+		if (! $idwarehouse || $idwarehouse == -1)
+		{
+			$error++;
+			setEventMessages($langs->trans('ErrorFieldRequired',$langs->transnoentitiesnoconv("Warehouse")), null, 'errors');
+			$action='';
+		}
+	}
+
+	if (! $error) {
+		$result = $object->cancel($idwarehouse);
+
+		if ($result < 0) {
+			setEventMessages($object->error, $object->errors, 'errors');
+		}
+	}
+}
+
+
 if ($action == 'builddoc'){
 	// Save last template used to generate document
 	if (GETPOST('model')) $object->setDocModel($user, GETPOST('model', 'alpha'));
@@ -1831,7 +1869,36 @@ if ($action == 'create' && $user->rights->commande->creer)
 			$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('CloneOrder'), $langs->trans('ConfirmCloneOrder', $object->ref), 'confirm_clone', $formquestion, 'yes', 1);
 		}
 
+		if ($action == 'cancel')
+		{
+			$qualified_for_stock_change=0;
+			if (empty($conf->global->STOCK_SUPPORTS_SERVICES))
+			{
+				$qualified_for_stock_change=$object->hasProductsOrServices(2);
+			}
+			else
+			{
+				$qualified_for_stock_change=$object->hasProductsOrServices(1);
+			}
 
+			$text=$langs->trans('ConfirmCancelOrder',$object->ref);
+			$formquestion=array();
+			if (! empty($conf->stock->enabled) && ! empty($conf->global->STOCK_CALCULATE_ON_VALIDATE_ORDER) && $qualified_for_stock_change)
+			{
+				$langs->load("stocks");
+				require_once DOL_DOCUMENT_ROOT . '/product/class/html.formproduct.class.php';
+				$formproduct = new FormProduct($db);
+				$formquestion = array(
+						// 'text' => $langs->trans("ConfirmClone"),
+						// array('type' => 'checkbox', 'name' => 'clone_content', 'label' => $langs->trans("CloneMainAttributes"), 'value'
+						// => 1),
+						// array('type' => 'checkbox', 'name' => 'update_prices', 'label' => $langs->trans("PuttingPricesUpToDate"),
+						// 'value' => 1),
+						array('type' => 'other','name' => 'idwarehouse','label' => $langs->trans("SelectWarehouseForStockIncrease"),'value' => $formproduct->selectWarehouses(GETPOST('idwarehouse')?GETPOST('idwarehouse'):'ifone', 'idwarehouse', '', 1)));
+			}
+
+			$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('Cancel'), $text, 'confirm_cancel', $formquestion, 0, 1);
+		}
 
 		// Print form confirm
 		print $formconfirm;
