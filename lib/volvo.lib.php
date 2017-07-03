@@ -470,7 +470,7 @@ function stat_sell1($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "societe as soc on soc.rowid = l.fk_soc ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead_extrafields lef on lef.fk_object = l.rowid ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND com.fk_statut > 0 ";
 	if(!empty($monthlist)){
 		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
 	}
@@ -538,7 +538,7 @@ function stat_sell2($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as ef on c.rowid = ef.fk_object ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "'  AND com.fk_statut > 0 ";
 	if(!empty($monthlist)){
 		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
 	}
@@ -604,7 +604,7 @@ function stat_sell3($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet as det on c.rowid = det.fk_commande ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as p on p.rowid = det.fk_product ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND p.ref IS NOT NULL ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' AND p.ref IS NOT NULL  AND com.fk_statut > 0 ";
 	if(!empty($monthlist)){
 		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
 	}
@@ -647,7 +647,7 @@ function stat_sell4($year, $commercial,$monthlist,$mode='GROUP'){
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = c.rowid AND event.elementtype = 'order' AND event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = c.rowid AND elm.sourcetype ='commande' AND elm.targettype='lead' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "lead as l on elm.fk_target = l.rowid ";
-	$sql.= "WHERE YEAR(event.datep) ='" . $year . "' ";
+	$sql.= "WHERE YEAR(event.datep) ='" . $year . "'  AND com.fk_statut > 0 ";
 	if(!empty($monthlist)){
 		$sql.= "AND MONTH(event.datep) IN (" . $monthlist . ") ";
 	}
