@@ -610,7 +610,7 @@ class Leadext extends Lead
 			}
 		}
 		if (count($sqlwhere) > 0) {
-			$sql .= ' HAVING com.fk_statut > -1 AND ' . implode(' ' . $filtermode . ' ', $sqlwhere);
+			$sql .= ' HAVING ' . implode(' ' . $filtermode . ' ', $sqlwhere);
 		}
 
 		if (! empty($sortfield)) {
