@@ -714,7 +714,7 @@ class Leadext extends Lead
 		$sql .= " FROM (" . $subsql1 . ") as idx";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "lead as lead on lead.rowid = idx.lead";
 		$sql .= " INNER JOIN " . MAIN_DB_PREFIX . "user as u ON u.rowid = lead.fk_user_resp";
-		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd";
+		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande as com ON com.rowid = idx.cmd AND com.fk_statut > 0";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as comef ON com.rowid = comef.fk_object";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur as cf ON cf.ref = idx.fourn";
 		$sql .= " LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = cf.rowid";
@@ -745,7 +745,7 @@ class Leadext extends Lead
 				}
 			}
 		}
-		$sql .= ' HAVING event6.datep IS NOT NULL AND com.fk_statut != -1';
+		$sql .= ' HAVING event6.datep IS NOT NULL ';
 		if (count($sqlwhere) > 0) {
 			$sql .= ' AND (' . implode(' ' . $filtermode . ' ', $sqlwhere) .')';
 		}
