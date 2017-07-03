@@ -603,14 +603,14 @@ class Leadext extends Lead
 				}elseif(($key== 'YEAR_IN')) {
 					$sqlwhere[] = 'YEAR(dt_sortie) IN (' . $value . ')';
 				}elseif(($key== 'PORT')) {
-					$sqlwhere[] = '(cf.fk_statut>0 AND  event3.datep IS NULL)';
+					$sqlwhere[] = '(cf.fk_statut>0 AND event3.datep IS NULL)';
 				}else {
 					$sqlwhere[] = $key . ' LIKE \'%' . $this->db->escape($value) . '%\'';
 				}
 			}
 		}
 		if (count($sqlwhere) > 0) {
-			$sql .= ' HAVING com.fk_statut <> -1 AND ' . implode(' ' . $filtermode . ' ', $sqlwhere);
+			$sql .= ' HAVING com.fk_statut > -1 AND ' . implode(' ' . $filtermode . ' ', $sqlwhere);
 		}
 
 		if (! empty($sortfield)) {
