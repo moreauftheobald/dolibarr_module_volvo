@@ -603,7 +603,7 @@ class Leadext extends Lead
 				}elseif(($key== 'YEAR_IN')) {
 					$sqlwhere[] = 'YEAR(dt_sortie) IN (' . $value . ')';
 				}elseif(($key== 'PORT')) {
-					$sqlwhere[] = '(cf.fk_statut>0 AND event3.datep IS NULL)';
+					$sqlwhere[] = '(cf.fk_statut>0 AND com.fk_statut > 0 AND event3.datep IS NULL)';
 				}else {
 					$sqlwhere[] = $key . ' LIKE \'%' . $this->db->escape($value) . '%\'';
 				}
@@ -745,7 +745,7 @@ class Leadext extends Lead
 				}
 			}
 		}
-		$sql .= ' HAVING event6.datep IS NOT NULL';
+		$sql .= ' HAVING event6.datep IS NOT NULL AND com.fk_statut != -1';
 		if (count($sqlwhere) > 0) {
 			$sql .= ' AND (' . implode(' ' . $filtermode . ' ', $sqlwhere) .')';
 		}

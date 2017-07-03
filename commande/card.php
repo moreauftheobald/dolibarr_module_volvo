@@ -2194,6 +2194,17 @@ if ($action == 'create' && $user->rights->commande->creer)
 						print '<div class="inline-block divButAction"><a class="butActionRefused" href="#" title="' . $langs->trans("ShippingExist") . '">' . $langs->trans("Delete") . '</a></div>';
 					}
 				}
+
+				// Cancel order
+				if ($object->statut == Commande::STATUS_VALIDATED &&
+						((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->cloturer))
+								|| (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->commande->order_advance->annuler)))
+						)
+				{
+					print '<div class="inline-block divButAction"><a class="butActionDelete" href="' . $_SERVER["PHP_SELF"] . '?id=' . $object->id . '&amp;action=cancel">' . $langs->trans('Cancel') . '</a></div>';
+				}
+
+
 			}
 			print '</div>';
 		}
