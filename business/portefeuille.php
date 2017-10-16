@@ -267,6 +267,8 @@ $tools['3'] = $tool;
 
 $table->extra_tools =$tools;
 
+$table->filter['PORT'] = 1;
+
 $table->post();
 
 $table->filter['PORT'] = 1;
