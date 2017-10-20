@@ -295,7 +295,7 @@ $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
 $field->name='fk_statut';
-$field->enabled = false;
+$field->enabled = true;
 $field->alias = 'fk_statut';
 $field->field = 'IF(ef.dt_env_cli IS NULL,1,IF(dt_ret_cli IS NULL,2,IF(dt_sig_the IS NULL,3,IF(dt_env_vtf IS NULL,4,IF(dt_enr IS NULL,5,IF(dt_ret_vtf IS NULL, 6,IF(dt_trait IS NULL,7,8))))))) ';
 $field->group =1;
