@@ -306,7 +306,7 @@ $tool->html_name = 'year';
 $tool->filter = 'year';
 $tool->use_empty = 0;
 $tool->min_year = 5;
-$tool->max_year = 0;
+$tool->max_year = 1;
 $tool->default = dol_print_date(dol_now(),'%Y');
 $tools['1'] = $tool;
 
