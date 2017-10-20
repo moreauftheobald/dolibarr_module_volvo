@@ -710,7 +710,7 @@ class Dyntable
 		$this->limit = 0;
 		$this->data_array();
 		$selectfields = $this->multiSelectArrayWithCheckbox();
-		echo $this->sql;
+
 		$handler = fopen("php://output", "w");
 		header('Content-Type: text/csv');
 		header('Content-Disposition: attachment;filename=' . $this->export_name . '.csv');
@@ -718,7 +718,7 @@ class Dyntable
 
 		$ligne=array();
 		foreach ($this->arrayfields as $f){
-			if($f->checked ==1) $ligne[]=$f->label;
+			if($f->checked ==1) $ligne[]=strip_tags($f->label);
 		}
 		fputcsv($handler, $ligne, ';', '"');
 		foreach ($this->array_display as $disp){
