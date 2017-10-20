@@ -362,8 +362,6 @@ $table->post();
 
 $table->data_array();
 
-print $table->sql;
-
 $table->header();
 
 if ($action == 'set_date' && $element != 'none') {
