@@ -710,6 +710,7 @@ class Dyntable
 		$selectfields = $this->multiSelectArrayWithCheckbox();
 		$this->limit = 0;
 		$this->data_array();
+		echo $this->sql;
 		$handler = fopen("php://output", "w");
 		header('Content-Type: text/csv');
 		header('Content-Disposition: attachment;filename=' . $this->export_name . '.csv');

@@ -273,8 +273,6 @@ $table->post();
 
 $table->filter['PORT'] = 1;
 
-
-
 $table->data_array();
 
 $table->header();
