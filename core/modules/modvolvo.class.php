@@ -1129,21 +1129,6 @@ class modvolvo extends DolibarrModules
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
 				'type' => 'left',
-				'titre' => 'Affaires chaudes',
-				'mainmenu' => 'volvo',
-				'leftmenu' => 'chaudes',
-				'url' => '/mydoliboard/mydoliboard.php?idboard=5',
-				'langs' => 'lead@lead',
-				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->chaudes',
-				'perms' => '$user->rights->volvo->chaudes',
-				'target' => '',
-				'user' => 0
-		);
-		$r ++;
-		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
-				'type' => 'left',
 				'titre' => 'Portefeuille cmd',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'portefeuille',
@@ -1156,8 +1141,57 @@ class modvolvo extends DolibarrModules
 				'user' => 0
 		);
 		$r ++;
+
 		$this->menu[$r] = array(
 				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
+				'type' => 'left',
+				'titre' => 'Affaires chaudes',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'chaudes',
+				'url' => '/mydoliboard/mydoliboard.php?idboard=5',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->chaudes',
+				'perms' => '$user->rights->volvo->chaudes',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo',
+				'type' => 'left',
+				'titre' => 'Sol. TRS',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'soltrs',
+				'url' => '/mydoliboard/mydoliboard.php?idboard=6',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '1',
+				'perms' => '1',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=soltrs',
+				'type' => 'left',
+				'titre' => 'Tableau de bord Sol. Trs.',
+				'mainmenu' => 'volvo',
+				'leftmenu' => 'tdbsoltrs',
+				'url' => '/mydoliboard/mydoliboard.php?idboard=6',
+				'langs' => 'lead@lead',
+				'position' => 100+$r,
+				'enabled' => '$user->rights->volvo->soltrs',
+				'perms' => '$user->rights->volvo->soltrs',
+				'target' => '',
+				'user' => 0
+		);
+		$r ++;
+
+		$this->menu[$r] = array(
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=soltrs',
 				'type' => 'left',
 				'titre' => 'Liste des contrats',
 				'mainmenu' => 'volvo',
@@ -1171,17 +1205,18 @@ class modvolvo extends DolibarrModules
 				'user' => 0
 		);
 		$r ++;
+
 		$this->menu[$r] = array(
-				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=etats',
+				'fk_menu' => 'fk_mainmenu=volvo,fk_leftmenu=soltrs',
 				'type' => 'left',
-				'titre' => 'Tableau de bord Sol. Trs.',
+				'titre' => 'portefeuille contrats',
 				'mainmenu' => 'volvo',
-				'leftmenu' => 'tdbsoltrs',
-				'url' => '/mydoliboard/mydoliboard.php?idboard=6',
+				'leftmenu' => 'contratport',
+				'url' => '/volvo/business/listcontrat.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
-				'enabled' => '$user->rights->volvo->soltrs',
-				'perms' => '$user->rights->volvo->soltrs',
+				'enabled' => '$user->rights->volvo->contrat',
+				'perms' => '$user->rights->volvo->contrat',
 				'target' => '',
 				'user' => 0
 		);
