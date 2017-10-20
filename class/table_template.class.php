@@ -88,7 +88,7 @@ class Dyntable
 			}
 			if ($val->label)
 			{
-				$lis.='<li><input type="checkbox" value="'.$key.'"'.(empty($val->checked)?'':' checked="checked"').'/>'.strip_tags($val->label).'</li>';
+				$lis.='<li><input type="checkbox" value="'.$key.'"'.(empty($val->checked)?'':' checked="checked"').'/>'.$val->label.'</li>';
 				$listcheckedstring.=(empty($val->checked)?'':$key.',');
 			}
 		}
