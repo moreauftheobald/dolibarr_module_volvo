@@ -52,7 +52,8 @@ $langs->load("companies");
 $langs->load("compta");
 
 $table->title = "portefeuille de contrats";
-$table->default_sortfield = 'vcmincmd.ref';
+$table->default_sortfield = 'vcmincmd.immat';
+$table->sortorder = "DESC";
 $table->export_name = 'prt_contrat_new';
 $table->context = 'contractprt';
 $table->search_button = 1;
