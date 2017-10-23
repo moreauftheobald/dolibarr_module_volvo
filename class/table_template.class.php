@@ -44,6 +44,7 @@ class Dyntable
 	public $param8='none';
 	public $param9='none';
 	public $default_sortfield;
+	public $default_sortorder;
 	public $filter_line;
 
 
@@ -543,8 +544,12 @@ class Dyntable
 
 		$this->offset = ($this->limit+1) * $this->page;
 
-		if (empty($this->sortorder))
+		if (empty($this->sortorder) && !empty($this->default_sortorder)){
+			$this->sortorder = $this->default_sortorder;
+		}else{
 			$this->sortorder = "ASC";
+		}
+
 		if (empty($this->sortfield))
 			$this->sortfield = $this->default_sortfield;
 
