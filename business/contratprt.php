@@ -246,8 +246,6 @@ $table->data_array();
 
 $table->header();
 
-print $table->sql;
-
 $table->draw_tool_bar();
 
 $table->draw_table_head();
