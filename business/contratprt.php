@@ -209,7 +209,7 @@ $field->alias = 'socid';
 $field->field = 'soc.rowid';
 $table->arrayfields[$field->name] = $field;
 
-$table->sql_from.= "(SELECT cmdef.vin as vin, cmdp.rowid as prodid, cmdp.ref as product, cmd.ref as ref,cmd.rowid as cmdid, cmdef.immat as immat, cmd.fk_soc as client, cmd.date_livraison as date_livraison, cmdp.label as produit ";
+$table->sql_from.= "(SELECT RIGHT(cmdef.vin,7) as vin, cmdp.rowid as prodid, cmdp.ref as product, cmd.ref as ref,cmd.rowid as cmdid, cmdef.immat as immat, cmd.fk_soc as client, cmd.date_livraison as date_livraison, cmdp.label as produit ";
 $table->sql_from.= "FROM " . MAIN_DB_PREFIX . "commande AS cmd ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields AS cmdef ON cmd.rowid = cmdef.fk_object ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "commandedet AS cmddet on cmd.rowid = cmddet.fk_commande ";
@@ -221,14 +221,14 @@ $table->sql_from.= "LEFT JOIN ";
 
 $table->sql_from.= "(SELECT ct.ref_supplier as vin, ctp.ref as product ";
 $table->sql_from.= "FROM " . MAIN_DB_PREFIX . "contrat AS ct ";
-$table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contratdet AS ctdet on ct.rowid = ctdet.fk_contrat";
+$table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "contratdet AS ctdet on ct.rowid = ctdet.fk_contrat ";
 $table->sql_from.= "LEFT JOIN " . MAIN_DB_PREFIX . "product as ctp ON ctp.rowid = ctdet.fk_product ";
 $table->sql_from.= "WHERE ctp.ref IN ('GOLD','SILVER','SILVER+','BLUE','PPC','PREV','PVC')) AS vcminct ";
 
 $table->sql_from.= "ON vcmincmd.vin = vcminct.vin AND vcmincmd.product = vcminct.product ";
 $table->sql_from.= "INNER JOIN llx_societe as soc on soc.rowid = vcmincmd.client ";
 
-$table->sql_where = 'WHERE vcminct.vin IS NULL ';
+$table->sql_where = 'vcminct.vin IS NULL ';
 $table->sql_filter_action = array();
 $table->sql_filter_action[] = array('keys'=>array('soc.nom','vcmincmd.ref','vcmincmd.vin','vcmincmd.immat'), 'action' =>"#KEY# LIKE '%#VALUE#%'");
 $table->sql_filter_action[] = array('keys'=>array('vcmincmd.prodid'), 'action' =>"#KEY# = #VALUE#");
