@@ -253,7 +253,7 @@ $table->data_array();
 
 $table->header();
 
-if(!empty($formconfirm)) print $formconfirm;
+print $table->sql;
 
 $table->draw_tool_bar();
 
