@@ -1212,7 +1212,7 @@ class modvolvo extends DolibarrModules
 				'titre' => 'portefeuille contrats',
 				'mainmenu' => 'volvo',
 				'leftmenu' => 'contratport',
-				'url' => '/volvo/business/listcontrat.php',
+				'url' => '/volvo/business/contratprt.php',
 				'langs' => 'lead@lead',
 				'position' => 100+$r,
 				'enabled' => '$user->rights->volvo->contrat',
