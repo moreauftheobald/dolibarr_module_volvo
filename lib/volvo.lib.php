@@ -688,10 +688,10 @@ function stat_sell5($year, $commercial,$monthlist,$mode='GROUP'){
 	}
 	$sql.= "MONTH( IFNULL( ef.dt_liv_maj, c.date_livraison ) ) AS Mois, ";
 	$sql.= "COUNT(DISTINCT c.rowid) as nb_port ";
-	$sql.= "FROM " . MAIN_DB_PREFIX . "commande_fournisseur AS c ";
+	$sql.= "FROM " . MAIN_DB_PREFIX . "commande AS cmd ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS el ON el.fk_source = cmd.rowid AND el.targettype =  'order_supplier' AND el.sourcetype =  'commande' ";
+	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur AS c ON c.rowid = el.fk_target ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_fournisseur_extrafields as ef on ef.fk_object = c.rowid ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS el ON el.fk_target = c.rowid AND el.targettype =  'order_supplier' AND el.sourcetype =  'commande' ";
-	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande AS cmd ON cmd.rowid = el.fk_source ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "actioncomm AS event ON event.fk_element = cmd.rowid AND event.elementtype = 'order' AND
 			event.label LIKE '%Commande V% classée Facturée%' ";
 	$sql.= "LEFT JOIN " . MAIN_DB_PREFIX . "element_element AS elm ON elm.fk_source = cmd.rowid AND elm.targettype =  'lead' AND elm.sourcetype =  'commande' ";
