@@ -682,7 +682,7 @@ class Leadext extends Lead
 		$subsql1.= 'el2.fk_target as lead ';
 		$subsql1.= 'FROM ' . MAIN_DB_PREFIX .'element_element AS el ';
 		$subsql1.= 'LEFT JOIN ' . MAIN_DB_PREFIX .'commande_fournisseur as fourn ON el.fk_target = fourn.rowid AND el.targettype = "order_supplier" AND el.sourcetype = "commande" AND fourn.fk_soc = 32553 ';
-		$subsql1.= 'LEFT JOIN ' . MAIN_DB_PREFIX .'commande as cmd ON el.fk_source = cmd.rowid AND cmd.fk_statut > 0';
+		$subsql1.= 'LEFT JOIN ' . MAIN_DB_PREFIX .'commande as cmd ON el.fk_source = cmd.rowid ';
 		$subsql1.= 'INNER JOIN ' . MAIN_DB_PREFIX .'element_element AS el2 ON el2.fk_source = cmd.rowid AND el2.targettype = "lead" AND el.sourcetype = "commande" ';
 		$subsql1.= 'GROUP BY cmd.ref';
 
