@@ -745,7 +745,7 @@ class Leadext extends Lead
 				}
 			}
 		}
-		$sql .= ' HAVING event6.datep IS NOT NULL AND (event5.datep >= DATEADD(CURDATE(), INTERVAL -7 DAY) OR event5.datep IS NULL) ';
+		$sql .= ' HAVING event6.datep IS NOT NULL AND (event5.datep IS NULL) ';
 		if (count($sqlwhere) > 0) {
 			$sql .= ' AND (' . implode(' ' . $filtermode . ' ', $sqlwhere) .')';
 		}
