@@ -102,26 +102,26 @@ class VolvoImportom extends VolvoImport
 				'editable' => 0,
 				'noinsert' => 1
 		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_liv_maj',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de livraison Mise a jour'),
-				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
-				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Date de livraison mise à jour',
-				'editable' => 0,
-				'noinsert' => 1
-		);
-		$this->targetInfoArray[] = array(
-				'column' => 'dt_fact',
-				'type' => 'date',
-				'columntrans' => $langs->trans('Date de facturation'),
-				'table' => MAIN_DB_PREFIX . 'commande',
-				'tabletrans' => $langs->trans('Commande Client'),
-				'filecolumntitle' => 'Date de facturation (niveau final)',
-				'editable' => 0,
-				'noinsert' => 1
-		);
+// 		$this->targetInfoArray[] = array(
+// 				'column' => 'dt_liv_maj',
+// 				'type' => 'date',
+// 				'columntrans' => $langs->trans('Date de livraison Mise a jour'),
+// 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
+// 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
+// 				'filecolumntitle' => 'Date de livraison mise à jour',
+// 				'editable' => 0,
+// 				'noinsert' => 1
+// 		);
+// 		$this->targetInfoArray[] = array(
+// 				'column' => 'dt_fact',
+// 				'type' => 'date',
+// 				'columntrans' => $langs->trans('Date de facturation'),
+// 				'table' => MAIN_DB_PREFIX . 'commande',
+// 				'tabletrans' => $langs->trans('Commande Client'),
+// 				'filecolumntitle' => 'Date de facturation (niveau final)',
+// 				'editable' => 0,
+// 				'noinsert' => 1
+// 		);
 		$this->targetInfoArray[] = array(
 				'column' => 'vin',
 				'type' => 'text',
