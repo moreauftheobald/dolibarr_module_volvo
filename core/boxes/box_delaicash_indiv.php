@@ -96,7 +96,11 @@ class box_delaicash_indiv extends ModeleBoxes
 					'url' => DOL_URL_ROOT . "/societe/soc.php?socid=" . $line->societe
 			);
 
+<<<<<<< HEAD
+			$this->info_box_contents[$i][2] = array(
+=======
 			$this->info_box_contents[$i][3] = array(
+>>>>>>> 0b3bbc2a03f69e509b63162b06d118a12b6e7d20
 					'td' => 'align="left"',
 					'text' => dol_print_date($line->date_lim_reg,'day'),
 			);
