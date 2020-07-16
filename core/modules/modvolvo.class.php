@@ -573,6 +573,15 @@ class modvolvo extends DolibarrModules
 				'current',
 				1
 			),
+			48 => array(
+					'COMMANDEFOUR_ADDON_PDF',
+					'chaine',
+					'GOP',
+					'',
+					1,
+					'current',
+					1
+			),
 		);
 
 		// Array to add new pages in new tabs
@@ -1557,6 +1566,7 @@ class modvolvo extends DolibarrModules
 		$result=dol_copy(dol_buildpath('/volvo/core/doctemplate/ANALYSE CDE VOLVO.pdf'),DOL_DATA_ROOT.'/volvo/modelpdf/ficheanalyse.pdf',0,0);
 		$result=dol_copy(dol_buildpath('/volvo/core/doctemplate/ANALYSE CDE VOLVO LG.pdf'),DOL_DATA_ROOT.'/volvo/modelpdf/ficheanalyselg.pdf',0,0);
 		$result=dol_copy(dol_buildpath('/volvo/core/doctemplate/VCM.pdf'),DOL_DATA_ROOT.'/volvo/modelpdf/vcm.pdf',0,0);
+		$result=dol_copy(dol_buildpath('/volvo/core/doctemplate/GOP.pdf'),DOL_DATA_ROOT.'/volvo/modelpdf/gop.pdf',0,0);
 
 		return $this->_init($sql, $options);
 	}
