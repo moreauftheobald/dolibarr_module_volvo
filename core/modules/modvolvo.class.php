@@ -573,6 +573,15 @@ class modvolvo extends DolibarrModules
 				'current',
 				1
 			),
+			2 => array(
+				'SUPPLIERORDER_ADDON_PDF',
+				'chaine',
+				'gop',
+				'',
+				1,
+				'current',
+				1
+			),
 		);
 
 		// Array to add new pages in new tabs
