@@ -44,7 +44,7 @@ dol_include_once('/volvo/lib/volvo.lib.php');
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_vcm extends ModelePDFContract
+class pdf_gop extends ModelePDFContract
 {
 	var $db;
 	var $name;
