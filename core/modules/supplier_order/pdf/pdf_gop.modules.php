@@ -84,8 +84,8 @@ class pdf_vcm extends ModelePDFContract
 		global $conf,$langs,$mysoc;
 
 		$this->db = $db;
-		$this->name = 'vcm';
-		$this->description = "Demande de tarification de solution de maintenace";
+		$this->name = 'gop';
+		$this->description = "garantie de paiement";
 
 		// Dimension page pour format A4
 		$this->type = 'pdf';
