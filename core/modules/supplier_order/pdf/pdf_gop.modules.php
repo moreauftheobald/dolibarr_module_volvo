@@ -216,17 +216,12 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 				$pdf->SetPage(1);
 
-//  				$extrafields = new ExtraFields($this->db);
-// 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 
-// 				$commercial = new User($this->db);
-// 				$commercial->fetch($object->user_author_id);
-
-// 				$pdf->SetFont('','', $default_font_size);
-// 				$pdf->SetXY(38, $y[0]);
-// 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
-// 				$pdf->MultiCell(80, 0, $out,0,'L');
+ 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetXY(120, 120);
+ 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
+ 				$pdf->MultiCell(80, 0, $out,0,'L');
 
 // 				$pdf->SetFont('','', $default_font_size);
 //  				$pdf->SetXY(143.8, $y[0]);
