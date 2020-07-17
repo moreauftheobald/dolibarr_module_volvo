@@ -252,12 +252,12 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->MultiCell(150, 16.5, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size + 0.3);
-  				$pdf->SetXY(95.5, 154.25);
+  				$pdf->SetXY(95.5, 154.15);
   				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
   				$pdf->writeHTML ($out);
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(126.7, 195.5);
+  				$pdf->SetXY(126.7, 195.6);
   				if(!empty($object->cond_reglement_id)){
   					$text = $object->cond_reglement;
   				}else{
