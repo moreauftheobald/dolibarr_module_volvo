@@ -260,7 +260,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
   				$pdf->SetFont('','', $default_font_size);
   				$out = $outputlangs->convToOutputCharset($object->lines['0']->desc);
-  				$pdf->writeHTMLCell(150,16.5,43,137.7,$out);
+  				$pdf->writeHTMLCell(150,16.5,40,137.5,$out);
 
 
 //  				$pdf->SetFont('','', $default_font_size);
