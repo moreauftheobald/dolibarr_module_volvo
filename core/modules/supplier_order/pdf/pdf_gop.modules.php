@@ -257,8 +257,13 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->writeHTML ($out);
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(110, 186.5);
-  				$out = $outputlangs->convToOutputCharset('test' . $object->cond_reglement_doc);
+  				$pdf->SetXY(120, 200);
+  				if(!empty($object->cond_reglement_id)){
+  					$text = $object->cond_reglement;
+  				}else{
+  					$text = '60 Jours fin de mois';
+  				}
+  				$out = $outputlangs->convToOutputCharset($text);
   				$pdf->MultiCell(80, 0, $out,0,'L');
 
 				$pdf->Close();
