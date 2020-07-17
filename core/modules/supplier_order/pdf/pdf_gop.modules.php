@@ -171,7 +171,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
 				$reshook=$hookmanager->executeHooks('beforePDFCreation',$parameters,$object,$action);    // Note that $action and $object may have been modified by some hooks
 
                 $pdf=pdf_getInstance($this->format);
-                $default_font_size = pdf_getPDFFontSize($outputlangs)-1.3;	// Must be after pdf_getInstance
+                $default_font_size = pdf_getPDFFontSize($outputlangs)-0.3;	// Must be after pdf_getInstance
                 $heightforinfotot = 50;	// Height reserved to output the info and total part
 		        $heightforfreetext= (isset($conf->global->MAIN_PDF_FREETEXT_HEIGHT)?$conf->global->MAIN_PDF_FREETEXT_HEIGHT:5);	// Height reserved to output the free text on last page
 	            $heightforfooter = $this->marge_basse + 8;	// Height reserved to output the footer (value include bottom margin)
@@ -218,29 +218,34 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 
 
- 				$pdf->SetFont('','', $default_font_size);
+ 				$pdf->SetFont('','', $default_font_size-1);
  				$pdf->SetXY(73.5, 59.1);
  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
  				$pdf->MultiCell(80, 0, $out,0,'L');
 
- 				$pdf->SetFont('','', $default_font_size+1);
+ 				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(55, 86.8);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
-  				$pdf->SetFont('','', $default_font_size+1);
+  				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(55, 91);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->address);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
-  				$pdf->SetFont('','', $default_font_size+1);
+  				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(55, 95.2);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->zip . ' ' . $object->thirdparty->town);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
-  				$pdf->SetFont('','', $default_font_size+1);
+  				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(55, 99.4);
   				$out = $outputlangs->convToOutputCharset('Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(55, 120);
+  				$out = $outputlangs->convToOutputCharset($conf->entity->name);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
 //  				$pdf->SetFont('','', $default_font_size);
