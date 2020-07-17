@@ -256,6 +256,11 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
   				$pdf->writeHTML ($out);
 
+  				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(110, 186.5);
+  				$out = $outputlangs->convToOutputCharset($object->thirdparty->cond_reglement);
+  				$pdf->MultiCell(150, 16.5, $out,0,'L');
+
 				$pdf->Close();
 
 				$pdf->Output($file,'F');
