@@ -233,6 +233,11 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->address);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
+  				$pdf->SetFont('','', $default_font_size+1);
+  				$pdf->SetXY(55, 95.2);
+  				$out = $outputlangs->convToOutputCharset($object->thirdparty->zip . ' ' . $object->thirdparty->town);
+  				$pdf->MultiCell(120, 0, $out,0,'L');
+
 //  				$pdf->SetFont('','', $default_font_size);
 //  				$pdf->SetXY(19, $y[1]);
 //  				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
