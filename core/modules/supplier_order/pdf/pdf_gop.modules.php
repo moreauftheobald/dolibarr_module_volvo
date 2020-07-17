@@ -217,47 +217,47 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 91);
+  				$pdf->SetXY(55, 90);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->address);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 95.2);
+  				$pdf->SetXY(55, 94.2);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->zip . ' ' . $object->thirdparty->town);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 99.4);
+  				$pdf->SetXY(55, 98.4);
   				$out = $outputlangs->convToOutputCharset('Tel: ' . $object->thirdparty->phone . ' - Fax: ' . $object->thirdparty->fax . ' -  Mail: ' . $object->thirdparty->email);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(55, 116.4);
+  				$pdf->SetXY(55, 115.4);
   				$out = $outputlangs->convToOutputCharset($this->emetteur->name);
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(45.5, 124.8);
+  				$pdf->SetXY(45.5, 123.8);
   				$out = $outputlangs->convToOutputCharset('Tracteur MERCEDES - VIN : YV2XTY0A9LB924738 - immatriculation : FL364TV');
   				$pdf->MultiCell(150, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(44, 129.3);
+  				$pdf->SetXY(44, 128.3);
   				$out = $outputlangs->convToOutputCharset($object->ref);
   				$pdf->MultiCell(150, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(40, 137.6);
+  				$pdf->SetXY(40, 136.6);
   				$out = $outputlangs->convToOutputCharset($object->lines['0']->desc);
   				$pdf->MultiCell(150, 16.5, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size + 0.3);
-  				$pdf->SetXY(95.5, 154.85);
+  				$pdf->SetXY(95.5, 153.85);
   				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
   				$pdf->writeHTML ($out);
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(126.7, 196.1);
+  				$pdf->SetXY(126.7, 195.1);
   				if(!empty($object->cond_reglement_id)){
   					$text = $object->cond_reglement;
   				}else{
