@@ -37,7 +37,7 @@ require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
 /**
  *	Class to build contracts documents with model Strato
  */
-class pdf_gop extends ModelePDFContract
+class pdf_gop extends ModelePDFSuppliersOrders
 {
 	var $db;
 	var $name;
