@@ -257,7 +257,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->writeHTML ($out);
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(126, 196);
+  				$pdf->SetXY(126.5, 196.1);
   				if(!empty($object->cond_reglement_id)){
   					$text = $object->cond_reglement;
   				}else{
