@@ -224,9 +224,9 @@ class pdf_gop extends ModelePDFSuppliersOrders
  				$pdf->MultiCell(80, 0, $out,0,'L');
 
  				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(57, 88);
+  				$pdf->SetXY(55, 85);
   				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
-  				$pdf->MultiCell(30, 0, $out,0,'L');
+  				$pdf->MultiCell(120, 0, $out,0,'L');
 
 //  				$pdf->SetFont('','', $default_font_size);
 //  				$pdf->SetXY(19, $y[1]);
