@@ -27,19 +27,12 @@
  *	\ingroup    ficheinter
  *	\brief      Strato contracts template class file
  */
-require_once DOL_DOCUMENT_ROOT.'/core/modules/contract/modules_contract.php';
+
 require_once DOL_DOCUMENT_ROOT.'/core/lib/company.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/pdf.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
-require_once DOL_DOCUMENT_ROOT.'/product/class/product.class.php';
-require_once DOL_DOCUMENT_ROOT . '/core/class/extrafields.class.php';
-require_once DOL_DOCUMENT_ROOT . '/projet/class/project.class.php';
 require_once DOL_DOCUMENT_ROOT . '/user/class/user.class.php';
-require_once DOL_DOCUMENT_ROOT . '/volvo/class/lead.extend.class.php';
 require_once DOL_DOCUMENT_ROOT . '/fourn/class/fournisseur.commande.class.php';
-require_once DOL_DOCUMENT_ROOT . '/categories/class/categorie.class.php';
-require_once DOL_DOCUMENT_ROOT . '/volvo/class/reprise.class.php';
-dol_include_once('/volvo/lib/volvo.lib.php');
 
 /**
  *	Class to build contracts documents with model Strato
@@ -98,13 +91,13 @@ class pdf_gop extends ModelePDFContract
 		$this->marge_haute =isset($conf->global->MAIN_PDF_MARGIN_TOP)?$conf->global->MAIN_PDF_MARGIN_TOP:10;
 		$this->marge_basse =isset($conf->global->MAIN_PDF_MARGIN_BOTTOM)?$conf->global->MAIN_PDF_MARGIN_BOTTOM:10;
 
-		$this->option_logo = 1;                    // Affiche logo
+		$this->option_logo = 0;                    // Affiche logo
 		$this->option_tva = 0;                     // Gere option tva FACTURE_TVAOPTION
 		$this->option_modereg = 0;                 // Affiche mode reglement
 		$this->option_condreg = 0;                 // Affiche conditions reglement
 		$this->option_codeproduitservice = 0;      // Affiche code produit-service
 		$this->option_multilang = 0;               // Dispo en plusieurs langues
-		$this->option_draft_watermark = 1;		   //Support add of a watermark on drafts
+		$this->option_draft_watermark = 0;		   //Support add of a watermark on drafts
 
 		// Get source company
 		$this->emetteur=$mysoc;
@@ -151,8 +144,8 @@ class pdf_gop extends ModelePDFContract
 			else
 			{
 				$objectref = dol_sanitizeFileName($object->ref);
-				$dir = $conf->commande->dir_output . "/" . $objectref;
-				$file = $dir . "/vcm_" . $objectref . ".pdf";
+				$dir = $conf->fournisseur->commande->dir_output . "/" . $objectref;
+				$file = $dir . "/gop_" . $objectref . ".pdf";
 			}
 
 			if (! file_exists($dir))
@@ -206,7 +199,7 @@ class pdf_gop extends ModelePDFContract
 				$pdf->SetMargins($this->marge_gauche, $this->marge_haute, $this->marge_droite);   // Left, Top, Right
 
 				// Add Pages from models
-				$infile=$conf->volvo->dir_output.'/modelpdf/vcm.pdf';
+				$infile=$conf->volvo->dir_output.'/modelpdf/gop.pdf';
 				if (file_exists($infile) && is_readable($infile)) {
 					$pagecount = $pdf->setSourceFile($infile);
 					for($i = 1; $i <= $pagecount; $i ++) {
@@ -228,11 +221,6 @@ class pdf_gop extends ModelePDFContract
 
 				$sys = new Leadext($this->db);
 				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,167.2,172,192.2,196.6,201.2,205.7,210.2,214.7,219.3,223.8,234,280,284);
-
-// 				$x = $sys->prepare_array('VOLVO_ANALYSELG_X', 'array');
-// 				$z = $sys->prepare_array('VOLVO_ANALYSELG_Z', 'array');
-// 				$yt = $sys->prepare_array('VOLVO_ANALYSELG_Y_ENTETE', 'array');
-// 				$yp = $sys->prepare_array('VOLVO_ANALYSELG_Y_PIED', 'array');
 
 				$commercial = new User($this->db);
 				$commercial->fetch($object->user_author_id);
