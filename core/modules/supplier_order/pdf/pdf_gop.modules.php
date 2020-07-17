@@ -129,16 +129,18 @@ class pdf_gop extends ModelePDFSuppliersOrders
 		$outputlangs->load("main");
 		$outputlangs->load("dict");
 		$outputlangs->load("companies");
-		$outputlangs->load("contracts");
+		$outputlangs->load("bills");
+		$outputlangs->load("products");
+		$outputlangs->load("orders");
 
-		if ($conf->commande->dir_output)
+		if ($conf->fournisseur->commande->dir_output)
 		{
             $object->fetch_thirdparty();
 
 			// Definition of $dir and $file
 			if ($object->specimen)
 			{
-				$dir = $conf->commande->dir_output;
+				$dir = $conf->fournisseur->commande->dir_output;
 				$file = $dir . "/SPECIMEN.pdf";
 			}
 			else
@@ -159,16 +161,6 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 			if (file_exists($dir))
 			{
-				// Add pdfgeneration hook
-				if (! is_object($hookmanager))
-				{
-					include_once DOL_DOCUMENT_ROOT.'/core/class/hookmanager.class.php';
-					$hookmanager=new HookManager($this->db);
-				}
-				$hookmanager->initHooks(array('pdfgeneration'));
-				$parameters=array('file'=>$file,'object'=>$object,'outputlangs'=>$outputlangs);
-				global $action;
-				$reshook=$hookmanager->executeHooks('beforePDFCreation',$parameters,$object,$action);    // Note that $action and $object may have been modified by some hooks
 
                 $pdf=pdf_getInstance($this->format);
                 $default_font_size = pdf_getPDFFontSize($outputlangs)-0.3;	// Must be after pdf_getInstance
@@ -186,14 +178,12 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 
 				$pdf->Open();
-				$pagenb=0;
 				$pdf->SetDrawColor(128,128,128);
 
-				$pdf->SetTitle($outputlangs->convToOutputCharset($object->ref));
-				$pdf->SetSubject($outputlangs->transnoentities("commandeCard"));
+				$pdf->SetTitle($outputlangs->convToOutputCharset('GOP-' . $object->ref));
+				$pdf->SetSubject($outputlangs->transnoentities("Garantie de paiement"));
 				$pdf->SetCreator("Dolibarr ".DOL_VERSION);
 				$pdf->SetAuthor($outputlangs->convToOutputCharset($user->getFullName($outputlangs)));
-				$pdf->SetKeyWords($outputlangs->convToOutputCharset($object->ref)." ".$outputlangs->transnoentities("ContractCard")." ".$outputlangs->convToOutputCharset($object->thirdparty->name));
 				if (! empty($conf->global->MAIN_DISABLE_PDF_COMPRESSION)) $pdf->SetCompression(false);
 
 				$pdf->SetMargins($this->marge_gauche, $this->marge_haute, $this->marge_droite);   // Left, Top, Right
@@ -215,8 +205,6 @@ class pdf_gop extends ModelePDFSuppliersOrders
 				}
 				$object->fetch_thirdparty();
 				$pdf->SetPage(1);
-
-
 
  				$pdf->SetFont('','', $default_font_size-1);
  				$pdf->SetXY(73.5, 59.1);
@@ -265,27 +253,12 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
   				$pdf->SetFont('','', $default_font_size + 0.3);
   				$pdf->SetXY(95.5, 154.85);
-  				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € HT') .'</b>';
+  				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
   				$pdf->writeHTML ($out);
-  				//$pdf->MultiCell(44.2, 0, $out,0,'R');
-
-
-
 
 				$pdf->Close();
 
 				$pdf->Output($file,'F');
-
-				// Add pdfgeneration hook
-				if (! is_object($hookmanager))
-				{
-					include_once DOL_DOCUMENT_ROOT.'/core/class/hookmanager.class.php';
-					$hookmanager=new HookManager($this->db);
-				}
-				$hookmanager->initHooks(array('pdfgeneration'));
-				$parameters=array('file'=>$file,'object'=>$object,'outputlangs'=>$outputlangs);
-				global $action;
-				$reshook=$hookmanager->executeHooks('afterPDFCreation',$parameters,$this,$action);    // Note that $action and $object may have been modified by some hooks
 
 				if (! empty($conf->global->MAIN_UMASK))
 				@chmod($file, octdec($conf->global->MAIN_UMASK));
@@ -300,7 +273,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
 		}
 		else
 		{
-			$this->error=$langs->trans("ErrorConstantNotDefined","CONTRACT_OUTPUTDIR");
+			$this->error=$langs->trans("ErrorConstantNotDefined","SUPPLIERORDER_OUTPUTDIR");
 			return 0;
 		}
 		$this->error=$langs->trans("ErrorUnknown");
