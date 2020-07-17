@@ -213,7 +213,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
 						}
 					}
 				}
-
+				$object->fetch_thirdparty();
 				$pdf->SetPage(1);
 
 
@@ -223,10 +223,10 @@ class pdf_gop extends ModelePDFSuppliersOrders
  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
  				$pdf->MultiCell(80, 0, $out,0,'L');
 
-// 				$pdf->SetFont('','', $default_font_size);
-//  				$pdf->SetXY(143.8, $y[0]);
-//  				$out = $outputlangs->convToOutputCharset($object->ref);
-//  				$pdf->MultiCell(30, 0, $out,0,'L');
+ 				$pdf->SetFont('','', $default_font_size);
+  				$pdf->SetXY(57, 88);
+  				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
+  				$pdf->MultiCell(30, 0, $out,0,'L');
 
 //  				$pdf->SetFont('','', $default_font_size);
 //  				$pdf->SetXY(19, $y[1]);
