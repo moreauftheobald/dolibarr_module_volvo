@@ -219,7 +219,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 
  				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(74, 59);
+ 				$pdf->SetXY(73.5, 59.5);
  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->date_valid,'daytext'));
  				$pdf->MultiCell(80, 0, $out,0,'L');
 
