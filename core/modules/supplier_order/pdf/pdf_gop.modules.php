@@ -251,7 +251,7 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->SetFont('','', $default_font_size);
   				$pdf->SetXY(45.5, 124.8);
   				$out = $outputlangs->convToOutputCharset('Tracteur MERCEDES - VIN : YV2XTY0A9LB924738 - immatriculation : FL364TV');
-  				$pdf->MultiCell(120, 0, $out,0,'L');
+  				$pdf->MultiCell(150, 0, $out,0,'L');
 
 //  				$pdf->SetFont('','', $default_font_size);
 //  				$pdf->SetXY(19, $y[1]);
