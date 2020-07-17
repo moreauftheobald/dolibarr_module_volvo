@@ -237,27 +237,27 @@ class pdf_gop extends ModelePDFSuppliersOrders
   				$pdf->MultiCell(120, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(45.5, 123.8);
+  				$pdf->SetXY(45.5, 124.1);
   				$out = $outputlangs->convToOutputCharset('Tracteur MERCEDES - VIN : YV2XTY0A9LB924738 - immatriculation : FL364TV');
   				$pdf->MultiCell(150, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(44, 128.3);
+  				$pdf->SetXY(44, 128.9);
   				$out = $outputlangs->convToOutputCharset($object->ref);
   				$pdf->MultiCell(150, 0, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(40, 136.6);
+  				$pdf->SetXY(40, 137.2);
   				$out = $outputlangs->convToOutputCharset($object->lines['0']->desc);
   				$pdf->MultiCell(150, 16.5, $out,0,'L');
 
   				$pdf->SetFont('','', $default_font_size + 0.3);
-  				$pdf->SetXY(95.5, 153.85);
+  				$pdf->SetXY(95.5, 154.45);
   				$out = '<b>' . $outputlangs->convToOutputCharset(' : ' . price($object->total_ht). ' € Hors Taxes') .'</b>';
   				$pdf->writeHTML ($out);
 
   				$pdf->SetFont('','', $default_font_size);
-  				$pdf->SetXY(126.7, 195.1);
+  				$pdf->SetXY(126.7, 195.7);
   				if(!empty($object->cond_reglement_id)){
   					$text = $object->cond_reglement;
   				}else{
