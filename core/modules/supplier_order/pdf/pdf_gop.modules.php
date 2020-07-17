@@ -216,401 +216,399 @@ class pdf_gop extends ModelePDFSuppliersOrders
 
 				$pdf->SetPage(1);
 
- 				$extrafields = new ExtraFields($this->db);
-				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
-
-				$sys = new Leadext($this->db);
-				$y=array(25.1,37.4,49.6,61.9,66,70.4,97.3,103.4,107.9,112.4,118.3,122.8,127.3,131.8,138.5,143.2,147.8,152.3,156.7,156.9,161.5,167.2,172,192.2,196.6,201.2,205.7,210.2,214.7,219.3,223.8,234,280,284);
-
-				$commercial = new User($this->db);
-				$commercial->fetch($object->user_author_id);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(38, $y[0]);
-				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
-				$pdf->MultiCell(80, 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(143.8, $y[0]);
- 				$out = $outputlangs->convToOutputCharset($object->ref);
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(19, $y[1]);
- 				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(93.1, $y[1]);
-				$out = $outputlangs->convToOutputCharset($object->thirdparty->town);
-				$pdf->MultiCell(80, 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(154.2, $y[1]);
-				$out = $outputlangs->convToOutputCharset($object->thirdparty->code_client);
-				$pdf->MultiCell(80, 0, $out,0,'L');
-
-				$lead = new Leadext($this->db);
-				$lead->fetchLeadLink($object->id, $object->table_element);
-				$lead=$lead->doclines['0'];
-				$extrafields_lead = new ExtraFields($this->db);
-				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(25.5, $y[2]);
-				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
-				$pdf->MultiCell(100, 0, $out,0,'L');
-
-				$pdf->SetFont('','', $default_font_size);
-				$pdf->SetXY(140.1, $y[2]);
-				$out = $outputlangs->convToOutputCharset(substr($object->array_options['options_vin'],-7));
- 				$pdf->MultiCell(50, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(61, $y[3]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_deja']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$reprise = new Reprise($this->db);
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(143, $y[3]);
- 				$out = $outputlangs->convToOutputCharset($reprise->sites[$object->array_options['options_vcm_site']]);
- 				$pdf->MultiCell(50, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(30.5, $y[4]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_deport']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(65.5, $y[5]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_gds']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(173, $y[5]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_dfol']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[6]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ppc']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[7]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pc']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[8]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pcc']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[9]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pvc']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[10]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_blue']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[11]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_silver']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[12]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_silverp']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(170.5, $y[13]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_gold']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$selected = explode(',', $object->array_options['options_vcm_duree']);
- 				$x = 32;
- 				foreach ($extrafields->attribute_param['vcm_duree']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[14],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[14]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+22;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[14],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[14]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+22;
- 					}
- 				}
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(54, $y[15]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_conso']) . ' l/100km');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(164, $y[15]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_ptra']) . ' Tonnes');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(33, $y[16]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km']) . ' km/an');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(164, $y[16]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km_dep']) . ' km');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(58.7, $y[17]);
- 				$out = $outputlangs->convToOutputCharset(dol_print_date($object->array_options['options_vcm_dt_dem'],'daytext'));
- 				$pdf->MultiCell(80, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$selected = explode(',', $object->array_options['options_vcm_pto']);
- 				$x = 37;
- 				foreach ($extrafields->attribute_param['vcm_pto']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[18],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[18]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(30, 0, $value,0,'L');
- 						$x=$x+22;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[18],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[18]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(30, 0, $value,0,'L');
- 						$x=$x+22;
- 					}
- 				}
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(164, $y[19]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_pto_nbh']) . ' H/an');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(164, $y[20]);
- 				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_pto_hdep']) . ' Heures');
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$selected = explode(',', $object->array_options['options_vcm_hydro']);
- 				$x = 41;
- 				foreach ($extrafields->attribute_param['vcm_hydro']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[21],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[21]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+70;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[21],3,3,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size);
- 						$pdf->SetXY($x+3.5, $y[21]);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$x=$x+70;
- 					}
- 				}
-
- 				if(!empty($object->array_options['options_vcm_carr'])){
- 					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<B>Carrosserie et equipements: </b>' . $object->array_options['options_vcm_carr']);
- 					$pdf->writeHTMLCell(194,20,6.8,$y[22],$out);
- 				}
-
- 				$cycle='test';
- 				if($object->array_options['options_vcm_ld']==1) $cycle='Longue Distance';
- 				if($object->array_options['options_vcm_50km']==1) $cycle='Distribution Régionnale';
- 				if($object->array_options['options_vcm_ville']==1) $cycle='Distribution Urbaine';
- 				if($object->array_options['options_vcm_chant']==1) $cycle='Construction';
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(33.5, $y[23]);
- 				$out = $outputlangs->convToOutputCharset($cycle);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(58.5, $y[24]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_sais']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(63, $y[25]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_chant']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(67, $y[26]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ville']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(120, $y[27]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_50km']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(86, $y[28]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ld']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
-
- 				$list_value = $extrafields->attribute_param['vcm_zone']['options'];
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(33.5, $y[29]);
- 				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_zone']]);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$list_value = $extrafields->attribute_param['vcm_typ_trans']['options'];
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(122.5, $y[29]);
- 				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_typ_trans']]);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$list_value = $extrafields->attribute_param['vcm_roul']['options'];
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(35.5, $y[30]);
- 				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_roul']]);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$list_value = $extrafields->attribute_param['vcm_topo']['options'];
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(122.5, $y[30]);
- 				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_topo']]);
- 				$pdf->MultiCell(100, 0, $out,0,'L');
-
- 				$pdf->SetFont('','', $default_font_size-1);
- 				$selected = explode(',', $object->array_options['options_vcm_pack']);
- 				$x = 8;
- 				$yy = $y[31];
- 				foreach ($extrafields->attribute_param['vcm_pack']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}
- 				}
- 				$ysuiv = $yy + 7;
-
- 				$pdf->SetFont('','', $default_font_size-1);
- 				$selected = explode(',', $object->array_options['options_vcm_option']);
- 				$x = 8;
- 				$yy = $ysuiv;
- 				foreach ($extrafields->attribute_param['vcm_option']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}
- 				}
+//  				$extrafields = new ExtraFields($this->db);
+// 				$extralabels = $extrafields->fetch_name_optionals_label($object->table_element, true);
 
 
- 				$pdf->SetFont('','', $default_font_size-1);
- 				$selected = explode(',', $object->array_options['options_vcm_sup']);
- 				$x = 65;
- 				$yy = $y[31];
- 				foreach ($extrafields->attribute_param['vcm_sup']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}
- 				}
+// 				$commercial = new User($this->db);
+// 				$commercial->fetch($object->user_author_id);
 
- 				$pdf->SetFont('','', $default_font_size-1);
- 				$selected = explode(',', $object->array_options['options_vcm_legal']);
- 				$x = 130;
- 				$yy = $y[31];
- 				foreach ($extrafields->attribute_param['vcm_legal']['options'] as $key => $value){
- 					if(in_array($key, $selected)){
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}else{
- 						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
- 						$pdf->SetFont('','', $default_font_size-1);
- 						$pdf->SetXY($x+2.5, $yy-0.3);
- 						$out = $outputlangs->convToOutputCharset($value);
- 						$pdf->MultiCell(80, 0, $value,0,'L');
- 						$yy=$yy+3.5;
- 					}
- 				}
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY(38, $y[0]);
+// 				$out = $outputlangs->convToOutputCharset($commercial->firstname . ' ' . $commercial->lastname);
+// 				$pdf->MultiCell(80, 0, $out,0,'L');
 
- 				$pdf->SetFont('','', $default_font_size);
- 				$pdf->SetXY(46, $y[32]);
- 				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_frigo']));
- 				$pdf->MultiCell(30, 0, $out,0,'L');
+// 				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(143.8, $y[0]);
+//  				$out = $outputlangs->convToOutputCharset($object->ref);
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
 
- 				if($object->array_options['options_vcm_frigo']==1){
- 					$list_value = $extrafields->attribute_param['vcm_marque']['options'];
- 					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid: </b>' . $list_value[$object->array_options['options_vcm_marque']]);
- 					$pdf->writeHTMLCell(194,5,65,$y[32],$out);
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(19, $y[1]);
+//  				$out = $outputlangs->convToOutputCharset($object->thirdparty->name);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
 
- 					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<b>Modèle: </b>' . $object->array_options['options_vcm_model']);
- 					$pdf->writeHTMLCell(194,5,130,$y[32],$out);
+//  				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY(93.1, $y[1]);
+// 				$out = $outputlangs->convToOutputCharset($object->thirdparty->town);
+// 				$pdf->MultiCell(80, 0, $out,0,'L');
 
- 					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset("<b>Nombre d'heure de fonctionnement: </b>" . price($object->array_options['options_vcm_frigo_nbh']) . ' H/an');
- 					$pdf->writeHTMLCell(194,5,6.8,$y[33],$out);
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY(154.2, $y[1]);
+// 				$out = $outputlangs->convToOutputCharset($object->thirdparty->code_client);
+// 				$pdf->MultiCell(80, 0, $out,0,'L');
 
- 					$list_value = $extrafields->attribute_param['vcm_fonct']['options'];
- 					$pdf->SetFont('','', $default_font_size);
- 					$out = $outputlangs->convToOutputCharset('<b>Fonctionnement du groupe: </b>' . $list_value[$object->array_options['options_vcm_fonct']]);
- 					$pdf->writeHTMLCell(194,5,130,$y[33],$out);
- 				}
+// 				$lead = new Leadext($this->db);
+// 				$lead->fetchLeadLink($object->id, $object->table_element);
+// 				$lead=$lead->doclines['0'];
+// 				$extrafields_lead = new ExtraFields($this->db);
+// 				$extralabels_lead = $extrafields_lead->fetch_name_optionals_label($lead->table_element, true);
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY(25.5, $y[2]);
+// 				$out = $outputlangs->convToOutputCharset($extrafields_lead->showOutputField('specif', $lead->array_options['options_specif']));
+// 				$pdf->MultiCell(100, 0, $out,0,'L');
+
+// 				$pdf->SetFont('','', $default_font_size);
+// 				$pdf->SetXY(140.1, $y[2]);
+// 				$out = $outputlangs->convToOutputCharset(substr($object->array_options['options_vin'],-7));
+//  				$pdf->MultiCell(50, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(61, $y[3]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_deja']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$reprise = new Reprise($this->db);
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(143, $y[3]);
+//  				$out = $outputlangs->convToOutputCharset($reprise->sites[$object->array_options['options_vcm_site']]);
+//  				$pdf->MultiCell(50, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(30.5, $y[4]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_deport']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(65.5, $y[5]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_gds']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(173, $y[5]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_trf_dfol']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[6]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ppc']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[7]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pc']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[8]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pcc']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[9]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_pvc']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[10]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_blue']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[11]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_silver']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[12]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_silverp']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(170.5, $y[13]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_gold']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$selected = explode(',', $object->array_options['options_vcm_duree']);
+//  				$x = 32;
+//  				foreach ($extrafields->attribute_param['vcm_duree']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[14],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[14]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$x=$x+22;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[14],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[14]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$x=$x+22;
+//  					}
+//  				}
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(54, $y[15]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_conso']) . ' l/100km');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(164, $y[15]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_ptra']) . ' Tonnes');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(33, $y[16]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km']) . ' km/an');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(164, $y[16]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_km_dep']) . ' km');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(58.7, $y[17]);
+//  				$out = $outputlangs->convToOutputCharset(dol_print_date($object->array_options['options_vcm_dt_dem'],'daytext'));
+//  				$pdf->MultiCell(80, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$selected = explode(',', $object->array_options['options_vcm_pto']);
+//  				$x = 37;
+//  				foreach ($extrafields->attribute_param['vcm_pto']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[18],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[18]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(30, 0, $value,0,'L');
+//  						$x=$x+22;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[18],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[18]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(30, 0, $value,0,'L');
+//  						$x=$x+22;
+//  					}
+//  				}
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(164, $y[19]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_pto_nbh']) . ' H/an');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(164, $y[20]);
+//  				$out = $outputlangs->convToOutputCharset(price($object->array_options['options_vcm_pto_hdep']) . ' Heures');
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$selected = explode(',', $object->array_options['options_vcm_hydro']);
+//  				$x = 41;
+//  				foreach ($extrafields->attribute_param['vcm_hydro']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$y[21],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[21]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$x=$x+70;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$y[21],3,3,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size);
+//  						$pdf->SetXY($x+3.5, $y[21]);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$x=$x+70;
+//  					}
+//  				}
+
+//  				if(!empty($object->array_options['options_vcm_carr'])){
+//  					$pdf->SetFont('','', $default_font_size);
+//  					$out = $outputlangs->convToOutputCharset('<B>Carrosserie et equipements: </b>' . $object->array_options['options_vcm_carr']);
+//  					$pdf->writeHTMLCell(194,20,6.8,$y[22],$out);
+//  				}
+
+//  				$cycle='test';
+//  				if($object->array_options['options_vcm_ld']==1) $cycle='Longue Distance';
+//  				if($object->array_options['options_vcm_50km']==1) $cycle='Distribution Régionnale';
+//  				if($object->array_options['options_vcm_ville']==1) $cycle='Distribution Urbaine';
+//  				if($object->array_options['options_vcm_chant']==1) $cycle='Construction';
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(33.5, $y[23]);
+//  				$out = $outputlangs->convToOutputCharset($cycle);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(58.5, $y[24]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_sais']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(63, $y[25]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_chant']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(67, $y[26]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ville']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(120, $y[27]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_50km']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(86, $y[28]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_ld']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				$list_value = $extrafields->attribute_param['vcm_zone']['options'];
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(33.5, $y[29]);
+//  				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_zone']]);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+//  				$list_value = $extrafields->attribute_param['vcm_typ_trans']['options'];
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(122.5, $y[29]);
+//  				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_typ_trans']]);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+//  				$list_value = $extrafields->attribute_param['vcm_roul']['options'];
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(35.5, $y[30]);
+//  				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_roul']]);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+//  				$list_value = $extrafields->attribute_param['vcm_topo']['options'];
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(122.5, $y[30]);
+//  				$out = $outputlangs->convToOutputCharset($list_value[$object->array_options['options_vcm_topo']]);
+//  				$pdf->MultiCell(100, 0, $out,0,'L');
+
+//  				$pdf->SetFont('','', $default_font_size-1);
+//  				$selected = explode(',', $object->array_options['options_vcm_pack']);
+//  				$x = 8;
+//  				$yy = $y[31];
+//  				foreach ($extrafields->attribute_param['vcm_pack']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}
+//  				}
+//  				$ysuiv = $yy + 7;
+
+//  				$pdf->SetFont('','', $default_font_size-1);
+//  				$selected = explode(',', $object->array_options['options_vcm_option']);
+//  				$x = 8;
+//  				$yy = $ysuiv;
+//  				foreach ($extrafields->attribute_param['vcm_option']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}
+//  				}
+
+
+//  				$pdf->SetFont('','', $default_font_size-1);
+//  				$selected = explode(',', $object->array_options['options_vcm_sup']);
+//  				$x = 65;
+//  				$yy = $y[31];
+//  				foreach ($extrafields->attribute_param['vcm_sup']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}
+//  				}
+
+//  				$pdf->SetFont('','', $default_font_size-1);
+//  				$selected = explode(',', $object->array_options['options_vcm_legal']);
+//  				$x = 130;
+//  				$yy = $y[31];
+//  				foreach ($extrafields->attribute_param['vcm_legal']['options'] as $key => $value){
+//  					if(in_array($key, $selected)){
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(1),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}else{
+//  						$pdf->image("http://www.erp-theobald.com" . show_picto_pdf(0),$x,$yy,2,2,'','','M',1);
+//  						$pdf->SetFont('','', $default_font_size-1);
+//  						$pdf->SetXY($x+2.5, $yy-0.3);
+//  						$out = $outputlangs->convToOutputCharset($value);
+//  						$pdf->MultiCell(80, 0, $value,0,'L');
+//  						$yy=$yy+3.5;
+//  					}
+//  				}
+
+//  				$pdf->SetFont('','', $default_font_size);
+//  				$pdf->SetXY(46, $y[32]);
+//  				$out = $outputlangs->convToOutputCharset(yn($object->array_options['options_vcm_frigo']));
+//  				$pdf->MultiCell(30, 0, $out,0,'L');
+
+//  				if($object->array_options['options_vcm_frigo']==1){
+//  					$list_value = $extrafields->attribute_param['vcm_marque']['options'];
+//  					$pdf->SetFont('','', $default_font_size);
+//  					$out = $outputlangs->convToOutputCharset('<b>Marque du groupe froid: </b>' . $list_value[$object->array_options['options_vcm_marque']]);
+//  					$pdf->writeHTMLCell(194,5,65,$y[32],$out);
+
+//  					$pdf->SetFont('','', $default_font_size);
+//  					$out = $outputlangs->convToOutputCharset('<b>Modèle: </b>' . $object->array_options['options_vcm_model']);
+//  					$pdf->writeHTMLCell(194,5,130,$y[32],$out);
+
+//  					$pdf->SetFont('','', $default_font_size);
+//  					$out = $outputlangs->convToOutputCharset("<b>Nombre d'heure de fonctionnement: </b>" . price($object->array_options['options_vcm_frigo_nbh']) . ' H/an');
+//  					$pdf->writeHTMLCell(194,5,6.8,$y[33],$out);
+
+//  					$list_value = $extrafields->attribute_param['vcm_fonct']['options'];
+//  					$pdf->SetFont('','', $default_font_size);
+//  					$out = $outputlangs->convToOutputCharset('<b>Fonctionnement du groupe: </b>' . $list_value[$object->array_options['options_vcm_fonct']]);
+//  					$pdf->writeHTMLCell(194,5,130,$y[33],$out);
+//  				}
 
 
 
