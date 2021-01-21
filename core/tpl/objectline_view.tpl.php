@@ -255,6 +255,8 @@ if (empty($usemargins)) $usemargins=0;
 <?php if ($object->element == 'commande') {?>
 
 	<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
+	<table>
+	<tr>
 	<td class="linecoldescription" style="border-bottom-style:none" colspan="2"><?php $coldisplay++; ?><div id="line_<?php echo $line->id; ?>"></div>
 	<?php
 	if (($line->info_bits & 2) == 2) {
@@ -329,7 +331,7 @@ if (empty($usemargins)) $usemargins=0;
 	}
 	?>
 	</td>
-<td align="right" class="linecolqty nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?>
+	<td align="right" class="linecolqty nowrap" style="border-bottom-style:none"><?php $coldisplay++; ?>
 	<?php if ((($line->info_bits & 2) != 2) && $line->special_code != 3) {
 			// I comment this because it shows info even when not required
 			// for example always visible on invoice but must be visible only if stock module on and stock decrease option is on invoice validation and status is not validated
@@ -409,6 +411,9 @@ if (empty($usemargins)) $usemargins=0;
 		?>
 	</td>
 	<td></td>
+	</tr>
+</table>
+</tr>
 
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
