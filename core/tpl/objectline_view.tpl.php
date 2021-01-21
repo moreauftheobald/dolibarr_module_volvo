@@ -417,7 +417,7 @@ if (empty($usemargins)) $usemargins=0;
 <?php } ?>
 </tr>
 </table>
-</tr>
+<tr>
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'_c" '.$bcdd[$var]; ?>>
 <td colspan="10" style="border-style:none">
