@@ -255,8 +255,6 @@ if (empty($usemargins)) $usemargins=0;
 <?php if ($object->element == 'commande') {?>
 
 	<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-	<table>
-	<tr>
 	<td class="linecoldescription" style="border-bottom-style:none" colspan="2"><?php $coldisplay++; ?><div id="line_<?php echo $line->id; ?>"></div>
 	<?php
 	if (($line->info_bits & 2) == 2) {
@@ -415,8 +413,6 @@ if (empty($usemargins)) $usemargins=0;
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
 <?php } ?>
-</tr>
-</table>
 </tr>
 <tr>
 <?php if(!empty($line->desc)){?>
