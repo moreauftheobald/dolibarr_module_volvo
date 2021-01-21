@@ -379,7 +379,7 @@ class VolvoImportom extends VolvoImport
 		//update customer order id
 		$sql = 'UPDATE ' . $this->tempTable .' as tmp, ' . MAIN_DB_PREFIX . 'commande_extrafields as ef ';
 		$sql.= 'SET tmp.cust_cmd_id = ef.fk_object ';
-		$sql.= 'WHERE tmp.numero_de_commande = ef.numom';
+		$sql.= 'WHERE tmp.order_number = ef.numom';
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update cust_cmd_id', LOG_DEBUG);
 		$resql = $this->db->query($sql);
 		if (! $resql) {
@@ -435,7 +435,7 @@ class VolvoImportom extends VolvoImport
 			foreach ($arrayresult as $key =>$value){
 				$sql = "UPDATE " . $this->tempTable ." as tmp ";
 				$sql.= "SET tmp.fourn_cmd_id = '" . $value . "' ";
-				$sql.= "WHERE tmp.numero_de_commande = " . $key;
+				$sql.= "WHERE tmp.order_number = " . $key;
 // 				var_dump($sql);
 // 				exit;
 				dol_syslog(get_class($this) . '::' . __METHOD__ . ' update fourn_cmd_id', LOG_DEBUG);
