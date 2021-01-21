@@ -255,8 +255,6 @@ if (empty($usemargins)) $usemargins=0;
 <?php if ($object->element == 'commande') {?>
 
 	<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-	<table>
-	<tr>
 	<td class="linecoldescription" style="border-bottom-style:none" colspan="2"><?php $coldisplay++; ?><div id="line_<?php echo $line->id; ?>"></div>
 	<?php
 	if (($line->info_bits & 2) == 2) {
@@ -415,7 +413,7 @@ if (empty($usemargins)) $usemargins=0;
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
 <?php } ?>
-
+</tr>
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'_c" '.$bcdd[$var]; ?>>
 <td colspan="10" style="border-style:none">
@@ -431,8 +429,6 @@ if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_op
 <td><b><span style="text-decoration:underline;">Reçue le:</span></b> <?php echo $extrafieldsline->showOutputField("dt_invoice",$line->array_options["options_dt_invoice"]);?></td>
 <td colspan="8">
 </td>
-</tr>
-</table>
 </tr>
 
 <?php } ?>
