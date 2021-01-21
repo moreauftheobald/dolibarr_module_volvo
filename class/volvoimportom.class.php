@@ -498,9 +498,9 @@ class VolvoImportom extends VolvoImport
 					while ( $obj = $this->db->fetch_object($resql) ) {
 						if (! empty($obj->dateinfo)) {
 							try {
-								$day = substr($obj->dateinfo, 0,2);
-								$month = substr($obj->dateinfo, 2,2);
-								$year = substr($obj->dateinfo, 4,4);
+								$day = substr($obj->dateinfo, 6,2);
+								$month = substr($obj->dateinfo, 4,2);
+								$year = substr($obj->dateinfo, 0,4);
 								$datetime = new DateTime($year . '-' . $month . '-' . $day);
 							} catch ( Exception $e ) {
 								$integration_comment = array(

@@ -371,7 +371,7 @@ if ($step == 4 && $action == 'viewtempdata') {
 	print '<table width="100%" cellspacing="0" cellpadding="4" class="border">';
 	print '<tr class="liste_titre">';
 	foreach ( $importobject->columnArray as $column ) {
-		print '<td> KO' . $column['label'] . '</td>';
+		print '<td>' . $column['label'] . '</td>';
 	}
 	print '</tr>';
 
