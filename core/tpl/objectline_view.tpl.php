@@ -411,9 +411,6 @@ if (empty($usemargins)) $usemargins=0;
 		?>
 	</td>
 	<td></td>
-	</tr>
-</table>
-</tr>
 
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
@@ -435,6 +432,9 @@ if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_op
 <td colspan="8">
 </td>
 </tr>
+</table>
+</tr>
+
 <?php } ?>
 
 <?php }?>
