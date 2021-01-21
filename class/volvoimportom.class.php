@@ -128,7 +128,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('VIN'),
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'NIV',
+				'filecolumntitle' => 'VIN',
 				'editable' => 0,
 				'noinsert' => 1,
 				'isvin' =>1,
