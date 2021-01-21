@@ -417,7 +417,7 @@ class VolvoImportom extends VolvoImport
 		$sql1.= "FROM " . MAIN_DB_PREFIX . "commande_fournisseur as cf ";
 		$sql1.= "INNER JOIN " . MAIN_DB_PREFIX . "commande as c on c.ref = cf.ref_supplier ";
 		$sql1.= "LEFT JOIN " . MAIN_DB_PREFIX . "commande_extrafields as ef on ef.fk_object = c.rowid ";
-		$sql1.= "INNER JOIN " .$this->tempTable . " as tmp ON tmp.numero_de_commande = ef.numom";
+		$sql1.= "INNER JOIN " .$this->tempTable . " as tmp ON tmp.order_number = ef.numom";
 		$resql1 = $this->db->query($sql1);
 
 		if($resql1){
