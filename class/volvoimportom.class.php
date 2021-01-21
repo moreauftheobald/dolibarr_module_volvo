@@ -64,7 +64,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Numéro d\'OM'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Numéro de commande',
+				'filecolumntitle' => 'Order Number',
 				'editable' => 0,
 				'noinsert' => 1,
 				'isnumom' =>1,
@@ -76,7 +76,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date de bocage de modification'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Ultime date de modification',
+				'filecolumntitle' => 'Last Change Date',
 				'editable' => 0,
 				'noinsert' => 1
 
@@ -87,7 +87,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date limite d\'annulation'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Ultime date d\'annulation',
+				'filecolumntitle' => 'Cancellation Date',
 				'editable' => 0,
 				'noinsert' => 1
 
@@ -128,7 +128,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('VIN'),
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'VIN',
+				'filecolumntitle' => 'NIV',
 				'editable' => 0,
 				'noinsert' => 1,
 				'isvin' =>1,
@@ -140,7 +140,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => 'Client',
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Client final',
+				'filecolumntitle' => 'End Customer',
 				'editable' => 0,
 				'noinsert' => 1,
 				'ForCustomerStep' => 1,
@@ -152,7 +152,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => 'Modele',
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Modèle',
+				'filecolumntitle' => 'Model',
 				'editable' => 0,
 				'noinsert' => 1,
 				'ForCustomerStep' => 1
