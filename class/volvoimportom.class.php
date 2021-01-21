@@ -622,8 +622,8 @@ class VolvoImportom extends VolvoImport
 				}
 			}
 		}
-//   		var_dump($cmd_data_array);
-//   		exit;
+   		var_dump($cmd_data_array);
+   		exit;
 
 		foreach ($cmd_data_array as $key => $value){
 			$cmd = new CommandeVolvo($this->db);
