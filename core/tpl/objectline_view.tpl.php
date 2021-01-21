@@ -52,8 +52,6 @@ if (empty($usemargins)) $usemargins=0;
 <?php if ($object->element != 'commande') { ?>
 
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
-	<table>
-	<tr>
 	<td class="linecoldescription" style="border-bottom-style:none"><?php $coldisplay++; ?><div id="line_<?php echo $line->id; ?>"></div>
 	<?php
 	if (($line->info_bits & 2) == 2) {
@@ -245,7 +243,7 @@ if (empty($usemargins)) $usemargins=0;
 <?php } else { ?>
 	<td colspan="3" style="border-bottom-style:none"><?php $coldisplay=$coldisplay+3; ?></td>
 <?php } ?>
-//</tr>
+</tr>
 <?php if(!empty($line->desc)){?>
 <tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
 <td colspan="9">
@@ -423,8 +421,6 @@ if (empty($usemargins)) $usemargins=0;
 </td>
 </tr>
 <?php }?>
-</tr>
-</table>
 <?php
 //Line extrafield
 if(!empty($line->array_options["options_fk_supplier"]) || !empty($line->array_options["options_fk_supplier"])){ ?>
