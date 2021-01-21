@@ -373,7 +373,8 @@ if (empty($usemargins)) $usemargins=0;
 	</td>
 
 	<?php
-	//if ($num > 1 && empty($conf->browser->phone) && ($this->situation_counter == 1 || !$this->situation_cycle_ref) && empty($disablemove)) { ?>
+	$conf->browser->phone = 1;
+	if ($num > 1 && empty($conf->browser->phone) && ($this->situation_counter == 1 || !$this->situation_cycle_ref) && empty($disablemove)) { ?>
 	<td align="center" class="linecolmove tdlineupdown" style="border-bottom-style:none"><?php $coldisplay++; ?>
 		<?php if ($i > 0) { ?>
 		<a class="lineupdown" href="<?php echo $_SERVER["PHP_SELF"].'?id='.$this->id.'&amp;action=up&amp;rowid='.$line->id; ?>">
@@ -386,9 +387,9 @@ if (empty($usemargins)) $usemargins=0;
 		</a>
 		<?php } ?>
 	</td>
-    //<?php } else { ?>
-    //<td align="center"<?php echo ((empty($conf->browser->phone) && empty($disablemove)) ?' class="linecolmove tdlineupdown"':' class="linecolmove"'); ?> style="border-bottom-style:none"><?php $coldisplay++; ?></td>
-	//<?php } ?>
+    <?php } else { ?>
+    <td align="center"<?php echo ((empty($conf->browser->phone) && empty($disablemove)) ?' class="linecolmove tdlineupdown"':' class="linecolmove"'); ?> style="border-bottom-style:none"><?php $coldisplay++; ?></td>
+	<?php } ?>
 <?php }elseif (($this->statut > 0  && ($object_rights->creer)) && (in_array($line->product_ref, array('GOLD','SILVER','SILVER+','BLUE','PPC','PVC','PCC')))) { ?>
 	<td class="linecoledit" align="center" style="border-bottom-style:none"><?php $coldisplay++; ?>
 		<?php if ($line->total_ht==0) { ?>
