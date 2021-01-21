@@ -387,22 +387,11 @@ if (empty($usemargins)) $usemargins=0;
 		<?php } ?>
 	</td>
 	
-	<td align="center"<?php echo ((empty($conf->browser->phone) && empty($disablemove)) ?' class="linecolmove tdlineupdown"':' class="linecolmove"'); ?> style="border-bottom-style:none"><?php $coldisplay++; ?></td>
+	
 	
     <?php } else { ?>
-    <td align="center" class="linecolmove tdlineupdown" style="border-bottom-style:none"><?php $coldisplay++; ?>
-		<?php if ($i > 0) { ?>
-		<a class="lineupdown" href="<?php echo $_SERVER["PHP_SELF"].'?id='.$this->id.'&amp;action=up&amp;rowid='.$line->id; ?>">
-		<?php echo img_up('default',0,'imgupforline'); ?>
-		</a>
-		<?php } ?>
-		<?php if ($i < $num-1) { ?>
-		<a class="lineupdown" href="<?php echo $_SERVER["PHP_SELF"].'?id='.$this->id.'&amp;action=down&amp;rowid='.$line->id; ?>">
-		<?php echo img_down('default',0,'imgdownforline'); ?>
-		</a>
-		<?php } ?>
-	</td>
     
+    <td align="center"<?php echo ((empty($conf->browser->phone) && empty($disablemove)) ?' class="linecolmove tdlineupdown"':' class="linecolmove"'); ?> style="border-bottom-style:none"><?php $coldisplay++; ?></td>
     
 	<?php } ?>
 <?php }elseif (($this->statut > 0  && ($object_rights->creer)) && (in_array($line->product_ref, array('GOLD','SILVER','SILVER+','BLUE','PPC','PVC','PCC')))) { ?>
@@ -432,7 +421,7 @@ if (empty($usemargins)) $usemargins=0;
 </tr>
 <tr>
 <?php if(!empty($line->desc)){?>
-<tr <?php echo 'id="row-'.$line->id.'_c" '.$bcdd[$var]; ?>>
+<tr <?php echo 'id="row_c-'.$line->id.'" '.$bcdd[$var]; ?>>
 <td colspan="10" style="border-style:none">
 <b><span style="text-decoration:underline;">Commentaire:</span></b> <?php echo $line->desc;?>
 </td>
