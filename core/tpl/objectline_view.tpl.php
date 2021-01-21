@@ -416,7 +416,7 @@ if (empty($usemargins)) $usemargins=0;
 <?php } ?>
 
 <?php if(!empty($line->desc)){?>
-<tr <?php echo 'id="row-'.$line->id.'" '.$bcdd[$var]; ?>>
+<tr <?php echo 'id="row-'.$line->id.'_c" '.$bcdd[$var]; ?>>
 <td colspan="10" style="border-style:none">
 <b><span style="text-decoration:underline;">Commentaire:</span></b> <?php echo $line->desc;?>
 </td>
