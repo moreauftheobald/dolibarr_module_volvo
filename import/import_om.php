@@ -578,7 +578,7 @@ if ($step == 6 && $action == 'reviewdatacustomer') {
 
 		foreach ( $importobject->lines as $line ) {
 			print '<tr>';
-			print '<td>' . $importobject->printlistorderwhithoutOMlist($line->numero_de_commande) . '</td>';
+			print '<td>' . $importobject->printlistorderwhithoutOMlist($line->order_number) . '</td>';
 			foreach ( $line as $key => $data )
 				if ($key != 'rowid' && $key != 'integration_comment' && in_array($key, $coloutput)) {
 					print '<td>';

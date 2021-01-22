@@ -194,9 +194,9 @@ class FormVolvo
 			}
 		}
 
-		var_dump($arrayColumnDef);
-		 var_dump($matchColmunArray);
-		 var_dump($columnName);
+		//var_dump($arrayColumnDef);
+		//var_dump($matchColmunArray);
+		//var_dump($columnName);
 		$coldata = $arrayColumnDef[array_search($columnName, $matchColmunArray)];
 		$actualvalue = '';
 		// Find column error
