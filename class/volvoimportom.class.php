@@ -453,7 +453,7 @@ class VolvoImportom extends VolvoImport
 
 		// Add supplier order not found integration comment
 		$sql = 'SELECT rowid FROM ' . $this->tempTable;
-		$sql .= ' WHERE fourn_cmd_id IS NULL AND cancelation_date IS NULL';
+		$sql .= ' WHERE fourn_cmd_id IS NULL AND cancellation_date IS NULL';
 
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update dictionnary problem', LOG_DEBUG);
 		$resql = $this->db->query($sql);
