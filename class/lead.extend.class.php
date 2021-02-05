@@ -621,6 +621,7 @@ class Leadext extends Lead
 		}
 		$this->business = array();
         Var_dump($sql);
+        exit;
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$num = $this->db->num_rows($resql);
