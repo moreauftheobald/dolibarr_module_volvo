@@ -238,23 +238,24 @@ $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
 $field->name='dt_lim_annul';
-$field->label = 'Date Limite Annul.';
+$field->label = 'Date de livraison réele';
 $field->checked = 1;
 $field->sub_title = 2;
 $field->field = 'ef.dt_lim_annul';
 $field->align = 'center';
 $field->alias = 'dt_lim_annul';
-//$field->post_traitement = array('date', 'day');
+$field->post_traitement = array('date', 'day');
 $tools=array();
 $tool = new Dyntable_tools($db);
 $tool->type = 'date_between';
 $tool->title = '';
-$tool->html_name = 'search_date_anl_';
+$tool->html_name = 'search_dt_lim_annul_';
 $tool->filter = 'ef.dt_lim_annul';
 $tool->add_now = 1;
 $tools['1'] = $tool;
 $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
+
 
 $field= new Dyntable_fields($db);
 $field->name='date_lpu';
