@@ -87,7 +87,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date limite d\'annulation'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Cancellation Date',
+				'filecolumntitle' => 'Last Cancellation Date',
 				'editable' => 0,
 				'noinsert' => 1
 
@@ -389,7 +389,7 @@ class VolvoImportom extends VolvoImport
 
 		// Add customer order not found integration comment
 		$sql = 'SELECT rowid FROM ' . $this->tempTable;
-		$sql .= ' WHERE cust_cmd_id IS NULL AND cancellation_date IS NOT NULL';
+		$sql .= ' WHERE cust_cmd_id IS NULL';
 
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update dictionnary problem', LOG_DEBUG);
 		$resql = $this->db->query($sql);
@@ -453,7 +453,7 @@ class VolvoImportom extends VolvoImport
 
 		// Add supplier order not found integration comment
 		$sql = 'SELECT rowid FROM ' . $this->tempTable;
-		$sql .= ' WHERE fourn_cmd_id IS NULL AND cancellation_date IS NOT NULL';
+		$sql .= ' WHERE fourn_cmd_id IS NULL';
 
 		dol_syslog(get_class($this) . '::' . __METHOD__ . ' update dictionnary problem', LOG_DEBUG);
 		$resql = $this->db->query($sql);
