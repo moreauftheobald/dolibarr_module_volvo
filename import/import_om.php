@@ -57,7 +57,7 @@ if($todo == 'set_numon'){
 			}
 		}
 	}
-	var_dump($cmdarray);
+	//var_dump($cmdarray);
 	foreach ($cmdarray as $key=>$value){
 		$importobject->setnumom($key,$value);
 	}
