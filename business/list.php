@@ -237,7 +237,7 @@ $field->filter = $tools;
 $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
-$field->name='dt_annul_lim';
+$field->name='dt_lim_annul';
 $field->label = 'Date Limite Annul.';
 $field->checked = 1;
 $field->sub_title = 2;
