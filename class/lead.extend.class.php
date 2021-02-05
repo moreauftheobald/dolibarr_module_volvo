@@ -545,6 +545,7 @@ class Leadext extends Lead
 		$sql .= " ef.vin AS vin,";
 		$sql .= " ef.immat AS immat,";
 		$sql .= " ef.numom AS numom,";
+		$sql .= " ef.dt_annul_lim AS dt_annul_lim,";
 		$sql .= " genre.genre AS genre,";
 		$sql .= " gamme.gamme AS gamme,";
 		$sql .= " silouhette.silouhette AS silouhette,";
@@ -620,8 +621,8 @@ class Leadext extends Lead
 			$sql .= ' ' . $this->db->plimit($limit+1, $offset);
 		}
 		$this->business = array();
-        Var_dump($sql);
-        exit;
+        //Var_dump($sql);
+        //exit;
 		$resql = $this->db->query($sql);
 		if ($resql) {
 			$num = $this->db->num_rows($resql);
