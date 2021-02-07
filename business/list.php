@@ -238,7 +238,7 @@ $table->arrayfields[$field->name] = $field;
 
 $field= new Dyntable_fields($db);
 $field->name='dt_lim_annul';
-$field->label = 'Date de livraison réele';
+$field->label = 'Date limite annulation';
 $field->checked = 1;
 $field->sub_title = 2;
 $field->field = 'ef.dt_lim_annul';
