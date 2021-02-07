@@ -640,6 +640,7 @@ class Leadext extends Lead
 				$line->dt_valid_ana = $this->db->jdate($obj->dt_valid_ana);
 				$line->dt_env_usi = $this->db->jdate($obj->dt_env_usi);
 				$line->dt_blockupdate = $this->db->jdate($obj->dt_blockupdate);
+				$line->dt_lim_annul = $this->db->jdate($obj->dt_lim_annul);
 				$line->dt_liv_cons = $this->db->jdate($obj->dt_liv_cons);
 				$line->dt_liv_dem_cli = $this->db->jdate($obj->dt_liv_dem_cli);
 				$line->delaiprep = $obj->delaiprep;
