@@ -499,8 +499,8 @@ class VolvoImportom extends VolvoImport
 						if (! empty($obj->dateinfo)) {
 							try {
 								$day = substr($obj->dateinfo, 0,2);
-								$month = substr($obj->dateinfo, 4,2);
-								$year = substr($obj->dateinfo, 8,4);
+								$month = substr($obj->dateinfo, 3,2);
+								$year = substr($obj->dateinfo, 6,4);
 								$datetime = new DateTime($year . '-' . $month . '-' . $day);
 							} catch ( Exception $e ) {
 								$integration_comment = array(
@@ -636,8 +636,8 @@ class VolvoImportom extends VolvoImport
 				$cmd->insertExtraFields();
 				if(!empty($value['date_facture'])){
 					$day = substr($value['date_facture'], 0,2);
-					$month = substr($value['date_facture'], 4,2);
-					$year = substr($value['date_facture'], 8,4);
+					$month = substr($value['date_facture'], 3,2);
+					$year = substr($value['date_facture'], 6,4);
 					$cmd->date_billed = dol_mktime(0, 0, 0, $month, $day, $year);
 					$cmd->classifyBilled($user);
 
@@ -677,14 +677,14 @@ class VolvoImportom extends VolvoImport
 				}
 				if(!empty($value['dt_liv_maj'])){
 					$day = substr($value['dt_liv_maj'], 0,2);
-					$month = substr($value['dt_liv_maj'], 4,2);
-					$year = substr($value['dt_liv_maj'], 8,4);
+					$month = substr($value['dt_liv_maj'], 3,2);
+					$year = substr($value['dt_liv_maj'], 6,4);
 					$cmd_fourn->array_options['options_dt_liv_maj'] = dol_mktime(0, 0, 0, $month, $day, $year);
 				}
 				if(!empty($value['dt_lim_annul'])){
 					$day = substr($value['dt_lim_annul'], 0,2);
-					$month = substr($value['dt_lim_annul'], 4,2);
-					$year = substr($value['dt_lim_annul'], 8,4);
+					$month = substr($value['dt_lim_annul'], 3,2);
+					$year = substr($value['dt_lim_annul'], 6,4);
 					$cmd_fourn->array_options['options_dt_lim_annul'] = dol_mktime(0, 0, 0, $month, $day, $year);
 				}
 				$cmd_fourn->insertExtraFields();
@@ -692,8 +692,8 @@ class VolvoImportom extends VolvoImport
 
 				if(!empty($value['date_livraison'])){
 					$day = substr($value['date_livraison'], 0,2);
-					$month = substr($value['date_livraison'], 4,2);
-					$year = substr($value['date_livraison'], 8,4);
+					$month = substr($value['date_livraison'], 3,2);
+					$year = substr($value['date_livraison'], 6,4);
 					$date = dol_mktime(0, 0, 0, $month, $day, $year);
 					$result=$cmd_fourn->set_date_livraison($user,dol_mktime(0, 0, 0, $month, $day, $year));
 				}
