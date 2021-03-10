@@ -498,9 +498,9 @@ class VolvoImportom extends VolvoImport
 					while ( $obj = $this->db->fetch_object($resql) ) {
 						if (! empty($obj->dateinfo)) {
 							try {
-								$day = substr($obj->dateinfo, 6,2);
+								$day = substr($obj->dateinfo, 0,2);
 								$month = substr($obj->dateinfo, 4,2);
-								$year = substr($obj->dateinfo, 0,4);
+								$year = substr($obj->dateinfo, 8,4);
 								$datetime = new DateTime($year . '-' . $month . '-' . $day);
 							} catch ( Exception $e ) {
 								$integration_comment = array(
@@ -635,9 +635,9 @@ class VolvoImportom extends VolvoImport
 				$cmd->array_options['options_vin'] = $value['vin'];
 				$cmd->insertExtraFields();
 				if(!empty($value['date_facture'])){
-					$day = substr($value['date_facture'], 6,2);
+					$day = substr($value['date_facture'], 0,2);
 					$month = substr($value['date_facture'], 4,2);
-					$year = substr($value['date_facture'], 0,4);
+					$year = substr($value['date_facture'], 8,4);
 					$cmd->date_billed = dol_mktime(0, 0, 0, $month, $day, $year);
 					$cmd->classifyBilled($user);
 
@@ -670,30 +670,30 @@ class VolvoImportom extends VolvoImport
 				$cmd_fourn->array_options['options_numom'] = $value['numom'];
 				$cmd_fourn->array_options['options_vin'] = $value['vin'];
 				if(!empty($value['dt_blockupdate'])){
-					$day = substr($value['dt_blockupdate'], 6,2);
+					$day = substr($value['dt_blockupdate'], 0,2);
 					$month = substr($value['dt_blockupdate'], 4,2);
-					$year = substr($value['dt_blockupdate'], 0,4);
+					$year = substr($value['dt_blockupdate'], 8,4);
 					$cmd_fourn->array_options['options_dt_blockupdate'] = dol_mktime(0, 0, 0, $month, $day, $year);
 				}
 				if(!empty($value['dt_liv_maj'])){
-					$day = substr($value['dt_liv_maj'], 6,2);
+					$day = substr($value['dt_liv_maj'], 0,2);
 					$month = substr($value['dt_liv_maj'], 4,2);
-					$year = substr($value['dt_liv_maj'], 0,4);
+					$year = substr($value['dt_liv_maj'], 8,4);
 					$cmd_fourn->array_options['options_dt_liv_maj'] = dol_mktime(0, 0, 0, $month, $day, $year);
 				}
 				if(!empty($value['dt_lim_annul'])){
-					$day = substr($value['dt_lim_annul'], 6,2);
+					$day = substr($value['dt_lim_annul'], 0,2);
 					$month = substr($value['dt_lim_annul'], 4,2);
-					$year = substr($value['dt_lim_annul'], 0,4);
+					$year = substr($value['dt_lim_annul'], 8,4);
 					$cmd_fourn->array_options['options_dt_lim_annul'] = dol_mktime(0, 0, 0, $month, $day, $year);
 				}
 				$cmd_fourn->insertExtraFields();
 
 
 				if(!empty($value['date_livraison'])){
-					$day = substr($value['date_livraison'], 6,2);
+					$day = substr($value['date_livraison'], 0,2);
 					$month = substr($value['date_livraison'], 4,2);
-					$year = substr($value['date_livraison'], 0,4);
+					$year = substr($value['date_livraison'], 8,4);
 					$date = dol_mktime(0, 0, 0, $month, $day, $year);
 					$result=$cmd_fourn->set_date_livraison($user,dol_mktime(0, 0, 0, $month, $day, $year));
 				}
