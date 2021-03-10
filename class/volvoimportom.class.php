@@ -64,7 +64,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('NumÃ©ro d\'OM'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Order Number',
+				'filecolumntitle' => 'Numéro de commande',
 				'editable' => 0,
 				'noinsert' => 1,
 				'isnumom' =>1,
@@ -76,7 +76,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date de bocage de modification'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Last Change Date',
+				'filecolumntitle' => 'Ultime date de modification',
 				'editable' => 0,
 				'noinsert' => 1
 
@@ -87,7 +87,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('Date limite d\'annulation'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Last Cancellation Date',
+				'filecolumntitle' => "Ultime date d'annulation",
 				'editable' => 0,
 				'noinsert' => 1
 
@@ -140,7 +140,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => 'Client',
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'End Customer',
+				'filecolumntitle' => 'Client final',
 				'editable' => 0,
 				'noinsert' => 1,
 				'ForCustomerStep' => 1,
@@ -152,7 +152,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => 'Modele',
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Model',
+				'filecolumntitle' => 'Modèle',
 				'editable' => 0,
 				'noinsert' => 1,
 				'ForCustomerStep' => 1
