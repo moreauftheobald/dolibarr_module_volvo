@@ -64,7 +64,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => $langs->trans('NumÃ©ro d\'OM'),
 				'table' => MAIN_DB_PREFIX . 'commande_fournisseur_extrafields',
 				'tabletrans' => $langs->trans('commande fournisseur extrfields'),
-				'filecolumntitle' => 'Numéro de commande',
+				'filecolumntitle' => 'NumÃ©ro de commande',
 				'editable' => 0,
 				'noinsert' => 1,
 				'isnumom' =>1,
@@ -152,7 +152,7 @@ class VolvoImportom extends VolvoImport
 				'columntrans' => 'Modele',
 				'table' => MAIN_DB_PREFIX . 'commande_extrafields',
 				'tabletrans' => $langs->trans('commande extrafields'),
-				'filecolumntitle' => 'Modèle',
+				'filecolumntitle' => 'ModÃ¨le',
 				'editable' => 0,
 				'noinsert' => 1,
 				'ForCustomerStep' => 1
