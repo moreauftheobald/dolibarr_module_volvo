@@ -162,7 +162,7 @@ class mod_facture_volvo extends ModeleNumRefFactures
 		$posindice=8;
 		$sql = "SELECT MAX(CAST(SUBSTRING(facnumber FROM ".$posindice.") AS SIGNED)) as max";	// This is standard SQL
 		$sql.= " FROM ".MAIN_DB_PREFIX."facture";
-		$sql.= " WHERE facnumber LIKE '".$prefix.$yy."____-%'";
+		$sql.= " WHERE facnumber LIKE '".$prefix.$yy."-____%'";
 		$sql.= " AND entity IN (".getEntity('facture', 1).")";
         
 		var_dump($sql);
