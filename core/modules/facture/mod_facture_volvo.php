@@ -136,26 +136,26 @@ class mod_facture_volvo extends ModeleNumRefFactures
 		    if ($facture->array_options['options_canal'] == 1) $prefix="VOL-REP-";
 		    else if ($facture->array_options['options_canal'] == 2) $prefix="NIS-REP-";
 		    else if ($facture->array_options['options_canal'] == 3) $prefix="SCH-REP-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="VOC-REP-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="DIV-REP-";
+		    else if ($facture->array_options['options_canal'] == 4) $prefix="VOC-REP-";
+		    else if ($facture->array_options['options_canal'] == 5) $prefix="DIV-REP-";
 		}else if ($facture->type == 2){
 		    if ($facture->array_options['options_canal'] == 1) $prefix="VOL-AVO-";
 		    else if ($facture->array_options['options_canal'] == 2) $prefix="NIS-AVO-";
 		    else if ($facture->array_options['options_canal'] == 3) $prefix="SCH-AVO-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="VOC-AVO-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="DIV-AVO-";
+		    else if ($facture->array_options['options_canal'] == 4) $prefix="VOC-AVO-";
+		    else if ($facture->array_options['options_canal'] == 5) $prefix="DIV-AVO-";
 		}else if ($facture->type == 3){
 		    if ($facture->array_options['options_canal'] == 1) $prefix="VOL-ACC-";
 		    else if ($facture->array_options['options_canal'] == 2) $prefix="NIS-ACC-";
 		    else if ($facture->array_options['options_canal'] == 3) $prefix="SCH-ACC-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="VOC-ACC-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="DIV-ACC-";
+		    else if ($facture->array_options['options_canal'] == 4) $prefix="VOC-ACC-";
+		    else if ($facture->array_options['options_canal'] == 5) $prefix="DIV-ACC-";
 		}else {
 		    if ($facture->array_options['options_canal'] == 1) $prefix="VOL-FAC-";
 		    else if ($facture->array_options['options_canal'] == 2) $prefix="NIS-FAC-";
 		    else if ($facture->array_options['options_canal'] == 3) $prefix="SCH-FAC-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="VOC-FAC-";
-		    else if ($facture->array_options['options_canal'] == 3) $prefix="DIV-FAC-";
+		    else if ($facture->array_options['options_canal'] == 4) $prefix="VOC-FAC-";
+		    else if ($facture->array_options['options_canal'] == 5) $prefix="DIV-FAC-";
 		}
 
 		// D'abord on recupere la valeur max
