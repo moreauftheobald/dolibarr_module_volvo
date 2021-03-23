@@ -409,7 +409,7 @@ class CommandeVolvo extends Commande
 							$line->fk_product = $data['productid'];
 							$line->ref_supplier = $data['ref_supplier'];
 							$line->ref_fourn = $data['ref_supplier'];
-							$line->product_type= 0;
+							$line->product_type= 1;
 							$cmdsup->lines[] = $line;
 						}
 
